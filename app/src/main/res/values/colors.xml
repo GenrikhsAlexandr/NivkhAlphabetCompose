@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="colorText">#CBE9FB</color>
+    <color name="colorCardLetterItem">#47A2D8</color>
+    <color name="colorProgressBar">#2688C2</color>
+    <color name="colorPrimary">#52ABFA</color>
+    <color name="colorDrawing">#95CFF2</color>
+</resources>

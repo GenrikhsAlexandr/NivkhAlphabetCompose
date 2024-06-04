@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Нивхский алфавит</string>
+    <string name="chooseLetter">Выберите букву</string>
+    <string name="selectedLetter">Изучаем букву \"%1$s\"</string>
+    <string name="empty" translatable="false" />
+    <string name="language">Язык</string>
+    <string name="progress">Достижения</string>
+    <string name="studied">Вы изучили букву %1$s</string>
+    <string name="firstTask">Выучи букву</string>
+    <string name="secondTask">Второй этап</string>
+    <string name="thirdTask">Третий этап</string>
+    <string name="otherTask">Следующий этап</string>
+    <string name="backListTask">Выбрать задание</string>
+    <string name="backAlphabet">Выбрать букву</string>
+    <string name="titleFistTask">Нажми и послушай\n как звучит буква</string>
+    <string name="getWordError">Not found word</string>
+    <string name="titleSecondTask">Task #2</string>
+    <string name="titleThirdTask">Task #3</string>
+
+</resources>

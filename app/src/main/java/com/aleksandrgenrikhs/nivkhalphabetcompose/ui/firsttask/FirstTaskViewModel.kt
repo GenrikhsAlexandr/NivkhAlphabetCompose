@@ -28,31 +28,7 @@ class FirstTaskViewModel
     private val interactor: AlphabetInteractor,
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<FirstTaskUIState> = MutableStateFlow(
-        FirstTaskUIState(
-            selectedLetter = "",
-            isPlaying = false,
-            progressLetter = 0,
-            progressFirstWord = 0,
-            progressSecondWord = 0,
-            progressThirdWord = 0,
-            isClickableLetter = true,
-            isClickableFirstWord = false,
-            isClickableSecondWord = false,
-            isClickableThirdWord = false,
-            isVisibleFirstWord = false,
-            isVisibleSecondWord = false,
-            isVisibleThirdWord = false,
-            wordTitle1 = "",
-            wordTitle2 = "",
-            wordTitle3 = "",
-            wordIcon1 = "",
-            wordIcon2 = "",
-            wordIcon3 = "",
-            navigate = false,
-            getWordError = false,
-        )
-    )
+    private val _uiState: MutableStateFlow<FirstTaskUIState> = MutableStateFlow(FirstTaskUIState())
     val uiState: StateFlow<FirstTaskUIState> = _uiState.asStateFlow()
 
     private val task: Int = Task.FIRST.stableId

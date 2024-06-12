@@ -7,6 +7,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.Letters
 
 class LettersViewModel : ViewModel() {
 
-    private val _letters = mutableStateOf(Letters.entries)
-    val letters get() = _letters
+    private val _uiState = mutableStateOf(LettersUIState(
+        letters = Letters.entries))
+    val uiState get() = _uiState
 }

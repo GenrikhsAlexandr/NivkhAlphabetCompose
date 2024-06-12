@@ -49,7 +49,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.ui.theme.shapes
 @Composable
 fun CardLetter(
     modifier: Modifier = Modifier,
-    letter: String,
+    title: String,
     onClick: () -> Unit,
     isClickable: Boolean,
     progress: Int
@@ -85,7 +85,7 @@ fun CardLetter(
                 color = colorProgressBar
             )
             Text(
-                text = letter,
+                text = title,
                 style = MaterialTheme.typography.displayLarge.copy(
                     fontSize = 90.sp
                 )
@@ -202,7 +202,7 @@ fun CardWord(
 fun CardLetterPreview() {
     NivkhAlphabetComposeTheme {
         CardLetter(
-            letter = Letters.Shch.title,
+            title = Letters.Shch.title,
             onClick = {},
             isClickable = true,
             progress = 3

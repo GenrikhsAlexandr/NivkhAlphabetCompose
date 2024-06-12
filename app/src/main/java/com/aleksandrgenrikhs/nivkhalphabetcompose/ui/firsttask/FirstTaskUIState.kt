@@ -1,25 +1,15 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.ui.firsttask
 
-data class FirstTaskUIState (
+import com.aleksandrgenrikhs.nivkhalphabetcompose.model.Word
+
+data class FirstTaskUIState(
     val selectedLetter: String = "",
+    val words: List<Word> = emptyList(),
     val isPlaying: Boolean = false,
     val progressLetter: Int = 0,
-    val progressFirstWord: Int = 0,
-    val progressSecondWord: Int = 0,
-    val progressThirdWord: Int = 0,
     val isClickableLetter: Boolean = true,
-    val isClickableFirstWord: Boolean = false,
-    val isClickableSecondWord: Boolean = false,
-    val isClickableThirdWord: Boolean = false,
-    val isVisibleFirstWord: Boolean = false,
-    val isVisibleSecondWord: Boolean = false,
-    val isVisibleThirdWord: Boolean = false,
-    val wordTitle1: String = "",
-    val wordTitle2: String = "",
-    val wordTitle3: String = "",
-    val wordIcon1: String = "",
-    val wordIcon2: String = "",
-    val wordIcon3: String = "",
-    val navigate: Boolean = false,
+    val isCompletedLetter: Boolean = false,
     val getWordError: Boolean = false,
+    val isVisibleWord: Boolean = false,
+    val isCompleted: Boolean = false,
 )

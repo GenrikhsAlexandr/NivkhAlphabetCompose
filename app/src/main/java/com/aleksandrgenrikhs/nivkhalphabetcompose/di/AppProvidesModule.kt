@@ -1,6 +1,6 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.di
 
-import com.aleksandrgenrikhs.nivkhalphabet.utils.AlphabetMediaPlayer
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.AlphabetMediaPlayer
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

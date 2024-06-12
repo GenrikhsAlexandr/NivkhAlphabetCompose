@@ -1,6 +1,7 @@
-package com.aleksandrgenrikhs.nivkhalphabet.domain.repository
+package com.aleksandrgenrikhs.nivkhalphabetcompose.model.repository
 
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.Word
+import kotlinx.coroutines.flow.Flow
 
 interface FirstTaskRepository {
 
@@ -9,6 +10,8 @@ interface FirstTaskRepository {
    fun initPlayer(url: String)
 
     fun play()
+
+    fun isPlaying(): Flow<Boolean>
 
    fun playerDestroy()
 }

@@ -35,8 +35,8 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.ui.letters.LetterScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.ui.listtasks.TasksScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.ui.theme.colorText
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.NavConstants.LETTER_KEY
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.NavConstants.TASK_KEY
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.LETTER_KEY
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.TASK_KEY
 
 @Composable
 fun NivkhAlphabetApp(

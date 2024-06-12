@@ -1,7 +1,8 @@
-package com.aleksandrgenrikhs.nivkhalphabet.domain.interator
+package com.aleksandrgenrikhs.nivkhalphabetcompose.model.interator
 
-import com.aleksandrgenrikhs.nivkhalphabet.domain.repository.FirstTaskRepository
+import com.aleksandrgenrikhs.nivkhalphabetcompose.model.repository.FirstTaskRepository
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.Word
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class AlphabetInteractor
@@ -14,6 +15,8 @@ class AlphabetInteractor
     fun initPlayer(url: String) = firstTaskRepository.initPlayer(url)
 
     fun play() = firstTaskRepository.play()
+
+    fun isPlaying(): Flow<Boolean> = firstTaskRepository.isPlaying()
 
     fun playerDestroy() = firstTaskRepository.playerDestroy()
 

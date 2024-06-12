@@ -1,6 +1,6 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.utils
 
-object NavConstants {
+object Constants {
     // Константы для навигации по экранам
     const val LETTERS_SCREEN = "letters"
     const val TASKS_SCREEN = "list_tasks"
@@ -11,4 +11,14 @@ object NavConstants {
     //Костанты для передачи аргументов
     const val LETTER_KEY = "letter"
     const val TASK_KEY = "task"
+
+    //URI константы
+    const val WORDS_FIRST_TASK = "firsttask/words/words.json"
+    const val ICON_WORD_FIRST_TASK = "file:///android_asset/firsttask/image/"
+    const val LETTER_AUDIO_FIRST_TASK = "firsttask/audio/letters/"
+    const val WORDS_AUDIO_FIRST_TASK = "firsttask/audio/words/"
+
+    //SharedPreferences константы
+    const val PREF_KEY_LETTER = "completed_letters"
+    const val PREF_KEY_TASK = "completed_tasks"
 }

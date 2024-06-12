@@ -2,9 +2,11 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.ui.firsttask
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -31,70 +33,66 @@ fun FirstTaskScreen(
 
     val uiState by viewModel.uiState.collectAsState()
 
-    LazyColumn(
+    Column(
         modifier = modifier
             .fillMaxSize()
-            .background(colorPrimary),
-        contentPadding = PaddingValues(top = 32.dp),
+            .background(colorPrimary)
+            .padding(top = 32.dp)
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        item {
+        with(uiState) {
             CardLetter(
-                progress = uiState.progressLetter,
-                letter = uiState.selectedLetter,
+                progress = progressLetter,
+                title = letter,
                 onClick = {
-                    viewModel.onClickElement(LETTER)
+                    viewModel.onClickElement(selectedLetter)
                 },
-                isClickable = uiState.isClickableLetter,
+                isClickable = isClickableLetter && !isPlaying,
             )
         }
-        item {
+        if (uiState.words.isNotEmpty()) {
             CardWord(
-                progress = uiState.progressFirstWord,
-                title = uiState.wordTitle1,
-                icon = uiState.wordIcon1,
+                progress = uiState.words[0].progress,
+                title = uiState.words[0].title,
+                icon = uiState.words[0].icon,
                 onClick = {
-                    viewModel.onClickElement(WORD1)
+                    viewModel.onClickElement(uiState.words[0].wordId)
                 },
-                isClickable = uiState.isClickableFirstWord,
-                isVisible = uiState.isVisibleFirstWord,
-                getWordError = uiState.getWordError
+                isClickable = uiState.words[0].isClickable && !uiState.isPlaying,
+                isVisible = uiState.isVisibleWord,
+                getWordError = uiState.getWordError,
             )
-        }
-        item {
             CardWord(
-                progress = uiState.progressSecondWord,
-                title = uiState.wordTitle2,
-                icon = uiState.wordIcon2,
+                progress = uiState.words[1].progress,
+                title = uiState.words[1].title,
+                icon = uiState.words[1].icon,
                 onClick = {
-                    viewModel.onClickElement(WORD2)
+                    viewModel.onClickElement(uiState.words[1].wordId)
                 },
-                isClickable = uiState.isClickableSecondWord,
-                isVisible = uiState.isVisibleSecondWord,
-                getWordError = uiState.getWordError
+                isClickable = uiState.words[1].isClickable && !uiState.isPlaying,
+                isVisible = uiState.isVisibleWord,
+                getWordError = uiState.getWordError,
+            )
 
-            )
-        }
-        item {
             CardWord(
-                progress = uiState.progressThirdWord,
-                title = uiState.wordTitle3,
-                icon = uiState.wordIcon3,
+                progress = uiState.words[2].progress,
+                title = uiState.words[2].title,
+                icon = uiState.words[2].icon,
                 onClick = {
-                    viewModel.onClickElement(WORD3)
+                    viewModel.onClickElement(uiState.words[2].wordId)
                 },
-                isClickable = uiState.isClickableThirdWord,
-                isVisible = uiState.isVisibleThirdWord,
-                getWordError = uiState.getWordError
-
+                isClickable = uiState.words[2].isClickable && !uiState.isPlaying,
+                isVisible = uiState.isVisibleWord,
+                getWordError = uiState.getWordError,
             )
+            if (uiState.isCompleted && !uiState.isPlaying) {
+                navController.popBackStack(
+                    "${NavigationDestination.TasksScreen.destination}/$letter",
+                    inclusive = false
+                )
+            }
         }
-    }
-    if (uiState.navigate) {
-        navController.popBackStack(
-            "${NavigationDestination.TasksScreen.destination}/$letter",
-            inclusive = false
-        )
     }
 }

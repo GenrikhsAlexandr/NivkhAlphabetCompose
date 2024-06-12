@@ -2,9 +2,9 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.NavConstants.FIRST_TASK_SCREEN
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.NavConstants.SECOND_TASK_SCREEN
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.NavConstants.THIRD_TASK_SCREEN
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FIRST_TASK_SCREEN
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.SECOND_TASK_SCREEN
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.THIRD_TASK_SCREEN
 
 enum class Task(
     val stableId: Int,

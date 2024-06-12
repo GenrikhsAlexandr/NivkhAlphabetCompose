@@ -1,10 +1,10 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.navigator
 
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.NavConstants.FIRST_TASK_SCREEN
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.NavConstants.LETTERS_SCREEN
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.NavConstants.SECOND_TASK_SCREEN
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.NavConstants.TASKS_SCREEN
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.NavConstants.THIRD_TASK_SCREEN
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FIRST_TASK_SCREEN
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.LETTERS_SCREEN
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.SECOND_TASK_SCREEN
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.TASKS_SCREEN
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.THIRD_TASK_SCREEN
 
 sealed class NavigationDestination(val destination: String) {
     data object LettersScreen : NavigationDestination(LETTERS_SCREEN)

@@ -1,7 +1,9 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.di
 
-import com.aleksandrgenrikhs.nivkhalphabet.domain.repository.FirstTaskRepository
+import com.aleksandrgenrikhs.nivkhalphabetcompose.model.repository.FirstTaskRepository
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.repository.FirstTaskRepositoryImpl
+import com.aleksandrgenrikhs.nivkhalphabetcompose.data.repository.PrefRepositoryImpl
+import com.aleksandrgenrikhs.nivkhalphabetcompose.model.repository.PrefRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -11,12 +13,11 @@ import javax.inject.Singleton
 @[Module InstallIn(SingletonComponent::class)]
 interface AppBindsModule {
 
-   @Binds
+    @Binds
     @Singleton
     fun bindFirstTaskRepository(impl: FirstTaskRepositoryImpl): FirstTaskRepository
 
-    /* @Binds
+    @Binds
     @Singleton
-    fun bindSharedPreferencesRepository(impl: SharedPreferencesRepositoryImpl): SharedPreferencesRepository
-*/
+    fun bindSharedPreferencesRepository(impl: PrefRepositoryImpl): PrefRepository
 }

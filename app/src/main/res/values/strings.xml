@@ -7,14 +7,14 @@
     <string name="progress">Достижения</string>
     <string name="studied">Вы изучили букву %1$s</string>
     <string name="firstTask">Выучи букву</string>
-    <string name="secondTask">Второй этап</string>
-    <string name="thirdTask">Третий этап</string>
+    <string name="secondTask">Выбери картинку</string>
+    <string name="thirdTask">Поставь буквы</string>
     <string name="otherTask">Следующий этап</string>
     <string name="backListTask">Выбрать задание</string>
     <string name="backAlphabet">Выбрать букву</string>
     <string name="titleFistTask">Нажми и послушай\n как звучит буква</string>
     <string name="getWordError">Not found word</string>
-    <string name="titleSecondTask">Task #2</string>
-    <string name="titleThirdTask">Task #3</string>
+    <string name="titleSecondTask">Какое слово содержит букву \"%1$s\"\?</string>
+    <string name="titleThirdTask">Поставь буквы\n в правельном порядке</string>
 
 </resources>

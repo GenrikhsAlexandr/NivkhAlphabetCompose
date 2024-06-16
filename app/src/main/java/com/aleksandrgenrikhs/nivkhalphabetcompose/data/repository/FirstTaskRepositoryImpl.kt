@@ -4,9 +4,9 @@ import android.app.Application
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.repository.FirstTaskRepository
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.AlphabetMediaPlayer
 import com.aleksandrgenrikhs.nivkhalphabet.utils.UrlConstants.WORDS_FIRST_TASK
-import com.aleksandrgenrikhs.nivkhalphabetcompose.data.firsttask.dto.SubjectDto
-import com.aleksandrgenrikhs.nivkhalphabetcompose.data.firsttask.mapper.FirstTaskMapper
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.Word
+import com.aleksandrgenrikhs.nivkhalphabetcompose.data.dto.SubjectDto
+import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.WordMapper
+import com.aleksandrgenrikhs.nivkhalphabetcompose.model.WordModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -19,13 +19,13 @@ import javax.inject.Inject
 class FirstTaskRepositoryImpl
 @Inject constructor(
 	private val application: Application,
-	private val mapper: FirstTaskMapper,
+	private val mapper: WordMapper,
 	private val mediaPlayer: AlphabetMediaPlayer
 ) : FirstTaskRepository {
 
 	private val json = Json { ignoreUnknownKeys = true }
 
-	override suspend fun getWords(letterId: String): List<Word> {
+	override suspend fun getWords(letterId: String): List<WordModel> {
 		return withContext(Dispatchers.IO) {
 			try {
 				val inputStream = application.assets.open(WORDS_FIRST_TASK)

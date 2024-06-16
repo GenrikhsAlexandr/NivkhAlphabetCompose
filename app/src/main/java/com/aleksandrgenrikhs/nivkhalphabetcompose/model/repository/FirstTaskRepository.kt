@@ -1,11 +1,11 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.model.repository
 
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.Word
+import com.aleksandrgenrikhs.nivkhalphabetcompose.model.WordModel
 import kotlinx.coroutines.flow.Flow
 
 interface FirstTaskRepository {
 
-   suspend fun getWords(letterId:String): List <Word>
+   suspend fun getWords(letterId:String): List <WordModel>
 
    fun initPlayer(url: String)
 

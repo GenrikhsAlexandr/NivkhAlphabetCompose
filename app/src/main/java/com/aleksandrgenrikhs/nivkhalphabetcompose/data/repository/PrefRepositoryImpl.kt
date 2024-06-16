@@ -1,8 +1,43 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.data.repository
 
+import android.content.Context
+import android.content.SharedPreferences
+import com.aleksandrgenrikhs.nivkhalphabetcompose.Letters
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.repository.PrefRepository
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 class PrefRepositoryImpl
-@Inject constructor(): PrefRepository {
+@Inject constructor(@ApplicationContext private val context: Context) : PrefRepository {
+
+    private val preferences: SharedPreferences by lazy {
+        context.getSharedPreferences(
+            "AppPref",
+            Context.MODE_PRIVATE
+        )
+    }
+
+
+    override fun taskCompleted(taskId: Int, letterId: String) {
+        val currentValue = preferences.getString(taskId.toString(), "")
+        preferences.edit()
+            .putString(
+                taskId.toString(), "$currentValue:$letterId"
+            )
+            .apply()
+    }
+
+    override fun getLetterCompleted(taskId: Int): List<Letters>? {
+        val completedLetter = preferences.getString(
+            taskId.toString(), ""
+        )
+        return completedLetter?.split(":")?.mapNotNull {
+            Letters.getById(it)
+        }
+    }
+
+    override fun isTaskCompleted(taskId: Int, letterId: String): Boolean {
+        val completedLetters = getLetterCompleted(taskId)
+        return completedLetters?.contains(Letters.getById(letterId)) ?: false
+    }
 }

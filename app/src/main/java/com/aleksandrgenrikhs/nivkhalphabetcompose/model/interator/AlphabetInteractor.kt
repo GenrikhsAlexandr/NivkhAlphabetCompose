@@ -1,19 +1,28 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.model.interator
 
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Letters
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.repository.FirstTaskRepository
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.WordModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.model.FirstTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.model.SecondTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.model.ThirdTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.model.repository.AlphabetRepository
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.repository.PrefRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class AlphabetInteractor
 @Inject constructor(
-    private val firstTaskRepository: FirstTaskRepository,
+    private val firstTaskRepository: AlphabetRepository,
     private val sharedPreferencesRepository: PrefRepository
 ) {
 
-    suspend fun getWords(letterId: String): List<WordModel> = firstTaskRepository.getWords(letterId)
+    suspend fun getWordsForFirstTask(letterId: String): List<FirstTaskModel> =
+        firstTaskRepository.getWordsForFirstTask(letterId)
+
+    suspend fun getWordsForSecondTask(letterId: String): List<SecondTaskModel> =
+        firstTaskRepository.getWordsForSecondTask(letterId)
+
+    suspend fun getShuffledWord(letterId: String): ThirdTaskModel =
+        firstTaskRepository.shuffledWord(letterId)
 
     fun initPlayer(url: String) = firstTaskRepository.initPlayer(url)
 

@@ -1,10 +1,10 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.firsttask
 
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.WordModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.model.FirstTaskModel
 
 data class FirstTaskUIState(
     val selectedLetter: String = "",
-    val words: List<WordModel> = emptyList(),
+    val words: List<FirstTaskModel> = emptyList(),
     val isPlaying: Boolean = false,
     val progressLetter: Int = 0,
     val isClickableLetter: Boolean = true,

@@ -1,8 +1,8 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.di
 
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.repository.FirstTaskRepository
-import com.aleksandrgenrikhs.nivkhalphabetcompose.data.repository.FirstTaskRepositoryImpl
+import com.aleksandrgenrikhs.nivkhalphabetcompose.data.repository.AlphabetRepositoryImpl
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.repository.PrefRepositoryImpl
+import com.aleksandrgenrikhs.nivkhalphabetcompose.model.repository.AlphabetRepository
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.repository.PrefRepository
 import dagger.Binds
 import dagger.Module
@@ -15,7 +15,7 @@ interface AppBindsModule {
 
     @Binds
     @Singleton
-    fun bindFirstTaskRepository(impl: FirstTaskRepositoryImpl): FirstTaskRepository
+    fun bindAlphabetRepository(impl: AlphabetRepositoryImpl): AlphabetRepository
 
     @Binds
     @Singleton

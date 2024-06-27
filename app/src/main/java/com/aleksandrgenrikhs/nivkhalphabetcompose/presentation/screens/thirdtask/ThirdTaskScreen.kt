@@ -11,16 +11,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.ThirdTaskViewModel
-import kotlin.random.Random
 
 @Composable
 fun ThirdTaskScreen(
@@ -31,13 +29,11 @@ fun ThirdTaskScreen(
 ) {
     viewModel.setLetter(letter)
     LaunchedEffect(key1 = Unit, block = {
-        viewModel.getWords(letter)
+        viewModel.getShuffledWord(letter)
     })
 
     val uiState by viewModel.uiState.collectAsState()
-    if (uiState.words.isNotEmpty()) {
-        val randomIndex =
-            rememberSaveable { mutableIntStateOf(Random.nextInt(uiState.words.size - 1)) }
+    if (uiState.shuffledWord.isNotEmpty()) {
         Column(
             modifier = modifier
                 .fillMaxSize()
@@ -47,13 +43,18 @@ fun ThirdTaskScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(32.dp),
         ) {
-
             TextThirdTask(
-                letter = letter
+                word = uiState.shuffledWord
             )
             ButtonThirdTask(
                 onClick = { },
-                icon = uiState.words[randomIndex.intValue].icon
+                icon = uiState.icon
+            )
+        }
+        if (uiState.isCompleted) {
+            navController.popBackStack(
+                "${NavigationDestination.TasksScreen.destination}/$letter",
+                inclusive = false
             )
         }
     }

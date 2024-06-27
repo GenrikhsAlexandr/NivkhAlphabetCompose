@@ -26,7 +26,6 @@ import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import coil.request.ImageRequest
-import com.aleksandrgenrikhs.nivkhalphabetcompose.Letters
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorOnPrimary
@@ -36,7 +35,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPro
 @Composable
 fun TextThirdTask(
     modifier: Modifier = Modifier,
-    letter: String,
+    word: List<Char>,
 ) {
     Column(
         modifier = modifier
@@ -47,11 +46,16 @@ fun TextThirdTask(
     )
     {
         Text(
-            text = stringResource(id = R.string.titleThirdTask) ,
-            style = MaterialTheme.typography.displayMedium,
+            text = stringResource(id = R.string.titleThirdTask),
+            style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center
         )
     }
+    Text(
+        text = word.joinToString(" "),
+        style = MaterialTheme.typography.displayLarge,
+        textAlign = TextAlign.Center
+    )
 }
 
 @Composable
@@ -100,10 +104,11 @@ fun ButtonThirdTask(
 fun TextPreview() {
     NivkhAlphabetComposeTheme {
         TextThirdTask(
-            letter = Letters.A.title
+            word = listOf('a', 'b')
         )
     }
 }
+
 @Preview(widthDp = 210, heightDp = 210)
 @Composable
 fun ButtonElementPreview() {

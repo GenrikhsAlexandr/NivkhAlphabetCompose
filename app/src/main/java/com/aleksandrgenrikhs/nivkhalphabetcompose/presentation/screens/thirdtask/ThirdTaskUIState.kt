@@ -1,8 +1,9 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.thirdtask
 
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.WordModel
-
 data class ThirdTaskUIState(
     val selectedLetter: String = "",
-    val words: List<WordModel> = emptyList(),
-    )
+    val shuffledWord: List<Char> = emptyList(),
+    val userInput: List<Char> = emptyList(),
+    val icon: String? = "",
+    val isCompleted: Boolean = false
+)

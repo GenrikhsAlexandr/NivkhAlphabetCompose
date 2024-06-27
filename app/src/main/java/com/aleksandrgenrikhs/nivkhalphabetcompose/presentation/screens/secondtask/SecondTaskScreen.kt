@@ -11,16 +11,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.SecondTaskViewModel
-import kotlin.random.Random
+import kotlinx.coroutines.delay
 
 @Composable
 fun SecondTaskScreen(
@@ -37,8 +36,6 @@ fun SecondTaskScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     if (uiState.words.isNotEmpty()) {
-        val randomIndex =
-            rememberSaveable { mutableIntStateOf(Random.nextInt(uiState.words.size - 1)) }
         Column(
             modifier = modifier
                 .fillMaxSize()
@@ -48,22 +45,51 @@ fun SecondTaskScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(32.dp),
         ) {
-
             TextSecondTask(
                 letter = letter
             )
             ButtonSecondTask(
-                onClick = { },
-                icon = uiState.words[randomIndex.intValue].icon
+                onClick = {
+                    viewModel.flipCard(uiState.words[0].wordId, uiState.words[0].letterId)
+                },
+                icon = uiState.words[0].icon,
+                title = uiState.words[0].title,
+                isFlipped = uiState.words[0].isFlipped,
+                isClickable = !uiState.isPlaying && !uiState.isAnswerCorrect,
+                isRightAnswer = uiState.words[0].isRightAnswer,
             )
             ButtonSecondTask(
-                onClick = { },
-                icon = uiState.words[randomIndex.intValue].icon
+                onClick = {
+                    viewModel.flipCard(uiState.words[1].wordId, uiState.words[1].letterId)
+
+                },
+                icon = uiState.words[1].icon,
+                title = uiState.words[1].title,
+                isFlipped = uiState.words[1].isFlipped,
+                isClickable = !uiState.isPlaying && !uiState.isAnswerCorrect,
+                isRightAnswer = uiState.words[1].isRightAnswer,
             )
             ButtonSecondTask(
-                onClick = { },
-                icon = uiState.words[randomIndex.intValue].icon
+                onClick = {
+                    viewModel.flipCard(uiState.words[2].wordId, uiState.words[2].letterId)
+
+                },
+                icon = uiState.words[2].icon,
+                title = uiState.words[2].title,
+                isFlipped = uiState.words[2].isFlipped,
+                isClickable = !uiState.isPlaying && !uiState.isAnswerCorrect,
+                isRightAnswer = uiState.words[2].isRightAnswer,
             )
+            if (uiState.isCompleted && !uiState.isPlaying) {
+                LaunchedEffect(key1 = Unit, block = {
+                    delay(2000)
+                    navController.popBackStack(
+                        "${NavigationDestination.TasksScreen.destination}/$letter",
+                        inclusive = false
+                    )
+                }
+                )
+            }
         }
     }
 }

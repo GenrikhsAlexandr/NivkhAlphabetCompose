@@ -28,7 +28,7 @@ class FirstTaskViewModel
     }
 
     suspend fun getWords(letterId: String) {
-        val listWords = interactor.getWords(letterId)
+        val listWords = interactor.getWordsForFirstTask(letterId)
         if (listWords.isNotEmpty()) {
             _uiState.value = _uiState.value.copy(
                 words = listWords,

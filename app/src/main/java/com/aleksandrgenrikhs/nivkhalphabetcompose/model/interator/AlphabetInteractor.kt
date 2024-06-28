@@ -11,26 +11,28 @@ import javax.inject.Inject
 
 class AlphabetInteractor
 @Inject constructor(
-    private val firstTaskRepository: AlphabetRepository,
+    private val alphabetRepository: AlphabetRepository,
     private val sharedPreferencesRepository: PrefRepository
 ) {
 
     suspend fun getWordsForFirstTask(letterId: String): List<FirstTaskModel> =
-        firstTaskRepository.getWordsForFirstTask(letterId)
+        alphabetRepository.getWordsForFirstTask(letterId)
 
     suspend fun getWordsForSecondTask(letterId: String): List<SecondTaskModel> =
-        firstTaskRepository.getWordsForSecondTask(letterId)
+        alphabetRepository.getWordsForSecondTask(letterId)
+
+    fun clearPreviousWordsList() = alphabetRepository.clearPreviousWordsList()
 
     suspend fun getShuffledWord(letterId: String): ThirdTaskModel =
-        firstTaskRepository.shuffledWord(letterId)
+        alphabetRepository.shuffledWord(letterId)
 
-    fun initPlayer(url: String) = firstTaskRepository.initPlayer(url)
+    fun initPlayer(url: String) = alphabetRepository.initPlayer(url)
 
-    fun play() = firstTaskRepository.play()
+    fun play() = alphabetRepository.play()
 
-    fun isPlaying(): Flow<Boolean> = firstTaskRepository.isPlaying()
+    fun isPlaying(): Flow<Boolean> = alphabetRepository.isPlaying()
 
-    fun playerDestroy() = firstTaskRepository.playerDestroy()
+    fun playerDestroy() = alphabetRepository.playerDestroy()
 
     fun taskCompleted(taskId: Int, letterId: String) =
         sharedPreferencesRepository.taskCompleted(taskId, letterId)

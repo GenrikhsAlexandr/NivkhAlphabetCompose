@@ -32,6 +32,7 @@ class AlphabetRepositoryImpl
 ) : AlphabetRepository {
 
     private val json = Json { ignoreUnknownKeys = true }
+    private val previousWordsList = mutableSetOf<String>()
 
     override suspend fun getWords(): List<WordModel> {
         return withContext(Dispatchers.IO) {
@@ -57,18 +58,25 @@ class AlphabetRepositoryImpl
     override suspend fun getWordsForSecondTask(letterId: String): List<SecondTaskModel> {
         val filterWordsList = filterWords(letterId)
         val allWordsList = getWords().filterNot { it in filterWordsList }
-        val indexCorrectWord = Random.nextInt(filterWordsList.size)
+        val correctWord =
+            filterWordsList.filterNot { it.wordId in previousWordsList }
+        val indexCorrectWord = Random.nextInt(correctWord.size)
         val indexWord1 = Random.nextInt(allWordsList.size)
         var indexWord2 = Random.nextInt(allWordsList.size)
         while (indexWord2 == indexWord1) {
             indexWord2 = Random.nextInt(allWordsList.size)
         }
-        val resultList = mutableListOf(
-            filterWordsList[indexCorrectWord],
+        val resultList = mutableListOf<WordModel>(
+            correctWord[indexCorrectWord],
             allWordsList[indexWord1],
             allWordsList[indexWord2]
         )
+        previousWordsList.addAll(resultList.map { it.wordId })
         return secondTaskMapper.map(resultList.shuffled())
+    }
+
+    override fun clearPreviousWordsList() {
+        previousWordsList.clear()
     }
 
     override suspend fun shuffledWord(letterId: String): ThirdTaskModel {

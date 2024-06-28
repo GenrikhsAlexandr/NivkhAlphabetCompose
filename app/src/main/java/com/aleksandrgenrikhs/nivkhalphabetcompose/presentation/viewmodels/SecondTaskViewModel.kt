@@ -63,11 +63,11 @@ class SecondTaskViewModel
                         isRightAnswer = isRightWord
                     )
                     if (isRightWord && !isCompleted) {
-                        this.map {
                             viewModelScope.launch {
                                 delay(2000)
                                 getWords(letterId)
                             }
+                        this.map {
                             it.copy(
                                 isFlipped = false,
                             )
@@ -83,6 +83,7 @@ class SecondTaskViewModel
             )
         }
         if (uiState.value.isCompleted) {
+            interactor.clearPreviousWordsList()
             interactor.taskCompleted(Task.SECOND.stableId, uiState.value.selectedLetter)
         }
     }

@@ -13,6 +13,8 @@ interface AlphabetRepository {
 
     suspend fun getWordsForSecondTask(letterId: String): List<SecondTaskModel>
 
+    fun clearPreviousWordsList()
+
     suspend fun shuffledWord(letterId: String): ThirdTaskModel
 
    fun initPlayer(url: String)

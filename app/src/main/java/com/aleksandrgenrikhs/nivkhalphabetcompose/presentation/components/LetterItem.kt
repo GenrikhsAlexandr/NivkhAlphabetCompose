@@ -1,4 +1,4 @@
-package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.letters
+package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

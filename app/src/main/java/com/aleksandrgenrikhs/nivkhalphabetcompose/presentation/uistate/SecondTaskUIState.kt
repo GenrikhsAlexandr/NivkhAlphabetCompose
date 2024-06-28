@@ -1,4 +1,4 @@
-package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.secondtask
+package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate
 
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.SecondTaskModel
 

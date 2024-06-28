@@ -1,4 +1,4 @@
-package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.firsttask
+package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -17,6 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.CardLetter
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.CardWord
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.FirstTaskViewModel
 

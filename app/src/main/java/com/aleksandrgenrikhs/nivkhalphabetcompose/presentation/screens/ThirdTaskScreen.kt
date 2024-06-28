@@ -1,4 +1,4 @@
-package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.thirdtask
+package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -16,7 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.ButtonThirdTask
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.DialogLetterGameOver
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.TextThirdTask
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.ThirdTaskViewModel
 
@@ -43,6 +45,7 @@ fun ThirdTaskScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(32.dp),
         ) {
+
             TextThirdTask(
                 word = uiState.shuffledWord
             )
@@ -52,10 +55,7 @@ fun ThirdTaskScreen(
             )
         }
         if (uiState.isCompleted) {
-            navController.popBackStack(
-                "${NavigationDestination.TasksScreen.destination}/$letter",
-                inclusive = false
-            )
+            DialogLetterGameOver(letter = letter, navController = navController)
         }
     }
 }

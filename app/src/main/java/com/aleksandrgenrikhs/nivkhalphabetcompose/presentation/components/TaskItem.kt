@@ -1,4 +1,4 @@
-package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.listtasks
+package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

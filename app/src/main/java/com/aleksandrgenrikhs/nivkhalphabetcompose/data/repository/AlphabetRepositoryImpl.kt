@@ -57,11 +57,17 @@ class AlphabetRepositoryImpl
     override suspend fun getWordsForSecondTask(letterId: String): List<SecondTaskModel> {
         val filterWordsList = filterWords(letterId)
         val allWordsList = getWords().filterNot { it in filterWordsList }
-        val randomFilterWord = filterWordsList.firstOrNull()
-        val randomWordsFromAll = allWordsList.shuffled().take(2)
-        val resultList = mutableListOf<WordModel>()
-        randomFilterWord?.let { resultList.add(it) }
-        resultList.addAll(randomWordsFromAll)
+        val indexCorrectWord = Random.nextInt(filterWordsList.size)
+        val indexWord1 = Random.nextInt(allWordsList.size)
+        var indexWord2 = Random.nextInt(allWordsList.size)
+        while (indexWord2 == indexWord1) {
+            indexWord2 = Random.nextInt(allWordsList.size)
+        }
+        val resultList = mutableListOf(
+            filterWordsList[indexCorrectWord],
+            allWordsList[indexWord1],
+            allWordsList[indexWord2]
+        )
         return secondTaskMapper.map(resultList.shuffled())
     }
 

@@ -6,7 +6,7 @@ import com.aleksandrgenrikhs.nivkhalphabet.utils.UrlConstants.LETTER_AUDIO_FIRST
 import com.aleksandrgenrikhs.nivkhalphabet.utils.UrlConstants.WORDS_AUDIO_FIRST_TASK
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.interator.AlphabetInteractor
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.firsttask.FirstTaskUIState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.FirstTaskUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

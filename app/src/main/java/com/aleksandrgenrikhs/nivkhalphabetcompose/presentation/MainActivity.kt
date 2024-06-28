@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.NivkhAlphabetApp
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.NivkhAlphabetApp
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import dagger.hilt.android.AndroidEntryPoint

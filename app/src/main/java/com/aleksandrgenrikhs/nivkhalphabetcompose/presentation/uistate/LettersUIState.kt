@@ -1,4 +1,4 @@
-package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.letters
+package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate
 
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.LetterModel
 

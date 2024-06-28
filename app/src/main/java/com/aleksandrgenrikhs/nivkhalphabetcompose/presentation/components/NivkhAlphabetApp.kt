@@ -1,4 +1,4 @@
-package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui
+package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -30,11 +30,11 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.firsttask.FirstTaskScreen
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.letters.LetterScreen
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.listtasks.TasksScreen
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.secondtask.SecondTaskScreen
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.thirdtask.ThirdTaskScreen
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.FirstTaskScreen
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.LetterScreen
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.SecondTaskScreen
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.TasksScreen
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.ThirdTaskScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.LETTER_KEY

@@ -1,4 +1,4 @@
-package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.firsttask
+package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

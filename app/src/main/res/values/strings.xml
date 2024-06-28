@@ -15,6 +15,8 @@
     <string name="titleFistTask">Нажми и послушай\n как звучит буква</string>
     <string name="getWordError">Not found word</string>
     <string name="titleSecondTask">Какое слово содержит букву \"%1$s\"\?</string>
-    <string name="titleThirdTask">Поставь буквы\n в правельном порядке</string>
+    <string name="titleThirdTask">Поставь буквы\n в правильном порядке</string>
+    <string name="mainScreen">Вернуться к списку букв</string>
+    <string name="repeat">Повторить еще раз</string>
 
 </resources>

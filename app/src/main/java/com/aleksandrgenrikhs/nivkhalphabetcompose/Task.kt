@@ -24,7 +24,8 @@ enum class Task(
         stableId = 2,
         titleResId = R.string.secondTask,
         icon = R.drawable.ic_task2,
-        route = SECOND_TASK_SCREEN),
+        route = SECOND_TASK_SCREEN
+    ),
     THIRD(
         stableId = 3,
         titleResId = R.string.thirdTask,

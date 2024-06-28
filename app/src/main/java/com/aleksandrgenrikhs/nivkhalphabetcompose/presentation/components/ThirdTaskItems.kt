@@ -1,4 +1,4 @@
-package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.thirdtask
+package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -101,7 +101,7 @@ fun ButtonThirdTask(
 
 @Preview(widthDp = 400, heightDp = 210)
 @Composable
-fun TextPreview() {
+fun TextThirdTaskPreview() {
     NivkhAlphabetComposeTheme {
         TextThirdTask(
             word = listOf('a', 'b')
@@ -111,7 +111,7 @@ fun TextPreview() {
 
 @Preview(widthDp = 210, heightDp = 210)
 @Composable
-fun ButtonElementPreview() {
+fun ButtonThirdTaskPreview() {
     NivkhAlphabetComposeTheme {
         ButtonThirdTask(
             icon = "file:///android_asset/firsttask/image/1.1.png",

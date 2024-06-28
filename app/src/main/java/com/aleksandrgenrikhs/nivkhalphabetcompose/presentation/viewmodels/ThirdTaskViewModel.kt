@@ -3,7 +3,7 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels
 import androidx.lifecycle.ViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.interator.AlphabetInteractor
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.thirdtask.ThirdTaskUIState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.ThirdTaskUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

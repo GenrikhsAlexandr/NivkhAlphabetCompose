@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.TaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.interator.AlphabetInteractor
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.listtasks.TaskUIState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.TaskUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

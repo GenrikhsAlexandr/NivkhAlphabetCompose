@@ -57,22 +57,15 @@ class SecondTaskViewModel
 
             val newWordsList = uiState.words.toMutableList().apply {
                 val index = uiState.words.indexOfFirst { it.wordId == wordId }
-                if (index != -1) {
                     this[index] = this[index].copy(
                         isFlipped = !this[index].isFlipped,
                         isRightAnswer = isRightWord
                     )
-                    if (isRightWord && !isCompleted) {
-                            viewModelScope.launch {
-                                delay(2000)
-                                getWords(letterId)
-                            }
-                        this.map {
-                            it.copy(
-                                isFlipped = false,
-                            )
-                        }
-                    }
+            }
+            if (isRightWord && !isCompleted) {
+                viewModelScope.launch {
+                    delay(2000)
+                    getWords(letterId)
                 }
             }
             uiState.copy(
@@ -81,6 +74,7 @@ class SecondTaskViewModel
                 correctAnswersCount = correctAnswersCount,
                 isAnswerCorrect = isRightWord,
             )
+
         }
         if (uiState.value.isCompleted) {
             interactor.clearPreviousWordsList()

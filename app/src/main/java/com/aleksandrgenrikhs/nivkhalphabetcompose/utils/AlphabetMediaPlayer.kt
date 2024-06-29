@@ -30,10 +30,9 @@ object AlphabetMediaPlayer {
         mediaPlayer?.start()
     }
 
-    fun isPlayingPlayer(): Flow<Boolean> = flow<Boolean> {
+    fun isPlayingPlayer(): Flow<Boolean> = flow {
         mediaPlayer?.let {
             while (true) {
-                it.isPlaying
                 if (!it.isPlaying) {
                     emit(false)
                     break

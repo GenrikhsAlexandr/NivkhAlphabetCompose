@@ -8,11 +8,19 @@ import androidx.compose.ui.unit.sp
 
 // Set of Material typography styles to start with
 val Typography = Typography(
+    labelSmall = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp,
+        lineHeight = 14.sp,
+        letterSpacing = 0.5.sp,
+        color = colorText
+    ),
     bodyLarge = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Bold,
-        fontSize = 28.sp,
-        lineHeight = 28.sp,
+        fontSize = 16.sp,
+        lineHeight = 16.sp,
         letterSpacing = 0.5.sp,
         color = colorText
     ),
@@ -20,31 +28,23 @@ val Typography = Typography(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Bold,
         color = colorText,
-        fontSize = 32.sp,
-        lineHeight = 32.sp,
+        fontSize = 22.sp,
+        lineHeight = 22.sp,
         letterSpacing = 0.sp,
-    ),
-    labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Medium,
-        fontSize = 16.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp,
-        color = colorText
-    ),
-    displayLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Bold,
-        fontSize = 56.sp,
-        lineHeight = 56.sp,
-        letterSpacing = 0.sp,
-        color = colorText
     ),
     displayMedium = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Bold,
         fontSize = 42.sp,
         lineHeight = 42.sp,
+        letterSpacing = 0.sp,
+        color = colorText
+    ),
+    displayLarge = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Bold,
+        fontSize = 57.sp,
+        lineHeight = 57.sp,
         letterSpacing = 0.sp,
         color = colorText
     )

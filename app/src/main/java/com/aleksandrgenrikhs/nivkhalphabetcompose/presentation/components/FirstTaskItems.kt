@@ -57,7 +57,7 @@ fun CardLetter(
 ) {
     Text(
         text = stringResource(id = R.string.titleFistTask) ,
-        style = MaterialTheme.typography.displayMedium,
+        style = MaterialTheme.typography.titleLarge,
         textAlign = TextAlign.Center
     )
 

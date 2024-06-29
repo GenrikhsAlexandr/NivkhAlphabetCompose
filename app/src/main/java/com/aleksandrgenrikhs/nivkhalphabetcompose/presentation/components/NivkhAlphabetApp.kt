@@ -141,35 +141,35 @@ private fun TopAppBarAlphabet(
                 NavigationDestination.LettersScreen.destination -> {
                     Text(
                         text = stringResource(id = R.string.app_name),
-                        style = MaterialTheme.typography.titleLarge
+                        style = MaterialTheme.typography.bodyLarge
                     )
                 }
 
                 NavigationDestination.TasksScreen.destination -> {
                     Text(
                         text = letter!!,
-                        style = MaterialTheme.typography.displayLarge,
+                        style = MaterialTheme.typography.titleLarge,
                     )
                 }
 
                 NavigationDestination.FirstTaskScreen.destination -> {
                     Text(
                         text = stringResource(id = R.string.firstTask),
-                        style = MaterialTheme.typography.titleLarge,
+                        style = MaterialTheme.typography.bodyLarge,
                     )
                 }
 
                 NavigationDestination.SecondTaskScreen.destination -> {
                     Text(
                         text = stringResource(id = R.string.secondTask),
-                        style = MaterialTheme.typography.titleLarge
+                        style = MaterialTheme.typography.bodyLarge
                     )
                 }
 
                 NavigationDestination.ThirdTaskScreen.destination -> {
                     Text(
                         text = stringResource(id = R.string.thirdTask),
-                        style = MaterialTheme.typography.titleLarge
+                        style = MaterialTheme.typography.bodyLarge
                     )
                 }
             }

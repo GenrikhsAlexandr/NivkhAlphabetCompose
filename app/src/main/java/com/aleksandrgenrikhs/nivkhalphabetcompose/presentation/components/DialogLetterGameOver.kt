@@ -8,7 +8,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorRight
 
 @Composable
 fun DialogLetterGameOver(
@@ -25,7 +25,7 @@ fun DialogLetterGameOver(
         title = {
             Text(
                 stringResource(R.string.studied, letter),
-                color = colorProgressBar,
+                color = colorRight,
             )
         },
         dismissButton = {
@@ -39,7 +39,7 @@ fun DialogLetterGameOver(
             ) {
                 Text(
                     text = stringResource(R.string.mainScreen),
-                    color = colorProgressBar,
+                    color = colorRight,
                 )
             }
         },
@@ -53,7 +53,7 @@ fun DialogLetterGameOver(
                 }) {
                 Text(
                     text = stringResource(R.string.repeat),
-                    color = colorProgressBar,
+                    color = colorRight,
                 )
             }
         }

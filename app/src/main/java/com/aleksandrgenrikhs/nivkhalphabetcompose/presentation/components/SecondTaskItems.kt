@@ -35,6 +35,7 @@ import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import coil.request.ImageRequest
+import coil.size.Size
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Letters
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
@@ -122,14 +123,19 @@ fun ButtonSecondTask(
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(icon)
                         .crossfade(true)
+                        .size(Size.ORIGINAL)
                         .build(),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                 ) {
                     val state = painter.state
+                    println("state = ${painter.state}")
                     when (state) {
                         is AsyncImagePainter.State.Loading -> CircularProgressIndicator()
                         is AsyncImagePainter.State.Success -> SubcomposeAsyncImageContent()
+                        is AsyncImagePainter.State.Error -> {
+                            println("Error loading image: $icon, error: ${state.result.throwable.localizedMessage}")
+                        }
                         else -> Icon(
                             imageVector = Icons.Default.Warning,
                             contentDescription = null,

@@ -5,18 +5,23 @@
     <string name="empty" translatable="false" />
     <string name="language">Язык</string>
     <string name="progress">Достижения</string>
+    <string name="nextTask">Перейти к %1$s игре</string>
+    <string name="backAlphabet">Вернуться к алфавиту</string>
+    <string name="repeat">Повторить еще раз</string>
+    <string name="supper">Молодец!</string>
+
+
     <string name="studied">Вы изучили букву %1$s</string>
     <string name="firstTask">Выучи букву</string>
     <string name="secondTask">Выбери картинку</string>
     <string name="thirdTask">Поставь буквы</string>
+    <string name="fourthTask">Четвертая задача</string>
+    <string name="fifthTask">Пятая задача</string>
     <string name="otherTask">Следующий этап</string>
     <string name="backListTask">Выбрать задание</string>
-    <string name="backAlphabet">Выбрать букву</string>
     <string name="titleFistTask">Нажми и послушай\n как звучит буква</string>
     <string name="getWordError">Not found word</string>
     <string name="titleSecondTask">Какое слово содержит букву \"%1$s\"\?</string>
     <string name="titleThirdTask">Поставь буквы\n в правильном порядке</string>
-    <string name="mainScreen">Вернуться к списку букв</string>
-    <string name="repeat">Повторить еще раз</string>
 
 </resources>

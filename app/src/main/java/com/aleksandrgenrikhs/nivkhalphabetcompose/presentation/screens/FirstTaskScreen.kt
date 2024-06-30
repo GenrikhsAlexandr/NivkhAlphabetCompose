@@ -13,12 +13,17 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
+import com.aleksandrgenrikhs.nivkhalphabetcompose.R
+import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.CardLetter
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.CardWord
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.Dialog
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.FirstTaskViewModel
 
@@ -91,9 +96,23 @@ fun FirstTaskScreen(
                 getWordError = uiState.getWordError,
             )
             if (uiState.isCompleted && !uiState.isPlaying) {
-                navController.popBackStack(
-                    "${NavigationDestination.TasksScreen.destination}/$letter",
-                    inclusive = false
+                val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task1)
+                Dialog(
+                    navigationBack = {
+                        navController.popBackStack(
+                            NavigationDestination.LettersScreen.destination,
+                            inclusive = false
+                        )
+                    },
+                    navigationNext = {
+                        navController.navigate(
+                            "${NavigationDestination.SecondTaskScreen.destination}/$letter"
+                        )
+                    },
+                    painter = painter,
+                    title = stringResource(id = R.string.supper),
+                    textButtonBack = stringResource(id = R.string.backAlphabet),
+                    textButtonNext = stringResource(id = R.string.nextTask, Task.SECOND.stableId),
                 )
             }
         }

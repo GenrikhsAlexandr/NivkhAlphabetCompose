@@ -59,18 +59,17 @@ class AlphabetRepositoryImpl
         val filterWordsList = filterWords(letterId)
         val allWordsList = getWords().filterNot { it in filterWordsList }
         val correctWord =
-            filterWordsList.filterNot { it.wordId in previousWordsList }
-        val indexCorrectWord = Random.nextInt(correctWord.size)
+            filterWordsList.filterNot { it.wordId in previousWordsList }.shuffled().firstOrNull()
         val indexWord1 = Random.nextInt(allWordsList.size)
         var indexWord2 = Random.nextInt(allWordsList.size)
         while (indexWord2 == indexWord1) {
             indexWord2 = Random.nextInt(allWordsList.size)
         }
         val resultList = mutableListOf<WordModel>(
-            correctWord[indexCorrectWord],
             allWordsList[indexWord1],
             allWordsList[indexWord2]
         )
+        correctWord?.let { resultList.add(it) }
         previousWordsList.addAll(resultList.map { it.wordId })
         return secondTaskMapper.map(resultList.shuffled())
     }

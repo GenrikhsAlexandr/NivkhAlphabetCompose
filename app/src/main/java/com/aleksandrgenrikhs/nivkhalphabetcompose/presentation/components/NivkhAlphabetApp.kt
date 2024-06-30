@@ -30,7 +30,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.FifthTaskScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.FirstTaskScreen
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.FourthTaskScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.LetterScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.SecondTaskScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.TasksScreen
@@ -118,6 +120,30 @@ fun NivkhAlphabetApp(
             ) { backStackEntry ->
                 val currentLetter = backStackEntry.arguments?.getString(LETTER_KEY)
                 ThirdTaskScreen(
+                    letter = checkNotNull(currentLetter),
+                    navController = navController,
+                )
+            }
+            composable(
+                route = "${NavigationDestination.FourthTaskScreen.destination}/{$LETTER_KEY}",
+                arguments = listOf(
+                    navArgument(LETTER_KEY) { type = NavType.StringType },
+                )
+            ) { backStackEntry ->
+                val currentLetter = backStackEntry.arguments?.getString(LETTER_KEY)
+                FourthTaskScreen(
+                    letter = checkNotNull(currentLetter),
+                    navController = navController,
+                )
+            }
+            composable(
+                route = "${NavigationDestination.FifthTaskScreen.destination}/{$LETTER_KEY}",
+                arguments = listOf(
+                    navArgument(LETTER_KEY) { type = NavType.StringType },
+                )
+            ) { backStackEntry ->
+                val currentLetter = backStackEntry.arguments?.getString(LETTER_KEY)
+                FifthTaskScreen(
                     letter = checkNotNull(currentLetter),
                     navController = navController,
                 )

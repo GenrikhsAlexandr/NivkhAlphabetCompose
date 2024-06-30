@@ -77,7 +77,6 @@ class SecondTaskViewModel
 
         }
         if (uiState.value.isCompleted) {
-            interactor.clearPreviousWordsList()
             interactor.taskCompleted(Task.SECOND.stableId, uiState.value.selectedLetter)
         }
     }
@@ -109,5 +108,10 @@ class SecondTaskViewModel
                 e.printStackTrace()
             }
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        interactor.clearPreviousWordsList()
     }
 }

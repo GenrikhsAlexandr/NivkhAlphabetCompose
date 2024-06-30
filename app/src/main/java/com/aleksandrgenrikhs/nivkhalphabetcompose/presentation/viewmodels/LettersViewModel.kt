@@ -30,7 +30,7 @@ class LettersViewModel
     val uiState = _uiState.asStateFlow()
 
     fun isLetterCompleted() {
-        val lettersCompleted = interactor.getLetterCompleted(Task.THIRD.stableId)
+        val lettersCompleted = interactor.getLetterCompleted(Task.FIFTH.stableId)
         if (lettersCompleted != null) {
             _uiState.update { uiState ->
                 uiState.copy(

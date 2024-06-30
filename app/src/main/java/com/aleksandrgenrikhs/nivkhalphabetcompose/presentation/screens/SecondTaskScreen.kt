@@ -13,15 +13,19 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
+import com.aleksandrgenrikhs.nivkhalphabetcompose.R
+import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.ButtonSecondTask
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.Dialog
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.TextSecondTask
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.SecondTaskViewModel
-import kotlinx.coroutines.delay
 
 @Composable
 fun SecondTaskScreen(
@@ -38,6 +42,10 @@ fun SecondTaskScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     if (uiState.words.isNotEmpty()) {
+        println("icon0 = ${uiState.words[0].icon}")
+        println("icon1 = ${uiState.words[1].icon}")
+        println("icon2 = ${uiState.words[1].icon}")
+
         Column(
             modifier = modifier
                 .fillMaxSize()
@@ -59,6 +67,7 @@ fun SecondTaskScreen(
                 isFlipped = uiState.words[0].isFlipped,
                 isClickable = !uiState.isPlaying && !uiState.isAnswerCorrect,
                 isRightAnswer = uiState.words[0].isRightAnswer,
+
             )
             ButtonSecondTask(
                 onClick = {
@@ -83,13 +92,23 @@ fun SecondTaskScreen(
                 isRightAnswer = uiState.words[2].isRightAnswer,
             )
             if (uiState.isCompleted && !uiState.isPlaying) {
-                LaunchedEffect(key1 = Unit, block = {
-                    delay(2000)
-                    navController.popBackStack(
-                        "${NavigationDestination.TasksScreen.destination}/$letter",
-                        inclusive = false
-                    )
-                }
+                val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task2)
+                Dialog(
+                    navigationBack = {
+                        navController.popBackStack(
+                            NavigationDestination.LettersScreen.destination,
+                            inclusive = false
+                        )
+                    },
+                    navigationNext = {
+                        navController.navigate(
+                            "${NavigationDestination.ThirdTaskScreen.destination}/$letter"
+                        )
+                    },
+                    painter = painter,
+                    title = stringResource(id = R.string.supper),
+                    textButtonBack = stringResource(id = R.string.backAlphabet),
+                    textButtonNext = stringResource(id = R.string.nextTask, Task.THIRD.stableId),
                 )
             }
         }

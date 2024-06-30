@@ -19,19 +19,18 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
-import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.ButtonThirdTask
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.Dialog
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.TextThirdTask
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.ThirdTaskViewModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.FifthTaskViewModel
 
 @Composable
-fun ThirdTaskScreen(
+fun FifthTaskScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    viewModel: ThirdTaskViewModel = hiltViewModel(),
+    viewModel: FifthTaskViewModel = hiltViewModel(),
     letter: String,
 ) {
     viewModel.setLetter(letter)
@@ -60,7 +59,7 @@ fun ThirdTaskScreen(
             )
         }
         if (uiState.isCompleted) {
-            val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task3)
+            val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task5)
             Dialog(
                 navigationBack = {
                     navController.popBackStack(
@@ -69,14 +68,15 @@ fun ThirdTaskScreen(
                     )
                 },
                 navigationNext = {
-                    navController.navigate(
-                        "${NavigationDestination.FourthTaskScreen.destination}/$letter"
+                    navController.popBackStack(
+                        "${NavigationDestination.TasksScreen.destination}/$letter",
+                        inclusive = false
                     )
                 },
                 painter = painter,
                 title = stringResource(id = R.string.supper),
                 textButtonBack = stringResource(id = R.string.backAlphabet),
-                textButtonNext = stringResource(id = R.string.nextTask, Task.FOURTH.stableId),
+                textButtonNext = stringResource(id = R.string.repeat),
             )
         }
     }

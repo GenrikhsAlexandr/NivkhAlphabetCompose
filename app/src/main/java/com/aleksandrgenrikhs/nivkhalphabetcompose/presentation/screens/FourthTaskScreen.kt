@@ -25,13 +25,13 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.Button
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.Dialog
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.TextThirdTask
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.ThirdTaskViewModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.FourthTaskViewModel
 
 @Composable
-fun ThirdTaskScreen(
+fun FourthTaskScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    viewModel: ThirdTaskViewModel = hiltViewModel(),
+    viewModel: FourthTaskViewModel = hiltViewModel(),
     letter: String,
 ) {
     viewModel.setLetter(letter)
@@ -60,7 +60,7 @@ fun ThirdTaskScreen(
             )
         }
         if (uiState.isCompleted) {
-            val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task3)
+            val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task4)
             Dialog(
                 navigationBack = {
                     navController.popBackStack(
@@ -70,13 +70,13 @@ fun ThirdTaskScreen(
                 },
                 navigationNext = {
                     navController.navigate(
-                        "${NavigationDestination.FourthTaskScreen.destination}/$letter"
+                        "${NavigationDestination.FifthTaskScreen.destination}/$letter"
                     )
                 },
                 painter = painter,
                 title = stringResource(id = R.string.supper),
                 textButtonBack = stringResource(id = R.string.backAlphabet),
-                textButtonNext = stringResource(id = R.string.nextTask, Task.FOURTH.stableId),
+                textButtonNext = stringResource(id = R.string.nextTask, Task.FIFTH.stableId),
             )
         }
     }

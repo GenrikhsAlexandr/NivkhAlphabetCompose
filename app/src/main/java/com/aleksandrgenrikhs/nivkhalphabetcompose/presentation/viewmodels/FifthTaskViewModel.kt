@@ -1,7 +1,6 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.interator.AlphabetInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.ThirdTaskUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,6 +29,6 @@ class FifthTaskViewModel
             shuffledWord = word.title,
             icon = word.icon
         )
-        interactor.taskCompleted(Task.FIFTH.stableId, uiState.value.selectedLetter)
+        //   interactor.taskCompleted(Task.FIFTH.stableId, uiState.value.selectedLetter)
     }
 }

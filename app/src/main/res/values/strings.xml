@@ -1,36 +1,56 @@
 <resources>
-    <string name="app_name">Нивхский алфавит</string>
-    <string name="chooseLetter">Выберите букву</string>
-    <string name="selectedLetter">Изучаем букву \"%1$s\"</string>
-    <string name="empty" translatable="false" />
-    <string name="language">Язык</string>
-    <string name="progress">Достижения</string>
-    <string name="nextTask">Перейти к игре %1$s</string>
-    <string name="backAlphabet">Вернуться к алфавиту</string>
-    <string name="repeat">Повторить еще раз</string>
 
-    <string name="textEndFirstTask">Молодец!</string>
-    <string name="textEndSecondTask">Так держать!</string>
-    <string name="textEndThirdTask">Супер!</string>
-    <string name="textEndFourthTask">Отлично!</string>
-    <string name="textEndFifthTask">Это успех!\n Ты выполнил все задания с этой буквой! \n Переходи к следующей</string>
+    <!--главный экран-->
+    <string name="app_name">Нивхский алфавит</string>
     <string name="textStartApp">Выбери букву, которую хочешь изучить.</string>
     <string name="letsGo">Вперед к знаниям!</string>
 
-
-    <string name="studied">Вы изучили букву %1$s</string>
+    <!--список заданий-->
     <string name="firstTask">Выучи букву</string>
-    <string name="secondTask">Выбери картинку</string>
-    <string name="thirdTask">Поставь буквы</string>
-    <string name="fourthTask">Четвертая задача</string>
-    <string name="fifthTask">Пятая задача</string>
-    <string name="otherTask">Следующий этап</string>
-    <string name="backListTask">Выбрать задание</string>
-    <string name="titleFistTask">Нажми и послушай\n как звучит буква</string>
-    <string name="getWordError">Not found word</string>
-    <string name="titleSecondTask">Какое слово содержит букву \"%1$s\"\?</string>
-    <string name="titleThirdTask">Поставь буквы\n в правильном порядке</string>
-    <string name="notConnected">Нет подключения к интернету</string>
-    <string name="exitApp">Выйти из игры</string>
+    <string name="secondTask">Найди слово</string>
+    <string name="thirdTask">Составь пары</string>
+    <string name="fourthTask">Напечатай слово</string>
+    <string name="fifthTask">Составь слово</string>
 
+    <!--Первое задание-->
+    <string name="titleFistTask">Нажми и послушай\n как звучит буква</string>
+    <string name="textEndFirstTask">Молодец!</string>
+
+    <!--Второе задание-->
+    <string name="titleSecondTask">В каком слове есть буква \"%1$s\"\?</string>
+    <string name="textEndSecondTask">Так держать!</string>
+
+    <!--Третье задание-->
+    <string name="titleThirdTask">Составь пары</string>
+    <string name="textEndThirdTask">Супер!</string>
+
+    <!--Четвертое задание-->
+    <string name="textEndFourthTask">Отлично!</string>
+    <string name="enter_your_word">Введите слово</string>
+    <string name="wrong_guess">Неверно!</string>
+
+
+    <!--Пятое задание-->
+    <string name="titleFifthTask">Напечатой слово </string>
+    <string name="textEndFifthTask">Это успех!\n Ты выполнил все задания с этой буквой! \n Переходи к следующей</string>
+    <string name="repeat">Повторить еще раз</string>
+
+    <!--Повторение-->
+    <string name="otherTask">Повторение</string>
+    <string name="otherFifthTask">Выбери правельную букву </string>
+    <string name="textEndOtherFifthTask">Гранлиозно! </string>
+    <string name="otherSecondTask">Выбери правельную букву </string>
+    <string name="textEndOtherSecondTask">Потрясающе! </string>
+    <string name="otherThirdTask">Составь пары</string>
+    <string name="textEndOtherThirdTask">Гениально! </string>
+
+    <!--Диплоговое окно-->
+    <string name="nextTask">Перейти к игре %1$s</string>
+    <string name="backAlphabet">Вернуться к алфавиту</string>
+    <string name="backListTask">Выбрать задание</string>
+    <string name="exitApp">Выйти из игры</string>
+    <string name="notConnected">Нет подключения к интернету</string>
+
+    <!--Другое-->
+    <string name="getWordError">Not found word</string>
 </resources>

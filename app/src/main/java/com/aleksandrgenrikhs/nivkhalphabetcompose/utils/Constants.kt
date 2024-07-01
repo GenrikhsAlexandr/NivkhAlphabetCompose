@@ -19,6 +19,7 @@ object Constants {
     const val WORDS_FIRST_TASK = "firsttask/words/words.json"
     const val IMAGE_URL =
         "http://bibl-nogl-dictionary.ru/data/alphabet/"
-    const val LETTER_AUDIO_FIRST_TASK = "firsttask/audio/letters/"
-    const val WORDS_AUDIO_FIRST_TASK = "firsttask/audio/words/"
+    const val LETTER_AUDIO = "firsttask/audio/letters/"
+    const val WORDS_AUDIO = "firsttask/audio/words/"
+    const val ERROR_AUDIO = "firsttask/audio/error"
 }

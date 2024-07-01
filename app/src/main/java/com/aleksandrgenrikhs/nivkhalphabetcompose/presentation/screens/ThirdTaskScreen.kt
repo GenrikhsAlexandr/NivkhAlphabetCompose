@@ -79,7 +79,11 @@ fun ThirdTaskScreen(
                 navigationNext = {
                     navController.navigate(
                         "${NavigationDestination.FourthTaskScreen.destination}/$letter"
-                    )
+                    ) {
+                        popUpTo("${NavigationDestination.ThirdTaskScreen.destination}/$letter") {
+                            inclusive = true
+                        }
+                    }
                 },
                 painter = painter,
                 title = stringResource(id = R.string.textEndThirdTask),

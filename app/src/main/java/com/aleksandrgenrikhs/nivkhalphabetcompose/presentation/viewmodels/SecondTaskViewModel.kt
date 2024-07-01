@@ -5,7 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.interator.AlphabetInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.SecondTaskUIState
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO_FIRST_TASK
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -42,14 +43,11 @@ class SecondTaskViewModel
                     )
                 },
                 isAnswerCorrect = false
-
             )
         }
     }
 
     fun flipCard(wordId: String, letterId: String) {
-        playSound(wordId)
-        isPlaying()
         _uiState.update { uiState ->
             val isRightWord = letterId == uiState.selectedLetter
             val correctAnswersCount = if (isRightWord) {
@@ -61,11 +59,18 @@ class SecondTaskViewModel
 
             val newWordsList = uiState.words.toMutableList().apply {
                 val index = uiState.words.indexOfFirst { it.wordId == wordId }
-                    this[index] = this[index].copy(
-                        isFlipped = !this[index].isFlipped,
-                        isRightAnswer = isRightWord
-                    )
+                this[index] = this[index].copy(
+                    isFlipped = !this[index].isFlipped,
+                    isRightAnswer = isRightWord
+                )
             }
+
+            if (isRightWord) {
+                playSound("${WORDS_AUDIO}$wordId")
+            } else {
+                playSound(ERROR_AUDIO)
+            }
+
             if (isRightWord && !isCompleted) {
                 viewModelScope.launch {
                     delay(2000)
@@ -78,44 +83,21 @@ class SecondTaskViewModel
                 correctAnswersCount = correctAnswersCount,
                 isAnswerCorrect = isRightWord,
             )
-
         }
         if (uiState.value.isCompleted) {
             interactor.taskCompleted(Task.SECOND.stableId, uiState.value.selectedLetter)
         }
     }
 
-    private fun playSound(wordId: String) {
-        interactor.initPlayer("${WORDS_AUDIO_FIRST_TASK}$wordId")
+    private fun playSound(url: String) {
+        interactor.playerDestroy()
+        interactor.initPlayer(url)
         interactor.play()
-    }
-
-    private fun isPlaying() {
-        _uiState.update { uiState ->
-            uiState.copy(
-                isPlaying = true
-            )
-        }
-        viewModelScope.launch {
-            try {
-                interactor.isPlaying().collect {
-                    _uiState.update { uiState ->
-                        uiState.copy(
-                            isPlaying = it
-                        )
-                    }
-                    if (!uiState.value.isPlaying) {
-                        interactor.playerDestroy()
-                    }
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
     }
 
     override fun onCleared() {
         super.onCleared()
         interactor.clearPreviousWordsList()
+        interactor.playerDestroy()
     }
 }

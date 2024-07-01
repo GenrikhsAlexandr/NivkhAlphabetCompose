@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.interator.AlphabetInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.FirstTaskUIState
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.LETTER_AUDIO_FIRST_TASK
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO_FIRST_TASK
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.LETTER_AUDIO
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -175,12 +175,12 @@ class FirstTaskViewModel
     private fun playSound(element: String) {
         when {
             element == uiState.value.selectedLetter -> {
-                interactor.initPlayer("$LETTER_AUDIO_FIRST_TASK${element}")
+                interactor.initPlayer("$LETTER_AUDIO${element}")
                 interactor.play()
             }
 
             else -> {
-                interactor.initPlayer("$WORDS_AUDIO_FIRST_TASK$element")
+                interactor.initPlayer("$WORDS_AUDIO$element")
                 interactor.play()
             }
         }

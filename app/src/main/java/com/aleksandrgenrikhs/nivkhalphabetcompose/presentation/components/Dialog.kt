@@ -48,7 +48,7 @@ fun Dialog(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(400.dp)
+                .height(450.dp)
                 .padding(16.dp),
             shape = shapes.medium,
         ) {

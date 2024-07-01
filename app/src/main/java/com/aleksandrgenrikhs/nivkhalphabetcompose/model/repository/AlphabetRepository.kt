@@ -1,6 +1,7 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.model.repository
 
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.FirstTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.model.FourthTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.SecondTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.ThirdTaskModel
 import kotlinx.coroutines.flow.Flow
@@ -10,6 +11,8 @@ interface AlphabetRepository {
     suspend fun getWordsForFirstTask(letterId: String): List<FirstTaskModel>
 
     suspend fun getWordsForSecondTask(letterId: String): List<SecondTaskModel>
+
+    suspend fun getWordsForFourthTask(letterId: String): FourthTaskModel
 
     fun clearPreviousWordsList()
 

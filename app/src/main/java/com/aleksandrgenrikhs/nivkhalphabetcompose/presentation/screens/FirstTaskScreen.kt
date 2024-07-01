@@ -115,10 +115,9 @@ fun FirstTaskScreen(
                         navController.navigate(
                             "${NavigationDestination.SecondTaskScreen.destination}/$letter"
                         ) {
-                            popUpTo(NavigationDestination.TasksScreen.destination) {
+                            popUpTo("${NavigationDestination.FirstTaskScreen.destination}/$letter") {
                                 inclusive = true
                             }
-                            launchSingleTop = true
                         }
                     },
                     painter = painter,

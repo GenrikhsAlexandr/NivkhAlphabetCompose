@@ -2,6 +2,7 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.model.interator
 
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Letters
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.FirstTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.model.FourthTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.SecondTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.ThirdTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.repository.AlphabetRepository
@@ -20,6 +21,9 @@ class AlphabetInteractor
 
     suspend fun getWordsForSecondTask(letterId: String): List<SecondTaskModel> =
         alphabetRepository.getWordsForSecondTask(letterId)
+
+    suspend fun getWordsForFourthTask(letterId: String): FourthTaskModel =
+        alphabetRepository.getWordsForFourthTask(letterId)
 
     fun clearPreviousWordsList() = alphabetRepository.clearPreviousWordsList()
 
@@ -44,5 +48,4 @@ class AlphabetInteractor
         sharedPreferencesRepository.getLetterCompleted(letters)
 
     fun isNetWorkConnected(): Boolean = alphabetRepository.isNetWorkConnected()
-
 }

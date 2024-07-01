@@ -6,6 +6,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.FirstTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.SecondTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.WordMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.FirstTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.model.FourthTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.SecondTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.ThirdTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.WordModel
@@ -67,13 +68,25 @@ class AlphabetRepositoryImpl
         while (indexWord2 == indexWord1) {
             indexWord2 = Random.nextInt(allWordsList.size)
         }
-        val resultList = mutableListOf<WordModel>(
+        val resultList = mutableListOf(
             allWordsList[indexWord1],
             allWordsList[indexWord2]
         )
         correctWord?.let { resultList.add(it) }
         previousWordsList.addAll(resultList.map { it.wordId })
         return secondTaskMapper.map(resultList.shuffled())
+    }
+
+    override suspend fun getWordsForFourthTask(letterId: String): FourthTaskModel {
+        val filterWordsList = filterWords(letterId)
+        val currentWord =
+            filterWordsList.filterNot { it.wordId in previousWordsList }.shuffled().firstOrNull()
+        currentWord?.let { previousWordsList.add(it.wordId) }
+        return FourthTaskModel(
+            title = currentWord?.title ?: "",
+            icon = currentWord?.icon ?: "",
+            wordId = currentWord?.wordId ?: ""
+        )
     }
 
     override fun clearPreviousWordsList() {

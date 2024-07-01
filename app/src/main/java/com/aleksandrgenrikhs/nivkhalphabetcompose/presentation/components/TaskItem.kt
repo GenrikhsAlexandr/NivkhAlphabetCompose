@@ -28,6 +28,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorCardLetterItem
@@ -78,8 +79,9 @@ fun TaskItem(
                         .align(Alignment.CenterVertically)
                 )
                 Text(
+                    fontSize = 32.sp,
                     text = stringResource(task),
-                    style = MaterialTheme.typography.bodyLarge,
+                    style = MaterialTheme.typography.displayMedium,
                     modifier = modifier
                         .align(Alignment.CenterVertically)
                 )

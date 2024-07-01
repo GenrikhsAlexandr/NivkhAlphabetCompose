@@ -1,10 +1,8 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -16,7 +14,6 @@ import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
@@ -32,7 +29,6 @@ fun AppBar(
     navController: NavHostController?,
     letter: String?
 ) {
-    val context = LocalContext.current
     CenterAlignedTopAppBar(
         title = {
             when (currentScreen) {
@@ -70,6 +66,13 @@ fun AppBar(
                         style = MaterialTheme.typography.bodyLarge
                     )
                 }
+
+                NavigationDestination.FourthTaskScreen.destination -> {
+                    Text(
+                        text = stringResource(id = R.string.fourthTask),
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                }
             }
         },
         navigationIcon = {
@@ -77,26 +80,11 @@ fun AppBar(
                 && currentScreen != NavigationDestination.StartScreen.destination
             ) {
                 IconButton(onClick = {
-                    navController?.popBackStack(
-                        NavigationDestination.LettersScreen.destination,
-                        inclusive = false
-                    )
+                    navController?.popBackStack()
                 }) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         tint = colorText,
-                        contentDescription = "Localized description"
-                    )
-                }
-            }
-        },
-        actions = {
-            if (currentScreen == NavigationDestination.LettersScreen.destination) {
-                IconButton(onClick = {
-                    Toast.makeText(context, "Ничего нет", Toast.LENGTH_LONG).show()
-                }) {
-                    Icon(
-                        imageVector = Icons.Filled.Star,
                         contentDescription = "Localized description"
                     )
                 }

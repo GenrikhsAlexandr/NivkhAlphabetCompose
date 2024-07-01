@@ -13,7 +13,11 @@ import javax.inject.Inject
 class FifthTaskViewModel
 @Inject constructor(val interactor: AlphabetInteractor) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<ThirdTaskUIState> = MutableStateFlow(ThirdTaskUIState())
+    private val _uiState: MutableStateFlow<ThirdTaskUIState> = MutableStateFlow(
+        ThirdTaskUIState(
+            isNetworkConnected = interactor.isNetWorkConnected()
+        )
+    )
     val uiState = _uiState.asStateFlow()
 
     fun setLetter(letter: String) {

@@ -9,4 +9,5 @@ data class SecondTaskUIState(
     val correctAnswersCount: Int = 0,
     val isAnswerCorrect: Boolean = false,
     val isCompleted: Boolean = false,
+    val isNetworkConnected: Boolean
 )

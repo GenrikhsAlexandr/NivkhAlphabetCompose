@@ -42,4 +42,7 @@ class AlphabetInteractor
 
     fun getLetterCompleted(letters: Int): List<Letters>? =
         sharedPreferencesRepository.getLetterCompleted(letters)
+
+    fun isNetWorkConnected(): Boolean = alphabetRepository.isNetWorkConnected()
+
 }

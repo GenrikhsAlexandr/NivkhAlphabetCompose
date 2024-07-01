@@ -5,5 +5,6 @@ data class ThirdTaskUIState(
     val shuffledWord: List<Char> = emptyList(),
     val userInput: List<Char> = emptyList(),
     val icon: String? = "",
-    val isCompleted: Boolean = true
+    val isCompleted: Boolean = true,
+    val isNetworkConnected: Boolean
 )

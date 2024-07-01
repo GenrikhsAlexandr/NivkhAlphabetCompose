@@ -23,6 +23,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.ButtonSecondTask
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.Dialog
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.NotConnected
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.TextSecondTask
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.SecondTaskViewModel
@@ -40,6 +41,12 @@ fun SecondTaskScreen(
     })
 
     val uiState by viewModel.uiState.collectAsState()
+
+    if (!uiState.isNetworkConnected) {
+        NotConnected(
+            navController = navController
+        )
+    }
 
     if (uiState.words.isNotEmpty()) {
         println("icon0 = ${uiState.words[0].icon}")
@@ -97,18 +104,22 @@ fun SecondTaskScreen(
                     navigationBack = {
                         navController.popBackStack(
                             NavigationDestination.LettersScreen.destination,
-                            inclusive = false
+                            inclusive = true
                         )
                     },
                     navigationNext = {
                         navController.navigate(
                             "${NavigationDestination.ThirdTaskScreen.destination}/$letter"
-                        )
+                        ) {
+                            launchSingleTop = true
+                        }
                     },
                     painter = painter,
-                    title = stringResource(id = R.string.supper),
+                    title = stringResource(id = R.string.textEndSecondTask),
                     textButtonBack = stringResource(id = R.string.backAlphabet),
                     textButtonNext = stringResource(id = R.string.nextTask, Task.THIRD.stableId),
+                    isVisibleSecondButton = true,
+                    onDismissRequest = {}
                 )
             }
         }

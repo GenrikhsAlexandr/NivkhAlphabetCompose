@@ -5,10 +5,17 @@
     <string name="empty" translatable="false" />
     <string name="language">Язык</string>
     <string name="progress">Достижения</string>
-    <string name="nextTask">Перейти к %1$s игре</string>
+    <string name="nextTask">Перейти к игре %1$s</string>
     <string name="backAlphabet">Вернуться к алфавиту</string>
     <string name="repeat">Повторить еще раз</string>
-    <string name="supper">Молодец!</string>
+
+    <string name="textEndFirstTask">Молодец!</string>
+    <string name="textEndSecondTask">Так держать!</string>
+    <string name="textEndThirdTask">Супер!</string>
+    <string name="textEndFourthTask">Отлично!</string>
+    <string name="textEndFifthTask">Это успех!\n Ты выполнил все задания с этой буквой! \n Переходи к следующей</string>
+    <string name="textStartApp">Выбери букву, которую хочешь изучить.</string>
+    <string name="letsGo">Вперед к знаниям!</string>
 
 
     <string name="studied">Вы изучили букву %1$s</string>
@@ -23,5 +30,7 @@
     <string name="getWordError">Not found word</string>
     <string name="titleSecondTask">Какое слово содержит букву \"%1$s\"\?</string>
     <string name="titleThirdTask">Поставь буквы\n в правильном порядке</string>
+    <string name="notConnected">Нет подключения к интернету</string>
+    <string name="exitApp">Выйти из игры</string>
 
 </resources>

@@ -23,6 +23,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.ButtonThirdTask
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.Dialog
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.NotConnected
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.TextThirdTask
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.FourthTaskViewModel
@@ -40,6 +41,13 @@ fun FourthTaskScreen(
     })
 
     val uiState by viewModel.uiState.collectAsState()
+
+    if (!uiState.isNetworkConnected) {
+        NotConnected(
+            navController = navController
+        )
+    }
+
     if (uiState.shuffledWord.isNotEmpty()) {
         Column(
             modifier = modifier
@@ -74,9 +82,11 @@ fun FourthTaskScreen(
                     )
                 },
                 painter = painter,
-                title = stringResource(id = R.string.supper),
+                title = stringResource(id = R.string.textEndFourthTask),
                 textButtonBack = stringResource(id = R.string.backAlphabet),
                 textButtonNext = stringResource(id = R.string.nextTask, Task.FIFTH.stableId),
+                isVisibleSecondButton = true,
+                onDismissRequest = {}
             )
         }
     }

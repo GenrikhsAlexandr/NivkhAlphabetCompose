@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.NotConnected
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.TaskItem
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.TasksViewModel
@@ -23,21 +24,29 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.TasksV
 @Composable
 fun TasksScreen(
     modifier: Modifier,
-    navController: NavController?,
+    navController: NavController,
     letter: String,
     tasksViewModel: TasksViewModel = hiltViewModel()
 ) {
     val uiState by tasksViewModel.uiState.collectAsState()
     var previousLetter by remember { mutableStateOf("") }
+
     if (previousLetter != letter) {
         previousLetter = letter
         tasksViewModel.isTaskCompleted(letter)
     }
+
+    if (!uiState.isNetworkConnected) {
+        NotConnected(
+            navController = navController
+        )
+    }
+
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
             .background(colorPrimary),
-        contentPadding = PaddingValues(top = 40.dp),
+        contentPadding = PaddingValues(8.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
 
     ) {
@@ -49,7 +58,7 @@ fun TasksScreen(
                 iconResId = it.task.icon,
                 onTaskClick = {
                     if (it.isNextTaskVisible) {
-                        navController?.navigate("${it.task.route}/$letter")
+                        navController.navigate("${it.task.route}/$letter")
                     }
                 },
                 isClickable = it.isNextTaskVisible

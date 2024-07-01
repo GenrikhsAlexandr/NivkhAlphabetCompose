@@ -4,4 +4,5 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.model.TaskModel
 
 data class TaskUIState(
     val task: List<TaskModel>,
+    val isNetworkConnected: Boolean
 )

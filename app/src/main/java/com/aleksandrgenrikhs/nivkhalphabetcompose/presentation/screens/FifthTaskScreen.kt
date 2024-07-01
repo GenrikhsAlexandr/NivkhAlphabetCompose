@@ -22,6 +22,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.ButtonThirdTask
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.Dialog
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.NotConnected
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.TextThirdTask
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.FifthTaskViewModel
@@ -39,6 +40,13 @@ fun FifthTaskScreen(
     })
 
     val uiState by viewModel.uiState.collectAsState()
+
+    if (!uiState.isNetworkConnected) {
+        NotConnected(
+            navController = navController
+        )
+    }
+
     if (uiState.shuffledWord.isNotEmpty()) {
         Column(
             modifier = modifier
@@ -74,9 +82,11 @@ fun FifthTaskScreen(
                     )
                 },
                 painter = painter,
-                title = stringResource(id = R.string.supper),
+                title = stringResource(id = R.string.textEndFifthTask),
                 textButtonBack = stringResource(id = R.string.backAlphabet),
                 textButtonNext = stringResource(id = R.string.repeat),
+                isVisibleSecondButton = true,
+                onDismissRequest = {}
             )
         }
     }

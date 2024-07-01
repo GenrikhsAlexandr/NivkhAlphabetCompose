@@ -2,11 +2,11 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aleksandrgenrikhs.nivkhalphabet.utils.UrlConstants.LETTER_AUDIO_FIRST_TASK
-import com.aleksandrgenrikhs.nivkhalphabet.utils.UrlConstants.WORDS_AUDIO_FIRST_TASK
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.interator.AlphabetInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.FirstTaskUIState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.LETTER_AUDIO_FIRST_TASK
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO_FIRST_TASK
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,11 +20,17 @@ class FirstTaskViewModel
     val interactor: AlphabetInteractor,
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<FirstTaskUIState> = MutableStateFlow(FirstTaskUIState())
+    private val _uiState: MutableStateFlow<FirstTaskUIState> = MutableStateFlow(
+        FirstTaskUIState(
+            isNetworkConnected = interactor.isNetWorkConnected()
+        )
+    )
     val uiState = _uiState.asStateFlow()
 
     fun setLetter(letter: String) {
-        _uiState.value = _uiState.value.copy(selectedLetter = letter)
+        _uiState.value = _uiState.value.copy(
+            selectedLetter = letter,
+        )
     }
 
     suspend fun getWords(letterId: String) {
@@ -169,7 +175,7 @@ class FirstTaskViewModel
     private fun playSound(element: String) {
         when {
             element == uiState.value.selectedLetter -> {
-                interactor.initPlayer("$LETTER_AUDIO_FIRST_TASK${element.lowercase()}")
+                interactor.initPlayer("$LETTER_AUDIO_FIRST_TASK${element}")
                 interactor.play()
             }
 

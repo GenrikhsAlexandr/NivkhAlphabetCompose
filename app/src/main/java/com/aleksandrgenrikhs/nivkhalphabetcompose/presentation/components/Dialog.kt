@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -22,6 +24,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import coil.compose.AsyncImagePainter
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorOnPrimary
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.shapes
 
@@ -33,23 +37,25 @@ fun Dialog(
     navigationBack: () -> Unit,
     navigationNext: () -> Unit,
     painter: AsyncImagePainter,
+    isVisibleSecondButton: Boolean,
+    onDismissRequest: () -> Unit
 ) {
     Dialog(
         onDismissRequest = {
-            navigationBack()
+            onDismissRequest()
         }
     ) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(375.dp)
+                .height(400.dp)
                 .padding(16.dp),
             shape = shapes.medium,
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(colorProgressBar),
+                    .background(colorProgressBar)
             ) {
                 Column(
                     modifier = Modifier
@@ -68,39 +74,63 @@ fun Dialog(
                         text = title,
                         style = MaterialTheme.typography.titleLarge,
                         modifier = Modifier.padding(16.dp),
+                        textAlign = TextAlign.Center
                     )
                     Row(
                         modifier = Modifier
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center,
                     ) {
-                        TextButton(
-                            onClick = {
-                                navigationBack()
-                            },
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .weight(1f)
-                        ) {
-                            Text(
-                                text = textButtonBack,
-                                style = MaterialTheme.typography.labelSmall,
-                                textAlign = TextAlign.Center
-                            )
-                        }
-                        TextButton(
-                            onClick = {
-                                navigationNext()
-                            },
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .weight(1f)
-                        ) {
-                            Text(
-                                text = textButtonNext,
-                                style = MaterialTheme.typography.labelSmall,
-                                textAlign = TextAlign.Center
-                            )
+                        if (isVisibleSecondButton) {
+                            TextButton(
+                                onClick = {
+                                    navigationBack()
+                                },
+                                modifier = Modifier
+                                    .padding(8.dp)
+                                    .weight(1f)
+                            ) {
+                                Text(
+                                    text = textButtonBack,
+                                    style = MaterialTheme.typography.labelSmall,
+                                    textAlign = TextAlign.Center
+                                )
+                            }
+                            TextButton(
+                                onClick = {
+                                    navigationNext()
+                                },
+                                modifier = Modifier
+                                    .padding(8.dp)
+                                    .weight(1f)
+                            ) {
+                                Text(
+                                    text = textButtonNext,
+                                    style = MaterialTheme.typography.labelSmall,
+                                    textAlign = TextAlign.Center
+                                )
+                            }
+                        } else {
+                            Button(
+                                colors = ButtonColors(
+                                    containerColor = colorPrimary,
+                                    contentColor = colorOnPrimary,
+                                    disabledContainerColor = colorPrimary,
+                                    disabledContentColor = colorOnPrimary
+                                ),
+                                onClick = {
+                                    navigationNext()
+                                },
+                                modifier = Modifier
+                                    .padding(8.dp)
+                                    .fillMaxWidth()
+                            ) {
+                                Text(
+                                    text = textButtonNext,
+                                    style = MaterialTheme.typography.labelSmall,
+                                    textAlign = TextAlign.Center
+                                )
+                            }
                         }
                     }
                 }

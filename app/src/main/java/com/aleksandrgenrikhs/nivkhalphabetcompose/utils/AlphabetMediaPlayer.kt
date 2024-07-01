@@ -1,6 +1,6 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.utils
 
-import android.app.Application
+import android.content.Context
 import android.media.MediaPlayer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.flowOn
 object AlphabetMediaPlayer {
 
     private var mediaPlayer: MediaPlayer? = null
-    fun initPlayer(application: Application, url: String): MediaPlayer? {
+    fun initPlayer(application: Context, url: String): MediaPlayer? {
         return try {
             val afd = application.assets.openFd("$url.mp3")
             if (mediaPlayer == null) {

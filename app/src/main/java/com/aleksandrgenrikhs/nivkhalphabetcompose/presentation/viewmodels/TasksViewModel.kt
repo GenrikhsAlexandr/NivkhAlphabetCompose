@@ -24,7 +24,8 @@ class TasksViewModel
                 isTaskCompleted = false,
                 isNextTaskVisible = false
             )
-        }
+        },
+        isNetworkConnected = interactor.isNetWorkConnected()
     ))
     val uiState = _uiState.asStateFlow()
 

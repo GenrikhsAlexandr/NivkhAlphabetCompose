@@ -1,7 +1,6 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.data.repository
 
-import android.app.Application
-import com.aleksandrgenrikhs.nivkhalphabet.utils.UrlConstants.WORDS_FIRST_TASK
+import android.content.Context
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.dto.SubjectDto
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.FirstTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.SecondTaskMapper
@@ -12,6 +11,8 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.model.ThirdTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.WordModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.repository.AlphabetRepository
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.AlphabetMediaPlayer
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_FIRST_TASK
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.NetworkConnected
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -24,20 +25,21 @@ import kotlin.random.Random
 
 class AlphabetRepositoryImpl
 @Inject constructor(
-    private val application: Application,
+    private val context: Context,
     private val wordMapper: WordMapper,
     private val firstTaskMapper: FirstTaskMapper,
     private val secondTaskMapper: SecondTaskMapper,
-    private val mediaPlayer: AlphabetMediaPlayer
+    private val mediaPlayer: AlphabetMediaPlayer,
+    private val networkConnected: NetworkConnected
 ) : AlphabetRepository {
 
     private val json = Json { ignoreUnknownKeys = true }
     private val previousWordsList = mutableSetOf<String>()
 
-    override suspend fun getWords(): List<WordModel> {
+    private suspend fun getWords(): List<WordModel> {
         return withContext(Dispatchers.IO) {
             try {
-                val inputStream = application.assets.open(WORDS_FIRST_TASK)
+                val inputStream = context.assets.open(WORDS_FIRST_TASK)
                 val reader = BufferedReader(InputStreamReader(inputStream))
                 val jsonString = reader.use { it.readText() }
                 val response = json.decodeFromString<List<SubjectDto>>(jsonString)
@@ -90,7 +92,7 @@ class AlphabetRepositoryImpl
     }
 
     override fun initPlayer(url: String) {
-        mediaPlayer.initPlayer(application, url)
+        mediaPlayer.initPlayer(context, url)
     }
 
     override fun play() {
@@ -101,5 +103,9 @@ class AlphabetRepositoryImpl
 
     override fun playerDestroy() {
         mediaPlayer.destroyPlayer()
+    }
+
+    override fun isNetWorkConnected(): Boolean {
+        return networkConnected.isNetworkConnected(context)
     }
 }

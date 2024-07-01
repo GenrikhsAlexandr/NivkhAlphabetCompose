@@ -2,10 +2,10 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aleksandrgenrikhs.nivkhalphabet.utils.UrlConstants
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.interator.AlphabetInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.SecondTaskUIState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO_FIRST_TASK
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,7 +21,11 @@ class SecondTaskViewModel
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<SecondTaskUIState> =
-        MutableStateFlow(SecondTaskUIState())
+        MutableStateFlow(
+            SecondTaskUIState(
+                isNetworkConnected = interactor.isNetWorkConnected()
+            )
+        )
     val uiState = _uiState.asStateFlow()
 
     fun setLetter(letter: String) {
@@ -82,7 +86,7 @@ class SecondTaskViewModel
     }
 
     private fun playSound(wordId: String) {
-        interactor.initPlayer("${UrlConstants.WORDS_AUDIO_FIRST_TASK}$wordId")
+        interactor.initPlayer("${WORDS_AUDIO_FIRST_TASK}$wordId")
         interactor.play()
     }
 

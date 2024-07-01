@@ -24,6 +24,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestinatio
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.CardLetter
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.CardWord
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.Dialog
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.NotConnected
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.FirstTaskViewModel
 
@@ -40,6 +41,12 @@ fun FirstTaskScreen(
     })
 
     val uiState by viewModel.uiState.collectAsState()
+
+    if (!uiState.isNetworkConnected) {
+        NotConnected(
+            navController = navController
+        )
+    }
 
     Column(
         modifier = modifier
@@ -107,12 +114,22 @@ fun FirstTaskScreen(
                     navigationNext = {
                         navController.navigate(
                             "${NavigationDestination.SecondTaskScreen.destination}/$letter"
-                        )
+                        ) {
+                            popUpTo(NavigationDestination.TasksScreen.destination) {
+                                inclusive = true
+                            }
+                            launchSingleTop = true
+                        }
                     },
                     painter = painter,
-                    title = stringResource(id = R.string.supper),
+                    title = stringResource(id = R.string.textEndFirstTask),
                     textButtonBack = stringResource(id = R.string.backAlphabet),
-                    textButtonNext = stringResource(id = R.string.nextTask, Task.SECOND.stableId),
+                    textButtonNext = stringResource(
+                        id = R.string.nextTask,
+                        Task.SECOND.stableId
+                    ),
+                    isVisibleSecondButton = true,
+                    onDismissRequest = {}
                 )
             }
         }

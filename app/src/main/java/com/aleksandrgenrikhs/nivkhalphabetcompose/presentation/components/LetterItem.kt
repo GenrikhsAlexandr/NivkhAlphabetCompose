@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Letters
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorCardLetterItem
@@ -27,8 +28,7 @@ fun LetterItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     isClickable: Boolean,
-    ) {
-
+) {
     val backgroundColor = if (isClickable) colorProgressBar else colorCardLetterItem
 
     ElevatedCard(
@@ -50,10 +50,11 @@ fun LetterItem(
         {
             Text(
                 text = letter,
-                style = MaterialTheme.typography.displayLarge
+                style = MaterialTheme.typography.displayLarge,
+                fontSize = if (letter == Letters.Shch.title) 50.sp else 55.sp,
             )
-            }
         }
+    }
 }
 
 @Preview(widthDp = 100, heightDp = 100)

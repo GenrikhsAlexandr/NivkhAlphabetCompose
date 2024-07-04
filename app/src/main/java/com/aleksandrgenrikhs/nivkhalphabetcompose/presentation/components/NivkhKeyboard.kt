@@ -180,16 +180,16 @@ fun NivkhKeyboard(
                         onClick = onValueChange,
                         modifier = Modifier.weight(1f)
                     )
-                    LetterButton(
-                        letter = "ӄʼ",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
 
                 }
                 Row(
                     modifier = Modifier.fillMaxWidth()
                 ) {
+                    LetterButton(
+                        letter = "ӄʼ",
+                        onClick = onValueChange,
+                        modifier = Modifier.weight(1f)
+                    )
                     LetterButton(
                         letter = "л",
                         onClick = onValueChange,
@@ -210,6 +210,11 @@ fun NivkhKeyboard(
                         onClick = onValueChange,
                         modifier = Modifier.weight(1f)
                     )
+
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     LetterButton(
                         letter = "о",
                         onClick = onValueChange,
@@ -220,10 +225,6 @@ fun NivkhKeyboard(
                         onClick = onValueChange,
                         modifier = Modifier.weight(1f)
                     )
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
                     LetterButton(
                         letter = "пʼ",
                         onClick = onValueChange,
@@ -239,6 +240,10 @@ fun NivkhKeyboard(
                         onClick = onValueChange,
                         modifier = Modifier.weight(1f)
                     )
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     LetterButton(
                         letter = "с",
                         onClick = onValueChange,
@@ -254,10 +259,6 @@ fun NivkhKeyboard(
                         onClick = onValueChange,
                         modifier = Modifier.weight(1f)
                     )
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
                     LetterButton(
                         letter = "у",
                         onClick = onValueChange,
@@ -268,6 +269,10 @@ fun NivkhKeyboard(
                         onClick = onValueChange,
                         modifier = Modifier.weight(1f)
                     )
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     LetterButton(
                         letter = "ф",
                         onClick = onValueChange,
@@ -288,15 +293,15 @@ fun NivkhKeyboard(
                         onClick = onValueChange,
                         modifier = Modifier.weight(1f)
                     )
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
                     LetterButton(
                         letter = "ц",
                         onClick = onValueChange,
                         modifier = Modifier.weight(1f)
                     )
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     LetterButton(
                         letter = "ч",
                         onClick = onValueChange,
@@ -322,16 +327,17 @@ fun NivkhKeyboard(
                         onClick = onValueChange,
                         modifier = Modifier.weight(1f)
                     )
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    DeleteButton(onDelete = onDelete, modifier = Modifier.weight(1f))
                     LetterButton(
                         letter = "ь",
                         onClick = onValueChange,
                         modifier = Modifier.weight(1f)
                     )
+
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    DeleteButton(onDelete = onDelete, modifier = Modifier.weight(1f))
                     LetterButton(
                         letter = "э",
                         onClick = onValueChange,
@@ -353,6 +359,7 @@ fun NivkhKeyboard(
                         word = input,
                         onClickable = onClickable
                     )
+
                 }
             }
         }

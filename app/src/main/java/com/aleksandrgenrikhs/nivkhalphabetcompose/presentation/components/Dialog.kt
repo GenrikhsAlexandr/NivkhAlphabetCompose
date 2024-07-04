@@ -6,10 +6,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Card
@@ -48,18 +49,18 @@ fun Dialog(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(450.dp)
+                .wrapContentHeight()
                 .padding(16.dp),
             shape = shapes.medium,
         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .wrapContentSize()
                     .background(colorProgressBar)
             ) {
                 Column(
                     modifier = Modifier
-                        .fillMaxSize(),
+                        .wrapContentSize(),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {

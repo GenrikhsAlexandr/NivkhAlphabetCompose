@@ -50,8 +50,7 @@ fun FourthTaskLayout(
                 .size(180.dp)
                 .background(colorCardLetterItem)
                 .clickable(
-                    onClick = onClick,
-                    enabled = onClickable
+                    onClick = onClick
                 )
                 .border(
                     width = 2.dp,

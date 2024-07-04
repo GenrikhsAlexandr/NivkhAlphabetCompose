@@ -66,6 +66,7 @@ fun FourthTaskScreen(
             FourthTaskLayout(
                 onClick = { viewModel.playSound("${WORDS_AUDIO}${uiState.wordId}") },
                 icon = uiState.icon,
+                onClickable = uiState.isClickable,
                 onDone = { viewModel.checkUserGuess(uiState.userGuess) },
                 isGuessWrong = uiState.isGuessWrong,
                 onUserGuessChanged = { viewModel.updateUserGuess(it.appendChar(uiState.userGuess)) },

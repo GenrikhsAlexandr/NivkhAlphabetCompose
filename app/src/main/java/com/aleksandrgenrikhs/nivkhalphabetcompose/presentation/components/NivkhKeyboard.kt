@@ -37,7 +37,8 @@ fun NivkhKeyboard(
     onValueChange: (letter: String) -> Unit,
     onDelete: () -> Unit,
     onDone: (word: String) -> Unit,
-    modifier: Modifier
+    modifier: Modifier,
+    onClickable: Boolean
 ) {
     Column(
         modifier = modifier
@@ -346,7 +347,12 @@ fun NivkhKeyboard(
                         onClick = onValueChange,
                         modifier = Modifier.weight(1f)
                     )
-                    DoneButton(onDone = onDone, modifier = Modifier.weight(1f), word = input)
+                    DoneButton(
+                        onDone = onDone,
+                        modifier = Modifier.weight(1f),
+                        word = input,
+                        onClickable = onClickable
+                    )
                 }
             }
         }
@@ -406,12 +412,14 @@ private fun DeleteButton(
 private fun DoneButton(
     word: String,
     onDone: (word: String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClickable: Boolean
 ) {
     OutlinedButton(
         onClick = {
             onDone(word)
         },
+        enabled = onClickable,
         modifier = modifier
             .wrapContentSize(),
         border = ButtonDefaults.outlinedButtonBorder.copy(

@@ -43,7 +43,8 @@ class FourthTaskViewModel
         _uiState.update { uiState ->
             uiState.copy(
                 userGuess = guessedWord,
-                isGuessWrong = false
+                isGuessWrong = false,
+                isClickable = true
             )
         }
     }
@@ -85,6 +86,7 @@ class FourthTaskViewModel
                 isCompleted = isCompleted,
                 correctAnswersCount = correctAnswersCount,
                 isGuessWrong = !isAnswerCorrect,
+                isClickable = false
             )
         }
         if (uiState.value.isCompleted) {

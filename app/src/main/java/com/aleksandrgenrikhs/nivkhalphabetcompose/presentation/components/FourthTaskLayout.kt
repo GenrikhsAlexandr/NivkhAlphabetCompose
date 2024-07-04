@@ -36,6 +36,7 @@ fun FourthTaskLayout(
     onUserGuessChanged: (String) -> Unit,
     isGuessWrong: Boolean,
     userGuess: String,
+    onClickable: Boolean
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -49,7 +50,8 @@ fun FourthTaskLayout(
                 .size(180.dp)
                 .background(colorCardLetterItem)
                 .clickable(
-                    onClick = onClick
+                    onClick = onClick,
+                    enabled = onClickable
                 )
                 .border(
                     width = 2.dp,
@@ -83,6 +85,7 @@ fun FourthTaskLayout(
         onValueChange = onUserGuessChanged,
         onDelete = onDelete,
         onDone = onDone,
-        modifier = Modifier
+        modifier = Modifier,
+        onClickable = onClickable
     )
 }

@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.CircularProgressIndicator
@@ -17,12 +19,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import coil.request.ImageRequest
 import coil.size.Size
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorCardLetterItem
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 
@@ -39,11 +43,12 @@ fun FourthTaskLayout(
     onClickable: Boolean
 ) {
     Column(
-        verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = modifier
             .fillMaxSize()
-            .background(colorPrimary),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .background(colorPrimary)
+            .verticalScroll(rememberScrollState()),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Box(
             modifier = modifier
@@ -77,14 +82,31 @@ fun FourthTaskLayout(
                 }
             }
         }
+        NivkhKeyboard(
+            input = userGuess,
+            isError = isGuessWrong,
+            onValueChange = onUserGuessChanged,
+            onDelete = onDelete,
+            onDone = onDone,
+            modifier = Modifier,
+            onClickable = onClickable
+        )
     }
-    NivkhKeyboard(
-        input = userGuess,
-        isError = isGuessWrong,
-        onValueChange = onUserGuessChanged,
-        onDelete = onDelete,
-        onDone = onDone,
-        modifier = Modifier,
-        onClickable = onClickable
-    )
+}
+
+@Preview(widthDp = 410, heightDp = 610)
+@Composable
+private fun FourthTaskContentPreview() {
+    NivkhAlphabetComposeTheme {
+        FourthTaskLayout(
+            onClick = { },
+            onDelete = {},
+            onDone = {},
+            icon = null,
+            onUserGuessChanged = {},
+            isGuessWrong = true,
+            userGuess = "Aldjf",
+            onClickable = true
+        )
+    }
 }

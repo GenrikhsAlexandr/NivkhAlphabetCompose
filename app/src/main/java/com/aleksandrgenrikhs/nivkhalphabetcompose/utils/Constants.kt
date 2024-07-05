@@ -16,7 +16,7 @@ object Constants {
     const val TASK_KEY = "task"
 
     //URI константы
-    const val WORDS_FIRST_TASK = "firsttask/words/words.json"
+    const val WORDS_URL = "firsttask/words/words.json"
     const val IMAGE_URL =
         "http://bibl-nogl-dictionary.ru/data/alphabet/"
     const val LETTER_AUDIO = "firsttask/audio/letters/"

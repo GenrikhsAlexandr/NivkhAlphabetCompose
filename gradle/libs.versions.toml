@@ -1,5 +1,6 @@
 [versions]
 agp = "8.3.2"
+autosizetextCompose = "0.3.0"
 coilCompose = "2.6.0"
 coreSplashscreen = "1.0.1"
 hilt = "2.49"
@@ -27,6 +28,7 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 androidx-material3-window-size = { module = "androidx.compose.material3:material3-window-size-class", version.ref = "material3WindowSize" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 androidx-ui-text-google-fonts = { module = "androidx.compose.ui:ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
+autosizetext-compose = { module = "com.idapgroup:autosizetext-compose", version.ref = "autosizetextCompose" }
 coil-base = { module = "io.coil-kt:coil-base", version.ref = "coilCompose" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }

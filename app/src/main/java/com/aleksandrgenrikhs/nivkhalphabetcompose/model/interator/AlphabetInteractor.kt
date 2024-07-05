@@ -22,13 +22,13 @@ class AlphabetInteractor
     suspend fun getWordsForSecondTask(letterId: String): List<SecondTaskModel> =
         alphabetRepository.getWordsForSecondTask(letterId)
 
+    suspend fun getWordsForThirdTask(letterId: String): List<ThirdTaskModel> =
+        alphabetRepository.getWordsForThirdTask(letterId)
+
     suspend fun getWordsForFourthTask(letterId: String): FourthTaskModel =
         alphabetRepository.getWordsForFourthTask(letterId)
 
     fun clearPreviousWordsList() = alphabetRepository.clearPreviousWordsList()
-
-    suspend fun getShuffledWord(letterId: String): ThirdTaskModel =
-        alphabetRepository.shuffledWord(letterId)
 
     fun initPlayer(url: String) = alphabetRepository.initPlayer(url)
 

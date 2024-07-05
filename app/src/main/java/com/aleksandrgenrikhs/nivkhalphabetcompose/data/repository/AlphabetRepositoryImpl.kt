@@ -4,6 +4,7 @@ import android.content.Context
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.dto.SubjectDto
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.FirstTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.SecondTaskMapper
+import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.ThirdTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.WordMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.FirstTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.FourthTaskModel
@@ -12,7 +13,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.model.ThirdTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.WordModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.repository.AlphabetRepository
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.AlphabetMediaPlayer
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_FIRST_TASK
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_URL
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.NetworkConnected
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -30,6 +31,7 @@ class AlphabetRepositoryImpl
     private val wordMapper: WordMapper,
     private val firstTaskMapper: FirstTaskMapper,
     private val secondTaskMapper: SecondTaskMapper,
+    private val thirdTaskMapper: ThirdTaskMapper,
     private val mediaPlayer: AlphabetMediaPlayer,
     private val networkConnected: NetworkConnected
 ) : AlphabetRepository {
@@ -40,7 +42,7 @@ class AlphabetRepositoryImpl
     private suspend fun getWords(): List<WordModel> {
         return withContext(Dispatchers.IO) {
             try {
-                val inputStream = context.assets.open(WORDS_FIRST_TASK)
+                val inputStream = context.assets.open(WORDS_URL)
                 val reader = BufferedReader(InputStreamReader(inputStream))
                 val jsonString = reader.use { it.readText() }
                 val response = json.decodeFromString<List<SubjectDto>>(jsonString)
@@ -77,6 +79,9 @@ class AlphabetRepositoryImpl
         return secondTaskMapper.map(resultList.shuffled())
     }
 
+    override suspend fun getWordsForThirdTask(letterId: String): List<ThirdTaskModel> =
+        thirdTaskMapper.map(filterWords(letterId).shuffled())
+
     override suspend fun getWordsForFourthTask(letterId: String): FourthTaskModel {
         val filterWordsList = filterWords(letterId)
         val currentWord =
@@ -91,17 +96,6 @@ class AlphabetRepositoryImpl
 
     override fun clearPreviousWordsList() {
         previousWordsList.clear()
-    }
-
-    override suspend fun shuffledWord(letterId: String): ThirdTaskModel {
-        val listWords = filterWords(letterId)
-        val index = Random.nextInt(listWords.size)
-        val iconWord = listWords[index].icon
-        val shuffledWord = listWords[index].title.toCharArray().toList().shuffled()
-        return ThirdTaskModel(
-            title = shuffledWord,
-            icon = iconWord,
-        )
     }
 
     override fun initPlayer(url: String) {

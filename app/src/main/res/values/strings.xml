@@ -23,6 +23,7 @@
     <!--Третье задание-->
     <string name="titleThirdTask">Составь пары</string>
     <string name="textEndThirdTask">Супер!</string>
+    <string name="submit">Проверить</string>
 
     <!--Четвертое задание-->
     <string name="textEndFourthTask">Отлично!</string>

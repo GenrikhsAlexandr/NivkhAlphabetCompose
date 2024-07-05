@@ -7,9 +7,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.CircularProgressIndicator
@@ -36,8 +40,8 @@ import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import coil.request.ImageRequest
 import coil.size.Size
-import com.aleksandrgenrikhs.nivkhalphabetcompose.Letters
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
+import com.aleksandrgenrikhs.nivkhalphabetcompose.model.SecondTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorCardLetterItem
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorError
@@ -46,16 +50,57 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorRig
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
 
 @Composable
-fun TextSecondTask(
+fun SecondTaskLayout(
     modifier: Modifier = Modifier,
+    words: List<SecondTaskModel>,
     letter: String,
+    onClick: (String, String) -> Unit,
+    isClickable: Boolean
 ) {
     Column(
         modifier = modifier
             .fillMaxSize()
             .background(colorPrimary),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        TitleTask(
+            letter = letter
+        )
+        LazyColumn(
+            modifier = modifier
+                .fillMaxSize(),
+            contentPadding = PaddingValues(0.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(22.dp),
+        ) {
+            items(words) {
+                with(it) {
+                    IconButton(
+                        onClick = {
+                            onClick(wordId, letterId)
+                        },
+                        icon = icon,
+                        title = title,
+                        isFlipped = isFlipped,
+                        isClickable = isClickable,
+                        isCorrectAnswer = isCorrectAnswer,
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun TitleTask(
+    modifier: Modifier = Modifier,
+    letter: String,
+) {
+    Box(
+        modifier = modifier
+            .wrapContentSize(),
+        contentAlignment = Alignment.Center
     )
     {
         val text = stringResource(id = R.string.titleSecondTask, letter)
@@ -74,20 +119,20 @@ fun TextSecondTask(
             text = annotatedString,
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center,
-            modifier = modifier.padding(start = 8.dp, end = 8.dp, top = 8.dp)
+            modifier = modifier.padding(horizontal = 8.dp)
         )
     }
 }
 
 @Composable
-fun ButtonSecondTask(
+private fun IconButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     icon: String?,
     title: String,
     isFlipped: Boolean,
     isClickable: Boolean,
-    isRightAnswer: Boolean
+    isCorrectAnswer: Boolean
 
 ) {
     val rotationAngle by animateFloatAsState(
@@ -139,7 +184,7 @@ fun ButtonSecondTask(
                 }
             }
         } else {
-            if (isRightAnswer) {
+            if (isCorrectAnswer) {
                 Box(
                     modifier = modifier
                         .clickable(
@@ -194,27 +239,23 @@ fun ButtonSecondTask(
     }
 }
 
-@Preview(widthDp = 400, heightDp = 210)
+@Preview(widthDp = 410, heightDp = 610)
 @Composable
-fun TextPreview() {
+private fun SecondTaskPreview() {
     NivkhAlphabetComposeTheme {
-        TextSecondTask(
-            letter = Letters.A.title
-        )
-    }
-}
-
-@Preview(widthDp = 210, heightDp = 210)
-@Composable
-fun ButtonElementPreview() {
-    NivkhAlphabetComposeTheme {
-        ButtonSecondTask(
-            icon = "file:///android_asset/firsttask/image/1.1.png",
-            onClick = {},
-            title = "dd",
-            isFlipped = true,
+        SecondTaskLayout(
+            words = listOf(
+                SecondTaskModel(
+                    letterId = "Aa",
+                    title = "SAsna",
+                    wordId = "",
+                    icon = null,
+                    isFlipped = true
+                )
+            ),
+            letter = "Aa",
+            onClick = { _, _ -> Unit },
             isClickable = true,
-            isRightAnswer = true
         )
     }
 }

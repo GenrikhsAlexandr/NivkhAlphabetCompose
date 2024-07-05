@@ -2,7 +2,10 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -11,6 +14,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
@@ -38,17 +43,68 @@ import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import coil.request.ImageRequest
-import com.aleksandrgenrikhs.nivkhalphabetcompose.Letters
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
+import com.aleksandrgenrikhs.nivkhalphabetcompose.model.FirstTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorCardLetterItem
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorOnPrimary
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.shapes
 
 @Composable
-fun CardLetter(
+fun FirstTaskLayout(
+    modifier: Modifier = Modifier,
+    words: List<FirstTaskModel>,
+    letter: String,
+    onClick: (String) -> Unit,
+    isClickable: Boolean,
+    progressLetter: Int,
+    isVisibleWord: Boolean,
+    getWordError: Boolean
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(colorPrimary),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        CardLetter(
+            progress = progressLetter,
+            title = letter,
+            onClick = {
+                onClick(letter)
+            },
+            isClickable = isClickable,
+        )
+        LazyColumn(
+            modifier = modifier
+                .fillMaxSize()
+                .background(colorPrimary),
+            contentPadding = PaddingValues(8.dp)
+        )
+        {
+            items(words) {
+                with(it) {
+                    CardWord(
+                        progress = progressLetter,
+                        title = title,
+                        icon = icon,
+                        onClick = { onClick(wordId) },
+                        isClickable = isClickable,
+                        isVisible = isVisibleWord,
+                        getWordError = getWordError
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun CardLetter(
     modifier: Modifier = Modifier,
     title: String,
     onClick: () -> Unit,
@@ -56,7 +112,7 @@ fun CardLetter(
     progress: Int
 ) {
     Text(
-        text = stringResource(id = R.string.titleFistTask) ,
+        text = stringResource(id = R.string.titleFistTask),
         style = MaterialTheme.typography.titleLarge,
         textAlign = TextAlign.Center
     )
@@ -103,7 +159,7 @@ fun CardLetter(
 }
 
 @Composable
-fun CardWord(
+private fun CardWord(
     modifier: Modifier = Modifier,
     progress: Int,
     title: String,
@@ -204,31 +260,28 @@ fun CardWord(
     }
 }
 
-@Preview(widthDp = 210, heightDp = 210)
+@Preview(widthDp = 410, heightDp = 610)
 @Composable
-fun CardLetterPreview() {
+private fun FirstTaskContentPreview() {
     NivkhAlphabetComposeTheme {
-        CardLetter(
-            title = Letters.Shch.title,
+        FirstTaskLayout(
+            words = listOf(
+                FirstTaskModel(
+                    letterId = "Aa",
+                    title = "SAsna",
+                    wordId = "",
+                    icon = null,
+                    progress = 1,
+                    isCompleted = false,
+                    isClickable = false,
+                )
+            ),
+            letter = "Aa",
             onClick = {},
-            isClickable = true,
-            progress = 3
-        )
-    }
-}
-
-@Preview(widthDp = 400, heightDp = 200)
-@Composable
-fun CardWord1Preview() {
-    NivkhAlphabetComposeTheme {
-        CardWord(
-            title = "nivkh word",
-            onClick = {},
-            isClickable = true,
-            progress = 2,
-            isVisible = false,
-            icon = "file:///android_asset/firsttask/image/1.1.png",
-            getWordError = true
+            isClickable = false,
+            progressLetter = 1,
+            isVisibleWord = true,
+            getWordError = false
         )
     }
 }

@@ -6,5 +6,5 @@ data class SecondTaskModel(
     val wordId: String,
     val icon: String?,
     val isFlipped: Boolean = false,
-    val isRightAnswer: Boolean = false,
+    val isCorrectAnswer: Boolean = false,
 )

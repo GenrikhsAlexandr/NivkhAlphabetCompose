@@ -13,7 +13,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.AppBar
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.FifthTaskScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.FirstTaskScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.FourthTaskScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.LetterScreen
@@ -122,18 +121,6 @@ fun NavHost(
             ) { backStackEntry ->
                 val currentLetter = backStackEntry.arguments?.getString(Constants.LETTER_KEY)
                 FourthTaskScreen(
-                    letter = checkNotNull(currentLetter),
-                    navController = navController,
-                )
-            }
-            composable(
-                route = "${NavigationDestination.FifthTaskScreen.destination}/{${Constants.LETTER_KEY}}",
-                arguments = listOf(
-                    navArgument(Constants.LETTER_KEY) { type = NavType.StringType },
-                )
-            ) { backStackEntry ->
-                val currentLetter = backStackEntry.arguments?.getString(Constants.LETTER_KEY)
-                FifthTaskScreen(
                     letter = checkNotNull(currentLetter),
                     navController = navController,
                 )

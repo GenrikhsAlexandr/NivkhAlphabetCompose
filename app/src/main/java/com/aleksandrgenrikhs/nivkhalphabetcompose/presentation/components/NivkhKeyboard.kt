@@ -37,7 +37,7 @@ fun NivkhKeyboard(
     onValueChange: (letter: String) -> Unit,
     onDelete: () -> Unit,
     onDone: (word: String) -> Unit,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     onClickable: Boolean
 ) {
     Column(

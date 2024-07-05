@@ -72,6 +72,8 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil.base)
 
+    implementation(libs.autosizetext.compose)
+
     implementation(libs.androidx.ui.text.google.fonts)
 
     implementation(libs.androidx.ui)

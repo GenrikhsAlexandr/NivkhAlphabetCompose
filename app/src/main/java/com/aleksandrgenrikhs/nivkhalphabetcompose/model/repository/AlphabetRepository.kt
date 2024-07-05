@@ -12,11 +12,11 @@ interface AlphabetRepository {
 
     suspend fun getWordsForSecondTask(letterId: String): List<SecondTaskModel>
 
+    suspend fun getWordsForThirdTask(letterId: String): List<ThirdTaskModel>
+
     suspend fun getWordsForFourthTask(letterId: String): FourthTaskModel
 
     fun clearPreviousWordsList()
-
-    suspend fun shuffledWord(letterId: String): ThirdTaskModel
 
    fun initPlayer(url: String)
 

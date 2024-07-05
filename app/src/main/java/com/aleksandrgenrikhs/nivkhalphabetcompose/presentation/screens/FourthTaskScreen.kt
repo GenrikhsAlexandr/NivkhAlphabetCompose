@@ -1,12 +1,5 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -14,10 +7,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
@@ -26,7 +17,6 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestinatio
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.Dialog
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.FourthTaskLayout
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.NotConnected
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.FourthTaskViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO
 import kotlinx.coroutines.delay
@@ -38,42 +28,33 @@ fun FourthTaskScreen(
     viewModel: FourthTaskViewModel = hiltViewModel(),
     letter: String,
 ) {
+    val uiState by viewModel.uiState.collectAsState()
+
     viewModel.setLetter(letter)
+
     LaunchedEffect(key1 = Unit, block = {
         viewModel.getWord(letter)
     })
 
-    val uiState by viewModel.uiState.collectAsState()
+    with(uiState) {
+        if (!isNetworkConnected) {
+            NotConnected(
+                navController = navController
+            )
+        }
 
-    if (!uiState.isNetworkConnected) {
-        NotConnected(
-            navController = navController
-        )
-    }
-
-    if (uiState.title.isNotEmpty()) {
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .background(colorPrimary)
-                .padding(top = 8.dp)
-                .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-
-
+        if (title.isNotEmpty()) {
             FourthTaskLayout(
-                onClick = { viewModel.playSound("${WORDS_AUDIO}${uiState.wordId}") },
-                icon = uiState.icon,
-                onClickable = uiState.isClickable,
-                onDone = { viewModel.checkUserGuess(uiState.userGuess) },
-                isGuessWrong = uiState.isGuessWrong,
-                onUserGuessChanged = { viewModel.updateUserGuess(it.appendChar(uiState.userGuess)) },
-                userGuess = uiState.userGuess,
+                onClick = { viewModel.playSound("${WORDS_AUDIO}${wordId}") },
+                icon = icon,
+                onClickable = isClickable,
+                onDone = { viewModel.checkUserGuess(userGuess) },
+                isGuessWrong = isGuessWrong,
+                onUserGuessChanged = { viewModel.updateUserGuess(it.appendChar(userGuess)) },
+                userGuess = userGuess,
                 onDelete = { viewModel.deleteLastLetter() }
             )
-            if (uiState.isCompleted) {
+            if (isCompleted) {
                 val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task5)
                 var showDialog by remember { mutableStateOf(false) }
                 LaunchedEffect(key1 = null) {
@@ -105,10 +86,10 @@ fun FourthTaskScreen(
                         onDismissRequest = {}
                     )
                 }
+                }
             }
         }
     }
-}
 
 private fun String.appendChar(char: String): String {
     return char + this

@@ -49,8 +49,8 @@ class SecondTaskViewModel
 
     fun flipCard(wordId: String, letterId: String) {
         _uiState.update { uiState ->
-            val isRightWord = letterId == uiState.selectedLetter
-            val correctAnswersCount = if (isRightWord) {
+            val isCorrectWord = letterId == uiState.selectedLetter
+            val correctAnswersCount = if (isCorrectWord) {
                 uiState.correctAnswersCount + 1
             } else {
                 uiState.correctAnswersCount
@@ -61,17 +61,17 @@ class SecondTaskViewModel
                 val index = uiState.words.indexOfFirst { it.wordId == wordId }
                 this[index] = this[index].copy(
                     isFlipped = !this[index].isFlipped,
-                    isRightAnswer = isRightWord
+                    isCorrectAnswer = isCorrectWord
                 )
             }
 
-            if (isRightWord) {
+            if (isCorrectWord) {
                 playSound("${WORDS_AUDIO}$wordId")
             } else {
                 playSound(ERROR_AUDIO)
             }
 
-            if (isRightWord && !isCompleted) {
+            if (isCorrectWord && !isCompleted) {
                 viewModelScope.launch {
                     delay(2000)
                     getWords(letterId)
@@ -81,7 +81,7 @@ class SecondTaskViewModel
                 words = newWordsList,
                 isCompleted = isCompleted,
                 correctAnswersCount = correctAnswersCount,
-                isAnswerCorrect = isRightWord,
+                isAnswerCorrect = isCorrectWord,
             )
         }
         if (uiState.value.isCompleted) {

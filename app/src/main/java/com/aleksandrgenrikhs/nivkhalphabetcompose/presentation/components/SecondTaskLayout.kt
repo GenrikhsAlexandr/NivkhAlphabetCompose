@@ -254,7 +254,7 @@ private fun SecondTaskPreview() {
                 )
             ),
             letter = "Aa",
-            onClick = { _, _ -> Unit },
+            onClick = { _, _ -> },
             isClickable = true,
         )
     }

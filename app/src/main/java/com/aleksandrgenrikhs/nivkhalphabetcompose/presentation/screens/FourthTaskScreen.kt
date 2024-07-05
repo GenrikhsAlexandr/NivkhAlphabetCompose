@@ -7,7 +7,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -23,7 +22,6 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun FourthTaskScreen(
-    modifier: Modifier = Modifier,
     navController: NavController,
     viewModel: FourthTaskViewModel = hiltViewModel(),
     letter: String,

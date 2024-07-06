@@ -25,18 +25,25 @@ class FourthTaskViewModel
         )
     )
     val uiState = _uiState.asStateFlow()
+    private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     fun setLetter(letter: String) {
-        _uiState.value = _uiState.value.copy(selectedLetter = letter)
+        _uiState.update {
+            _uiState.value.copy(selectedLetter = letter)
+        }
     }
 
     suspend fun getWord(letterId: String) {
+        isLoading.value = true
         val word = interactor.getWordsForFourthTask(letterId)
-        _uiState.value = _uiState.value.copy(
-            wordId = word.wordId,
-            title = word.title,
-            icon = word.icon
-        )
+        _uiState.update {
+            it.copy(
+                wordId = word.wordId,
+                title = word.title,
+                icon = word.icon,
+            )
+        }
+        isLoading.value = false
     }
 
     fun updateUserGuess(guessedWord: String) {
@@ -77,9 +84,11 @@ class FourthTaskViewModel
             val isCompleted = correctAnswersCount == 3
             if (isAnswerCorrect && !isCompleted) {
                 viewModelScope.launch {
-                    delay(2000)
-                    updateUserGuess("")
-                    getWord(uiState.selectedLetter)
+                    if (!isLoading.value) {
+                        delay(2000)
+                        updateUserGuess("")
+                        getWord(uiState.selectedLetter)
+                    }
                 }
             }
             uiState.copy(

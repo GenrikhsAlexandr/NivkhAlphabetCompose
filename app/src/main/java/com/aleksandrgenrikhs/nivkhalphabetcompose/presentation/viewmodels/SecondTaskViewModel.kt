@@ -29,22 +29,30 @@ class SecondTaskViewModel
         )
     val uiState = _uiState.asStateFlow()
 
+    private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
+
     fun setLetter(letter: String) {
-        _uiState.value = _uiState.value.copy(selectedLetter = letter)
+        _uiState.update {
+            _uiState.value.copy(selectedLetter = letter)
+        }
     }
 
     suspend fun getWords(letterId: String) {
+        isLoading.value = true
         val listWords = interactor.getWordsForSecondTask(letterId)
         if (listWords.isNotEmpty()) {
-            _uiState.value = _uiState.value.copy(
-                words = listWords.map { word ->
-                    word.copy(
-                        isFlipped = false
-                    )
-                },
-                isAnswerCorrect = false
-            )
+            _uiState.update {
+                _uiState.value.copy(
+                    words = listWords.map { word ->
+                        word.copy(
+                            isFlipped = false
+                        )
+                    },
+                    isAnswerCorrect = false
+                )
+            }
         }
+        isLoading.value = false
     }
 
     fun flipCard(wordId: String, letterId: String) {
@@ -73,8 +81,10 @@ class SecondTaskViewModel
 
             if (isCorrectWord && !isCompleted) {
                 viewModelScope.launch {
-                    delay(2000)
-                    getWords(letterId)
+                    if (!isLoading.value) {
+                        delay(2000)
+                        getWords(letterId)
+                    }
                 }
             }
             uiState.copy(

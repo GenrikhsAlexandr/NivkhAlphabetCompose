@@ -10,5 +10,6 @@ data class FourthTaskUIState(
     val isNetworkConnected: Boolean,
     val isGuessWrong: Boolean = false,
     val userGuess: String = "",
-    val isClickable: Boolean = false
+    val isClickable: Boolean = false,
+    val isLoading: Boolean = false
 )

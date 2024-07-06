@@ -7,6 +7,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,15 +22,19 @@ class ThirdTaskViewModel
     val uiState = _uiState.asStateFlow()
 
     fun setLetter(letter: String) {
-        _uiState.value = _uiState.value.copy(selectedLetter = letter)
+        _uiState.update {
+            _uiState.value.copy(selectedLetter = letter)
+        }
     }
 
     suspend fun getWords(letterId: String) {
         val listWords = interactor.getWordsForThirdTask(letterId)
         if (listWords.isNotEmpty()) {
-            _uiState.value = _uiState.value.copy(
-                words = listWords,
-            )
+            _uiState.update {
+                _uiState.value.copy(
+                    words = listWords,
+                )
+            }
         }
     }
 

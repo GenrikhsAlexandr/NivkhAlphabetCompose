@@ -30,7 +30,7 @@ fun FourthTaskScreen(
 
     viewModel.setLetter(letter)
 
-    LaunchedEffect(key1 = Unit, block = {
+    LaunchedEffect(key1 = letter, block = {
         viewModel.getWord(letter)
     })
 
@@ -84,10 +84,10 @@ fun FourthTaskScreen(
                         onDismissRequest = {}
                     )
                 }
-                }
             }
         }
     }
+}
 
 private fun String.appendChar(char: String): String {
     return char + this

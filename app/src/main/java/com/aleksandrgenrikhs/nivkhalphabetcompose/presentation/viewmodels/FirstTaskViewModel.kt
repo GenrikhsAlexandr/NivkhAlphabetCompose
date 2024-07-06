@@ -28,22 +28,28 @@ class FirstTaskViewModel
     val uiState = _uiState.asStateFlow()
 
     fun setLetter(letter: String) {
-        _uiState.value = _uiState.value.copy(
-            selectedLetter = letter,
-        )
+        _uiState.update {
+            _uiState.value.copy(
+                selectedLetter = letter,
+            )
+        }
     }
 
     suspend fun getWords(letterId: String) {
         val listWords = interactor.getWordsForFirstTask(letterId)
         if (listWords.isNotEmpty()) {
-            _uiState.value = _uiState.value.copy(
-                words = listWords,
-                getWordError = false
-            )
+            _uiState.update {
+                _uiState.value.copy(
+                    words = listWords,
+                    getWordError = false
+                )
+            }
         } else {
-            _uiState.value = _uiState.value.copy(
-                getWordError = true,
-            )
+            _uiState.update {
+                _uiState.value.copy(
+                    getWordError = true,
+                )
+            }
         }
     }
 

@@ -45,7 +45,7 @@ fun SecondTaskScreen(
             SecondTaskLayout(
                 words = words,
                 letter = letter,
-                onClick = { wordId, letterId -> viewModel.flipCard(wordId, letterId) },
+                onClick = (viewModel::flipCard),
                 isClickable = !isAnswerCorrect
             )
             if (isCompleted) {

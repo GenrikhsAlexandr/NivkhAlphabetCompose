@@ -43,11 +43,15 @@ fun LetterScreen(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         items(uiState.letters, key = { letter -> letter.letter.title }) { item ->
-            LetterItem(letter = item.letter.title,
-                onClick = {
-                    navController.navigate("${TASKS_SCREEN}/${item.letter.title}")
-                },
-                isClickable = item.isLetterCompleted)
+            with(item) {
+                LetterItem(
+                    letter = letter.title,
+                    onClick = {
+                        navController.navigate("${TASKS_SCREEN}/${letter.title}")
+                    },
+                    isClickable = isLetterCompleted
+                )
+            }
         }
     }
 }

@@ -59,7 +59,7 @@ fun FirstTaskLayout(
     words: List<FirstTaskModel>,
     letter: String,
     onClick: (String) -> Unit,
-    isClickable: Boolean,
+    isClickableLetter: Boolean,
     progressLetter: Int,
     isVisibleWord: Boolean,
     getWordError: Boolean
@@ -77,7 +77,7 @@ fun FirstTaskLayout(
             onClick = {
                 onClick(letter)
             },
-            isClickable = isClickable,
+            isClickable = isClickableLetter,
         )
         LazyColumn(
             modifier = modifier
@@ -89,7 +89,7 @@ fun FirstTaskLayout(
             items(words) {
                 with(it) {
                     CardWord(
-                        progress = progressLetter,
+                        progress = progress,
                         title = title,
                         icon = icon,
                         onClick = { onClick(wordId) },
@@ -278,7 +278,7 @@ private fun FirstTaskContentPreview() {
             ),
             letter = "Aa",
             onClick = {},
-            isClickable = false,
+            isClickableLetter = false,
             progressLetter = 1,
             isVisibleWord = true,
             getWordError = false

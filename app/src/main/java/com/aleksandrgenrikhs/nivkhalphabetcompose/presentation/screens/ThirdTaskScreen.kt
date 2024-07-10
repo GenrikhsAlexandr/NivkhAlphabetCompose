@@ -4,8 +4,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.draganddrop.DragAndDropEvent
+import androidx.compose.ui.draganddrop.toAndroidDragEvent
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
+import com.aleksandrgenrikhs.nivkhalphabetcompose.R
+import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
+import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.Dialog
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.NotConnected
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.ThirdTaskLayout
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.ThirdTaskViewModel
@@ -32,11 +40,48 @@ fun ThirdTaskScreen(
         }
         if (words.isNotEmpty()) {
             with(uiState) {
+                println("shareWordsScreen = ${shareWords.joinToString()}}")
                 ThirdTaskLayout(
                     words = words,
-                    onIconClick = { viewModel.playSound(it) },
-                    onDone = { viewModel.checkMatching("", "") }
-                )
+                    currentWords = currentWords,
+                    shareWords = shareWords,
+                    onIconClick = (viewModel::playSound),
+                    onDone = (viewModel::checkMatching),
+                ) { transferData: DragAndDropEvent, index: Int ->
+                    viewModel.updateReceivingContainer(
+                        transferData.toAndroidDragEvent().clipData,
+                        index
+                    )
+                }
+                if (isAnswerCorrect) {
+                    val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task3)
+                    Dialog(
+                        navigationBack = {
+                            navController.popBackStack(
+                                NavigationDestination.LettersScreen.destination,
+                                inclusive = false
+                            )
+                        },
+                        navigationNext = {
+                            navController.navigate(
+                                "${NavigationDestination.FourthTaskScreen.destination}/$letter"
+                            ) {
+                                popUpTo("${NavigationDestination.ThirdTaskScreen.destination}/$letter") {
+                                    inclusive = true
+                                }
+                            }
+                        },
+                        painter = painter,
+                        title = stringResource(id = R.string.textEndThirdTask),
+                        textButtonBack = stringResource(id = R.string.backAlphabet),
+                        textButtonNext = stringResource(
+                            id = R.string.nextTask,
+                            Task.FOURTH.stableId
+                        ),
+                        isVisibleSecondButton = true,
+                        onDismissRequest = {}
+                    )
+                }
             }
         }
     }

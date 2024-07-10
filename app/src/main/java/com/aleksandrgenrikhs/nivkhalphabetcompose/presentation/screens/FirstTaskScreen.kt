@@ -40,9 +40,9 @@ fun FirstTaskScreen(
         if (words.isNotEmpty()) {
             FirstTaskLayout(
                 words = words,
-                onClick = { viewModel.onClickElement(it) },
+                onClick = (viewModel::onClickElement),
                 letter = letter,
-                isClickable = isClickableLetter && !isPlaying,
+                isClickableLetter = isClickableLetter && !isPlaying,
                 isVisibleWord = isVisibleWord,
                 getWordError = getWordError,
                 progressLetter = progressLetter

@@ -80,7 +80,7 @@ class AlphabetRepositoryImpl
     }
 
     override suspend fun getWordsForThirdTask(letterId: String): List<ThirdTaskModel> =
-        thirdTaskMapper.map(filterWords(letterId).shuffled())
+        thirdTaskMapper.map(filterWords(letterId))
 
     override suspend fun getWordsForFourthTask(letterId: String): FourthTaskModel {
         val filterWordsList = filterWords(letterId)

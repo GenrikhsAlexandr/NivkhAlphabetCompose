@@ -30,6 +30,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draganddrop.DragAndDropEvent
@@ -61,8 +64,8 @@ import com.idapgroup.autosizetext.AutoSizeText
 fun ThirdTaskLayout(
     modifier: Modifier = Modifier,
     words: List<ThirdTaskModel>,
-    shareWords: MutableList<String>,
-    currentWords: MutableList<String?>,
+    shareWords: List<String?>,
+    currentWords: List<String?>,
     onIconClick: (String) -> Unit,
     onDone: () -> Unit,
     onDragAndDropEventReceived: (DragAndDropEvent, Int) -> Unit,
@@ -75,8 +78,6 @@ fun ThirdTaskLayout(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        println("shareTextWords =${shareWords.joinToString()}")
-
         Row(
             modifier = modifier
                 .fillMaxWidth()
@@ -143,7 +144,7 @@ fun ThirdTaskLayout(
         ) {
             shareWords.map { title ->
                 ShareText(
-                    title = title,
+                    title = title ?: "",
                 )
             }
         }
@@ -165,6 +166,14 @@ private fun ReceivingContainer(
     index: Int,
     onDragAndDropEventReceived: (DragAndDropEvent, Int) -> Unit,
 ) {
+    val callback = remember {
+        object : DragAndDropTarget {
+            override fun onDrop(event: DragAndDropEvent): Boolean {
+                onDragAndDropEventReceived(event, index)
+                return true
+            }
+        }
+    }
     Box(
         modifier = modifier
             .border(
@@ -180,18 +189,7 @@ private fun ReceivingContainer(
                         .mimeTypes()
                         .contains(ClipDescription.MIMETYPE_TEXT_PLAIN)
                 },
-                target = object : DragAndDropTarget {
-                    override fun onDrop(event: DragAndDropEvent): Boolean {
-                        onDragAndDropEventReceived(event, index)
-                        return true
-                    }
-
-                    override fun onStarted(event: DragAndDropEvent) {
-                    }
-
-                    override fun onEnded(event: DragAndDropEvent) {
-                    }
-                }
+                target = callback
             ),
         contentAlignment = Alignment.Center
     ) {
@@ -213,6 +211,7 @@ fun ShareText(
     modifier: Modifier = Modifier,
     title: String,
 ) {
+    val currentTitle by rememberUpdatedState(title)
     Box(
         modifier = modifier
             .wrapContentSize()
@@ -221,7 +220,7 @@ fun ShareText(
                     onPress = {
                         startTransfer(
                             DragAndDropTransferData(
-                                clipData = ClipData.newPlainText("text", title)
+                                clipData = ClipData.newPlainText("text", currentTitle)
                             )
                         )
                     }
@@ -231,7 +230,7 @@ fun ShareText(
     )
     {
         Text(
-            text = title,
+            text = currentTitle,
             style = MaterialTheme.typography.titleLarge,
             fontSize = 32.sp,
             textAlign = TextAlign.Center,
@@ -239,7 +238,6 @@ fun ShareText(
         )
     }
 }
-
 
 @Composable
 private fun IconButton(

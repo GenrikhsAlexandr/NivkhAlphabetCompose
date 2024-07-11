@@ -40,13 +40,12 @@ fun ThirdTaskScreen(
         }
         if (words.isNotEmpty()) {
             with(uiState) {
-                println("shareWordsScreen = ${shareWords.joinToString()}}")
                 ThirdTaskLayout(
                     words = words,
                     currentWords = currentWords,
                     shareWords = shareWords,
                     onIconClick = (viewModel::playSound),
-                    onDone = (viewModel::checkMatching),
+                    onDone = (viewModel::checkAnswer),
                 ) { transferData: DragAndDropEvent, index: Int ->
                     viewModel.updateReceivingContainer(
                         transferData.toAndroidDragEvent().clipData,

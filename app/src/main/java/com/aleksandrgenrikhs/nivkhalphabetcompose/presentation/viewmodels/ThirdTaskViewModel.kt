@@ -2,7 +2,6 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels
 
 import android.content.ClipData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.interator.AlphabetInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.ThirdTaskUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO
@@ -10,7 +9,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,15 +28,14 @@ class ThirdTaskViewModel
         }
     }
 
-    private var shareWords = mutableListOf<String>()
     suspend fun getWords(letterId: String) {
         val listWords = interactor.getWordsForThirdTask(letterId)
-        shareWords = mutableListOf(*listWords.shuffled().map { it.title }.toTypedArray())
+        val newShareWords = listWords.shuffled().map { it.title }
         if (listWords.isNotEmpty()) {
             _uiState.update {
                 _uiState.value.copy(
                     words = listWords,
-                    shareWords = shareWords
+                    shareWords = newShareWords
                 )
             }
         }
@@ -51,33 +48,42 @@ class ThirdTaskViewModel
     }
 
     fun updateReceivingContainer(clipData: ClipData?, index: Int) {
-        if (clipData == null || clipData.itemCount == 0) return
+        if (clipData == null) return
         val sharedText = clipData.getItemAt(0).text.toString()
-        if (shareWords.contains(sharedText)) {
-            shareWords.remove(sharedText)
-        }
+        val newShareWords = uiState.value.shareWords.toMutableList()
+        val sharedTextIndex = newShareWords.indexOf(sharedText)
         _uiState.update {
             val newCurrentWords = it.currentWords.toMutableList()
-            newCurrentWords[index] = sharedText
-            it.copy(currentWords = newCurrentWords)
+            if (sharedTextIndex != -1 && newCurrentWords[index] == null) {
+                newShareWords[sharedTextIndex] = null
+                newCurrentWords[index] = sharedText
+            }
+            it.copy(
+                currentWords = newCurrentWords,
+                shareWords = newShareWords
+            )
         }
     }
 
-    fun checkMatching() {
+    fun checkAnswer() {
         val currentWords = uiState.value.currentWords
         val correctWords = uiState.value.words.map { it.title }
         if (currentWords == correctWords) {
-            _uiState.update { it.copy(isAnswerCorrect = true) }
+            _uiState.update { state ->
+                state.copy(
+                    isAnswerCorrect = true
+                )
+            }
         } else {
-            viewModelScope.launch {
-                getWords(uiState.value.selectedLetter)
-                _uiState.update {
-                    it.copy(
-                        currentWords = mutableListOf(null, null, null),
-                        isAnswerCorrect = false,
-                        shareWords = shareWords
-                    )
-                }
+            _uiState.update { state ->
+                uiState.value.shareWords
+                state.copy(
+                    currentWords = mutableListOf(null, null, null),
+                    isAnswerCorrect = false,
+                    shareWords = uiState.value.words.map { words ->
+                        words.title
+                    }.shuffled()
+                )
             }
         }
     }

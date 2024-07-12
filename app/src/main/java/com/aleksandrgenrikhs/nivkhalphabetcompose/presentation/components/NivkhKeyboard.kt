@@ -13,7 +13,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -21,7 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorCardLetterItem
@@ -406,11 +409,10 @@ private fun DeleteButton(
             brush = SolidColor(colorCardLetterItem)
         )
     ) {
-        Text(
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.ExtraBold,
-            text = "←",
-            style = MaterialTheme.typography.bodyLarge,
+        Icon(
+            imageVector = Icons.Default.ArrowBack,
+            contentDescription = "Done",
+            tint = colorError
         )
     }
 }
@@ -433,12 +435,11 @@ private fun DoneButton(
             brush = SolidColor(colorCardLetterItem)
         )
     ) {
-        Text(
-            textAlign = TextAlign.Center,
-            text = "✓",
-            style = MaterialTheme.typography.bodyLarge,
-            fontWeight = FontWeight.ExtraBold,
-            color = colorRight
+        Icon(
+            imageVector = Icons.Default.Done,
+            contentDescription = "Done",
+            tint = colorRight,
+            modifier = modifier.size(50.dp)
         )
     }
 }

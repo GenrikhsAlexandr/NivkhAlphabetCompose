@@ -50,9 +50,6 @@ fun SecondTaskScreen(
                 isClickable = !isAnswerCorrect
             )
             if (isCompleted) {
-                if (!isFinishAudio) {
-                    viewModel.playSound(FINISH_AUDIO)
-                }
                 val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task2)
                 var showDialog by remember { mutableStateOf(false) }
                 LaunchedEffect(key1 = null) {
@@ -60,6 +57,9 @@ fun SecondTaskScreen(
                     showDialog = true
                 }
                 if (showDialog) {
+                    if (!isFinishAudio) {
+                        viewModel.playSound(FINISH_AUDIO)
+                    }
                     Dialog(
                         navigationBack = {
                             navController.popBackStack(

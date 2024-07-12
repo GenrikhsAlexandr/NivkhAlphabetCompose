@@ -94,7 +94,7 @@ fun FourthTaskLayout(
     }
 }
 
-@Preview(widthDp = 410, heightDp = 610)
+@Preview(widthDp = 510, heightDp = 710)
 @Composable
 private fun FourthTaskContentPreview() {
     NivkhAlphabetComposeTheme {

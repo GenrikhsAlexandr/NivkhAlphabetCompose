@@ -17,6 +17,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.Dialog
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.NotConnected
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.ThirdTaskLayout
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.ThirdTaskViewModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 
 @Composable
 fun ThirdTaskScreen(
@@ -44,6 +45,7 @@ fun ThirdTaskScreen(
                     words = words,
                     currentWords = currentWords,
                     shareWords = shareWords,
+                    isGuessWrong = isGuessWrong,
                     onIconClick = (viewModel::playSound),
                     onDone = (viewModel::checkAnswer),
                 ) { transferData: DragAndDropEvent, index: Int ->
@@ -53,6 +55,9 @@ fun ThirdTaskScreen(
                     )
                 }
                 if (isAnswerCorrect) {
+                    if (!isFinishAudio) {
+                        viewModel.playSound(FINISH_AUDIO)
+                    }
                     val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task3)
                     Dialog(
                         navigationBack = {

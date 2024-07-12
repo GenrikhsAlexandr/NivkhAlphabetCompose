@@ -54,10 +54,12 @@ import coil.request.ImageRequest
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.ThirdTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorError
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorOnPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorRight
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO
 import com.idapgroup.autosizetext.AutoSizeText
 
 @Composable
@@ -67,6 +69,7 @@ fun ThirdTaskLayout(
     shareWords: List<String?>,
     currentWords: List<String?>,
     onIconClick: (String) -> Unit,
+    isGuessWrong: Boolean,
     onDone: () -> Unit,
     onDragAndDropEventReceived: (DragAndDropEvent, Int) -> Unit,
 ) {
@@ -87,7 +90,7 @@ fun ThirdTaskLayout(
         ) {
             IconButton(
                 icon = words[0].icon,
-                onClick = { onIconClick(words[0].wordId) },
+                onClick = { onIconClick("${WORDS_AUDIO}${words[0].wordId}") },
             )
             ReceivingContainer(
                 title = currentWords[0] ?: "",
@@ -95,6 +98,7 @@ fun ThirdTaskLayout(
                 onDragAndDropEventReceived = { transferData, index ->
                     onDragAndDropEventReceived(transferData, index)
                 },
+                isError = isGuessWrong
             )
         }
         Row(
@@ -106,14 +110,15 @@ fun ThirdTaskLayout(
         ) {
             IconButton(
                 icon = words[1].icon,
-                onClick = { onIconClick(words[1].wordId) },
+                onClick = { onIconClick("${WORDS_AUDIO}${words[1].wordId}") },
             )
             ReceivingContainer(
                 title = currentWords[1] ?: "",
+                index = 1,
                 onDragAndDropEventReceived = { transferData, index ->
                     onDragAndDropEventReceived(transferData, index)
                 },
-                index = 1
+                isError = isGuessWrong,
             )
         }
         Row(
@@ -125,14 +130,15 @@ fun ThirdTaskLayout(
         ) {
             IconButton(
                 icon = words[2].icon,
-                onClick = { onIconClick(words[2].wordId) },
+                onClick = { onIconClick("${WORDS_AUDIO}${words[2].wordId}") },
             )
             ReceivingContainer(
                 title = currentWords[2] ?: "",
+                index = 2,
                 onDragAndDropEventReceived = { transferData, index ->
                     onDragAndDropEventReceived(transferData, index)
                 },
-                index = 2
+                isError = isGuessWrong,
             )
         }
         Row(
@@ -164,6 +170,7 @@ private fun ReceivingContainer(
     title: String?,
     modifier: Modifier = Modifier,
     index: Int,
+    isError: Boolean,
     onDragAndDropEventReceived: (DragAndDropEvent, Int) -> Unit,
 ) {
     val callback = remember {
@@ -178,7 +185,7 @@ private fun ReceivingContainer(
         modifier = modifier
             .border(
                 width = 2.dp,
-                color = colorProgressBar
+                color = if (isError) colorError else colorProgressBar
             )
             .background(colorOnPrimary)
             .padding(horizontal = 3.dp)
@@ -331,8 +338,8 @@ private fun ThirdTaskPreview() {
             onDone = {},
             onDragAndDropEventReceived = { _, _ -> },
             shareWords = arrayListOf(),
-            currentWords = arrayListOf()
-
+            currentWords = arrayListOf(),
+            isGuessWrong = false,
         )
     }
 }

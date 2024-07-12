@@ -60,6 +60,7 @@ fun FirstTaskLayout(
     letter: String,
     onClick: (String) -> Unit,
     isClickableLetter: Boolean,
+    isPlaying: Boolean,
     progressLetter: Int,
     isVisibleWord: Boolean,
     getWordError: Boolean
@@ -77,7 +78,7 @@ fun FirstTaskLayout(
             onClick = {
                 onClick(letter)
             },
-            isClickable = isClickableLetter,
+            isClickable = isClickableLetter && !isPlaying,
         )
         LazyColumn(
             modifier = modifier
@@ -93,7 +94,7 @@ fun FirstTaskLayout(
                         title = title,
                         icon = icon,
                         onClick = { onClick(wordId) },
-                        isClickable = isClickable,
+                        isClickable = isClickable && !isPlaying,
                         isVisible = isVisibleWord,
                         getWordError = getWordError
                     )
@@ -281,7 +282,8 @@ private fun FirstTaskContentPreview() {
             isClickableLetter = false,
             progressLetter = 1,
             isVisibleWord = true,
-            getWordError = false
+            getWordError = false,
+            isPlaying = false,
         )
     }
 }

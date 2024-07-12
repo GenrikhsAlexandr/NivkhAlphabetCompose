@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.interator.AlphabetInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.FirstTaskUIState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.LETTER_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -178,11 +179,21 @@ class FirstTaskViewModel
         }
     }
 
-    private fun playSound(element: String) {
-        when {
-            element == uiState.value.selectedLetter -> {
+    fun playSound(element: String) {
+        when (element) {
+            uiState.value.selectedLetter -> {
                 interactor.initPlayer("$LETTER_AUDIO${element}")
                 interactor.play()
+            }
+
+            FINISH_AUDIO -> {
+                interactor.initPlayer(FINISH_AUDIO)
+                interactor.play()
+                _uiState.update { uiState ->
+                    uiState.copy(
+                        isFinishAudio = true
+                    )
+                }
             }
 
             else -> {

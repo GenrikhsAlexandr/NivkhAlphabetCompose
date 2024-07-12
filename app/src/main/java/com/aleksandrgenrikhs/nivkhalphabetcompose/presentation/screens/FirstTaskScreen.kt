@@ -15,6 +15,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.Dialog
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.FirstTaskLayout
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.NotConnected
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.FirstTaskViewModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 
 @Composable
 fun FirstTaskScreen(
@@ -42,13 +43,17 @@ fun FirstTaskScreen(
                 words = words,
                 onClick = (viewModel::onClickElement),
                 letter = letter,
-                isClickableLetter = isClickableLetter && !isPlaying,
+                isClickableLetter = isClickableLetter,
+                isPlaying = isPlaying,
                 isVisibleWord = isVisibleWord,
                 getWordError = getWordError,
                 progressLetter = progressLetter
             )
         }
         if (isCompleted && !isPlaying) {
+            if (!isFinishAudio) {
+                viewModel.playSound(FINISH_AUDIO)
+            }
             val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task1)
             Dialog(
                 navigationBack = {

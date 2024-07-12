@@ -4,7 +4,8 @@ import android.content.ClipData
 import androidx.lifecycle.ViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.interator.AlphabetInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.ThirdTaskUIState
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -41,9 +42,16 @@ class ThirdTaskViewModel
         }
     }
 
-    fun playSound(wordId: String) {
+    fun playSound(url: String) {
+        if (url == FINISH_AUDIO) {
+            _uiState.update { state ->
+                state.copy(
+                    isFinishAudio = true
+                )
+            }
+        }
         interactor.playerDestroy()
-        interactor.initPlayer("${WORDS_AUDIO}$wordId")
+        interactor.initPlayer(url)
         interactor.play()
     }
 
@@ -60,7 +68,8 @@ class ThirdTaskViewModel
             }
             it.copy(
                 currentWords = newCurrentWords,
-                shareWords = newShareWords
+                shareWords = newShareWords,
+                isGuessWrong = false
             )
         }
     }
@@ -75,11 +84,11 @@ class ThirdTaskViewModel
                 )
             }
         } else {
+            playSound(ERROR_AUDIO)
             _uiState.update { state ->
-                uiState.value.shareWords
                 state.copy(
                     currentWords = mutableListOf(null, null, null),
-                    isAnswerCorrect = false,
+                    isGuessWrong = true,
                     shareWords = uiState.value.words.map { words ->
                         words.title
                     }.shuffled()

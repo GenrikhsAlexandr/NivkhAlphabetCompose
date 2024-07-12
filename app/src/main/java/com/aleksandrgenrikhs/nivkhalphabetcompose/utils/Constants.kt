@@ -22,4 +22,5 @@ object Constants {
     const val LETTER_AUDIO = "firsttask/audio/letters/"
     const val WORDS_AUDIO = "firsttask/audio/words/"
     const val ERROR_AUDIO = "firsttask/audio/error"
+    const val FINISH_AUDIO = "firsttask/audio/finish"
 }

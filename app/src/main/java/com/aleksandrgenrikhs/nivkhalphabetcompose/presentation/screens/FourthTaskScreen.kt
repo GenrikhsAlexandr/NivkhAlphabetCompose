@@ -17,6 +17,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.Dialog
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.FourthTaskLayout
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.NotConnected
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.FourthTaskViewModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO
 import kotlinx.coroutines.delay
 
@@ -53,6 +54,9 @@ fun FourthTaskScreen(
                 onDelete = { viewModel.deleteLastLetter() }
             )
             if (isCompleted) {
+                if (!isFinishAudio) {
+                    viewModel.playSound(FINISH_AUDIO)
+                }
                 val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task5)
                 var showDialog by remember { mutableStateOf(false) }
                 LaunchedEffect(key1 = null) {
@@ -81,7 +85,7 @@ fun FourthTaskScreen(
                         textButtonBack = stringResource(id = R.string.backAlphabet),
                         textButtonNext = stringResource(id = R.string.repeat),
                         isVisibleSecondButton = true,
-                        onDismissRequest = {}
+                        onDismissRequest = {},
                     )
                 }
             }

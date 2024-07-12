@@ -18,6 +18,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.Dialog
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.NotConnected
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.SecondTaskLayout
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.SecondTaskViewModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 import kotlinx.coroutines.delay
 
 @Composable
@@ -49,6 +50,9 @@ fun SecondTaskScreen(
                 isClickable = !isAnswerCorrect
             )
             if (isCompleted) {
+                if (!isFinishAudio) {
+                    viewModel.playSound(FINISH_AUDIO)
+                }
                 val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task2)
                 var showDialog by remember { mutableStateOf(false) }
                 LaunchedEffect(key1 = null) {

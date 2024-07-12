@@ -9,4 +9,6 @@ data class ThirdTaskUIState(
     val isAnswerCorrect: Boolean = false,
     val isNetworkConnected: Boolean,
     val currentWords: List<String?> = listOf(null, null, null),
+    val isFinishAudio: Boolean = false,
+    val isGuessWrong: Boolean = false,
 )

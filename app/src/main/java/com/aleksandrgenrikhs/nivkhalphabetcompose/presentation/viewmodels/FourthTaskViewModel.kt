@@ -6,6 +6,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.interator.AlphabetInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.FourthTaskUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -104,6 +105,13 @@ class FourthTaskViewModel
     }
 
     fun playSound(url: String) {
+        if (url == FINISH_AUDIO) {
+            _uiState.update { state ->
+                state.copy(
+                    isFinishAudio = true
+                )
+            }
+        }
         interactor.playerDestroy()
         interactor.initPlayer(url)
         interactor.play()

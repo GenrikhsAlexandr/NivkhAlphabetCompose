@@ -37,7 +37,9 @@ class TasksViewModel
                     task.task.stableId,
                     letter
                 )
+                println("isTaskCompleted =$isTaskCompleted")
                 if (isTaskCompleted && index < uiState.task.lastIndex) {
+                    println("isNextTaskVisible = ${taskList[index + 1]}")
                     taskList[index + 1] = taskList[index + 1].copy(
                         isNextTaskVisible = true,
                     )

@@ -17,14 +17,16 @@ class PrefRepositoryImpl
         )
     }
 
-
     override fun taskCompleted(taskId: Int, letterId: String) {
         val currentValue = preferences.getString(taskId.toString(), "")
-        preferences.edit()
-            .putString(
-                taskId.toString(), "$currentValue:$letterId"
-            )
-            .apply()
+        val letters = currentValue?.split(":") ?: emptyList()
+        if (!letters.contains(letterId)) {
+            preferences.edit()
+                .putString(
+                    taskId.toString(), "$currentValue:$letterId"
+                )
+                .apply()
+        }
     }
 
     override fun getLetterCompleted(taskId: Int): List<Letters>? {

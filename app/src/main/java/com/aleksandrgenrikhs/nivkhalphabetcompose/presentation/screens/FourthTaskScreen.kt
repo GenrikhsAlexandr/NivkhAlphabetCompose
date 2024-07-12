@@ -75,7 +75,7 @@ fun FourthTaskScreen(
                             navController.navigate(
                                 "${NavigationDestination.TasksScreen.destination}/$letter"
                             ) {
-                                popUpTo("${NavigationDestination.FourthTaskScreen.destination}/$letter") {
+                                popUpTo("${NavigationDestination.TasksScreen.destination}/$letter") {
                                     inclusive = true
                                 }
                             }

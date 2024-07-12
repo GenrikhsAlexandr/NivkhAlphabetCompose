@@ -61,7 +61,6 @@ fun NavHost(
                 route = NavigationDestination.LettersScreen.destination,
             ) {
                 LetterScreen(
-                    modifier = modifier,
                     navController = navController,
                 )
             }

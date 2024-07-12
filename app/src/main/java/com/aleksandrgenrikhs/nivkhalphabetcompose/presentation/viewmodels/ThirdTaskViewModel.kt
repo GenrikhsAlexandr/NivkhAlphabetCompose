@@ -2,6 +2,7 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels
 
 import android.content.ClipData
 import androidx.lifecycle.ViewModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.interator.AlphabetInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.ThirdTaskUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
@@ -83,6 +84,7 @@ class ThirdTaskViewModel
                     isAnswerCorrect = true
                 )
             }
+            interactor.taskCompleted(Task.THIRD.stableId, uiState.value.selectedLetter)
         } else {
             playSound(ERROR_AUDIO)
             _uiState.update { state ->

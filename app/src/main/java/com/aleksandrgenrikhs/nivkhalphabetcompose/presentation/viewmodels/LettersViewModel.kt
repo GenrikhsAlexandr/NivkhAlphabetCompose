@@ -29,11 +29,8 @@ class LettersViewModel
     )
     val uiState = _uiState.asStateFlow()
 
-    fun isLetterCompleted() {
+    suspend fun isLetterCompleted() {
         val lettersCompleted = interactor.getLetterCompleted(Task.FOURTH.stableId)
-        println("lettersCompleted =$lettersCompleted")
-        println("lettersCompletedSize =${lettersCompleted?.size}")
-
         if (lettersCompleted != null) {
             _uiState.update { uiState ->
                 uiState.copy(
@@ -42,7 +39,8 @@ class LettersViewModel
                             isLetterCompleted = lettersCompleted.contains(letter.letter)
                         )
                     },
-                    isVisibleRepeat = lettersCompleted.size > 45
+                    isVisibleRepeat = lettersCompleted.size > 45,
+                    listLettersCompleted = lettersCompleted
                 )
             }
         }

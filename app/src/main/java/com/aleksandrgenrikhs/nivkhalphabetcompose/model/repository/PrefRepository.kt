@@ -6,7 +6,7 @@ interface PrefRepository {
 
     fun taskCompleted(taskId: Int, letterId: String)
 
-    fun isTaskCompleted(taskId: Int, letterId: String): Boolean
+    suspend fun isTaskCompleted(taskId: Int, letterId: String): Boolean
 
-    fun getLetterCompleted(taskId: Int): List<Letters>?
+    suspend fun getLetterCompleted(taskId: Int): List<Letters>?
 }

@@ -1,34 +1,31 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Done
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorCardLetterItem
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorError
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorRight
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
@@ -52,7 +49,7 @@ fun NivkhKeyboard(
         Box(
             modifier = modifier
                 .fillMaxWidth()
-                .size(50.dp)
+                .size(60.dp)
                 .padding(horizontal = 32.dp)
                 .border(
                     shape = RoundedCornerShape(8.dp),
@@ -60,8 +57,7 @@ fun NivkhKeyboard(
                     width = 1.dp
                 ),
             contentAlignment = Alignment.Center,
-
-            )
+        )
         {
             Text(
                 text = input,
@@ -73,298 +69,257 @@ fun NivkhKeyboard(
                 textAlign = TextAlign.Center,
             )
         }
-        Spacer(modifier = modifier.height(8.dp))
-        Box(
-            modifier = modifier
-                .background(colorProgressBar)
-                .wrapContentSize(),
-            contentAlignment = Alignment.Center
-        )
-        {
-            Column(
-                modifier = modifier
-                    .wrapContentSize(),
-                verticalArrangement = Arrangement.Top
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    LetterButton(
-                        letter = "а",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "б",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "в",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "г",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "ӷ",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "ғ",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    LetterButton(
-                        letter = "ӻ",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "д",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "е",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "ё",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "ж",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "з",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                }
+    }
+    Column(
+        modifier = modifier
+            .padding(horizontal = 24.dp)
+            .wrapContentSize(),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            LetterButton(
+                letter = "а",
+                onClick = onValueChange,
 
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    LetterButton(
-                        letter = "и",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "й",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "к",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "кʼ",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "ӄ",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
+                )
+            LetterButton(
+                letter = "б",
+                onClick = onValueChange,
 
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    LetterButton(
-                        letter = "ӄʼ",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "л",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "м",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "н",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "ӈ",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
+                )
+            LetterButton(
+                letter = "в",
+                onClick = onValueChange,
 
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    LetterButton(
-                        letter = "о",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "п",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "пʼ",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "р",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "р̆",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    LetterButton(
-                        letter = "с",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "т",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "тʼ",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "у",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "ў",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    LetterButton(
-                        letter = "ф",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "х",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "ӿ",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "ӽ",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "ц",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    LetterButton(
-                        letter = "ч",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "ш",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "щ",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "ъ",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "ы",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "ь",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
+                )
+            LetterButton(
+                letter = "г",
+                onClick = onValueChange,
 
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    DeleteButton(onDelete = onDelete, modifier = Modifier.weight(1f))
-                    LetterButton(
-                        letter = "э",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "ю",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    LetterButton(
-                        letter = "я",
-                        onClick = onValueChange,
-                        modifier = Modifier.weight(1f)
-                    )
-                    DoneButton(
-                        onDone = onDone,
-                        modifier = Modifier.weight(1f),
-                        word = input,
-                        onClickable = onClickable
-                    )
+                )
+            LetterButton(
+                letter = "ӷ",
+                onClick = onValueChange,
 
-                }
-            }
+                )
+            LetterButton(
+                letter = "ғ",
+                onClick = onValueChange,
+
+                )
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            LetterButton(
+                letter = "ӻ",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "д",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "е",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "ё",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "ж",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "з",
+                onClick = onValueChange,
+            )
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            LetterButton(
+                letter = "и",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "й",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "к",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "кʼ",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "ӄ",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "ӄʼ",
+                onClick = onValueChange,
+            )
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            LetterButton(
+                letter = "л",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "м",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "н",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "ӈ",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "о",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "п",
+                onClick = onValueChange,
+            )
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            LetterButton(
+                letter = "пʼ",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "р",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "р̆",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "с",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "т",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "тʼ",
+                onClick = onValueChange,
+            )
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            LetterButton(
+                letter = "у",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "ў",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "ф",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "х",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "ӿ",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "ӽ",
+                onClick = onValueChange,
+            )
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            LetterButton(
+                letter = "ц",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "ч",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "ш",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "щ",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "ъ",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "ы",
+                onClick = onValueChange,
+            )
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            DeleteButton(onDelete = onDelete)
+            LetterButton(
+                letter = "ь",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "э",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "ю",
+                onClick = onValueChange,
+            )
+            LetterButton(
+                letter = "я",
+                onClick = onValueChange,
+            )
+            DoneButton(
+                onDone = onDone,
+                word = input,
+                onClickable = onClickable
+            )
         }
     }
 }
@@ -375,20 +330,22 @@ private fun LetterButton(
     onClick: (letter: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    OutlinedButton(
-        onClick = {
-            onClick(letter)
-        },
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = colorPrimary,
+        ),
         modifier = modifier
-            .wrapContentSize(),
-        border = ButtonDefaults.outlinedButtonBorder.copy(
-            brush = SolidColor(colorCardLetterItem),
-        )
+            .wrapContentSize()
+            .padding(16.dp)
+            .clip(CircleShape)
+            .clickable(onClick = {
+                onClick(letter)
+            }),
     ) {
         Text(
             textAlign = TextAlign.Center,
             text = letter,
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.displayMedium,
         )
     }
 }
@@ -398,21 +355,23 @@ private fun DeleteButton(
     onDelete: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    OutlinedButton(
-        onClick = {
-            onDelete()
-        },
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = colorPrimary,
+        ),
         modifier = modifier
-            .wrapContentSize(),
-
-        border = ButtonDefaults.outlinedButtonBorder.copy(
-            brush = SolidColor(colorCardLetterItem)
-        )
+            .wrapContentSize()
+            .padding(16.dp)
+            .clip(CircleShape)
+            .clickable(onClick = {
+                onDelete()
+            }),
     ) {
-        Icon(
-            imageVector = Icons.Default.ArrowBack,
-            contentDescription = "Done",
-            tint = colorError
+        Text(
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.ExtraBold,
+            text = "←",
+            style = MaterialTheme.typography.displayMedium,
         )
     }
 }
@@ -424,22 +383,28 @@ private fun DoneButton(
     modifier: Modifier = Modifier,
     onClickable: Boolean
 ) {
-    OutlinedButton(
-        onClick = {
-            onDone(word)
-        },
-        enabled = onClickable,
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = colorPrimary,
+        ),
         modifier = modifier
-            .wrapContentSize(),
-        border = ButtonDefaults.outlinedButtonBorder.copy(
-            brush = SolidColor(colorCardLetterItem)
-        )
-    ) {
-        Icon(
-            imageVector = Icons.Default.Done,
-            contentDescription = "Done",
-            tint = colorRight,
-            modifier = modifier.size(50.dp)
+            .wrapContentSize()
+            .padding(16.dp)
+            .clip(CircleShape)
+            .clickable(
+                onClick = {
+                    onDone(word)
+                },
+                enabled = onClickable
+            ),
+
+        ) {
+        Text(
+            textAlign = TextAlign.Center,
+            text = "✓",
+            style = MaterialTheme.typography.displayMedium,
+            fontWeight = FontWeight.ExtraBold,
+            color = colorRight
         )
     }
 }

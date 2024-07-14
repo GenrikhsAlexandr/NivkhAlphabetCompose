@@ -10,10 +10,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.contentColorFor
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
@@ -27,7 +26,8 @@ fun AppBar(
     modifier: Modifier = Modifier,
     currentScreen: String,
     navController: NavHostController?,
-    letter: String?
+    letter: String?,
+    scrollBehavior: TopAppBarScrollBehavior?
 ) {
     CenterAlignedTopAppBar(
         title = {
@@ -35,7 +35,7 @@ fun AppBar(
                 NavigationDestination.LettersScreen.destination -> {
                     Text(
                         text = stringResource(id = R.string.app_name),
-                        style = MaterialTheme.typography.bodyLarge
+                        style = MaterialTheme.typography.titleLarge
                     )
                 }
 
@@ -49,21 +49,21 @@ fun AppBar(
                 NavigationDestination.FirstTaskScreen.destination -> {
                     Text(
                         text = stringResource(id = R.string.firstTask),
-                        style = MaterialTheme.typography.bodyLarge,
+                        style = MaterialTheme.typography.titleLarge,
                     )
                 }
 
                 NavigationDestination.SecondTaskScreen.destination -> {
                     Text(
                         text = stringResource(id = R.string.secondTask),
-                        style = MaterialTheme.typography.bodyLarge
+                        style = MaterialTheme.typography.titleLarge
                     )
                 }
 
                 NavigationDestination.ThirdTaskScreen.destination -> {
                     Text(
                         text = stringResource(id = R.string.thirdTask),
-                        style = MaterialTheme.typography.bodyLarge
+                        style = MaterialTheme.typography.titleLarge
                     )
                 }
 
@@ -73,11 +73,18 @@ fun AppBar(
                         style = MaterialTheme.typography.titleLarge
                     )
                 }
+
+                NavigationDestination.AboutScreen.destination -> {
+                    Text(
+                        text = stringResource(id = R.string.about),
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                }
             }
         },
         navigationIcon = {
             if (currentScreen != NavigationDestination.LettersScreen.destination
-                && currentScreen != NavigationDestination.StartScreen.destination
+                && currentScreen != NavigationDestination.SplashScreen.destination
             ) {
                 IconButton(onClick = {
                     navController?.popBackStack()
@@ -90,11 +97,19 @@ fun AppBar(
                 }
             }
         },
+        actions = {
+            if (currentScreen == NavigationDestination.LettersScreen.destination) {
+                AboutMenu {
+                    navController?.navigate(NavigationDestination.AboutScreen.destination)
+                }
+            }
+        },
         modifier = modifier
             .background(colorPrimary),
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.Transparent,
-            contentColorFor(colorPrimary)
-        )
+            containerColor = colorPrimary,
+            scrolledContainerColor = (colorPrimary)
+        ),
+        scrollBehavior = scrollBehavior,
     )
 }

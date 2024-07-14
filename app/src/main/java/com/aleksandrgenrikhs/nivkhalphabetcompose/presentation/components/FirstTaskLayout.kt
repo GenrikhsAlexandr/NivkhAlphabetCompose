@@ -87,17 +87,19 @@ fun FirstTaskLayout(
             contentPadding = PaddingValues(8.dp)
         )
         {
-            items(words) {
-                with(it) {
-                    CardWord(
-                        progress = progress,
-                        title = title,
-                        icon = icon,
-                        onClick = { onClick(wordId) },
-                        isClickable = isClickable && !isPlaying,
-                        isVisible = isVisibleWord,
-                        getWordError = getWordError
-                    )
+            if (words.isNotEmpty()) {
+                items(words) {
+                    with(it) {
+                        CardWord(
+                            progress = progress,
+                            title = title,
+                            icon = icon,
+                            onClick = { onClick(wordId) },
+                            isClickable = isClickable && !isPlaying,
+                            isVisible = isVisibleWord,
+                            getWordError = getWordError
+                        )
+                    }
                 }
             }
         }

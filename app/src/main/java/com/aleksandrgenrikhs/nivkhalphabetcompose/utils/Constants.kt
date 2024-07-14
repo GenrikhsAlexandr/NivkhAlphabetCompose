@@ -9,11 +9,11 @@ object Constants {
     const val THIRD_TASK_SCREEN = "third_task"
     const val FOURTH_TASK_SCREEN = "fourth_task"
     const val FIFTH_TASK_SCREEN = "fifth_task"
-    const val START_SCREEN = "start_screen"
+    const val SPLASH_SCREEN = "splash_screen"
+    const val ABOUT_SCREEN = "about_screen"
 
     //Костанты для передачи аргументов
     const val LETTER_KEY = "letter"
-    const val TASK_KEY = "task"
 
     //URI константы
     const val WORDS_URL = "firsttask/words/words.json"

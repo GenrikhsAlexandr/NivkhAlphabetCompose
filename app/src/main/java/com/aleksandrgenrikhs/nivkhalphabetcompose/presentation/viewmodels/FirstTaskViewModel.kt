@@ -88,8 +88,7 @@ class FirstTaskViewModel
             uiState.value.selectedLetter -> {
                 _uiState.update { uiState ->
                     val newProgressLetter = uiState.progressLetter + 1
-                    val isVisibleWord = newProgressLetter == 5
-                    val newIsClickableLetter = newProgressLetter < 5
+                    val isVisibleWord = newProgressLetter > 4
                     val newWordsList = uiState.words.toMutableList().apply {
                         if (uiState.words.isNotEmpty()) {
                             if (isVisibleWord) {
@@ -102,7 +101,6 @@ class FirstTaskViewModel
                     uiState.copy(
                         progressLetter = newProgressLetter,
                         isVisibleWord = isVisibleWord,
-                        isClickableLetter = newIsClickableLetter,
                         words = newWordsList,
                         isCompletedLetter = isVisibleWord
                     )

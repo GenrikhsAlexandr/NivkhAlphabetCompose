@@ -29,7 +29,7 @@ class TasksViewModel
     ))
     val uiState = _uiState.asStateFlow()
 
-    fun isTaskCompleted(letter: String) {
+    suspend fun isTaskCompleted(letter: String) {
         _uiState.update { uiState ->
             val taskList = uiState.task.toMutableList()
             uiState.task.mapIndexed { index, task ->

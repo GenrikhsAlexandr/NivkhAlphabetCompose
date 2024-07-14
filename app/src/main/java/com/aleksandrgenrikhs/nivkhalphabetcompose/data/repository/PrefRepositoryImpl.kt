@@ -29,7 +29,7 @@ class PrefRepositoryImpl
         }
     }
 
-    override fun getLetterCompleted(taskId: Int): List<Letters>? {
+    override suspend fun getLetterCompleted(taskId: Int): List<Letters>? {
         val completedLetter = preferences.getString(
             taskId.toString(), ""
         )
@@ -38,7 +38,7 @@ class PrefRepositoryImpl
         }
     }
 
-    override fun isTaskCompleted(taskId: Int, letterId: String): Boolean {
+    override suspend fun isTaskCompleted(taskId: Int, letterId: String): Boolean {
         val completedLetters = getLetterCompleted(taskId)
         return completedLetters?.contains(Letters.getById(letterId)) ?: false
     }

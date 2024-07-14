@@ -42,52 +42,50 @@ fun FourthTaskScreen(
             )
         }
 
-        if (title.isNotEmpty()) {
-            FourthTaskLayout(
-                onClick = { viewModel.playSound("${WORDS_AUDIO}${wordId}") },
-                icon = icon,
-                onClickable = isClickable,
-                onDone = (viewModel::checkUserGuess),
-                isGuessWrong = isGuessWrong,
-                onUserGuessChanged = { viewModel.updateUserGuess(it.appendChar(userGuess)) },
-                userGuess = userGuess,
-                onDelete = { viewModel.deleteLastLetter() }
-            )
-            if (isCompleted) {
-                val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task5)
-                var showDialog by remember { mutableStateOf(false) }
-                LaunchedEffect(key1 = null) {
-                    delay(2000)
-                    showDialog = true
+        FourthTaskLayout(
+            onClick = { viewModel.playSound("${WORDS_AUDIO}${wordId}") },
+            icon = icon,
+            onClickable = isClickable,
+            onDone = (viewModel::checkUserGuess),
+            isGuessWrong = isGuessWrong,
+            onUserGuessChanged = { viewModel.updateUserGuess(it.appendChar(userGuess)) },
+            userGuess = userGuess,
+            onDelete = { viewModel.deleteLastLetter() }
+        )
+        if (isCompleted) {
+            val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task5)
+            var showDialog by remember { mutableStateOf(false) }
+            LaunchedEffect(key1 = null) {
+                delay(2000)
+                showDialog = true
+            }
+            if (showDialog) {
+                if (!isFinishAudio) {
+                    viewModel.playSound(FINISH_AUDIO)
                 }
-                if (showDialog) {
-                    if (!isFinishAudio) {
-                        viewModel.playSound(FINISH_AUDIO)
-                    }
-                    Dialog(
-                        navigationBack = {
-                            navController.popBackStack(
-                                NavigationDestination.LettersScreen.destination,
-                                inclusive = false
-                            )
-                        },
-                        navigationNext = {
-                            navController.navigate(
-                                "${NavigationDestination.TasksScreen.destination}/$letter"
-                            ) {
-                                popUpTo("${NavigationDestination.TasksScreen.destination}/$letter") {
-                                    inclusive = true
-                                }
+                Dialog(
+                    navigationBack = {
+                        navController.popBackStack(
+                            NavigationDestination.LettersScreen.destination,
+                            inclusive = false
+                        )
+                    },
+                    navigationNext = {
+                        navController.navigate(
+                            "${NavigationDestination.TasksScreen.destination}/$letter"
+                        ) {
+                            popUpTo("${NavigationDestination.TasksScreen.destination}/$letter") {
+                                inclusive = true
                             }
-                        },
-                        painter = painter,
-                        title = stringResource(id = R.string.textEndFifthTask),
-                        textButtonBack = stringResource(id = R.string.backAlphabet),
-                        textButtonNext = stringResource(id = R.string.repeat),
-                        isVisibleSecondButton = true,
-                        onDismissRequest = {},
-                    )
-                }
+                        }
+                    },
+                    painter = painter,
+                    title = stringResource(id = R.string.textEndFifthTask),
+                    textButtonBack = stringResource(id = R.string.backAlphabet),
+                    textButtonNext = stringResource(id = R.string.repeat),
+                    isVisibleSecondButton = true,
+                    onDismissRequest = {},
+                )
             }
         }
     }

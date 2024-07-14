@@ -50,7 +50,7 @@ fun Dialog(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(16.dp),
+                .padding(horizontal = 16.dp, vertical = 32.dp),
             shape = shapes.medium,
         ) {
             Box(

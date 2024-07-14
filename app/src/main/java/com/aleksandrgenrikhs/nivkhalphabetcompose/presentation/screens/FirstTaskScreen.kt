@@ -26,30 +26,27 @@ fun FirstTaskScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     viewModel.setLetter(letter)
-
-    LaunchedEffect(key1 = Unit, block = {
-        viewModel.getWords(letter)
-    })
-
     with(uiState) {
+        LaunchedEffect(key1 = selectedLetter, block = {
+            viewModel.getWords(letter)
+        })
+
         if (!isNetworkConnected) {
             NotConnected(
                 navController = navController
             )
         }
+        FirstTaskLayout(
+            words = words,
+            onClick = (viewModel::onClickElement),
+            letter = letter,
+            isClickableLetter = isClickableLetter,
+            isPlaying = isPlaying,
+            isVisibleWord = isVisibleWord,
+            getWordError = getWordError,
+            progressLetter = progressLetter
+        )
 
-        if (words.isNotEmpty()) {
-            FirstTaskLayout(
-                words = words,
-                onClick = (viewModel::onClickElement),
-                letter = letter,
-                isClickableLetter = isClickableLetter,
-                isPlaying = isPlaying,
-                isVisibleWord = isVisibleWord,
-                getWordError = getWordError,
-                progressLetter = progressLetter
-            )
-        }
         if (isCompleted && !isPlaying) {
             if (!isFinishAudio) {
                 viewModel.playSound(FINISH_AUDIO)

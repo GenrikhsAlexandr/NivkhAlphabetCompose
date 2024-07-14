@@ -10,19 +10,24 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,6 +40,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlp
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorCardLetterItem
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorRight
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.shapes
 import com.idapgroup.autosizetext.AutoSizeText
@@ -50,20 +56,20 @@ fun LettersLayout(
         modifier = modifier
             .background(colorPrimary)
             .padding(
-                start = 8.dp,
-                end = 8.dp,
+                start = 16.dp,
+                end = 16.dp,
             ),
         contentPadding = PaddingValues(vertical = 8.dp),
-        columns = GridCells.Adaptive(100.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        columns = GridCells.Adaptive(80.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(letters, key = { letter -> letter.letter.title }) { item ->
             with(item) {
                 LetterItem(
                     letter = letter.title,
                     onClick = { onClick(letter.title) },
-                    isClickable = isLetterCompleted
+                    isCompleted = isLetterCompleted
                 )
             }
         }
@@ -83,35 +89,31 @@ fun LetterItem(
     letter: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    isClickable: Boolean,
+    isCompleted: Boolean,
 ) {
-    val backgroundColor = if (isClickable) colorProgressBar else colorCardLetterItem
+    val textColor = if (isCompleted) colorRight else colorText
 
-    ElevatedCard(
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = colorPrimary,
         ),
         modifier = modifier
-            .size(100.dp)
-            .border(width = 1.dp, color = colorProgressBar, shape = shapes.small)
+            .wrapContentSize()
+            .clip(CircleShape)
             .clickable(onClick = onClick),
-        shape = shapes.small
+
+        //  shape = shapes.small
     ) {
-        Box(
+        Text(
+            text = letter,
             modifier = modifier
-                .background(backgroundColor)
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center
+                .wrapContentSize()
+                .padding(8.dp),
+            color = textColor,
+            textAlign = TextAlign.Center,
+            maxLines = 1,
+            style = MaterialTheme.typography.displayMedium,
         )
-        {
-            AutoSizeText(
-                text = letter,
-                textAlign = TextAlign.Center,
-                maxLines = 1,
-                style = MaterialTheme.typography.displayLarge,
-                minFontSize = 50.sp,
-            )
-        }
     }
 }
 

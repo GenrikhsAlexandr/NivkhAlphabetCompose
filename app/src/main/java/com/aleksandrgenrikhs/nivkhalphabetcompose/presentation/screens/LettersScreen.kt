@@ -1,6 +1,7 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -15,11 +16,13 @@ fun LetterScreen(
     navController: NavController,
     viewModel: LettersViewModel = hiltViewModel()
 ) {
-
     val uiState by viewModel.uiState.collectAsState()
 
-    viewModel.isLetterCompleted()
     with(uiState) {
+        LaunchedEffect(key1 = listLettersCompleted, block = {
+            viewModel.isLetterCompleted()
+        }
+        )
         LettersLayout(
             letters = letters,
             onClick = { letter ->

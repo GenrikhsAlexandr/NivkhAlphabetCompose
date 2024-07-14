@@ -41,10 +41,10 @@ class AlphabetInteractor
     fun taskCompleted(taskId: Int, letterId: String) =
         sharedPreferencesRepository.taskCompleted(taskId, letterId)
 
-    fun isTaskCompleted(taskId: Int, letterId: String): Boolean =
+    suspend fun isTaskCompleted(taskId: Int, letterId: String): Boolean =
         sharedPreferencesRepository.isTaskCompleted(taskId, letterId)
 
-    fun getLetterCompleted(letters: Int): List<Letters>? =
+    suspend fun getLetterCompleted(letters: Int): List<Letters>? =
         sharedPreferencesRepository.getLetterCompleted(letters)
 
     fun isNetWorkConnected(): Boolean = alphabetRepository.isNetWorkConnected()

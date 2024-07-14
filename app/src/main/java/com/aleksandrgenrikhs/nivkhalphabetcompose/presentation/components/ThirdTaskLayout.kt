@@ -81,14 +81,15 @@ fun ThirdTaskLayout(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Row(
+        if (words.isNotEmpty()) {
+            Row(
             modifier = modifier
                 .fillMaxWidth()
                 .padding(8.dp),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            IconButton(
+                IconButton(
                 icon = words[0].icon,
                 onClick = { onIconClick("${WORDS_AUDIO}${words[0].wordId}") },
             )
@@ -154,13 +155,14 @@ fun ThirdTaskLayout(
                 )
             }
         }
-        Spacer(modifier = Modifier.weight(1f))
-        SubmitButton(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            onDone = onDone,
-        )
+            Spacer(modifier = Modifier.weight(1f))
+            SubmitButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                onDone = onDone,
+            )
+        }
     }
 }
 

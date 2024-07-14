@@ -42,51 +42,49 @@ fun SecondTaskScreen(
             )
         }
 
-        if (words.isNotEmpty()) {
-            SecondTaskLayout(
-                words = words,
-                letter = letter,
-                onClick = (viewModel::flipCard),
-                isClickable = !isAnswerCorrect
-            )
-            if (isCompleted) {
-                val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task2)
-                var showDialog by remember { mutableStateOf(false) }
-                LaunchedEffect(key1 = null) {
-                    delay(2000)
-                    showDialog = true
+        SecondTaskLayout(
+            words = words,
+            letter = letter,
+            onClick = (viewModel::flipCard),
+            isClickable = !isAnswerCorrect
+        )
+        if (isCompleted) {
+            val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task2)
+            var showDialog by remember { mutableStateOf(false) }
+            LaunchedEffect(key1 = null) {
+                delay(2000)
+                showDialog = true
+            }
+            if (showDialog) {
+                if (!isFinishAudio) {
+                    viewModel.playSound(FINISH_AUDIO)
                 }
-                if (showDialog) {
-                    if (!isFinishAudio) {
-                        viewModel.playSound(FINISH_AUDIO)
-                    }
-                    Dialog(
-                        navigationBack = {
-                            navController.popBackStack(
-                                NavigationDestination.LettersScreen.destination,
-                                inclusive = false
-                            )
-                        },
-                        navigationNext = {
-                            navController.navigate(
-                                "${NavigationDestination.ThirdTaskScreen.destination}/$letter"
-                            ) {
-                                popUpTo("${NavigationDestination.SecondTaskScreen.destination}/$letter") {
-                                    inclusive = true
-                                }
+                Dialog(
+                    navigationBack = {
+                        navController.popBackStack(
+                            NavigationDestination.LettersScreen.destination,
+                            inclusive = false
+                        )
+                    },
+                    navigationNext = {
+                        navController.navigate(
+                            "${NavigationDestination.ThirdTaskScreen.destination}/$letter"
+                        ) {
+                            popUpTo("${NavigationDestination.SecondTaskScreen.destination}/$letter") {
+                                inclusive = true
                             }
-                        },
-                        painter = painter,
-                        title = stringResource(id = R.string.textEndSecondTask),
-                        textButtonBack = stringResource(id = R.string.backAlphabet),
-                        textButtonNext = stringResource(
-                            id = R.string.nextTask,
-                            Task.THIRD.stableId
-                        ),
-                        isVisibleSecondButton = true,
-                        onDismissRequest = {}
-                    )
-                }
+                        }
+                    },
+                    painter = painter,
+                    title = stringResource(id = R.string.textEndSecondTask),
+                    textButtonBack = stringResource(id = R.string.backAlphabet),
+                    textButtonNext = stringResource(
+                        id = R.string.nextTask,
+                        Task.THIRD.stableId
+                    ),
+                    isVisibleSecondButton = true,
+                    onDismissRequest = {}
+                )
             }
         }
     }

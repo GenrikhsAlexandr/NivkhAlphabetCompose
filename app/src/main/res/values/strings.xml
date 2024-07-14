@@ -4,6 +4,7 @@
     <string name="app_name">Нивхский алфавит</string>
     <string name="textStartApp">Выбери букву, которую хочешь изучить.</string>
     <string name="letsGo">Вперед к знаниям!</string>
+    <string name="about">О приложении</string>
 
     <!--список заданий-->
     <string name="firstTask">Выучи букву</string>

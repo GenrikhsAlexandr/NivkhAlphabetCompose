@@ -2,7 +2,6 @@
 agp = "8.3.2"
 autosizetextCompose = "0.3.0"
 coilCompose = "2.6.0"
-coreSplashscreen = "1.0.1"
 hilt = "2.49"
 hiltNavigationCompose = "1.2.0"
 kotlin = "1.9.0"
@@ -21,7 +20,6 @@ kotlinSerialization = "2.0.0"
 uiTextGoogleFonts = "1.6.8"
 
 [libraries]
-androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

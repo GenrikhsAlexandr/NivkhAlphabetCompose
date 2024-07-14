@@ -39,53 +39,51 @@ fun ThirdTaskScreen(
                 navController = navController
             )
         }
-        if (words.isNotEmpty()) {
-            with(uiState) {
-                ThirdTaskLayout(
-                    words = words,
-                    currentWords = currentWords,
-                    shareWords = shareWords,
-                    isGuessWrong = isGuessWrong,
-                    onIconClick = (viewModel::playSound),
-                    onDone = (viewModel::checkAnswer),
-                ) { transferData: DragAndDropEvent, index: Int ->
-                    viewModel.updateReceivingContainer(
-                        transferData.toAndroidDragEvent().clipData,
-                        index
-                    )
+        with(uiState) {
+            ThirdTaskLayout(
+                words = words,
+                currentWords = currentWords,
+                shareWords = shareWords,
+                isGuessWrong = isGuessWrong,
+                onIconClick = (viewModel::playSound),
+                onDone = (viewModel::checkAnswer),
+            ) { transferData: DragAndDropEvent, index: Int ->
+                viewModel.updateReceivingContainer(
+                    transferData.toAndroidDragEvent().clipData,
+                    index
+                )
+            }
+            if (isAnswerCorrect) {
+                if (!isFinishAudio) {
+                    viewModel.playSound(FINISH_AUDIO)
                 }
-                if (isAnswerCorrect) {
-                    if (!isFinishAudio) {
-                        viewModel.playSound(FINISH_AUDIO)
-                    }
-                    val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task3)
-                    Dialog(
-                        navigationBack = {
-                            navController.popBackStack(
-                                NavigationDestination.LettersScreen.destination,
-                                inclusive = false
-                            )
-                        },
-                        navigationNext = {
-                            navController.navigate(
-                                "${NavigationDestination.FourthTaskScreen.destination}/$letter"
-                            ) {
-                                popUpTo("${NavigationDestination.ThirdTaskScreen.destination}/$letter") {
-                                    inclusive = true
-                                }
+                val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task3)
+                Dialog(
+                    navigationBack = {
+                        navController.popBackStack(
+                            NavigationDestination.LettersScreen.destination,
+                            inclusive = false
+                        )
+                    },
+                    navigationNext = {
+                        navController.navigate(
+                            "${NavigationDestination.FourthTaskScreen.destination}/$letter"
+                        ) {
+                            popUpTo("${NavigationDestination.ThirdTaskScreen.destination}/$letter") {
+                                inclusive = true
                             }
-                        },
-                        painter = painter,
-                        title = stringResource(id = R.string.textEndThirdTask),
-                        textButtonBack = stringResource(id = R.string.backAlphabet),
-                        textButtonNext = stringResource(
-                            id = R.string.nextTask,
-                            Task.FOURTH.stableId
-                        ),
-                        isVisibleSecondButton = true,
-                        onDismissRequest = {}
-                    )
-                }
+                        }
+                    },
+                    painter = painter,
+                    title = stringResource(id = R.string.textEndThirdTask),
+                    textButtonBack = stringResource(id = R.string.backAlphabet),
+                    textButtonNext = stringResource(
+                        id = R.string.nextTask,
+                        Task.FOURTH.stableId
+                    ),
+                    isVisibleSecondButton = true,
+                    onDismissRequest = {}
+                )
             }
         }
     }

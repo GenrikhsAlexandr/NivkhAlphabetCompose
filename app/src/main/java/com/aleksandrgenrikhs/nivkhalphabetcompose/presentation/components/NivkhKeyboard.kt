@@ -1,5 +1,6 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -10,8 +11,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -73,7 +76,8 @@ fun NivkhKeyboard(
     Column(
         modifier = modifier
             .padding(horizontal = 24.dp)
-            .wrapContentSize(),
+            .wrapContentSize()
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -107,17 +111,17 @@ fun NivkhKeyboard(
                 onClick = onValueChange,
 
                 )
-            LetterButton(
-                letter = "ғ",
-                onClick = onValueChange,
-
-                )
         }
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
+            LetterButton(
+                letter = "ғ",
+                onClick = onValueChange,
+
+                )
             LetterButton(
                 letter = "ӻ",
                 onClick = onValueChange,
@@ -134,6 +138,12 @@ fun NivkhKeyboard(
                 letter = "ё",
                 onClick = onValueChange,
             )
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
             LetterButton(
                 letter = "ж",
                 onClick = onValueChange,
@@ -142,12 +152,6 @@ fun NivkhKeyboard(
                 letter = "з",
                 onClick = onValueChange,
             )
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
-        ) {
             LetterButton(
                 letter = "и",
                 onClick = onValueChange,
@@ -160,6 +164,12 @@ fun NivkhKeyboard(
                 letter = "к",
                 onClick = onValueChange,
             )
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
             LetterButton(
                 letter = "кʼ",
                 onClick = onValueChange,
@@ -172,12 +182,6 @@ fun NivkhKeyboard(
                 letter = "ӄʼ",
                 onClick = onValueChange,
             )
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
-        ) {
             LetterButton(
                 letter = "л",
                 onClick = onValueChange,
@@ -186,6 +190,12 @@ fun NivkhKeyboard(
                 letter = "м",
                 onClick = onValueChange,
             )
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
             LetterButton(
                 letter = "н",
                 onClick = onValueChange,
@@ -202,16 +212,16 @@ fun NivkhKeyboard(
                 letter = "п",
                 onClick = onValueChange,
             )
+            LetterButton(
+                letter = "пʼ",
+                onClick = onValueChange,
+            )
         }
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
-            LetterButton(
-                letter = "пʼ",
-                onClick = onValueChange,
-            )
             LetterButton(
                 letter = "р",
                 onClick = onValueChange,
@@ -258,16 +268,16 @@ fun NivkhKeyboard(
                 letter = "ӿ",
                 onClick = onValueChange,
             )
-            LetterButton(
-                letter = "ӽ",
-                onClick = onValueChange,
-            )
         }
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
+            LetterButton(
+                letter = "ӽ",
+                onClick = onValueChange,
+            )
             LetterButton(
                 letter = "ц",
                 onClick = onValueChange,
@@ -284,6 +294,12 @@ fun NivkhKeyboard(
                 letter = "щ",
                 onClick = onValueChange,
             )
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
             LetterButton(
                 letter = "ъ",
                 onClick = onValueChange,
@@ -292,13 +308,7 @@ fun NivkhKeyboard(
                 letter = "ы",
                 onClick = onValueChange,
             )
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            DeleteButton(onDelete = onDelete)
+
             LetterButton(
                 letter = "ь",
                 onClick = onValueChange,
@@ -311,6 +321,13 @@ fun NivkhKeyboard(
                 letter = "ю",
                 onClick = onValueChange,
             )
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            DeleteButton(onDelete = onDelete)
             LetterButton(
                 letter = "я",
                 onClick = onValueChange,
@@ -330,17 +347,16 @@ private fun LetterButton(
     onClick: (letter: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Card(
-        colors = CardDefaults.cardColors(
-            containerColor = colorPrimary,
-        ),
+    Box(
         modifier = modifier
             .wrapContentSize()
             .padding(16.dp)
+            .background(colorPrimary)
             .clip(CircleShape)
             .clickable(onClick = {
                 onClick(letter)
             }),
+        contentAlignment = Alignment.Center
     ) {
         Text(
             textAlign = TextAlign.Center,

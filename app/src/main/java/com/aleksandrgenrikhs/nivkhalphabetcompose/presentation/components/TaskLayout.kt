@@ -4,20 +4,22 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -30,12 +32,53 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
+import com.aleksandrgenrikhs.nivkhalphabetcompose.model.TaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorCardLetterItem
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorOnPrimary
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.shapes
+
+@Composable
+fun TaskLayout(
+    task: List<TaskModel>,
+    letter: String,
+    modifier: Modifier = Modifier,
+    onClick: (String, String) -> Unit,
+) {
+    LazyColumn(
+        modifier = modifier
+            .fillMaxSize()
+            .background(colorPrimary),
+        contentPadding = PaddingValues(8.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+
+    ) {
+        item {
+            Image(
+                painter = painterResource(id = R.drawable.ic_start_alphabet),
+                contentDescription = null,
+                modifier = modifier
+                    .size(200.dp),
+                alignment = Alignment.Center
+            )
+        }
+        items(task) {
+            TaskItem(
+                task = it.task.titleResId,
+                iconResId = it.task.icon,
+                onTaskClick = {
+                    if (it.isNextTaskVisible) {
+                        onClick(it.task.route, letter)
+                    }
+                },
+                isClickable = it.isNextTaskVisible
+            )
+        }
+    }
+}
 
 @Composable
 fun TaskItem(
@@ -45,15 +88,11 @@ fun TaskItem(
     onTaskClick: () -> Unit,
     isClickable: Boolean,
 ) {
-    ElevatedCard(
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
-        ),
+    Card(
         modifier = modifier
             .fillMaxWidth()
-            .height(150.dp)
+            .height(100.dp)
             .padding(8.dp)
-            .border(width = 1.dp, color = colorProgressBar, shape = shapes.small)
             .clickable(onClick = onTaskClick),
         shape = shapes.small
     ) {
@@ -61,7 +100,7 @@ fun TaskItem(
             modifier = modifier
                 .background(colorOnPrimary)
                 .fillMaxSize(),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.CenterStart
         )
         {
             Row(
@@ -74,8 +113,8 @@ fun TaskItem(
                     painter = painterResource(id = iconResId),
                     contentDescription = null,
                     modifier = modifier
-                        .width(150.dp)
                         .fillMaxHeight()
+                        .padding(8.dp)
                         .align(Alignment.CenterVertically)
                 )
                 Text(
@@ -102,15 +141,26 @@ fun TaskItem(
     }
 }
 
-@Preview(widthDp = 600, heightDp = 100)
+@Preview(widthDp = 600, heightDp = 400)
 @Composable
 fun TaskItemPreview() {
     NivkhAlphabetComposeTheme {
-        TaskItem(
-            task = R.string.firstTask,
-            iconResId = R.drawable.ic_task1,
-            onTaskClick = {},
-            isClickable = false
-        )
+        /*TaskLayout(
+            task = listOf(
+                TaskModel(
+                    task = Task(
+                        stableId = 1,
+                        titleResId = "",
+                        icon = 0,
+                        route = ""
+                    ),
+                    isTaskCompleted = true,
+
+                    isNextTaskVisible = true
+                )
+            ),
+            letter = "",
+            onClick = { _, _ -> }
+        )*/
     }
 }

@@ -4,10 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,12 +18,11 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -47,11 +44,9 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.FirstTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorCardLetterItem
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorOnPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.shapes
 
 @Composable
 fun FirstTaskLayout(
@@ -65,41 +60,44 @@ fun FirstTaskLayout(
     isVisibleWord: Boolean,
     getWordError: Boolean
 ) {
-    Column(
+    LazyColumn(
         modifier = modifier
             .fillMaxSize()
             .background(colorPrimary),
+        contentPadding = PaddingValues(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        CardLetter(
-            progress = progressLetter,
-            title = letter,
-            onClick = {
-                onClick(letter)
-            },
-            isClickable = isClickableLetter && !isPlaying,
-        )
-        LazyColumn(
-            modifier = modifier
-                .fillMaxSize()
-                .background(colorPrimary),
-            contentPadding = PaddingValues(8.dp)
-        )
-        {
-            if (words.isNotEmpty()) {
-                items(words) {
-                    with(it) {
-                        CardWord(
-                            progress = progress,
-                            title = title,
-                            icon = icon,
-                            onClick = { onClick(wordId) },
-                            isClickable = isClickable && !isPlaying,
-                            isVisible = isVisibleWord,
-                            getWordError = getWordError
-                        )
-                    }
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    )
+    {
+        item {
+            Text(
+                text = stringResource(id = R.string.titleFistTask),
+                style = MaterialTheme.typography.titleLarge,
+                textAlign = TextAlign.Center
+            )
+        }
+        item {
+            CardLetter(
+                progress = progressLetter,
+                title = letter,
+                onClick = {
+                    onClick(letter)
+                },
+                isClickable = isClickableLetter && !isPlaying,
+            )
+        }
+        if (words.isNotEmpty()) {
+            items(words) {
+                with(it) {
+                    CardWord(
+                        progress = progress,
+                        title = title,
+                        icon = icon,
+                        onClick = { onClick(wordId) },
+                        isClickable = isClickable && !isPlaying,
+                        isVisible = isVisibleWord,
+                        getWordError = getWordError
+                    )
                 }
             }
         }
@@ -114,50 +112,33 @@ private fun CardLetter(
     isClickable: Boolean,
     progress: Int
 ) {
-    Text(
-        text = stringResource(id = R.string.titleFistTask),
-        style = MaterialTheme.typography.titleLarge,
-        textAlign = TextAlign.Center
-    )
-
-    ElevatedCard(
+    Box(
         modifier = modifier
             .size(210.dp)
-            .aspectRatio(1f)
+            .clip(ShapeDefaults.Medium)
             .clickable(
                 enabled = isClickable,
                 onClick = onClick
-            )
-            .padding(8.dp),
-        shape = shapes.medium,
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
-        ),
+            ),
+        contentAlignment = Alignment.Center
+
     )
     {
-        Box(
-            modifier = modifier
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center
+        LinearProgressIndicator(
+            progress = { (progress.toFloat() / 5f) },
+            modifier = Modifier
+                .fillMaxHeight()
+                .fillMaxWidth()
+                .rotate(-90f),
+            trackColor = colorCardLetterItem,
+            color = colorProgressBar
         )
-        {
-            LinearProgressIndicator(
-                progress = { (progress.toFloat() / 5f) },
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .fillMaxWidth()
-                    .rotate(-90f),
-                trackColor = colorCardLetterItem,
-                color = colorProgressBar
+        Text(
+            text = title,
+            style = MaterialTheme.typography.displayLarge.copy(
+                fontSize = 90.sp
             )
-            Text(
-                text = title,
-                style = MaterialTheme.typography.displayLarge.copy(
-                    fontSize = 90.sp
-                )
-            )
-        }
-
+        )
     }
 }
 
@@ -172,93 +153,84 @@ private fun CardWord(
     isVisible: Boolean,
     getWordError: Boolean,
 ) {
-    ElevatedCard(
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
-        ),
+    Box(
         modifier = modifier
             .fillMaxWidth()
             .height(150.dp)
-            .padding(8.dp)
+            .padding(16.dp)
+            .background(colorPrimary)
+            .clip(ShapeDefaults.Medium)
             .clickable(
                 enabled = isClickable,
                 onClick = onClick
             ),
-        shape = shapes.medium,
-    ) {
-        Box(
-            modifier = modifier
-                .background(colorOnPrimary)
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center
+    )
+    {
+        LinearProgressIndicator(
+            progress = { (progress.toFloat() / 3f) },
+            modifier = Modifier
+                .fillMaxHeight()
+                .fillMaxWidth(),
+            trackColor = colorCardLetterItem,
+            color = colorProgressBar
         )
-        {
-            LinearProgressIndicator(
-                progress = { (progress.toFloat() / 3f) },
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .fillMaxWidth(),
-                trackColor = colorCardLetterItem,
-                color = colorProgressBar
-            )
-            if (isVisible) {
-                Row(
-                    modifier = modifier
-                        .fillMaxSize()
-                        .padding(start = 8.dp)
-
+        if (isVisible) {
+            Row(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(start = 8.dp)
+            ) {
+                SubcomposeAsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(icon)
+                        .crossfade(true)
+                        .build(),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .size(130.dp)
+                        .align(Alignment.CenterVertically),
                 ) {
-                    SubcomposeAsyncImage(
-                        model = ImageRequest.Builder(LocalContext.current)
-                            .data(icon)
-                            .crossfade(true)
-                            .build(),
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .clip(CircleShape)
-                            .size(130.dp)
-                            .align(Alignment.CenterVertically),
-                    ) {
-                        val state = painter.state
-                        when (state) {
-                            is AsyncImagePainter.State.Loading -> CircularProgressIndicator()
-                            is AsyncImagePainter.State.Success -> SubcomposeAsyncImageContent()
-                            else -> Icon(
-                                imageVector = Icons.Default.Warning,
-                                tint = colorText,
-                                contentDescription = null,
-                            )
-                        }
-                    }
-                    if (getWordError) {
-                        Text(
-                            text = stringResource(id = R.string.getWordError),
-                            style = MaterialTheme.typography.bodyLarge,
-                            modifier = modifier
-                                .align(Alignment.CenterVertically)
-                                .padding(start = 8.dp)
-                        )
-                    } else {
-                        Text(
-                            text = title,
-                            style = MaterialTheme.typography.displayMedium,
-                            modifier = modifier
-                                .align(Alignment.CenterVertically)
-                                .padding(start = 8.dp)
+                    val state = painter.state
+                    when (state) {
+                        is AsyncImagePainter.State.Loading -> CircularProgressIndicator()
+                        is AsyncImagePainter.State.Success -> SubcomposeAsyncImageContent()
+                        else -> Icon(
+                            imageVector = Icons.Default.Warning,
+                            tint = colorText,
+                            contentDescription = null,
                         )
                     }
                 }
+                if (getWordError) {
+                    Text(
+                        text = stringResource(id = R.string.getWordError),
+                        style = MaterialTheme.typography.bodyLarge,
+                        modifier = modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(start = 8.dp)
+                    )
+                } else {
+                    Text(
+                        text = title,
+                        style = MaterialTheme.typography.displayMedium,
+                        modifier = modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(start = 8.dp)
+                    )
+                }
             }
-            if (!isVisible) {
-                Icon(
-                    imageVector = Icons.Default.Lock,
-                    contentDescription = null,
-                    tint = colorText,
-                    modifier = modifier
-                        .size(50.dp)
-                )
-            }
+        }
+        if (!isVisible) {
+            Icon(
+                imageVector = Icons.Default.Lock,
+                contentDescription = null,
+                tint = colorText,
+                modifier = modifier
+                    .size(50.dp)
+            )
         }
     }
 }

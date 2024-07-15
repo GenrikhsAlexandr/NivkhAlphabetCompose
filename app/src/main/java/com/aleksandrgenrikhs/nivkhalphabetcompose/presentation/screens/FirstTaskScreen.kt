@@ -29,6 +29,7 @@ fun FirstTaskScreen(
     with(uiState) {
         LaunchedEffect(key1 = selectedLetter, block = {
             viewModel.getWords(letter)
+            viewModel.isTaskCompleted(letter)
         })
 
         if (!isNetworkConnected) {

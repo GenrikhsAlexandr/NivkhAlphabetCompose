@@ -2,7 +2,6 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,11 +18,13 @@ import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
@@ -142,6 +143,7 @@ private fun IconButton(
         modifier = modifier
             .clickable { onClick() }
             .size(180.dp)
+            .clip(ShapeDefaults.Medium)
             .background(colorCardLetterItem)
             .graphicsLayer(
                 rotationY = rotationAngle,
@@ -150,20 +152,30 @@ private fun IconButton(
 
         contentAlignment = Alignment.Center
     ) {
-        if (!isFlipped) {
-            Box(
-                modifier = modifier
-                    .fillMaxSize()
-                    .clickable(
-                        enabled = isClickable,
-                        onClick = onClick
-                    )
-                    .border(
-                        width = 2.dp,
-                        color = colorPrimary
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
+        Box(
+            modifier = modifier
+                .size(180.dp)
+                .clickable(
+                    enabled = isClickable,
+                    onClick = onClick
+                )
+                .background(
+                    if (isCorrectAnswer && isFlipped) {
+                        colorRight
+                    } else
+                        if (!isFlipped) {
+                            colorCardLetterItem
+                        } else {
+                            colorError
+                        }
+                )
+                .graphicsLayer(
+                    rotationY = rotationAngle,
+                    transformOrigin = TransformOrigin.Center,
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            if (!isFlipped) {
                 SubcomposeAsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(icon)
@@ -182,58 +194,12 @@ private fun IconButton(
                         )
                     }
                 }
-            }
-        } else {
-            if (isCorrectAnswer) {
-                Box(
-                    modifier = modifier
-                        .clickable(
-                            enabled = isClickable,
-                            onClick = onClick
-                        )
-                        .graphicsLayer(
-                            rotationY = rotationAngle,
-                            transformOrigin = TransformOrigin.Center,
-                        )
-                        .background(colorRight)
-                        .fillMaxSize()
-                        .border(
-                            width = 2.dp,
-                            color = colorPrimary
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = title,
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.ExtraBold,
-                    )
-                }
             } else {
-                Box(
-                    modifier = modifier
-                        .clickable(
-                            enabled = isClickable,
-                            onClick = onClick
-                        )
-                        .graphicsLayer(
-                            rotationY = rotationAngle,
-                            transformOrigin = TransformOrigin.Center,
-                        )
-                        .background(colorError)
-                        .fillMaxSize()
-                        .border(
-                            width = 2.dp,
-                            color = colorPrimary
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = title,
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.ExtraBold,
-                    )
-                }
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.ExtraBold,
+                )
             }
         }
     }

@@ -54,6 +54,18 @@ class FirstTaskViewModel
         }
     }
 
+    suspend fun isTaskCompleted(letter: String) {
+        _uiState.update { uiState ->
+            val isTaskCompleted = interactor.isTaskCompleted(
+                Task.FIRST.stableId,
+                letter
+            )
+            uiState.copy(
+                isVisibleWord = isTaskCompleted,
+            )
+        }
+    }
+
     private fun isPlaying() {
         _uiState.update { uiState ->
             uiState.copy(
@@ -88,10 +100,11 @@ class FirstTaskViewModel
             uiState.value.selectedLetter -> {
                 _uiState.update { uiState ->
                     val newProgressLetter = uiState.progressLetter + 1
-                    val isVisibleWord = newProgressLetter > 4
+                    val newIsVisibleWord = newProgressLetter > 4 || uiState.isVisibleWord
+                    val newIsCompletedLetter = newProgressLetter > 4
                     val newWordsList = uiState.words.toMutableList().apply {
                         if (uiState.words.isNotEmpty()) {
-                            if (isVisibleWord) {
+                            if (newIsCompletedLetter) {
                                 this[0] = this[0].copy(
                                     isClickable = true,
                                 )
@@ -100,9 +113,9 @@ class FirstTaskViewModel
                     }
                     uiState.copy(
                         progressLetter = newProgressLetter,
-                        isVisibleWord = isVisibleWord,
+                        isVisibleWord = newIsVisibleWord,
                         words = newWordsList,
-                        isCompletedLetter = isVisibleWord
+                        isCompletedLetter = newIsCompletedLetter
                     )
                 }
             }
@@ -110,11 +123,9 @@ class FirstTaskViewModel
             uiState.value.words[0].wordId -> {
                 _uiState.update { uiState ->
                     val newProgressWord = uiState.words[0].progress + 1
-                    val isCompleted = newProgressWord == 3
-                    val newIsClickableWord1 = newProgressWord < 3
+                    val isCompleted = newProgressWord > 2
                     val newWordsList = uiState.words.toMutableList().apply {
                         this[0] = this[0].copy(
-                            isClickable = newIsClickableWord1,
                             progress = newProgressWord,
                             isCompleted = isCompleted
                         )
@@ -133,11 +144,9 @@ class FirstTaskViewModel
             uiState.value.words[1].wordId -> {
                 _uiState.update { uiState ->
                     val newProgressWord = uiState.words[1].progress + 1
-                    val isCompleted = newProgressWord == 3
-                    val newIsClickableWord2 = newProgressWord < 3
+                    val isCompleted = newProgressWord > 2
                     val newWordsList = uiState.words.toMutableList().apply {
                         this[1] = this[1].copy(
-                            isClickable = newIsClickableWord2,
                             progress = newProgressWord,
                             isCompleted = isCompleted
                         )
@@ -156,14 +165,12 @@ class FirstTaskViewModel
             uiState.value.words[2].wordId -> {
                 _uiState.update { uiState ->
                     val newProgressWord = uiState.words[2].progress + 1
-                    val isCompleted = newProgressWord == 3
-                    val newIsClickableWord3 = newProgressWord < 3
+                    val isCompleted = newProgressWord > 2
                     if (isCompleted) {
                         interactor.taskCompleted(Task.FIRST.stableId, uiState.selectedLetter)
                     }
                     val newWordsList = uiState.words.toMutableList().apply {
                         this[2] = this[2].copy(
-                            isClickable = newIsClickableWord3,
                             progress = newProgressWord,
                             isCompleted = isCompleted
                         )

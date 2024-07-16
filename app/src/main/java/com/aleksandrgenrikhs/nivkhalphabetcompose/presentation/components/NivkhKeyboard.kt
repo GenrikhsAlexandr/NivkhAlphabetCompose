@@ -30,7 +30,6 @@ import androidx.compose.ui.unit.dp
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorError
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorRight
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
 
 @Composable
@@ -420,7 +419,7 @@ private fun DoneButton(
             text = "✓",
             style = MaterialTheme.typography.displayMedium,
             fontWeight = FontWeight.ExtraBold,
-            color = colorRight
+            color = colorProgressBar
         )
     }
 }

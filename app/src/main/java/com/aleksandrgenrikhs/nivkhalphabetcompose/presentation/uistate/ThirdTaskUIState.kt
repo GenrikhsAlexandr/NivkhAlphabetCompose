@@ -1,10 +1,11 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate
 
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.ThirdTaskModel
-
 data class ThirdTaskUIState(
     val selectedLetter: String = "",
-    val words: List<ThirdTaskModel> = emptyList(),
+    val title: List<String> = emptyList(),
+    val wordId: List<String> = emptyList(),
+    val icon: List<String?> = emptyList(),
+    val isCorrectAnswer: List<Boolean> = emptyList(),
     val shareWords: List<String?> = listOf(null, null, null),
     val isAnswerCorrect: Boolean = false,
     val isNetworkConnected: Boolean,

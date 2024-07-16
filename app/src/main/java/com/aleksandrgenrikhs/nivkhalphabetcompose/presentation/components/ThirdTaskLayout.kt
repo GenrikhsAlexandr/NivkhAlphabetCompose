@@ -52,7 +52,6 @@ import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import coil.request.ImageRequest
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.ThirdTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorError
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorOnPrimary
@@ -65,7 +64,9 @@ import com.idapgroup.autosizetext.AutoSizeText
 @Composable
 fun ThirdTaskLayout(
     modifier: Modifier = Modifier,
-    words: List<ThirdTaskModel>,
+    title: List<String>,
+    wordId: List<String>,
+    icon: List<String?>,
     shareWords: List<String?>,
     currentWords: List<String?>,
     onIconClick: (String) -> Unit,
@@ -81,80 +82,80 @@ fun ThirdTaskLayout(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        if (words.isNotEmpty()) {
+        if (title.isNotEmpty()) {
             Row(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 IconButton(
-                icon = words[0].icon,
-                onClick = { onIconClick("${WORDS_AUDIO}${words[0].wordId}") },
-            )
-            ReceivingContainer(
-                title = currentWords[0] ?: "",
-                index = 0,
-                onDragAndDropEventReceived = { transferData, index ->
-                    onDragAndDropEventReceived(transferData, index)
-                },
-                isError = isGuessWrong
-            )
-        }
-        Row(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            IconButton(
-                icon = words[1].icon,
-                onClick = { onIconClick("${WORDS_AUDIO}${words[1].wordId}") },
-            )
-            ReceivingContainer(
-                title = currentWords[1] ?: "",
-                index = 1,
-                onDragAndDropEventReceived = { transferData, index ->
-                    onDragAndDropEventReceived(transferData, index)
-                },
-                isError = isGuessWrong,
-            )
-        }
-        Row(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            IconButton(
-                icon = words[2].icon,
-                onClick = { onIconClick("${WORDS_AUDIO}${words[2].wordId}") },
-            )
-            ReceivingContainer(
-                title = currentWords[2] ?: "",
-                index = 2,
-                onDragAndDropEventReceived = { transferData, index ->
-                    onDragAndDropEventReceived(transferData, index)
-                },
-                isError = isGuessWrong,
-            )
-        }
-        Row(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            shareWords.map { title ->
-                ShareText(
-                    title = title ?: "",
+                    icon = icon[0],
+                    onClick = { onIconClick("${WORDS_AUDIO}${wordId[0]}") },
+                )
+                ReceivingContainer(
+                    title = currentWords[0] ?: "",
+                    index = 0,
+                    onDragAndDropEventReceived = { transferData, index ->
+                        onDragAndDropEventReceived(transferData, index)
+                    },
+                    isError = isGuessWrong
                 )
             }
-        }
+            Row(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                IconButton(
+                    icon = icon[1],
+                    onClick = { onIconClick("${WORDS_AUDIO}${wordId[1]}") },
+                )
+                ReceivingContainer(
+                    title = currentWords[1] ?: "",
+                    index = 1,
+                    onDragAndDropEventReceived = { transferData, index ->
+                        onDragAndDropEventReceived(transferData, index)
+                    },
+                    isError = isGuessWrong,
+                )
+            }
+            Row(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                IconButton(
+                    icon = icon[2],
+                    onClick = { onIconClick("${WORDS_AUDIO}${wordId[2]}") },
+                )
+                ReceivingContainer(
+                    title = currentWords[2] ?: "",
+                    index = 2,
+                    onDragAndDropEventReceived = { transferData, index ->
+                        onDragAndDropEventReceived(transferData, index)
+                    },
+                    isError = isGuessWrong,
+                )
+            }
+            Row(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                shareWords.map { title ->
+                    ShareText(
+                        title = title ?: "",
+                    )
+                }
+            }
             Spacer(modifier = Modifier.weight(1f))
             SubmitButton(
                 modifier = Modifier
@@ -319,23 +320,10 @@ private fun SubmitButton(
 private fun ThirdTaskPreview() {
     NivkhAlphabetComposeTheme {
         ThirdTaskLayout(
-            words = listOf(
-                ThirdTaskModel(
-                    title = "SAsna",
-                    wordId = "",
-                    icon = null,
-                ),
-                ThirdTaskModel(
-                    title = "SAsna",
-                    wordId = "",
-                    icon = null,
-                ),
-                ThirdTaskModel(
-                    title = "SAsna",
-                    wordId = "",
-                    icon = null,
-                )
-            ),
+
+            title = listOf("SAsna"),
+            wordId = listOf("1"),
+            icon = listOf(null),
             onIconClick = {},
             onDone = {},
             onDragAndDropEventReceived = { _, _ -> },

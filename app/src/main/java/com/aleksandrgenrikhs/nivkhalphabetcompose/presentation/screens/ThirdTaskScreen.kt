@@ -41,7 +41,9 @@ fun ThirdTaskScreen(
         }
         with(uiState) {
             ThirdTaskLayout(
-                words = words,
+                title = title,
+                wordId = wordId,
+                icon = icon,
                 currentWords = currentWords,
                 shareWords = shareWords,
                 isGuessWrong = isGuessWrong,

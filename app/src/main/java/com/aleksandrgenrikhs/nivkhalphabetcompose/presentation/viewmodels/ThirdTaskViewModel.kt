@@ -4,6 +4,7 @@ import android.content.ClipData
 import androidx.lifecycle.ViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.interator.AlphabetInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateThirdTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.ThirdTaskUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
@@ -15,7 +16,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ThirdTaskViewModel
-@Inject constructor(val interactor: AlphabetInteractor) : ViewModel() {
+@Inject constructor(
+    val interactor: AlphabetInteractor,
+    val mapper: UIStateThirdTaskMapper
+) : ViewModel() {
 
     private val _uiState: MutableStateFlow<ThirdTaskUIState> = MutableStateFlow(
         ThirdTaskUIState(
@@ -26,20 +30,20 @@ class ThirdTaskViewModel
 
     fun setLetter(letter: String) {
         _uiState.update {
-            _uiState.value.copy(selectedLetter = letter)
+            it.copy(selectedLetter = letter)
         }
     }
 
     suspend fun getWords(letterId: String) {
-        val listWords = interactor.getWordsForThirdTask(letterId)
-        val newShareWords = listWords.shuffled().map { it.title }
-        if (listWords.isNotEmpty()) {
-            _uiState.update {
-                _uiState.value.copy(
-                    words = listWords,
-                    shareWords = newShareWords
-                )
-            }
+        _uiState.update {
+            val listWords = interactor.getWordsForThirdTask(letterId)
+            val newListWord = mapper.map(listWords)
+            it.copy(
+                title = newListWord.title,
+                wordId = newListWord.wordId,
+                icon = newListWord.icon,
+                shareWords = newListWord.shareWords,
+            )
         }
     }
 
@@ -77,7 +81,7 @@ class ThirdTaskViewModel
 
     fun checkAnswer() {
         val currentWords = uiState.value.currentWords
-        val correctWords = uiState.value.words.map { it.title }
+        val correctWords = uiState.value.title
         if (currentWords == correctWords) {
             _uiState.update { state ->
                 state.copy(
@@ -91,9 +95,7 @@ class ThirdTaskViewModel
                 state.copy(
                     currentWords = mutableListOf(null, null, null),
                     isGuessWrong = true,
-                    shareWords = uiState.value.words.map { words ->
-                        words.title
-                    }.shuffled()
+                    shareWords = uiState.value.title.shuffled()
                 )
             }
         }

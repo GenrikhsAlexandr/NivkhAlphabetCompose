@@ -3,9 +3,8 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.jetbrainsKotlinPluginSerialization)
     alias(libs.plugins.daggerHiltAndroid)
-
-    id("kotlin-parcelize")
-    id("kotlin-kapt")
+    alias(libs.plugins.kotlinKapt)
+    alias(libs.plugins.kotlinParcelize)
 }
 
 android {
@@ -66,8 +65,8 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.navigation.compose)
 
-   implementation(libs.hilt.android)
-   kapt(libs.hilt.compiler)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
 
     implementation(libs.coil.compose)
     implementation(libs.coil.base)

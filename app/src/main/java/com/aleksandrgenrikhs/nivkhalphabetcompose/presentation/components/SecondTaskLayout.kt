@@ -7,12 +7,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.CircularProgressIndicator
@@ -42,7 +44,6 @@ import coil.compose.SubcomposeAsyncImageContent
 import coil.request.ImageRequest
 import coil.size.Size
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.SecondTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorCardLetterItem
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorError
@@ -53,7 +54,12 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorTex
 @Composable
 fun SecondTaskLayout(
     modifier: Modifier = Modifier,
-    words: List<SecondTaskModel>,
+    letterId: List<String>,
+    title: List<String>,
+    wordId: List<String>,
+    icon: List<String?>,
+    isFlipped: List<Boolean>,
+    isCorrectAnswer: List<Boolean>,
     letter: String,
     onClick: (String, String) -> Unit,
     isClickable: Boolean
@@ -68,6 +74,7 @@ fun SecondTaskLayout(
         TitleTask(
             letter = letter
         )
+        Spacer(modifier = Modifier.height(32.dp))
         LazyColumn(
             modifier = modifier
                 .fillMaxSize(),
@@ -75,19 +82,17 @@ fun SecondTaskLayout(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(22.dp),
         ) {
-            items(words) {
-                with(it) {
-                    IconButton(
-                        onClick = {
-                            onClick(wordId, letterId)
-                        },
-                        icon = icon,
-                        title = title,
-                        isFlipped = isFlipped,
-                        isClickable = isClickable,
-                        isCorrectAnswer = isCorrectAnswer,
-                    )
-                }
+            itemsIndexed(title) { index, item ->
+                IconButton(
+                    onClick = {
+                        onClick(wordId[index], letterId[index])
+                    },
+                    icon = icon[index],
+                    title = item,
+                    isFlipped = isFlipped[index],
+                    isClickable = isClickable,
+                    isCorrectAnswer = isCorrectAnswer[index],
+                )
             }
         }
     }
@@ -210,18 +215,15 @@ private fun IconButton(
 private fun SecondTaskPreview() {
     NivkhAlphabetComposeTheme {
         SecondTaskLayout(
-            words = listOf(
-                SecondTaskModel(
-                    letterId = "Aa",
-                    title = "SAsna",
-                    wordId = "",
-                    icon = null,
-                    isFlipped = true
-                )
-            ),
+            letterId = listOf("Aa", "Bb", "Cc"),
+            title = listOf("Hello", "Word", "Nivkh"),
+            wordId = listOf("1.2", "1.1", "1.3"),
+            icon = listOf(null, null, null),
+            isFlipped = listOf(true, false, true),
             letter = "Aa",
             onClick = { _, _ -> },
             isClickable = true,
+            isCorrectAnswer = listOf(true, true, false),
         )
     }
 }

@@ -43,10 +43,15 @@ fun SecondTaskScreen(
         }
 
         SecondTaskLayout(
-            words = words,
+            letterId = letterId,
+            title = title,
+            wordId = wordId,
+            icon = icon,
+            isFlipped = isFlipped,
+            isCorrectAnswer = isCorrectAnswer,
             letter = letter,
             onClick = (viewModel::flipCard),
-            isClickable = !isAnswerCorrect
+            isClickable = !isCorrectWord,
         )
         if (isCompleted) {
             val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task2)

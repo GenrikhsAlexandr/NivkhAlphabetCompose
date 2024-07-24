@@ -2,8 +2,8 @@
 
     <!--главный экран-->
     <string name="app_name">Нивхский алфавит</string>
-    <string name="textStartApp">Выбери букву, которую хочешь изучить.</string>
     <string name="letsGo">Вперед к знаниям!</string>
+    <string name="infoLettersScreen">Здесь тебе нужно выберать букву, которую хочешь изучить.</string>
     <string name="about">О приложении</string>
 
     <!--список заданий-->
@@ -30,7 +30,6 @@
     <string name="textEndFourthTask">Отлично!</string>
     <string name="enter_your_word">Введите слово</string>
     <string name="wrong_guess">Неверно!</string>
-
 
     <!--Пятое задание-->
     <string name="titleFifthTask">Напечатой слово </string>

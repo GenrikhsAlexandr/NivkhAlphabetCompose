@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.interator.AlphabetInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateSecondTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.SecondTaskUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
@@ -20,6 +21,7 @@ import javax.inject.Inject
 class SecondTaskViewModel
 @Inject constructor(
     val interactor: AlphabetInteractor,
+    val mapper: UIStateSecondTaskMapper
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<SecondTaskUIState> =
@@ -33,25 +35,25 @@ class SecondTaskViewModel
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     fun setLetter(letter: String) {
-        _uiState.update {
-            _uiState.value.copy(selectedLetter = letter)
+        _uiState.update { uiState ->
+            uiState.copy(selectedLetter = letter)
         }
     }
 
     suspend fun getWords(letterId: String) {
-        isLoading.value = true
-        val listWords = interactor.getWordsForSecondTask(letterId)
-        if (listWords.isNotEmpty()) {
-            _uiState.update {
-                _uiState.value.copy(
-                    words = listWords.map { word ->
-                        word.copy(
-                            isFlipped = false
-                        )
-                    },
-                    isAnswerCorrect = false
-                )
-            }
+        _uiState.update { uiState ->
+            isLoading.value = true
+            val listWords = interactor.getWordsForSecondTask(letterId)
+            val newWordList = mapper.map(listWords)
+            uiState.copy(
+                letterId = newWordList.letterId,
+                wordId = newWordList.wordId,
+                icon = newWordList.icon,
+                isFlipped = newWordList.isFlipped,
+                title = newWordList.title,
+                isCorrectAnswer = newWordList.isCorrectAnswer,
+                isCorrectWord = false
+            )
         }
         isLoading.value = false
     }
@@ -65,14 +67,11 @@ class SecondTaskViewModel
                 uiState.correctAnswersCount
             }
             val isCompleted = correctAnswersCount == 3
-
-            val newWordsList = uiState.words.toMutableList().apply {
-                val index = uiState.words.indexOfFirst { it.wordId == wordId }
-                this[index] = this[index].copy(
-                    isFlipped = !this[index].isFlipped,
-                    isCorrectAnswer = isCorrectWord
-                )
-            }
+            val index = uiState.wordId.indexOfFirst { it == wordId }
+            val newIsFlippedList = uiState.isFlipped.toMutableList()
+            newIsFlippedList[index] = !newIsFlippedList[index]
+            val newIsCorrectAnswerList = uiState.isCorrectAnswer.toMutableList()
+            newIsCorrectAnswerList[index] = isCorrectWord
 
             if (isCorrectWord) {
                 playSound("${WORDS_AUDIO}$wordId")
@@ -89,10 +88,11 @@ class SecondTaskViewModel
                 }
             }
             uiState.copy(
-                words = newWordsList,
-                isCompleted = isCompleted,
+                isFlipped = newIsFlippedList,
+                isCorrectAnswer = newIsCorrectAnswerList,
                 correctAnswersCount = correctAnswersCount,
-                isAnswerCorrect = isCorrectWord,
+                isCompleted = isCompleted,
+                isCorrectWord = isCorrectWord,
             )
         }
         if (uiState.value.isCompleted) {

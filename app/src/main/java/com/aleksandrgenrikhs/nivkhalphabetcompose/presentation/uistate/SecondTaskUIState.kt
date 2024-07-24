@@ -1,12 +1,15 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate
 
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.SecondTaskModel
-
 data class SecondTaskUIState(
     val selectedLetter: String = "",
-    val words: List<SecondTaskModel> = emptyList(),
+    val letterId: List<String> = emptyList(),
+    val title: List<String> = emptyList(),
+    val wordId: List<String> = emptyList(),
+    val icon: List<String?> = emptyList(),
+    val isFlipped: List<Boolean> = emptyList(),
+    val isCorrectAnswer: List<Boolean> = emptyList(),
     val correctAnswersCount: Int = 0,
-    val isAnswerCorrect: Boolean = false,
+    val isCorrectWord: Boolean = false,
     val isCompleted: Boolean = false,
     val isNetworkConnected: Boolean,
     val isFinishAudio: Boolean = false,

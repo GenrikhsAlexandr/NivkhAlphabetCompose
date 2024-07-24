@@ -18,17 +18,18 @@ fun TasksScreen(
 ) {
     val uiState by tasksViewModel.uiState.collectAsState()
     with(uiState) {
-        LaunchedEffect(key1 = letter, block = {
-            tasksViewModel.isTaskCompleted(letter)
-        }
-        )
+        LaunchedEffect(key1 = letter, block = { tasksViewModel.isTaskCompleted(letter) })
         if (!isNetworkConnected) {
             NotConnected(
                 navController = navController
             )
         }
         TaskLayout(
-            task = uiState.task,
+            titleResId = uiState.titleResId,
+            iconId = uiState.iconId,
+            isTaskCompleted = uiState.isTaskCompleted,
+            isNextTaskVisible = uiState.isNextTaskVisible,
+            route = uiState.route,
             letter = letter,
             onClick = { route, letter ->
                 navController.navigate("$route/$letter")

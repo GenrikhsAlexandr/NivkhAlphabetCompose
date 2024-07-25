@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
@@ -41,7 +41,6 @@ import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import coil.request.ImageRequest
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.FirstTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorCardLetterItem
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
@@ -51,9 +50,13 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorTex
 @Composable
 fun FirstTaskLayout(
     modifier: Modifier = Modifier,
-    words: List<FirstTaskModel>,
+    title: List<String>,
+    wordId: List<String>,
+    icon: List<String?>,
+    progress: List<Int>,
+    isClickable: List<Boolean>,
     letter: String,
-    onClick: (String) -> Unit,
+    onClick: (String, Int?) -> Unit,
     isClickableLetter: Boolean,
     isPlaying: Boolean,
     progressLetter: Int,
@@ -81,24 +84,22 @@ fun FirstTaskLayout(
                 progress = progressLetter,
                 title = letter,
                 onClick = {
-                    onClick(letter)
+                    onClick(letter, null)
                 },
                 isClickable = isClickableLetter && !isPlaying,
             )
         }
-        if (words.isNotEmpty()) {
-            items(words) {
-                with(it) {
-                    CardWord(
-                        progress = progress,
-                        title = title,
-                        icon = icon,
-                        onClick = { onClick(wordId) },
-                        isClickable = isClickable && !isPlaying,
-                        isVisible = isVisibleWord,
-                        getWordError = getWordError
-                    )
-                }
+        if (title.isNotEmpty()) {
+            itemsIndexed(title) { index, title ->
+                CardWord(
+                    progress = progress[index],
+                    title = title,
+                    icon = icon[index],
+                    onClick = { onClick(wordId[index], index) },
+                    isClickable = isClickable[index] && !isPlaying,
+                    isVisible = isVisibleWord,
+                    getWordError = getWordError
+                )
             }
         }
     }
@@ -204,23 +205,13 @@ private fun CardWord(
                         )
                     }
                 }
-                if (getWordError) {
-                    Text(
-                        text = stringResource(id = R.string.getWordError),
-                        style = MaterialTheme.typography.bodyLarge,
-                        modifier = modifier
-                            .align(Alignment.CenterVertically)
-                            .padding(start = 8.dp)
-                    )
-                } else {
-                    Text(
-                        text = title,
-                        style = MaterialTheme.typography.displayMedium,
-                        modifier = modifier
-                            .align(Alignment.CenterVertically)
-                            .padding(start = 8.dp)
-                    )
-                }
+                Text(
+                    text = if (getWordError) stringResource(id = R.string.getWordError) else title,
+                    style = MaterialTheme.typography.displayMedium,
+                    modifier = modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(start = 8.dp)
+                )
             }
         }
         if (!isVisible) {
@@ -240,19 +231,13 @@ private fun CardWord(
 private fun FirstTaskContentPreview() {
     NivkhAlphabetComposeTheme {
         FirstTaskLayout(
-            words = listOf(
-                FirstTaskModel(
-                    letterId = "Aa",
-                    title = "SAsna",
-                    wordId = "",
-                    icon = null,
-                    progress = 1,
-                    isCompleted = false,
-                    isClickable = false,
-                )
-            ),
+            title = listOf("Alpha", "Word", "Nivkh"),
+            wordId = listOf("1.2", "1.3", "1.1"),
+            icon = listOf("we", "wew", "ds"),
+            progress = listOf(3, 2, 0),
+            isClickable = listOf(),
             letter = "Aa",
-            onClick = {},
+            onClick = { _, _ -> },
             isClickableLetter = false,
             progressLetter = 1,
             isVisibleWord = true,

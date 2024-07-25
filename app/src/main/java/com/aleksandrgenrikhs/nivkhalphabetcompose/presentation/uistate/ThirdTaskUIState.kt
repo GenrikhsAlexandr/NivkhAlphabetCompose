@@ -5,7 +5,6 @@ data class ThirdTaskUIState(
     val title: List<String> = emptyList(),
     val wordId: List<String> = emptyList(),
     val icon: List<String?> = emptyList(),
-    val isCorrectAnswer: List<Boolean> = emptyList(),
     val shareWords: List<String?> = listOf(null, null, null),
     val isAnswerCorrect: Boolean = false,
     val isNetworkConnected: Boolean,

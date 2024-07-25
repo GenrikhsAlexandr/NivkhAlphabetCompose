@@ -38,17 +38,21 @@ fun FirstTaskScreen(
             )
         }
         FirstTaskLayout(
-            words = words,
+            title = title,
+            wordId = wordId,
+            icon = icon,
+            progress = progressWord,
+            isClickable = isClickableWord,
             onClick = (viewModel::onClickElement),
             letter = letter,
             isClickableLetter = isClickableLetter,
             isPlaying = isPlaying,
             isVisibleWord = isVisibleWord,
             getWordError = getWordError,
-            progressLetter = progressLetter
+            progressLetter = progressLetter,
         )
 
-        if (isCompleted && !isPlaying) {
+        if (isCompletedWord.isNotEmpty() && isCompletedWord.last() && !isPlaying) {
             if (!isFinishAudio) {
                 viewModel.playSound(FINISH_AUDIO)
             }

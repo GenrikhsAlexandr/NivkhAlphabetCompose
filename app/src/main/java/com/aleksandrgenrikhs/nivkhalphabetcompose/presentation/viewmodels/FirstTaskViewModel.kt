@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.interator.AlphabetInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateFirstTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.FirstTaskUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.LETTER_AUDIO
@@ -19,6 +20,7 @@ import javax.inject.Inject
 class FirstTaskViewModel
 @Inject constructor(
     val interactor: AlphabetInteractor,
+    val mapper: UIStateFirstTaskMapper
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<FirstTaskUIState> = MutableStateFlow(
@@ -38,12 +40,20 @@ class FirstTaskViewModel
 
     suspend fun getWords(letterId: String) {
         val listWords = interactor.getWordsForFirstTask(letterId)
+        val newListWord = mapper.map(listWords)
         if (listWords.isNotEmpty()) {
             _uiState.update {
-                _uiState.value.copy(
-                    words = listWords,
-                    getWordError = false
-                )
+                with(newListWord) {
+                    _uiState.value.copy(
+                        title = title,
+                        wordId = wordId,
+                        icon = icon,
+                        progressWord = progressWord,
+                        isClickableWord = isClickableWord,
+                        isCompletedWord = isCompletedWord,
+                        getWordError = false
+                    )
+                }
             }
         } else {
             _uiState.update {
@@ -82,8 +92,8 @@ class FirstTaskViewModel
                     }
                     when {
                         !it && uiState.value.isCompletedLetter
-                                || !it && uiState.value.words[0].isCompleted
-                                || !it && uiState.value.words[1].isCompleted -> interactor.playerDestroy()
+                                || !it && uiState.value.isCompletedWord[0]
+                                || !it && uiState.value.isCompletedWord[1] -> interactor.playerDestroy()
 
                     }
                 }
@@ -93,7 +103,7 @@ class FirstTaskViewModel
         }
     }
 
-    fun onClickElement(element: String) {
+    fun onClickElement(element: String, index: Int?) {
         playSound(element)
         isPlaying()
         when (element) {
@@ -102,83 +112,40 @@ class FirstTaskViewModel
                     val newProgressLetter = uiState.progressLetter + 1
                     val newIsVisibleWord = newProgressLetter > 4 || uiState.isVisibleWord
                     val newIsCompletedLetter = newProgressLetter > 4
-                    val newWordsList = uiState.words.toMutableList().apply {
-                        if (uiState.words.isNotEmpty()) {
-                            if (newIsCompletedLetter) {
-                                this[0] = this[0].copy(
-                                    isClickable = true,
-                                )
-                            }
+                    val newIsClickable = uiState.isClickableWord.toMutableList()
+                    if (uiState.title.isNotEmpty()) {
+                        if (newIsCompletedLetter) {
+                            newIsClickable[0] = true
                         }
                     }
                     uiState.copy(
                         progressLetter = newProgressLetter,
                         isVisibleWord = newIsVisibleWord,
-                        words = newWordsList,
+                        isClickableWord = newIsClickable,
                         isCompletedLetter = newIsCompletedLetter
                     )
                 }
             }
 
-            uiState.value.words[0].wordId -> {
+            else -> {
+                if (index == null) return
                 _uiState.update { uiState ->
-                    val newProgressWord = uiState.words[0].progress + 1
-                    val isCompleted = newProgressWord > 2
-                    val newWordsList = uiState.words.toMutableList().apply {
-                        this[0] = this[0].copy(
-                            progress = newProgressWord,
-                            isCompleted = isCompleted
-                        )
-                        if (isCompleted) {
-                            this[1] = this[1].copy(
-                                isClickable = true,
-                            )
-                        }
+                    val newProgressWord = uiState.progressWord.toMutableList()
+                    val newWordIsCompleted = uiState.isCompletedWord.toMutableList()
+                    val newIsClickable = uiState.isClickableWord.toMutableList()
+                    newProgressWord[index] = uiState.progressWord[index] + 1
+                    newWordIsCompleted[index] = newProgressWord[index] > 2
+                    if (newWordIsCompleted[index] && index < uiState.title.lastIndex) {
+                        newIsClickable[index + 1] = true
                     }
                     uiState.copy(
-                        words = newWordsList,
+                        progressWord = newProgressWord,
+                        isCompletedWord = newWordIsCompleted,
+                        isClickableWord = newIsClickable,
                     )
                 }
-            }
-
-            uiState.value.words[1].wordId -> {
-                _uiState.update { uiState ->
-                    val newProgressWord = uiState.words[1].progress + 1
-                    val isCompleted = newProgressWord > 2
-                    val newWordsList = uiState.words.toMutableList().apply {
-                        this[1] = this[1].copy(
-                            progress = newProgressWord,
-                            isCompleted = isCompleted
-                        )
-                        if (isCompleted) {
-                            this[2] = this[2].copy(
-                                isClickable = true,
-                            )
-                        }
-                    }
-                    uiState.copy(
-                        words = newWordsList,
-                    )
-                }
-            }
-
-            uiState.value.words[2].wordId -> {
-                _uiState.update { uiState ->
-                    val newProgressWord = uiState.words[2].progress + 1
-                    val isCompleted = newProgressWord > 2
-                    if (isCompleted) {
-                        interactor.taskCompleted(Task.FIRST.stableId, uiState.selectedLetter)
-                    }
-                    val newWordsList = uiState.words.toMutableList().apply {
-                        this[2] = this[2].copy(
-                            progress = newProgressWord,
-                            isCompleted = isCompleted
-                        )
-                    }
-                    uiState.copy(
-                        words = newWordsList,
-                        isCompleted = isCompleted,
-                    )
+                if (uiState.value.isCompletedWord.last()) {
+                    interactor.taskCompleted(Task.FIRST.stableId, uiState.value.selectedLetter)
                 }
             }
         }

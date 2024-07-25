@@ -4,6 +4,13 @@
     <string name="app_name">Нивхский алфавит</string>
     <string name="letsGo">Вперед к знаниям!</string>
     <string name="infoLettersScreen">Здесь тебе нужно выберать букву, которую хочешь изучить.</string>
+    <string name="infoTasksScreen">Здесь тебе нужно выберать задание для изучения буквы. \n Начинать нужно с первого задагия</string>
+    <string name="infoFirstScreen">Здесь тебе нужно первое задание.</string>
+    <string name="infoSecondScreen">Здесь тебе нужно второе задание.</string>
+    <string name="infoThirdScreen">Здесь тебе нужно третье задание.</string>
+    <string name="infoFourthScreen">Здесь тебе нужно четвертое задание.</string>
+    <string name="infoRepeatScreen">Здесь тебе нужно поворить.</string>
+
     <string name="about">О приложении</string>
 
     <!--список заданий-->

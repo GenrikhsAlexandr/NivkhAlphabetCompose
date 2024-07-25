@@ -8,7 +8,7 @@ object Constants {
     const val SECOND_TASK_SCREEN = "second_task"
     const val THIRD_TASK_SCREEN = "third_task"
     const val FOURTH_TASK_SCREEN = "fourth_task"
-    const val FIFTH_TASK_SCREEN = "fifth_task"
+    const val REPEAT_TASK_SCREEN = "repeat_task"
     const val SPLASH_SCREEN = "splash_screen"
     const val ABOUT_SCREEN = "about_screen"
 

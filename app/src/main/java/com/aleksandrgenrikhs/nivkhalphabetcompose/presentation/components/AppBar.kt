@@ -98,10 +98,48 @@ fun AppBar(
             }
         },
         actions = {
-            if (currentScreen == NavigationDestination.LettersScreen.destination) {
-                AboutMenu {
-                    navController?.navigate(NavigationDestination.AboutScreen.destination)
-                }
+            when (currentScreen) {
+                NavigationDestination.LettersScreen.destination -> DialogInfo(
+                    title = stringResource(
+                        id = R.string.infoLettersScreen
+                    ),
+                )
+
+                NavigationDestination.TasksScreen.destination -> DialogInfo(
+                    title = stringResource(
+                        id = R.string.infoTasksScreen
+                    ),
+                )
+
+                NavigationDestination.FirstTaskScreen.destination -> DialogInfo(
+                    title = stringResource(
+                        id = R.string.infoFirstScreen
+                    ),
+                )
+
+                NavigationDestination.SecondTaskScreen.destination -> DialogInfo(
+                    title = stringResource(
+                        id = R.string.infoSecondScreen
+                    ),
+                )
+
+                NavigationDestination.ThirdTaskScreen.destination -> DialogInfo(
+                    title = stringResource(
+                        id = R.string.infoThirdScreen
+                    ),
+                )
+
+                NavigationDestination.FourthTaskScreen.destination -> DialogInfo(
+                    title = stringResource(
+                        id = R.string.infoFourthScreen
+                    ),
+                )
+
+                NavigationDestination.RepeatTaskScreen.destination -> DialogInfo(
+                    title = stringResource(
+                        id = R.string.infoRepeatScreen
+                    ),
+                )
             }
         },
         modifier = modifier

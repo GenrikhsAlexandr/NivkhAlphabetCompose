@@ -126,13 +126,6 @@ fun RepeatItem(
                 maxLines = 1,
                 style = MaterialTheme.typography.displayMedium,
             )
-            /* AutoSizeText(
-                 text = stringResource(id = R.string.otherTask),
-                 textAlign = TextAlign.Center,
-                 maxLines = 1,
-                 style = MaterialTheme.typography.displayMedium,
-                 minFontSize = 16.sp,
-             )*/
         } else {
             Icon(
                 imageVector = Icons.Default.Lock,

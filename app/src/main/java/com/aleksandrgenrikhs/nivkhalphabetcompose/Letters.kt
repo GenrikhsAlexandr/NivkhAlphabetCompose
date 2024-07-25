@@ -2,6 +2,7 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose
 
 enum class Letters(
     val title: String,
+    val isCompleted: Boolean = false
 ) {
     A("Аа"),
     B("Бб"),

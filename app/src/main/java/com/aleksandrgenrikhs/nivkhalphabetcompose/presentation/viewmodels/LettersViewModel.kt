@@ -3,7 +3,6 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels
 import androidx.lifecycle.ViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Letters
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.LetterModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.model.interator.AlphabetInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.LettersUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,29 +17,27 @@ class LettersViewModel
     private val interactor: AlphabetInteractor
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<LettersUIState> = MutableStateFlow(
-        LettersUIState(
-            letters = Letters.entries.map { letter ->
-                LetterModel(
-                    letter = letter,
-                    isLetterCompleted = false
-                )
-            })
-    )
+    private val _uiState: MutableStateFlow<LettersUIState> = MutableStateFlow(LettersUIState(
+        letters = Letters.entries.map { it.title },
+        isLetterCompleted = Letters.entries.map { it.isCompleted }
+    ))
     val uiState = _uiState.asStateFlow()
 
     suspend fun isLetterCompleted() {
-        val lettersCompleted = interactor.getLetterCompleted(Task.FOURTH.stableId)
+        val lettersCompleted = interactor.getLetterCompleted(Task.FOURTH.stableId)?.map {
+            it.title
+        }
         if (lettersCompleted != null) {
             _uiState.update { uiState ->
+                val newIsLetterCompleted = uiState.isLetterCompleted.toMutableList()
+                uiState.letters.mapIndexed { index, letter ->
+                    if (lettersCompleted.contains(letter)) {
+                        newIsLetterCompleted[index] = true
+                    }
+                }
                 uiState.copy(
-                    letters = uiState.letters.map { letter ->
-                        letter.copy(
-                            isLetterCompleted = lettersCompleted.contains(letter.letter)
-                        )
-                    },
+                    isLetterCompleted = newIsLetterCompleted,
                     isVisibleRepeat = lettersCompleted.size > 45,
-                    listLettersCompleted = lettersCompleted
                 )
             }
         }

@@ -19,16 +19,17 @@ fun LetterScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     with(uiState) {
-        LaunchedEffect(key1 = listLettersCompleted, block = {
+        LaunchedEffect(key1 = isLetterCompleted, block = {
             viewModel.isLetterCompleted()
         }
         )
         LettersLayout(
             letters = letters,
+            isLetterCompleted = isLetterCompleted,
+            isVisibleRepeat = isVisibleRepeat,
             onClick = { letter ->
                 navController.navigate("${TASKS_SCREEN}/$letter")
-            },
-            isVisibleRepeat = isVisibleRepeat
+            }
         )
     }
 }

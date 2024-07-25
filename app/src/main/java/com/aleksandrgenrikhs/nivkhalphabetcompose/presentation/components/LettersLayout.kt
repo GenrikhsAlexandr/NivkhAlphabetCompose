@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
@@ -25,9 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.aleksandrgenrikhs.nivkhalphabetcompose.Letters
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.LetterModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
@@ -35,8 +33,9 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorTex
 
 @Composable
 fun LettersLayout(
-    letters: List<LetterModel>,
     modifier: Modifier = Modifier,
+    letters: List<String>,
+    isLetterCompleted: List<Boolean>,
     isVisibleRepeat: Boolean,
     onClick: (String) -> Unit,
 ) {
@@ -52,20 +51,20 @@ fun LettersLayout(
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        items(letters, key = { letter -> letter.letter.title }) { item ->
-            with(item) {
+        if (letters.isNotEmpty()) {
+            itemsIndexed(letters) { index, item ->
                 LetterItem(
-                    letter = letter.title,
-                    onClick = { onClick(letter.title) },
-                    isCompleted = isLetterCompleted
+                    letter = item,
+                    onClick = { onClick(item) },
+                    isCompleted = isLetterCompleted[index]
                 )
             }
-        }
-        item {
-            RepeatItem(
-                onClick = {},
-                isVisible = isVisibleRepeat,
-            )
+            item {
+                RepeatItem(
+                    onClick = {},
+                    isVisible = isVisibleRepeat,
+                )
+            }
         }
     }
 }
@@ -151,7 +150,8 @@ fun RepeatItem(
 fun LetterElementPreview() {
     NivkhAlphabetComposeTheme {
         LettersLayout(
-            letters = listOf(LetterModel(Letters.A, false), LetterModel(Letters.B, true)),
+            letters = listOf("Aa", "Bb", "Cc"),
+            isLetterCompleted = listOf(true, false, false),
             modifier = Modifier,
             onClick = {},
             isVisibleRepeat = true,

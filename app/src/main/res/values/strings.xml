@@ -48,12 +48,15 @@
     <string name="backAlphabet">Вернуться к алфавиту</string>
     <string name="backListTask">Выбрать задание</string>
     <string name="exitApp">Выйти из игры</string>
-    <string name="infoLettersScreen">Здесь тебе нужно выберать букву, которую хочешь изучить.</string>
-    <string name="infoTasksScreen">Здесь тебе нужно выберать задание для изучения буквы. \n Начинать нужно с первого задагия</string>
-    <string name="infoFirstScreen">Здесь тебе нужно первое задание.</string>
-    <string name="infoSecondScreen">Здесь тебе нужно второе задание.</string>
-    <string name="infoThirdScreen">Здесь тебе нужно третье задание.</string>
-    <string name="infoFourthScreen">Здесь тебе нужно четвертое задание.</string>
+    <string name="infoLettersScreen">Выбери букву, которую хочешь изучить.</string>
+    <string name="infoTasksScreen">Выбери задание для изучения буквы \"%1$s\".</string>
+    <string name="infoFirstScreen">Cперва прослушай букву \"%1$s\" 5 раз, затем каждое слово по 3 раза.</string>
+    <string name="infoSecondScreen">По картинке определи где находиться слово с буквой \"%1$s\" и нажать на эту картинку.</string>
+    <string name="infoThirdScreen">Напротив каждой картинки поставить соответствующее слово.\n
+     Чтобы получить подсказку нажми на картинку.</string>
+    <string name="infoFourthScreen">Используя буквы алфавита напиши правильное слово.\n
+    Чтобы проверить слово нажми на ✓.\n Чтобы удалить символ нажми на ←.\n
+    Чтобы получить подсказку нажми на картинку.</string>
     <string name="infoRepeatScreen">Здесь тебе нужно поворить.</string>
     <string name="ok">Понятно</string>
 

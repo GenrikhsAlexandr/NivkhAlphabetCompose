@@ -107,19 +107,19 @@ fun AppBar(
 
                 NavigationDestination.TasksScreen.destination -> DialogInfo(
                     title = stringResource(
-                        id = R.string.infoTasksScreen
+                        id = R.string.infoTasksScreen, letter!!
                     ),
                 )
 
                 NavigationDestination.FirstTaskScreen.destination -> DialogInfo(
                     title = stringResource(
-                        id = R.string.infoFirstScreen
+                        id = R.string.infoFirstScreen, letter!!
                     ),
                 )
 
                 NavigationDestination.SecondTaskScreen.destination -> DialogInfo(
                     title = stringResource(
-                        id = R.string.infoSecondScreen
+                        id = R.string.infoSecondScreen, letter!!
                     ),
                 )
 

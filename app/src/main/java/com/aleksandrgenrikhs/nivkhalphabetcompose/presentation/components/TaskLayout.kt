@@ -45,7 +45,7 @@ fun TaskLayout(
     @StringRes titleResId: List<Int>,
     @DrawableRes iconId: List<Int>,
     isTaskCompleted: List<Boolean>,
-    isNextTaskVisible: List<Boolean>,
+    isTaskVisible: List<Boolean>,
     route: List<String>,
     letter: String,
     modifier: Modifier = Modifier,
@@ -75,11 +75,11 @@ fun TaskLayout(
                     task = task,
                     iconResId = iconId[index],
                     onTaskClick = {
-                        if (isNextTaskVisible[index]) {
+                        if (isTaskVisible[index]) {
                             onClick(route[index], letter)
                         }
                     },
-                    isClickable = isNextTaskVisible[index],
+                    isClickable = isTaskVisible[index],
                     isCompleted = isTaskCompleted[index]
                 )
             }
@@ -153,7 +153,7 @@ private fun TaskItemPreview() {
             iconId = listOf(R.drawable.ic_task1, R.drawable.ic_task2, R.drawable.ic_task3),
             route = listOf(),
             isTaskCompleted = listOf(true, false, false),
-            isNextTaskVisible = listOf(true, true, false),
+            isTaskVisible = listOf(true, true, false),
             letter = "Aa",
             onClick = { _, _ -> }
         )

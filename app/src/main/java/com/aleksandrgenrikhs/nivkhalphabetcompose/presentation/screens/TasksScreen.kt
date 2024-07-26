@@ -23,7 +23,7 @@ fun TasksScreen(
             titleResId = uiState.titleResId,
             iconId = uiState.iconId,
             isTaskCompleted = uiState.isTaskCompleted,
-            isNextTaskVisible = uiState.isNextTaskVisible,
+            isTaskVisible = uiState.isNextTaskVisible,
             route = uiState.route,
             letter = letter,
             onClick = { route, letter ->

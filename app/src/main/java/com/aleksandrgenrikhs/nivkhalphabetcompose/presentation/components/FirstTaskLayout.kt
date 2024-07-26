@@ -46,6 +46,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorCar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
+import com.idapgroup.autosizetext.AutoSizeText
 
 @Composable
 fun FirstTaskLayout(
@@ -205,12 +206,14 @@ private fun CardWord(
                         )
                     }
                 }
-                Text(
+                AutoSizeText(
                     text = if (getWordError) stringResource(id = R.string.getWordError) else title,
+                    maxLines = 1,
                     style = MaterialTheme.typography.displayMedium,
+                    minFontSize = 32.sp,
                     modifier = modifier
                         .align(Alignment.CenterVertically)
-                        .padding(start = 8.dp)
+                        .padding(horizontal = 8.dp)
                 )
             }
         }
@@ -235,7 +238,7 @@ private fun FirstTaskContentPreview() {
             wordId = listOf("1.2", "1.3", "1.1"),
             icon = listOf("we", "wew", "ds"),
             progress = listOf(3, 2, 0),
-            isClickable = listOf(),
+            isClickable = listOf(true, false, false),
             letter = "Aa",
             onClick = { _, _ -> },
             isClickableLetter = false,

@@ -3,15 +3,6 @@
     <!--главный экран-->
     <string name="app_name">Нивхский алфавит</string>
     <string name="letsGo">Вперед к знаниям!</string>
-    <string name="infoLettersScreen">Здесь тебе нужно выберать букву, которую хочешь изучить.</string>
-    <string name="infoTasksScreen">Здесь тебе нужно выберать задание для изучения буквы. \n Начинать нужно с первого задагия</string>
-    <string name="infoFirstScreen">Здесь тебе нужно первое задание.</string>
-    <string name="infoSecondScreen">Здесь тебе нужно второе задание.</string>
-    <string name="infoThirdScreen">Здесь тебе нужно третье задание.</string>
-    <string name="infoFourthScreen">Здесь тебе нужно четвертое задание.</string>
-    <string name="infoRepeatScreen">Здесь тебе нужно поворить.</string>
-
-    <string name="about">О приложении</string>
 
     <!--список заданий-->
     <string name="firstTask">Выучи букву</string>
@@ -46,7 +37,7 @@
     <!--Повторение-->
     <string name="otherTask">Повторение</string>
     <string name="otherFifthTask">Выбери правельную букву </string>
-    <string name="textEndOtherFifthTask">Гранлиозно! </string>
+    <string name="textEndOtherFifthTask">Грандиозно! </string>
     <string name="otherSecondTask">Выбери правельную букву </string>
     <string name="textEndOtherSecondTask">Потрясающе! </string>
     <string name="otherThirdTask">Составь пары</string>
@@ -57,9 +48,16 @@
     <string name="backAlphabet">Вернуться к алфавиту</string>
     <string name="backListTask">Выбрать задание</string>
     <string name="exitApp">Выйти из игры</string>
-    <string name="notConnected">Нет подключения к интернету</string>
+    <string name="infoLettersScreen">Здесь тебе нужно выберать букву, которую хочешь изучить.</string>
+    <string name="infoTasksScreen">Здесь тебе нужно выберать задание для изучения буквы. \n Начинать нужно с первого задагия</string>
+    <string name="infoFirstScreen">Здесь тебе нужно первое задание.</string>
+    <string name="infoSecondScreen">Здесь тебе нужно второе задание.</string>
+    <string name="infoThirdScreen">Здесь тебе нужно третье задание.</string>
+    <string name="infoFourthScreen">Здесь тебе нужно четвертое задание.</string>
+    <string name="infoRepeatScreen">Здесь тебе нужно поворить.</string>
 
     <!--Другое-->
-    <string name="getWordError">Not found word</string>
+    <string name="getWordError">Слово не найдено</string>
+    <string name="about">О приложении</string>
     <string name="space">пробел</string>
 </resources>

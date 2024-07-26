@@ -320,15 +320,14 @@ private fun SubmitButton(
 private fun ThirdTaskPreview() {
     NivkhAlphabetComposeTheme {
         ThirdTaskLayout(
-
-            title = listOf("SAsna"),
-            wordId = listOf("1"),
-            icon = listOf(null),
+            title = listOf("Alpha", "Word", "Nivkh"),
+            wordId = listOf("1.2", "1.3", "1.1"),
+            icon = listOf(null, null, null),
             onIconClick = {},
             onDone = {},
             onDragAndDropEventReceived = { _, _ -> },
-            shareWords = arrayListOf(),
-            currentWords = arrayListOf(),
+            shareWords = arrayListOf("Alpha", "Word", "Nivkh"),
+            currentWords = arrayListOf("Alpha", "Word", "Nivkh"),
             isGuessWrong = false,
         )
     }

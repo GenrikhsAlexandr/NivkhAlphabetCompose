@@ -85,7 +85,6 @@ fun FourthTaskLayout(
             onValueChange = onUserGuessChanged,
             onDelete = onDelete,
             onDone = onDone,
-            modifier = Modifier,
             onClickable = onClickable
         )
     }

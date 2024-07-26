@@ -1,0 +1,56 @@
+package com.aleksandrgenrikhs.nivkhalphabetcompose
+
+enum class LettersKeybord(
+    val title: String,
+) {
+    A("а"),
+    B("б"),
+    V("в"),
+    G("г"),
+    Ng("ӷ"),
+    Gh("ғ"),
+    Dj("ӻ"),
+    D("д"),
+    E("е"),
+    Yo("ё"),
+    Zh("ж"),
+    Z("з"),
+    I("и"),
+    J("й"),
+    K("к"),
+    KK("кʼ"),
+    Q("ӄ"),
+    QK("ӄʼ"),
+    L("л"),
+    M("м"),
+    N("н"),
+    Nng("ӈ"),
+    O("о"),
+    P("п"),
+    PP("пʼ"),
+    R("р"),
+    Rr("р̆"),
+    S("с"),
+    T("т"),
+    TT("тʼ"),
+    U("у"),
+    UU("ў"),
+    F("ф"),
+    H("х"),
+    Qh("ӿ"),
+    QQ("ӽ"),
+    Tsc("ц"),
+    Ch("ч"),
+    Sh("ш"),
+    Shch("щ"),
+    HARD("ъ"),
+    Y("ы"),
+    MM("ь"),
+    EE("э"),
+    YU("ю"),
+    Ya("я");
+
+    companion object {
+        fun getById(stableId: String): LettersKeybord? = entries.find { it.title == stableId }
+    }
+}

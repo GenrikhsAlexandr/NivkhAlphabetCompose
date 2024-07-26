@@ -61,4 +61,5 @@
 
     <!--Другое-->
     <string name="getWordError">Not found word</string>
+    <string name="space">пробел</string>
 </resources>

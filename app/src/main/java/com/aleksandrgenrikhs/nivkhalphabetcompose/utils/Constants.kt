@@ -16,11 +16,10 @@ object Constants {
     const val LETTER_KEY = "letter"
 
     //URI константы
-    const val WORDS_URL = "firsttask/words/words.json"
-    const val IMAGE_URL =
-        "file:///android_asset/firsttask/image/"
-    const val LETTER_AUDIO = "firsttask/audio/letters/"
-    const val WORDS_AUDIO = "firsttask/audio/words/"
-    const val ERROR_AUDIO = "firsttask/audio/error"
-    const val FINISH_AUDIO = "firsttask/audio/finish"
+    const val WORDS_URL = "words/words.json"
+    const val IMAGE_URL = "file:///android_asset/image/"
+    const val LETTER_AUDIO = "audio/letters/"
+    const val WORDS_AUDIO = "audio/words/"
+    const val ERROR_AUDIO = "audio/error"
+    const val FINISH_AUDIO = "audio/finish"
 }

@@ -68,7 +68,7 @@ fun DialogInfoItem(
     title: String,
 ) {
     Dialog(
-        onDismissRequest = onDismissRequest
+        onDismissRequest = {}
     ) {
         Box(
             modifier = Modifier

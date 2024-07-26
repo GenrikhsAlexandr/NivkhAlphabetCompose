@@ -6,8 +6,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
@@ -16,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -28,10 +27,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
 
@@ -63,7 +66,8 @@ fun DialogInfo(
 }
 
 @Composable
-fun DialogInfoItem(
+private fun DialogInfoItem(
+    modifier: Modifier = Modifier,
     onDismissRequest: () -> Unit,
     title: String,
 ) {
@@ -73,48 +77,56 @@ fun DialogInfoItem(
         Box(
             modifier = Modifier
                 .wrapContentSize()
+                .clip(ShapeDefaults.Medium)
                 .background(colorProgressBar)
         ) {
             Column(
-                modifier = Modifier
+                modifier = modifier
+                    .padding(vertical = 32.dp)
                     .wrapContentSize(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Image(
-                    painter = painterResource(R.drawable.ic_start_alphabet),
+                    painter = painterResource(R.drawable.ic_info),
                     contentDescription = null,
                     contentScale = ContentScale.Fit,
-                    modifier = Modifier
+                    modifier = modifier
                         .height(160.dp)
                 )
                 Text(
                     text = title,
                     style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.padding(16.dp),
+                    modifier = modifier.padding(16.dp),
                     textAlign = TextAlign.Center
                 )
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center,
+                TextButton(
+                    onClick = {
+                        onDismissRequest()
+                    },
+                    modifier = modifier
+                        .padding(8.dp)
+                        .background(colorPrimary, CircleShape)
                 ) {
-                    TextButton(
-                        onClick = {
-                            onDismissRequest()
-                        },
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .weight(1f)
-                    ) {
-                        Text(
-                            text = "Ok",
-                            style = MaterialTheme.typography.labelSmall,
-                            textAlign = TextAlign.Center
-                        )
-                    }
+                    Text(
+                        text = stringResource(id = R.string.ok),
+                        style = MaterialTheme.typography.bodyLarge,
+                        textAlign = TextAlign.Center
+                    )
                 }
             }
         }
+    }
+}
+
+@Preview(widthDp = 300, heightDp = 400)
+@Composable
+private fun DialogInfoPreview() {
+    NivkhAlphabetComposeTheme {
+        DialogInfoItem(
+            title = stringResource(id = R.string.infoLettersScreen),
+            onDismissRequest = {},
+
+            )
     }
 }

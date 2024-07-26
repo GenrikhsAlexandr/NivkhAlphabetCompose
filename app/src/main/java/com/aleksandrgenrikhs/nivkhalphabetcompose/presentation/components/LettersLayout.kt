@@ -100,9 +100,7 @@ fun RepeatItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     isVisible: Boolean = true,
-
-    ) {
-
+) {
     Box(
         modifier = modifier
             .height(80.dp)

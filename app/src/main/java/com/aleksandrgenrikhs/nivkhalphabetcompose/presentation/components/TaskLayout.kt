@@ -19,13 +19,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,7 +39,6 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorOnP
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.shapes
 
 @Composable
 fun TaskLayout(
@@ -62,7 +62,7 @@ fun TaskLayout(
     ) {
         item {
             Image(
-                painter = painterResource(id = R.drawable.ic_start_alphabet),
+                painter = painterResource(id = R.drawable.ic_tasks),
                 contentDescription = null,
                 modifier = modifier
                     .size(200.dp),
@@ -96,56 +96,50 @@ private fun TaskItem(
     isClickable: Boolean,
     isCompleted: Boolean
 ) {
-    Card(
+    Box(
         modifier = modifier
             .fillMaxWidth()
             .height(100.dp)
             .padding(8.dp)
-            .clickable(onClick = onTaskClick),
-        shape = shapes.small
+            .clickable(onClick = onTaskClick)
+            .clip(ShapeDefaults.Small)
+            .background(colorOnPrimary),
+        contentAlignment = Alignment.CenterStart
     ) {
-        Box(
+        Row(
             modifier = modifier
-                .background(colorOnPrimary)
-                .fillMaxSize(),
-            contentAlignment = Alignment.CenterStart
-        )
-        {
-            Row(
-                modifier = modifier
-                    .fillMaxSize()
-                    .background(colorCardLetterItem)
+                .fillMaxSize()
+                .background(colorCardLetterItem)
 
-            ) {
-                Image(
-                    painter = painterResource(id = iconResId),
-                    contentDescription = null,
-                    modifier = modifier
-                        .fillMaxHeight()
-                        .padding(8.dp)
-                        .align(Alignment.CenterVertically)
-                )
-                Text(
-                    fontSize = 32.sp,
-                    text = stringResource(task),
-                    color = if (isCompleted) colorProgressBar else colorText,
-                    style = MaterialTheme.typography.displayMedium,
-                    modifier = modifier
-                        .align(Alignment.CenterVertically)
-                )
-            }
-            if (!isClickable) {
-                Icon(
-                    imageVector = Icons.Default.Lock,
-                    contentDescription = null,
-                    tint = colorText,
-                    modifier = modifier
-                        .align(
-                            Alignment.TopEnd
-                        )
-                        .padding(8.dp)
-                )
-            }
+        ) {
+            Image(
+                painter = painterResource(id = iconResId),
+                contentDescription = null,
+                modifier = modifier
+                    .fillMaxHeight()
+                    .padding(8.dp)
+                    .align(Alignment.CenterVertically)
+            )
+            Text(
+                fontSize = 32.sp,
+                text = stringResource(task),
+                color = if (isCompleted) colorProgressBar else colorText,
+                style = MaterialTheme.typography.displayMedium,
+                modifier = modifier
+                    .align(Alignment.CenterVertically)
+            )
+        }
+        if (!isClickable) {
+            Icon(
+                imageVector = Icons.Default.Lock,
+                contentDescription = null,
+                tint = colorText,
+                modifier = modifier
+                    .align(
+                        Alignment.TopEnd
+                    )
+                    .padding(8.dp)
+            )
         }
     }
 }

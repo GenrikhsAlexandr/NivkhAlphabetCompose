@@ -171,6 +171,7 @@ private fun DeleteButton(
             modifier = modifier.align(Alignment.Center),
             fontWeight = FontWeight.ExtraBold,
             text = "←",
+            color = colorError,
             style = MaterialTheme.typography.displayMedium,
         )
     }

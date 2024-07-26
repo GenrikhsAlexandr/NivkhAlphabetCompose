@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -28,6 +29,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -39,6 +41,7 @@ import androidx.compose.ui.draganddrop.DragAndDropEvent
 import androidx.compose.ui.draganddrop.DragAndDropTarget
 import androidx.compose.ui.draganddrop.DragAndDropTransferData
 import androidx.compose.ui.draganddrop.mimeTypes
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -54,7 +57,6 @@ import coil.request.ImageRequest
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorError
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorOnPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorRight
@@ -94,6 +96,7 @@ fun ThirdTaskLayout(
                     icon = icon[0],
                     onClick = { onIconClick("${WORDS_AUDIO}${wordId[0]}") },
                 )
+                Spacer(modifier = modifier.width(4.dp))
                 ReceivingContainer(
                     title = currentWords[0] ?: "",
                     index = 0,
@@ -114,6 +117,7 @@ fun ThirdTaskLayout(
                     icon = icon[1],
                     onClick = { onIconClick("${WORDS_AUDIO}${wordId[1]}") },
                 )
+                Spacer(modifier = modifier.width(4.dp))
                 ReceivingContainer(
                     title = currentWords[1] ?: "",
                     index = 1,
@@ -134,6 +138,7 @@ fun ThirdTaskLayout(
                     icon = icon[2],
                     onClick = { onIconClick("${WORDS_AUDIO}${wordId[2]}") },
                 )
+                Spacer(modifier = modifier.width(4.dp))
                 ReceivingContainer(
                     title = currentWords[2] ?: "",
                     index = 2,
@@ -156,7 +161,7 @@ fun ThirdTaskLayout(
                     )
                 }
             }
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = modifier.weight(1f))
             SubmitButton(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -186,11 +191,13 @@ private fun ReceivingContainer(
     }
     Box(
         modifier = modifier
+            .clip(ShapeDefaults.Small)
             .border(
                 width = 2.dp,
-                color = if (isError) colorError else colorProgressBar
+                color = if (isError) colorError else colorProgressBar,
+                shape = ShapeDefaults.Small
             )
-            .background(colorOnPrimary)
+            .background(colorProgressBar)
             .padding(horizontal = 3.dp)
             .size(150.dp)
             .dragAndDropTarget(
@@ -259,11 +266,8 @@ private fun IconButton(
     IconButton(
         modifier = modifier
             .size(150.dp)
-            .border(
-                width = 2.dp,
-                color = colorProgressBar
-            )
-            .background(colorOnPrimary),
+            .clip(ShapeDefaults.Small)
+            .background(colorProgressBar),
         onClick = onClick
     ) {
         SubcomposeAsyncImage(
@@ -298,9 +302,10 @@ private fun SubmitButton(
             onDone()
         },
         modifier = modifier
-            .wrapContentSize(),
+            .wrapContentSize()
+            .padding(bottom = 16.dp),
         colors = ButtonColors(
-            colorRight,
+            colorProgressBar,
             colorRight,
             colorRight,
             colorRight
@@ -315,7 +320,7 @@ private fun SubmitButton(
     }
 }
 
-@Preview(widthDp = 410, heightDp = 610)
+@Preview(widthDp = 410, heightDp = 700)
 @Composable
 private fun ThirdTaskPreview() {
     NivkhAlphabetComposeTheme {

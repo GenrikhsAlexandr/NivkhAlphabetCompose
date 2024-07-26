@@ -55,6 +55,7 @@
     <string name="infoThirdScreen">Здесь тебе нужно третье задание.</string>
     <string name="infoFourthScreen">Здесь тебе нужно четвертое задание.</string>
     <string name="infoRepeatScreen">Здесь тебе нужно поворить.</string>
+    <string name="ok">Понятно</string>
 
     <!--Другое-->
     <string name="getWordError">Слово не найдено</string>

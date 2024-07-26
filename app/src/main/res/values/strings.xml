@@ -48,7 +48,8 @@
     <string name="backAlphabet">Вернуться к алфавиту</string>
     <string name="backListTask">Выбрать задание</string>
     <string name="exitApp">Выйти из игры</string>
-    <string name="infoLettersScreen">Выбери букву, которую хочешь изучить.</string>
+    <string name="infoLettersScreen">Выбери букву, которую хочешь изучить.\n
+        В конце алфавита можешь найти повторение всех букв.</string>
     <string name="infoTasksScreen">Выбери задание для изучения буквы \"%1$s\".</string>
     <string name="infoFirstScreen">Cперва прослушай букву \"%1$s\" 5 раз, затем каждое слово по 3 раза.</string>
     <string name="infoSecondScreen">По картинке определи где находиться слово с буквой \"%1$s\" и нажать на эту картинку.</string>

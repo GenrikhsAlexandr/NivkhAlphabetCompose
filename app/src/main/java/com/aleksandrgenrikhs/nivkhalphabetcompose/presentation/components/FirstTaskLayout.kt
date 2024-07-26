@@ -210,7 +210,7 @@ private fun CardWord(
                     text = if (getWordError) stringResource(id = R.string.getWordError) else title,
                     maxLines = 1,
                     style = MaterialTheme.typography.displayMedium,
-                    minFontSize = 32.sp,
+                    minFontSize = 28.sp,
                     modifier = modifier
                         .align(Alignment.CenterVertically)
                         .padding(horizontal = 8.dp)

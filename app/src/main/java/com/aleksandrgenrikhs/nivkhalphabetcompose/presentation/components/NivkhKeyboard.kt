@@ -29,14 +29,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.aleksandrgenrikhs.nivkhalphabetcompose.LettersKeybord
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorError
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
+import com.idapgroup.autosizetext.AutoSizeText
 
 @Composable
 fun NivkhKeyboard(
@@ -80,14 +81,14 @@ fun NivkhKeyboard(
                 contentAlignment = Alignment.Center,
             )
             {
-                Text(
+                AutoSizeText(
                     text = input,
+                    maxLines = 1,
                     style = MaterialTheme.typography.displayMedium,
+                    minFontSize = 32.sp,
                     color = if (!isError) colorText else colorError,
                     modifier = Modifier
-                        .padding(vertical = 4.dp),
-                    textAlign = TextAlign.Center,
-                    maxLines = 1
+                        .padding(4.dp),
                 )
             }
             DoneButton(

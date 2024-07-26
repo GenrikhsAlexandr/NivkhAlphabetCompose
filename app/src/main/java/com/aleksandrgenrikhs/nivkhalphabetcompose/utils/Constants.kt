@@ -18,7 +18,7 @@ object Constants {
     //URI константы
     const val WORDS_URL = "firsttask/words/words.json"
     const val IMAGE_URL =
-        "http://bibl-nogl-dictionary.ru/data/alphabet/"
+        "file:///android_asset/firsttask/image/"
     const val LETTER_AUDIO = "firsttask/audio/letters/"
     const val WORDS_AUDIO = "firsttask/audio/words/"
     const val ERROR_AUDIO = "firsttask/audio/error"

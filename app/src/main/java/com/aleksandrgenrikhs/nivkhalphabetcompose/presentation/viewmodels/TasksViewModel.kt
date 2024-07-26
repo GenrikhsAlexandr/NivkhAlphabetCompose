@@ -2,7 +2,7 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.interator.AlphabetInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.AlphabetInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.TaskUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +22,6 @@ class TasksViewModel
             iconId = Task.entries.map { it.icon },
             stableId = Task.entries.map { it.stableId },
             route = Task.entries.map { it.route },
-            isNetworkConnected = interactor.isNetWorkConnected()
         )
     )
     val uiState = _uiState.asStateFlow()

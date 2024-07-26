@@ -1,7 +1,7 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper
 
 import com.aleksandrgenrikhs.nivkhalphabet.utils.Mapper
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.SecondTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.SecondTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.SecondTaskUIState
 import javax.inject.Inject
 
@@ -16,7 +16,6 @@ class UIStateSecondTaskMapper
             icon = input.map { it.icon },
             isFlipped = input.map { it.isFlipped },
             isCorrectAnswer = input.map { it.isCorrectAnswer },
-            isNetworkConnected = true
         )
     }
 }

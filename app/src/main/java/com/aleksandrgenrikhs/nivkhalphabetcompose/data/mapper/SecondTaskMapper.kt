@@ -1,8 +1,8 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper
 
 import com.aleksandrgenrikhs.nivkhalphabet.utils.Mapper
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.SecondTaskModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.WordModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.SecondTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.WordModel
 import javax.inject.Inject
 
 class SecondTaskMapper

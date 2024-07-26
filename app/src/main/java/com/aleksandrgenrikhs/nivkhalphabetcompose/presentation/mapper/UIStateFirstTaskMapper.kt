@@ -1,7 +1,7 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper
 
 import com.aleksandrgenrikhs.nivkhalphabet.utils.Mapper
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.FirstTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.FirstTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.FirstTaskUIState
 import javax.inject.Inject
 
@@ -16,7 +16,6 @@ class UIStateFirstTaskMapper
             isClickableWord = input.map { it.isClickable },
             progressWord = input.map { it.progress },
             isCompletedWord = input.map { it.isCompleted },
-            isNetworkConnected = true
         )
     }
 }

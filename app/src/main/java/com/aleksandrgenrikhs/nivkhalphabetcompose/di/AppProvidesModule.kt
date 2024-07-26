@@ -3,7 +3,6 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.di
 import android.app.Application
 import android.content.Context
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.AlphabetMediaPlayer
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.NetworkConnected
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,10 +16,6 @@ object AppProvidesModule {
     @Provides
     @Singleton
     fun provideMediaPlayer(): AlphabetMediaPlayer = AlphabetMediaPlayer
-
-    @Provides
-    @Singleton
-    fun provideNetworkConnected(): NetworkConnected = NetworkConnected
 
     @Provides
     @Singleton

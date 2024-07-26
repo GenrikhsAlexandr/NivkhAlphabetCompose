@@ -3,7 +3,7 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.interator.AlphabetInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.AlphabetInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateSecondTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.SecondTaskUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
@@ -25,11 +25,7 @@ class SecondTaskViewModel
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<SecondTaskUIState> =
-        MutableStateFlow(
-            SecondTaskUIState(
-                isNetworkConnected = interactor.isNetWorkConnected()
-            )
-        )
+        MutableStateFlow(SecondTaskUIState())
     val uiState = _uiState.asStateFlow()
 
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)

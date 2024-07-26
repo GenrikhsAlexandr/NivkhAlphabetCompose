@@ -3,7 +3,7 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels
 import android.content.ClipData
 import androidx.lifecycle.ViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.interator.AlphabetInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.AlphabetInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateThirdTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.ThirdTaskUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
@@ -21,11 +21,7 @@ class ThirdTaskViewModel
     val mapper: UIStateThirdTaskMapper
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<ThirdTaskUIState> = MutableStateFlow(
-        ThirdTaskUIState(
-            isNetworkConnected = interactor.isNetWorkConnected()
-        )
-    )
+    private val _uiState: MutableStateFlow<ThirdTaskUIState> = MutableStateFlow(ThirdTaskUIState())
     val uiState = _uiState.asStateFlow()
 
     fun setLetter(letter: String) {

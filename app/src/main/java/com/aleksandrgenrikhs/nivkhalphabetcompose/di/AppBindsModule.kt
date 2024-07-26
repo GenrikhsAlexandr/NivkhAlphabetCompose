@@ -2,8 +2,8 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.di
 
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.repository.AlphabetRepositoryImpl
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.repository.PrefRepositoryImpl
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.repository.AlphabetRepository
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.repository.PrefRepository
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.AlphabetRepository
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.PrefRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

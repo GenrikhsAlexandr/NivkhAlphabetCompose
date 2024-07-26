@@ -3,7 +3,7 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.interator.AlphabetInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.AlphabetInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateFirstTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.FirstTaskUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
@@ -23,11 +23,7 @@ class FirstTaskViewModel
     val mapper: UIStateFirstTaskMapper
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<FirstTaskUIState> = MutableStateFlow(
-        FirstTaskUIState(
-            isNetworkConnected = interactor.isNetWorkConnected()
-        )
-    )
+    private val _uiState: MutableStateFlow<FirstTaskUIState> = MutableStateFlow(FirstTaskUIState())
     val uiState = _uiState.asStateFlow()
 
     fun setLetter(letter: String) {

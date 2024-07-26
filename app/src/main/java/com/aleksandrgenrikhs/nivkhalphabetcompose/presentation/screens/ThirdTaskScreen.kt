@@ -14,7 +14,6 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.Dialog
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.NotConnected
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.ThirdTaskLayout
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.ThirdTaskViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
@@ -34,12 +33,6 @@ fun ThirdTaskScreen(
     })
 
     with(uiState) {
-        if (!isNetworkConnected) {
-            NotConnected(
-                navController = navController
-            )
-        }
-        with(uiState) {
             ThirdTaskLayout(
                 title = title,
                 wordId = wordId,
@@ -88,5 +81,4 @@ fun ThirdTaskScreen(
                 )
             }
         }
-    }
 }

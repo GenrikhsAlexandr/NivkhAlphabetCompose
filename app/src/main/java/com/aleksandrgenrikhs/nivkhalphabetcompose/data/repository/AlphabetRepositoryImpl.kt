@@ -6,15 +6,14 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.FirstTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.SecondTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.ThirdTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.WordMapper
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.FirstTaskModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.FourthTaskModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.SecondTaskModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.ThirdTaskModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.WordModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.repository.AlphabetRepository
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.FirstTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.FourthTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.SecondTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.ThirdTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.WordModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.AlphabetRepository
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.AlphabetMediaPlayer
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_URL
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.NetworkConnected
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -33,7 +32,6 @@ class AlphabetRepositoryImpl
     private val secondTaskMapper: SecondTaskMapper,
     private val thirdTaskMapper: ThirdTaskMapper,
     private val mediaPlayer: AlphabetMediaPlayer,
-    private val networkConnected: NetworkConnected
 ) : AlphabetRepository {
 
     private val json = Json { ignoreUnknownKeys = true }
@@ -110,9 +108,5 @@ class AlphabetRepositoryImpl
 
     override fun playerDestroy() {
         mediaPlayer.destroyPlayer()
-    }
-
-    override fun isNetWorkConnected(): Boolean {
-        return networkConnected.isNetworkConnected(context)
     }
 }

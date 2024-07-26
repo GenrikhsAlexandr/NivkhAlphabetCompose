@@ -3,7 +3,7 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.interator.AlphabetInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.AlphabetInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.FourthTaskUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
@@ -20,11 +20,8 @@ import javax.inject.Inject
 class FourthTaskViewModel
 @Inject constructor(val interactor: AlphabetInteractor) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<FourthTaskUIState> = MutableStateFlow(
-        FourthTaskUIState(
-            isNetworkConnected = interactor.isNetWorkConnected()
-        )
-    )
+    private val _uiState: MutableStateFlow<FourthTaskUIState> =
+        MutableStateFlow(FourthTaskUIState())
     val uiState = _uiState.asStateFlow()
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
 

@@ -13,7 +13,6 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.Dialog
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.FirstTaskLayout
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.NotConnected
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.FirstTaskViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 
@@ -32,11 +31,6 @@ fun FirstTaskScreen(
             viewModel.isTaskCompleted(letter)
         })
 
-        if (!isNetworkConnected) {
-            NotConnected(
-                navController = navController
-            )
-        }
         FirstTaskLayout(
             title = title,
             wordId = wordId,

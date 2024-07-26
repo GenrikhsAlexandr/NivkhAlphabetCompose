@@ -15,7 +15,6 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.Dialog
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.FourthTaskLayout
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.NotConnected
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.FourthTaskViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO
@@ -36,11 +35,6 @@ fun FourthTaskScreen(
     })
 
     with(uiState) {
-        if (!isNetworkConnected) {
-            NotConnected(
-                navController = navController
-            )
-        }
 
         FourthTaskLayout(
             onClick = { viewModel.playSound("${WORDS_AUDIO}${wordId}") },

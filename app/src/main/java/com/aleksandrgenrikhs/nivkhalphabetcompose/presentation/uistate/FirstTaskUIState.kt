@@ -14,6 +14,5 @@ data class FirstTaskUIState(
     val isCompletedLetter: Boolean = false,
     val getWordError: Boolean = false,
     val isVisibleWord: Boolean = false,
-    val isNetworkConnected: Boolean,
     val isFinishAudio: Boolean = false,
 )

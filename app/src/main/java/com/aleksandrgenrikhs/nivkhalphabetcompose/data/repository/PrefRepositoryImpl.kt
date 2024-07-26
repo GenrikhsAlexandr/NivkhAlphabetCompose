@@ -3,7 +3,7 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.data.repository
 import android.content.Context
 import android.content.SharedPreferences
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Letters
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.repository.PrefRepository
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.PrefRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 

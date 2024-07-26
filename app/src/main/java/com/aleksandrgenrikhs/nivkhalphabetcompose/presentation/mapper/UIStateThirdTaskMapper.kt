@@ -1,7 +1,7 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper
 
 import com.aleksandrgenrikhs.nivkhalphabet.utils.Mapper
-import com.aleksandrgenrikhs.nivkhalphabetcompose.model.ThirdTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.ThirdTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.ThirdTaskUIState
 import javax.inject.Inject
 
@@ -14,7 +14,6 @@ class UIStateThirdTaskMapper
             wordId = input.map { it.wordId },
             icon = input.map { it.icon },
             shareWords = input.shuffled().map { it.title },
-            isNetworkConnected = true
         )
     }
 }

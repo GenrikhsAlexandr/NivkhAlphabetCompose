@@ -7,5 +7,4 @@ data class TaskUIState(
     val route: List<String>,
     val isTaskCompleted: List<Boolean> = listOf(false, false, false, false),
     val isNextTaskVisible: List<Boolean> = listOf(true, false, false, false),
-    val isNetworkConnected: Boolean
 )

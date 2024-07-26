@@ -26,7 +26,6 @@ fun LetterScreen(
         LettersLayout(
             letters = letters,
             isLetterCompleted = isLetterCompleted,
-            isVisibleRepeat = isVisibleRepeat,
             onClick = { letter ->
                 navController.navigate("${TASKS_SCREEN}/$letter")
             }

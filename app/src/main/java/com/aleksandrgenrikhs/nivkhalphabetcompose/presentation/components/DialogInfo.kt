@@ -44,12 +44,11 @@ fun DialogInfo(
     Box(
         modifier = modifier
             .clip(CircleShape)
+            .padding(end = 16.dp)
             .clickable { expanded = true },
         contentAlignment = Alignment.Center
     ) {
         Icon(
-            modifier = modifier
-                .padding(end = 16.dp),
             imageVector = Icons.Default.Info,
             contentDescription = null,
             tint = colorText

@@ -37,7 +37,6 @@ class LettersViewModel
                 }
                 uiState.copy(
                     isLetterCompleted = newIsLetterCompleted,
-                    isVisibleRepeat = lettersCompleted.size > 45,
                 )
             }
         }

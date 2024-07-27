@@ -16,15 +16,15 @@ fun TasksScreen(
     tasksViewModel: TasksViewModel = hiltViewModel()
 ) {
     val uiState by tasksViewModel.uiState.collectAsState()
-    with(uiState) {
-        LaunchedEffect(key1 = letter, block = { tasksViewModel.isTaskCompleted(letter) })
+    LaunchedEffect(key1 = letter, block = { tasksViewModel.isTaskCompleted(letter) })
 
+    with(uiState) {
         TaskLayout(
-            titleResId = uiState.titleResId,
-            iconId = uiState.iconId,
-            isTaskCompleted = uiState.isTaskCompleted,
-            isTaskVisible = uiState.isNextTaskVisible,
-            route = uiState.route,
+            titleResId = titleResId,
+            iconId = iconId,
+            isTaskCompleted = isTaskCompleted,
+            isTaskVisible = isNextTaskVisible,
+            route = route,
             letter = letter,
             onClick = { route, letter ->
                 navController.navigate("$route/$letter")

@@ -8,9 +8,11 @@ object Constants {
     const val SECOND_TASK_SCREEN = "second_task"
     const val THIRD_TASK_SCREEN = "third_task"
     const val FOURTH_TASK_SCREEN = "fourth_task"
-    const val REPEAT_TASK_SCREEN = "repeat_task"
     const val SPLASH_SCREEN = "splash_screen"
-    const val ABOUT_SCREEN = "about_screen"
+    const val REVISION_TASKS_SCREEN = "revision_screen"
+    const val REVISION_FIRST_SCREEN = "revision_first_screen"
+    const val REVISION_SECOND_SCREEN = "revision_second__screen"
+    const val REVISION_THIRD_SCREEN = "revision_third_screen"
 
     //Костанты для передачи аргументов
     const val LETTER_KEY = "letter"

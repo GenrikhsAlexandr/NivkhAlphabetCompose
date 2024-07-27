@@ -33,14 +33,11 @@ import kotlinx.coroutines.delay
 fun SplashScreen(
     navController: NavController
 ) {
-    val scale = remember {
-        androidx.compose.animation.core.Animatable(0f)
-    }
+    val scale = remember { androidx.compose.animation.core.Animatable(0f) }
 
     LaunchedEffect(key1 = true) {
         scale.animateTo(
             targetValue = 1.0f,
-            // tween Animation
             animationSpec = tween(
                 durationMillis = 1500,
                 easing = {

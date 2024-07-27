@@ -23,8 +23,8 @@ fun FirstTaskScreen(
     letter: String,
 ) {
     val uiState by viewModel.uiState.collectAsState()
-
     viewModel.setLetter(letter)
+
     with(uiState) {
         LaunchedEffect(key1 = selectedLetter, block = {
             viewModel.getWords(letter)

@@ -27,15 +27,11 @@ fun SecondTaskScreen(
     letter: String,
 ) {
     val uiState by viewModel.uiState.collectAsState()
-
     viewModel.setLetter(letter)
 
-    LaunchedEffect(key1 = Unit, block = {
-        viewModel.getWords(letter)
-    })
+    LaunchedEffect(key1 = Unit, block = { viewModel.getWords(letter) })
 
     with(uiState) {
-
         SecondTaskLayout(
             letterId = letterId,
             title = title,

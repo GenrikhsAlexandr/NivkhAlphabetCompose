@@ -74,10 +74,10 @@ fun AppBar(
                     )
                 }
 
-                NavigationDestination.AboutScreen.destination -> {
+                NavigationDestination.RevisionTaskScreen.destination -> {
                     Text(
-                        text = stringResource(id = R.string.about),
-                        style = MaterialTheme.typography.titleLarge
+                        text = stringResource(id = R.string.revisionTask),
+                        style = MaterialTheme.typography.titleLarge,
                     )
                 }
             }
@@ -135,9 +135,9 @@ fun AppBar(
                     ),
                 )
 
-                NavigationDestination.RepeatTaskScreen.destination -> DialogInfo(
+                NavigationDestination.RevisionTaskScreen.destination -> DialogInfo(
                     title = stringResource(
-                        id = R.string.infoRepeatScreen
+                        id = R.string.infoRevisionScreen
                     ),
                 )
             }

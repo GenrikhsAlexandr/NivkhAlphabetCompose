@@ -25,23 +25,19 @@
     <string name="submit">Проверить</string>
 
     <!--Четвертое задание-->
-    <string name="textEndFourthTask">Отлично!</string>
+    <string name="textEndFourthTask">Это успех!\n Ты выполнил все задания с этой буквой! \n Переходи к следующей</string>
     <string name="enter_your_word">Введите слово</string>
     <string name="wrong_guess">Неверно!</string>
-
-    <!--Пятое задание-->
-    <string name="titleFifthTask">Напечатой слово </string>
-    <string name="textEndFifthTask">Это успех!\n Ты выполнил все задания с этой буквой! \n Переходи к следующей</string>
     <string name="repeat">Повторить еще раз</string>
 
     <!--Повторение-->
-    <string name="otherTask">Повторение</string>
-    <string name="otherFifthTask">Выбери правельную букву </string>
-    <string name="textEndOtherFifthTask">Грандиозно! </string>
-    <string name="otherSecondTask">Выбери правельную букву </string>
-    <string name="textEndOtherSecondTask">Потрясающе! </string>
-    <string name="otherThirdTask">Составь пары</string>
-    <string name="textEndOtherThirdTask">Гениально! </string>
+    <string name="revisionTask">Повторение</string>
+    <string name="revisionTaskFirst">Выбери правельную букву </string>
+    <string name="textEndRevisionTaskFirst">Грандиозно! </string>
+    <string name="revisionTaskSecond">Выбери правельную букву </string>
+    <string name="textEndRevisionSecond">Потрясающе! </string>
+    <string name="revisionTaskThird">Составь пары</string>
+    <string name="textEndRevisionTaskThird">Гениально! </string>
 
     <!--Диплоговое окно-->
     <string name="nextTask">Перейти к игре %1$s</string>
@@ -58,11 +54,10 @@
     <string name="infoFourthScreen">Используя буквы алфавита напиши правильное слово.\n
     Чтобы проверить слово нажми на ✓.\n Чтобы удалить символ нажми на ←.\n
     Чтобы получить подсказку нажми на картинку.</string>
-    <string name="infoRepeatScreen">Здесь тебе нужно поворить.</string>
+    <string name="infoRevisionScreen">Нажми на картинку, чтобы приступить к заданию.</string>
     <string name="ok">Понятно</string>
 
     <!--Другое-->
     <string name="getWordError">Слово не найдено</string>
-    <string name="about">О приложении</string>
     <string name="space">пробел</string>
 </resources>

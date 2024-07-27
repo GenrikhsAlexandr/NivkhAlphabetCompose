@@ -24,10 +24,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.AppBar
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.AboutScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.FirstTaskScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.FourthTaskScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.LetterScreen
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.RevisionTasksScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.SecondTaskScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.SplashScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.TasksScreen
@@ -179,10 +179,11 @@ fun NavHost(
                 )
             }
             composable(
-                route = NavigationDestination.AboutScreen.destination
-            )
-            {
-                AboutScreen()
+                route = NavigationDestination.RevisionTaskScreen.destination,
+            ) {
+                RevisionTasksScreen(
+                    navController = navController,
+                )
             }
         }
     }

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
@@ -27,18 +28,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
+import com.idapgroup.autosizetext.AutoSizeText
 
 @Composable
 fun LettersLayout(
     modifier: Modifier = Modifier,
     letters: List<String>,
     isLetterCompleted: List<Boolean>,
-    onClick: (String) -> Unit,
+    onClickLetter: (String) -> Unit,
+    onClickRevision: () -> Unit,
 ) {
     LazyVerticalGrid(
         modifier = modifier
@@ -56,7 +60,7 @@ fun LettersLayout(
             itemsIndexed(letters) { index, item ->
                 LetterItem(
                     letter = item,
-                    onClick = { onClick(item) },
+                    onClick = { onClickLetter(item) },
                     isCompleted = isLetterCompleted[index]
                 )
             }
@@ -66,7 +70,9 @@ fun LettersLayout(
                         .wrapContentSize(
                             unbounded = true,
                         ),
-                    onClick = {},
+                    onClick = {
+                        onClickRevision()
+                    },
                 )
             }
         }
@@ -83,19 +89,18 @@ fun LetterItem(
     val textColor = if (isCompleted) colorProgressBar else colorText
     Box(
         modifier = modifier
-            .wrapContentSize()
+            .fillMaxSize()
             .clip(CircleShape)
             .clickable(onClick = onClick),
         contentAlignment = Alignment.Center
     ) {
-        Text(
+        AutoSizeText(
             text = letter,
-            modifier = modifier
-                .wrapContentSize()
-                .padding(8.dp),
             color = textColor,
             maxLines = 1,
             style = MaterialTheme.typography.displayMedium,
+            minFontSize = 38.sp,
+            modifier = modifier.padding(8.dp)
         )
     }
 }
@@ -126,7 +131,7 @@ fun RepeatItem(
                 .height(130.dp)
         )
         Text(
-            text = stringResource(id = R.string.otherTask),
+            text = stringResource(id = R.string.revisionTask),
             modifier = modifier
                 .padding(8.dp),
             maxLines = 1,
@@ -140,10 +145,11 @@ fun RepeatItem(
 fun LetterElementPreview() {
     NivkhAlphabetComposeTheme {
         LettersLayout(
-            letters = listOf("Aa", "Bb", "Cc"),
+            letters = listOf("Щщ", "Шш", "Юю"),
             isLetterCompleted = listOf(true, false, false),
             modifier = Modifier,
-            onClick = {},
+            onClickLetter = {},
+            onClickRevision = {}
         )
     }
 }

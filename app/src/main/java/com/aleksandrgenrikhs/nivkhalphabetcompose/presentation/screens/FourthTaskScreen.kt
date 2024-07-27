@@ -27,15 +27,11 @@ fun FourthTaskScreen(
     letter: String,
 ) {
     val uiState by viewModel.uiState.collectAsState()
-
     viewModel.setLetter(letter)
 
-    LaunchedEffect(key1 = letter, block = {
-        viewModel.getWord(letter)
-    })
+    LaunchedEffect(key1 = letter, block = { viewModel.getWord(letter) })
 
     with(uiState) {
-
         FourthTaskLayout(
             onClick = { viewModel.playSound("${WORDS_AUDIO}${wordId}") },
             icon = icon,
@@ -47,7 +43,7 @@ fun FourthTaskScreen(
             onDelete = { viewModel.deleteLastLetter() }
         )
         if (isCompleted) {
-            val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task5)
+            val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task4)
             var showDialog by remember { mutableStateOf(false) }
             LaunchedEffect(key1 = null) {
                 delay(2000)
@@ -74,7 +70,7 @@ fun FourthTaskScreen(
                         }
                     },
                     painter = painter,
-                    title = stringResource(id = R.string.textEndFifthTask),
+                    title = stringResource(id = R.string.textEndFourthTask),
                     textButtonBack = stringResource(id = R.string.backAlphabet),
                     textButtonNext = stringResource(id = R.string.repeat),
                     isVisibleSecondButton = true,

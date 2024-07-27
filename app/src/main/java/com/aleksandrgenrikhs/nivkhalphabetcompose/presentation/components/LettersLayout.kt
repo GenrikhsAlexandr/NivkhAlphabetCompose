@@ -119,7 +119,7 @@ fun RepeatItem(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_end_task2),
+            painter = painterResource(id = R.drawable.ic_repeat),
             contentDescription = null,
             contentScale = ContentScale.Fit,
             modifier = Modifier

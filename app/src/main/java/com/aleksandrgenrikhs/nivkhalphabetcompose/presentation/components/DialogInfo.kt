@@ -10,9 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
@@ -36,7 +33,6 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
 
 @Composable
 fun DialogInfo(
@@ -51,10 +47,12 @@ fun DialogInfo(
             .clickable { expanded = true },
         contentAlignment = Alignment.Center
     ) {
-        Icon(
-            imageVector = Icons.Default.Info,
+        Image(
+            painter = painterResource(R.drawable.ic_info_appbar),
             contentDescription = null,
-            tint = colorText
+            contentScale = ContentScale.Fit,
+            modifier = modifier
+                .height(50.dp)
         )
     }
     if (expanded) {

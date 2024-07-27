@@ -45,8 +45,8 @@ val Typography = Typography(
         fontFamily = fontFamily,
         fontWeight = FontWeight.Bold,
         color = colorText,
-        fontSize = 22.sp,
-        lineHeight = 22.sp,
+        fontSize = 25.sp,
+        lineHeight = 25.sp,
         letterSpacing = 0.sp,
     ),
     displayMedium = TextStyle(

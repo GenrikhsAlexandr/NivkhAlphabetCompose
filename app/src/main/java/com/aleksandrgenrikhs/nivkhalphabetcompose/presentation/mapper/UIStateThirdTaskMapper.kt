@@ -1,7 +1,7 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper
 
 import com.aleksandrgenrikhs.nivkhalphabet.utils.Mapper
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.ThirdTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.ThirdTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.ThirdTaskUIState
 import javax.inject.Inject
 

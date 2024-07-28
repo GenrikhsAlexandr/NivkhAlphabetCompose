@@ -86,9 +86,9 @@ private fun RevisionTaskLayoutPreview() {
     NivkhAlphabetComposeTheme {
         RevisionTaskLayout(
             titleResId = listOf(
-                R.string.revisionTaskFirst,
-                R.string.revisionTaskSecond,
-                R.string.revisionTaskThird
+                R.string.revisionFirst,
+                R.string.revisionSecond,
+                R.string.revisionThird
             ),
             iconId = listOf(
                 R.drawable.ic_revision_task_first,

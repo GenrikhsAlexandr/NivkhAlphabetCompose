@@ -1,4 +1,4 @@
-package com.aleksandrgenrikhs.nivkhalphabetcompose.domain
+package com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model
 
 data class FirstTaskModel(
     val letterId: String,

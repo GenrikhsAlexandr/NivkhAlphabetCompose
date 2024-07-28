@@ -80,7 +80,7 @@ fun LettersLayout(
 }
 
 @Composable
-fun LetterItem(
+private fun LetterItem(
     letter: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -106,7 +106,7 @@ fun LetterItem(
 }
 
 @Composable
-fun RepeatItem(
+private fun RepeatItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     isVisible: Boolean = true,
@@ -142,7 +142,7 @@ fun RepeatItem(
 
 @Preview(widthDp = 500, heightDp = 700)
 @Composable
-fun LetterElementPreview() {
+private fun LetterElementPreview() {
     NivkhAlphabetComposeTheme {
         LettersLayout(
             letters = listOf("Щщ", "Шш", "Юю"),

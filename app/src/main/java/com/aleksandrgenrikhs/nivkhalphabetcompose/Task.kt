@@ -4,6 +4,9 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FIRST_TASK_SCREEN
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FOURTH_TASK_SCREEN
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.REVISION_FIRST_SCREEN
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.REVISION_SECOND_SCREEN
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.REVISION_THIRD_SCREEN
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.SECOND_TASK_SCREEN
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.THIRD_TASK_SCREEN
 
@@ -51,20 +54,20 @@ enum class RevisionTask(
 ) {
     REVISION_FIRST(
         stableId = 5,
-        titleResId = R.string.revisionTaskFirst,
+        titleResId = R.string.revisionFirst,
         icon = R.drawable.ic_revision_task_first,
-        route = FIRST_TASK_SCREEN
+        route = REVISION_FIRST_SCREEN
     ),
     REVISION_SECOND(
         stableId = 5,
-        titleResId = R.string.revisionTaskSecond,
+        titleResId = R.string.revisionSecond,
         icon = R.drawable.ic_revision_task_second,
-        route = SECOND_TASK_SCREEN
+        route = REVISION_SECOND_SCREEN
     ),
     REVISION_THIRD(
         stableId = 7,
-        titleResId = R.string.revisionTaskThird,
+        titleResId = R.string.revisionThird,
         icon = R.drawable.ic_revision_task_third,
-        route = THIRD_TASK_SCREEN
+        route = REVISION_THIRD_SCREEN
     )
 }

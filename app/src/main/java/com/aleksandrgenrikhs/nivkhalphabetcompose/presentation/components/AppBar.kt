@@ -14,11 +14,13 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
+import com.idapgroup.autosizetext.AutoSizeText
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -80,6 +82,15 @@ fun AppBar(
                         style = MaterialTheme.typography.titleLarge,
                     )
                 }
+
+                NavigationDestination.RevisionFirstScreen.destination -> {
+                    AutoSizeText(
+                        text = stringResource(id = R.string.revisionFirst),
+                        style = MaterialTheme.typography.titleLarge,
+                        maxLines = 1,
+                        minFontSize = 20.sp,
+                    )
+                }
             }
         },
         navigationIcon = {
@@ -137,7 +148,13 @@ fun AppBar(
 
                 NavigationDestination.RevisionTaskScreen.destination -> DialogInfo(
                     title = stringResource(
-                        id = R.string.infoRevisionScreen
+                        id = R.string.infoRevisionTasksScreen
+                    ),
+                )
+
+                NavigationDestination.RevisionFirstScreen.destination -> DialogInfo(
+                    title = stringResource(
+                        id = R.string.infoRevisionFirstScreen
                     ),
                 )
             }

@@ -32,16 +32,17 @@
 
     <!--Повторение-->
     <string name="revisionTask">Повторение</string>
-    <string name="revisionTaskFirst">Выбери правельную букву </string>
-    <string name="textEndRevisionTaskFirst">Грандиозно! </string>
-    <string name="revisionTaskSecond">Выбери правельную букву </string>
+    <string name="revisionFirst">Выбери правельную букву </string>
+    <string name="textEndRevisionFirst">Грандиозно! </string>
+    <string name="revisionSecond">Выбери правельную букву </string>
     <string name="textEndRevisionSecond">Потрясающе! </string>
-    <string name="revisionTaskThird">Составь пары</string>
-    <string name="textEndRevisionTaskThird">Гениально! </string>
+    <string name="revisionThird">Составь пары</string>
+    <string name="textEndRevisionThird">Гениально! </string>
 
     <!--Диплоговое окно-->
     <string name="nextTask">Перейти к игре %1$s</string>
     <string name="backAlphabet">Вернуться к алфавиту</string>
+    <string name="backRevisionTasks">Вернуться к списку заданий</string>
     <string name="backListTask">Выбрать задание</string>
     <string name="exitApp">Выйти из игры</string>
     <string name="infoLettersScreen">Выбери букву, которую хочешь изучить.\n
@@ -54,7 +55,8 @@
     <string name="infoFourthScreen">Используя буквы алфавита напиши правильное слово.\n
     Чтобы проверить слово нажми на ✓.\n Чтобы удалить символ нажми на ←.\n
     Чтобы получить подсказку нажми на картинку.</string>
-    <string name="infoRevisionScreen">Нажми на картинку, чтобы приступить к заданию.</string>
+    <string name="infoRevisionTasksScreen">Нажми на картинку, чтобы приступить к заданию.</string>
+    <string name="infoRevisionFirstScreen">Нажми на букву, которая звучит в слове.</string>
     <string name="ok">Понятно</string>
 
     <!--Другое-->

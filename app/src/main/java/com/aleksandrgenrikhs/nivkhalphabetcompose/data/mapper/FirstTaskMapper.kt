@@ -1,8 +1,8 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper
 
 import com.aleksandrgenrikhs.nivkhalphabet.utils.Mapper
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.FirstTaskModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.WordModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.FirstTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
 import javax.inject.Inject
 
 class FirstTaskMapper

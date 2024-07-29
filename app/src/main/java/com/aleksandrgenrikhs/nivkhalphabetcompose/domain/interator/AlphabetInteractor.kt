@@ -1,10 +1,12 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator
 
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Letters
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.FirstTaskModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.FourthTaskModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.SecondTaskModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.ThirdTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.FirstTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.FourthTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.RevisionFirstModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.RevisionSecondModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.SecondTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.ThirdTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.AlphabetRepository
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.PrefRepository
 import kotlinx.coroutines.flow.Flow
@@ -27,6 +29,12 @@ class AlphabetInteractor
 
     suspend fun getWordsForFourthTask(letterId: String): FourthTaskModel =
         alphabetRepository.getWordsForFourthTask(letterId)
+
+    suspend fun getLettersForRevisionFirst(): List<RevisionFirstModel> =
+        alphabetRepository.getLettersForRevisionFirst()
+
+    suspend fun getWordsForRevisionSecond(): List<RevisionSecondModel> =
+        alphabetRepository.getWordsForRevisionSecond()
 
     fun clearPreviousWordsList() = alphabetRepository.clearPreviousWordsList()
 

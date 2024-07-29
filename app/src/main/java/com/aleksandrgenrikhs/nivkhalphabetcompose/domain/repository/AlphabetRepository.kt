@@ -1,9 +1,11 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository
 
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.FirstTaskModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.FourthTaskModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.SecondTaskModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.ThirdTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.FirstTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.FourthTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.RevisionFirstModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.RevisionSecondModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.SecondTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.ThirdTaskModel
 import kotlinx.coroutines.flow.Flow
 
 interface AlphabetRepository {
@@ -15,6 +17,11 @@ interface AlphabetRepository {
     suspend fun getWordsForThirdTask(letterId: String): List<ThirdTaskModel>
 
     suspend fun getWordsForFourthTask(letterId: String): FourthTaskModel
+
+    suspend fun getLettersForRevisionFirst(): List<RevisionFirstModel>
+
+    suspend fun getWordsForRevisionSecond(): List<RevisionSecondModel>
+
 
     fun clearPreviousWordsList()
 

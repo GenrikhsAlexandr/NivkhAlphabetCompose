@@ -38,7 +38,7 @@ fun RevisionFirstScreen(
             isCorrectAnswer = isCorrectAnswer,
             isClickable = !isUserAnswerCorrect,
         )
-        if (isUserAnswerCorrect) {
+        if (isCompleted) {
             val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_revision1)
             var showDialog by remember { mutableStateOf(false) }
             LaunchedEffect(key1 = null) {

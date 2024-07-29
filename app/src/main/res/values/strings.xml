@@ -32,9 +32,9 @@
 
     <!--Повторение-->
     <string name="revisionTask">Повторение</string>
-    <string name="revisionFirst">Выбери правельную букву </string>
+    <string name="revisionFirst">Выбери правильную букву </string>
     <string name="textEndRevisionFirst">Грандиозно! </string>
-    <string name="revisionSecond">Выбери правельную букву </string>
+    <string name="revisionSecond">Выбери правильное слово </string>
     <string name="textEndRevisionSecond">Потрясающе! </string>
     <string name="revisionThird">Составь пары</string>
     <string name="textEndRevisionThird">Гениально! </string>
@@ -56,7 +56,8 @@
     Чтобы проверить слово нажми на ✓.\n Чтобы удалить символ нажми на ←.\n
     Чтобы получить подсказку нажми на картинку.</string>
     <string name="infoRevisionTasksScreen">Нажми на картинку, чтобы приступить к заданию.</string>
-    <string name="infoRevisionFirstScreen">Нажми на букву, которая звучит в слове.</string>
+    <string name="infoRevisionFirstScreen">Выбери букву, которая произноситься при нажатии на иконку звука.</string>
+    <string name="infoRevisionSecondScreen">Выбери слово, которое звучит при нажатии картинку.</string>
     <string name="ok">Понятно</string>
 
     <!--Другое-->

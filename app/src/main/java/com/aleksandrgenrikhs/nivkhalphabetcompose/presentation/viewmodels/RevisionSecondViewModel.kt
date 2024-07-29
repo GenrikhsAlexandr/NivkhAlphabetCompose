@@ -3,11 +3,11 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.AlphabetInteractor
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateRevisionFirstMapper
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.RevisionFirstUIState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateRevisionSecondMapper
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.RevisionSecondUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.LETTER_AUDIO
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,47 +17,49 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RevisionFirstViewModel
+class RevisionSecondViewModel
 @Inject constructor(
     val interactor: AlphabetInteractor,
-    val mapper: UIStateRevisionFirstMapper
+    val mapper: UIStateRevisionSecondMapper
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<RevisionFirstUIState> =
-        MutableStateFlow(RevisionFirstUIState())
+    private val _uiState: MutableStateFlow<RevisionSecondUIState> =
+        MutableStateFlow(RevisionSecondUIState())
     val uiState = _uiState.asStateFlow()
 
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    suspend fun getLetters() {
+    suspend fun getWords() {
         _uiState.update { uiState ->
             isLoading.value = true
-            val letters = interactor.getLettersForRevisionFirst()
-            val newListLetters = mapper.map(letters)
+            val words = interactor.getWordsForRevisionSecond()
+            val newListWords = mapper.map(words)
             uiState.copy(
-                letters = newListLetters.letters,
-                isCorrectAnswer = newListLetters.isCorrectAnswer,
-                correctLetter = newListLetters.correctLetter,
+                correctWordId = newListWords.correctWordId,
+                wordsId = newListWords.wordsId,
+                words = newListWords.words,
+                icon = newListWords.icon,
+                isCorrectAnswer = newListWords.isCorrectAnswer,
                 isUserAnswerCorrect = false
             )
         }
         isLoading.value = false
     }
 
-    fun checkUserGuess(letter: String) {
+    fun checkUserGuess(wordId: String) {
         _uiState.update { uiState ->
-            val isCorrectAnswer = letter == uiState.correctLetter
+            val isCorrectAnswer = wordId == uiState.correctWordId
             val correctAnswersCount = if (isCorrectAnswer) {
                 uiState.correctAnswersCount + 1
             } else {
                 uiState.correctAnswersCount
             }
             val isCompleted = correctAnswersCount == 5
-            val index = uiState.letters.indexOfFirst { it == letter }
+            val index = uiState.wordsId.indexOfFirst { it == wordId }
             val newIsCorrectAnswerList = uiState.isCorrectAnswer.toMutableList()
             newIsCorrectAnswerList[index] = isCorrectAnswer
             if (isCorrectAnswer) {
-                playSound("${LETTER_AUDIO}${letter}")
+                playSound("${WORDS_AUDIO}${wordId}")
             } else {
                 playSound(ERROR_AUDIO)
             }
@@ -65,7 +67,7 @@ class RevisionFirstViewModel
                 viewModelScope.launch {
                     if (!isLoading.value) {
                         delay(1000)
-                        getLetters()
+                        getWords()
                     }
                 }
             }

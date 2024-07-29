@@ -91,6 +91,15 @@ fun AppBar(
                         minFontSize = 20.sp,
                     )
                 }
+
+                NavigationDestination.RevisionSecondScreen.destination -> {
+                    AutoSizeText(
+                        text = stringResource(id = R.string.revisionSecond),
+                        style = MaterialTheme.typography.titleLarge,
+                        maxLines = 1,
+                        minFontSize = 20.sp,
+                    )
+                }
             }
         },
         navigationIcon = {
@@ -111,51 +120,45 @@ fun AppBar(
         actions = {
             when (currentScreen) {
                 NavigationDestination.LettersScreen.destination -> DialogInfo(
-                    title = stringResource(
-                        id = R.string.infoLettersScreen
-                    ),
+                    title = stringResource(id = R.string.infoLettersScreen)
                 )
 
                 NavigationDestination.TasksScreen.destination -> DialogInfo(
-                    title = stringResource(
-                        id = R.string.infoTasksScreen, letter!!
-                    ),
+                    title = stringResource(id = R.string.infoTasksScreen, letter!!)
                 )
 
                 NavigationDestination.FirstTaskScreen.destination -> DialogInfo(
                     title = stringResource(
                         id = R.string.infoFirstScreen, letter!!
-                    ),
+                    )
                 )
 
                 NavigationDestination.SecondTaskScreen.destination -> DialogInfo(
                     title = stringResource(
                         id = R.string.infoSecondScreen, letter!!
-                    ),
+                    )
                 )
 
                 NavigationDestination.ThirdTaskScreen.destination -> DialogInfo(
                     title = stringResource(
                         id = R.string.infoThirdScreen
-                    ),
+                    )
                 )
 
                 NavigationDestination.FourthTaskScreen.destination -> DialogInfo(
-                    title = stringResource(
-                        id = R.string.infoFourthScreen
-                    ),
+                    title = stringResource(id = R.string.infoFourthScreen)
                 )
 
                 NavigationDestination.RevisionTaskScreen.destination -> DialogInfo(
-                    title = stringResource(
-                        id = R.string.infoRevisionTasksScreen
-                    ),
+                    title = stringResource(id = R.string.infoRevisionTasksScreen)
                 )
 
                 NavigationDestination.RevisionFirstScreen.destination -> DialogInfo(
-                    title = stringResource(
-                        id = R.string.infoRevisionFirstScreen
-                    ),
+                    title = stringResource(id = R.string.infoRevisionFirstScreen)
+                )
+
+                NavigationDestination.RevisionSecondScreen.destination -> DialogInfo(
+                    title = stringResource(id = R.string.infoRevisionSecondScreen)
                 )
             }
         },

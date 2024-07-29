@@ -19,6 +19,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.AlphabetRepository
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.AlphabetMediaPlayer
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_URL
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.selectUniqueRandomElements
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -27,7 +28,6 @@ import kotlinx.serialization.json.Json
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import javax.inject.Inject
-import kotlin.random.Random
 
 class AlphabetRepositoryImpl
 @Inject constructor(
@@ -71,18 +71,14 @@ class AlphabetRepositoryImpl
         val correctWord =
             filterWordsList.filterNot { it.wordId in previousList }.shuffled().firstOrNull()
 
-        val selectedIndices = mutableSetOf<Int>()
-        val resultList = mutableListOf<WordModel>()
+        val selectedWords = selectUniqueRandomElements(allWordsList, 2)
 
-        while (selectedIndices.size < 2) {
-            val index = Random.nextInt(allWordsList.size)
-            if (index !in selectedIndices) {
-                selectedIndices.add(index)
-                resultList.add(allWordsList[index])
+        val resultList = mutableListOf<WordModel>().apply {
+            addAll(selectedWords)
+            correctWord?.let {
+                add(it)
             }
         }
-
-        correctWord?.let { resultList.add(it) }
         previousList.addAll(resultList.map { it.wordId })
 
         return secondTaskMapper.map(resultList.shuffled())
@@ -107,24 +103,15 @@ class AlphabetRepositoryImpl
 
     override suspend fun getLettersForRevisionFirst(): List<RevisionFirstModel> {
         val allLetters = Letters.entries
-        val selectedIndices = mutableSetOf<Int>()
-        val resultList = mutableListOf<Letters>()
-
-        while (selectedIndices.size < 4) {
-            val index = Random.nextInt(allLetters.size)
-            if (index !in selectedIndices) {
-                selectedIndices.add(index)
-                resultList.add(allLetters[index])
-            }
-        }
-
-        return revisionFirstMapper.map(resultList)
+        val selectedLetters = selectUniqueRandomElements(allLetters, 4)
+        return revisionFirstMapper.map(selectedLetters)
     }
 
     override suspend fun getWordsForRevisionSecond(): List<RevisionSecondModel> {
-        val allWords = getWords().shuffled()
+        val allWords = getWords()
+        val selectedWords = selectUniqueRandomElements(allWords, 4)
 
-        return revisionSecondMapper.map(allWords.take(4))
+        return revisionSecondMapper.map(selectedWords)
     }
 
     override fun clearPreviousWordsList() {

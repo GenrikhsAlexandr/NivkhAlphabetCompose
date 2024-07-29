@@ -28,6 +28,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.FirstTask
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.FourthTaskScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.LetterScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.RevisionFirstScreen
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.RevisionSecondScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.RevisionTasksScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.SecondTaskScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.SplashScreen
@@ -190,6 +191,13 @@ fun NavHost(
                 route = NavigationDestination.RevisionFirstScreen.destination,
             ) {
                 RevisionFirstScreen(
+                    navController = navController,
+                )
+            }
+            composable(
+                route = NavigationDestination.RevisionSecondScreen.destination,
+            ) {
+                RevisionSecondScreen(
                     navController = navController,
                 )
             }

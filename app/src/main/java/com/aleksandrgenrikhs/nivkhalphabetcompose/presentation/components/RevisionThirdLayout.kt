@@ -15,19 +15,17 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
@@ -50,6 +48,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
@@ -60,17 +59,20 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorErr
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorRight
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO
 import com.idapgroup.autosizetext.AutoSizeText
 
 @Composable
-fun ThirdTaskLayout(
+fun RevisionThirdLayout(
     modifier: Modifier = Modifier,
-    wordsId: List<String>,
+    titles: List<String>,
+    letters: List<String>,
     icons: List<String?>,
     shareWords: List<String?>,
+    shareLetters: List<String?>,
+    shareIcons: List<String?>,
     currentWords: List<String?>,
-    onIconClick: (String) -> Unit,
+    currentLetters: List<String?>,
+    currentIcons: List<String?>,
     isGuessWrong: Boolean,
     onDone: () -> Unit,
     onDragAndDropEventReceived: (DragAndDropEvent, Int) -> Unit,
@@ -83,7 +85,7 @@ fun ThirdTaskLayout(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        if (wordsId.isNotEmpty()) {
+        if (titles.isNotEmpty()) {
             Row(
                 modifier = modifier
                     .fillMaxWidth()
@@ -91,19 +93,37 @@ fun ThirdTaskLayout(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                IconButton(
+                IconItem(
                     icon = icons[0],
-                    onClick = { onIconClick("$WORDS_AUDIO${wordsId[0]}") },
                 )
                 Spacer(modifier = modifier.width(4.dp))
-                ReceivingContainer(
-                    title = currentWords[0] ?: "",
-                    index = 0,
-                    onDragAndDropEventReceived = { transferData, index ->
-                        onDragAndDropEventReceived(transferData, index)
-                    },
-                    isError = isGuessWrong
-                )
+                Column(
+                    modifier = modifier
+                        .clip(ShapeDefaults.Small)
+                        .padding(horizontal = 3.dp)
+                        .height(130.dp)
+                        .wrapContentWidth(),
+                ) {
+                    ReceivingContainerItem(
+                        title = currentLetters[0] ?: "",
+                        icon = null,
+                        index = 0,
+                        onDragAndDropEventReceived = { transferData, index ->
+                            onDragAndDropEventReceived(transferData, index)
+                        },
+                        isError = isGuessWrong
+                    )
+                    Spacer(modifier = modifier.height(2.dp))
+                    ReceivingContainerItem(
+                        title = currentWords[0] ?: "",
+                        icon = null,
+                        index = 0,
+                        onDragAndDropEventReceived = { transferData, index ->
+                            onDragAndDropEventReceived(transferData, index)
+                        },
+                        isError = isGuessWrong
+                    )
+                }
             }
             Row(
                 modifier = modifier
@@ -112,19 +132,37 @@ fun ThirdTaskLayout(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                IconButton(
-                    icon = icons[1],
-                    onClick = { onIconClick("$WORDS_AUDIO${wordsId[1]}") },
-                )
-                Spacer(modifier = modifier.width(4.dp))
-                ReceivingContainer(
-                    title = currentWords[1] ?: "",
+                ReceivingContainerItem(
+                    title = null,
+                    icon = currentIcons[1] ?: "",
                     index = 1,
                     onDragAndDropEventReceived = { transferData, index ->
                         onDragAndDropEventReceived(transferData, index)
                     },
                     isError = isGuessWrong,
                 )
+                Spacer(modifier = modifier.width(4.dp))
+                Column(
+                    modifier = modifier
+                        .clip(ShapeDefaults.Small)
+                        .padding(horizontal = 3.dp)
+                        .height(130.dp)
+                        .wrapContentWidth(),
+                ) {
+                    ReceivingContainerItem(
+                        title = currentLetters[1] ?: "",
+                        icon = null,
+                        index = 1,
+                        onDragAndDropEventReceived = { transferData, index ->
+                            onDragAndDropEventReceived(transferData, index)
+                        },
+                        isError = isGuessWrong
+                    )
+                    Spacer(modifier = modifier.height(2.dp))
+                    TextItem(
+                        title = titles[1],
+                    )
+                }
             }
             Row(
                 modifier = modifier
@@ -133,48 +171,90 @@ fun ThirdTaskLayout(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                IconButton(
-                    icon = icons[2],
-                    onClick = { onIconClick("$WORDS_AUDIO${wordsId[2]}") },
-                )
-                Spacer(modifier = modifier.width(4.dp))
-                ReceivingContainer(
-                    title = currentWords[2] ?: "",
+                ReceivingContainerItem(
+                    title = null,
+                    icon = currentIcons[2] ?: "",
                     index = 2,
                     onDragAndDropEventReceived = { transferData, index ->
                         onDragAndDropEventReceived(transferData, index)
                     },
                     isError = isGuessWrong,
                 )
+                Spacer(modifier = modifier.width(4.dp))
+                Column(
+                    modifier = modifier
+                        .clip(ShapeDefaults.Small)
+                        .padding(horizontal = 3.dp)
+                        .height(130.dp)
+                        .wrapContentWidth(),
+                ) {
+                    TextItem(
+                        title = letters[2],
+                    )
+                    Spacer(modifier = modifier.height(2.dp))
+                    ReceivingContainerItem(
+                        title = currentWords[2] ?: "",
+                        icon = null,
+                        index = 2,
+                        onDragAndDropEventReceived = { transferData, index ->
+                            onDragAndDropEventReceived(transferData, index)
+                        },
+                        isError = isGuessWrong
+                    )
+                }
             }
             Row(
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(8.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                shareIcons.map { icon ->
+                    ShareIcons(
+                        icon = icon ?: ""
+                    )
+                }
+            }
+            Row(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
                 shareWords.map { title ->
-                    ShareText(
+                    ShareWords(
                         title = title ?: "",
                     )
                 }
             }
-            Spacer(modifier = modifier.weight(1f))
-            SubmitButton(
-                modifier = Modifier
+            Row(
+                modifier = modifier
                     .fillMaxWidth()
                     .padding(8.dp),
-                onDone = onDone,
-            )
+                horizontalArrangement = Arrangement.SpaceEvenly,
+            ) {
+                shareLetters.map { letter ->
+                    ShareLetters(
+                        letter = letter ?: "",
+                    )
+                }
+            }
         }
+        Spacer(modifier = modifier.height(8.dp))
+        SubmitButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            onDone = onDone,
+        )
     }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun ReceivingContainer(
+private fun ReceivingContainerItem(
     title: String?,
+    icon: String?,
     modifier: Modifier = Modifier,
     index: Int,
     isError: Boolean,
@@ -191,6 +271,8 @@ private fun ReceivingContainer(
     Box(
         modifier = modifier
             .clip(ShapeDefaults.Small)
+            .height(if (icon == null) 64.dp else 130.dp)
+            .width(if (icon == null) 170.dp else 130.dp)
             .border(
                 width = 2.dp,
                 color = if (isError) colorError else colorProgressBar,
@@ -198,7 +280,6 @@ private fun ReceivingContainer(
             )
             .background(colorProgressBar)
             .padding(horizontal = 3.dp)
-            .size(150.dp)
             .dragAndDropTarget(
                 shouldStartDragAndDrop = { startEvent: DragAndDropEvent ->
                     startEvent
@@ -209,28 +290,88 @@ private fun ReceivingContainer(
             ),
         contentAlignment = Alignment.Center
     ) {
-        title?.let {
+        if (title != null) {
             AutoSizeText(
-                text = it,
-                textAlign = TextAlign.Center,
+                text = title,
                 maxLines = 1,
+                textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.displayMedium,
                 minFontSize = 32.sp,
+            )
+        }
+        if (icon != null) {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(icon)
+                    .build(),
+                contentDescription = null,
+                contentScale = ContentScale.FillBounds
             )
         }
     }
 }
 
+
+@Composable
+private fun TextItem(
+    modifier: Modifier = Modifier,
+    title: String,
+) {
+    Box(
+        modifier = modifier
+            .clip(ShapeDefaults.Small)
+            .height(64.dp)
+            .width(170.dp)
+            .border(
+                width = 2.dp,
+                color = colorProgressBar,
+                shape = ShapeDefaults.Small
+            )
+            .background(colorProgressBar)
+            .padding(horizontal = 3.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        AutoSizeText(
+            textAlign = TextAlign.Center,
+            text = title,
+            maxLines = 1,
+            style = MaterialTheme.typography.displayMedium,
+            minFontSize = 32.sp,
+        )
+    }
+}
+
+@Composable
+private fun IconItem(
+    modifier: Modifier = Modifier,
+    icon: String?,
+) {
+    Box(
+        modifier = modifier
+            .size(130.dp)
+            .clip(ShapeDefaults.Small)
+            .background(colorProgressBar),
+        contentAlignment = Alignment.Center
+    ) {
+        AsyncImage(
+            model = icon,
+            contentDescription = null,
+            contentScale = ContentScale.FillBounds
+        )
+    }
+}
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun ShareText(
+private fun ShareWords(
     modifier: Modifier = Modifier,
     title: String,
 ) {
     val currentTitle by rememberUpdatedState(title)
     Box(
         modifier = modifier
-            .wrapContentSize()
+            .height(50.dp)
+            .wrapContentWidth()
             .dragAndDropSource {
                 detectTapGestures(
                     onPress = {
@@ -255,39 +396,81 @@ private fun ShareText(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun IconButton(
+private fun ShareLetters(
     modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-    icon: String?,
-
-    ) {
-    IconButton(
+    letter: String,
+) {
+    val currentLetter by rememberUpdatedState(letter)
+    Box(
         modifier = modifier
-            .size(150.dp)
-            .clip(ShapeDefaults.Small)
-            .background(colorProgressBar),
-        onClick = onClick
-    ) {
+            .height(50.dp)
+            .wrapContentWidth()
+            .dragAndDropSource {
+                detectTapGestures(
+                    onPress = {
+                        startTransfer(
+                            DragAndDropTransferData(
+                                clipData = ClipData.newPlainText("text", currentLetter)
+                            )
+                        )
+                    }
+                )
+            },
+        contentAlignment = Alignment.Center
+    )
+    {
+        AutoSizeText(
+            text = currentLetter,
+            style = MaterialTheme.typography.titleLarge,
+            maxLines = 1,
+            textAlign = TextAlign.Center,
+            minFontSize = 22.sp,
+        )
+    }
+}
+
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun ShareIcons(
+    modifier: Modifier = Modifier,
+    icon: String,
+) {
+    val url by rememberUpdatedState(icon)
+    Box(
+        modifier = modifier
+            .size(50.dp)
+            .dragAndDropSource {
+                detectTapGestures(
+                    onPress = {
+                        startTransfer(
+                            DragAndDropTransferData(
+                                clipData = ClipData.newPlainText("image Url", url)
+                            )
+                        )
+                    }
+                )
+            },
+        contentAlignment = Alignment.Center
+    )
+    {
         SubcomposeAsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(icon)
+                .data(url)
                 .crossfade(true)
                 .build(),
             contentDescription = null,
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.FillBounds,
         ) {
             val state = painter.state
             when (state) {
                 is AsyncImagePainter.State.Loading -> CircularProgressIndicator()
                 is AsyncImagePainter.State.Success -> SubcomposeAsyncImageContent()
-                else -> Icon(
-                    imageVector = Icons.Default.Warning,
-                    contentDescription = null,
-                )
+                else -> {}
             }
         }
-
     }
 }
 
@@ -319,19 +502,23 @@ private fun SubmitButton(
     }
 }
 
-@Preview(widthDp = 410, heightDp = 700)
+@Preview(widthDp = 410, heightDp = 900)
 @Composable
 private fun ThirdTaskPreview() {
     NivkhAlphabetComposeTheme {
-        ThirdTaskLayout(
-            wordsId = listOf("1.2", "1.3", "1.1"),
-            icons = listOf(null, null, null),
-            onIconClick = {},
+        RevisionThirdLayout(
+            titles = listOf("ӈағзыр̆раӄ", "пʼиды пʼаӽ", "ӿатӽ пʼерӈ"),
+            letters = listOf("Aa", "Bb", "Cc"),
+            icons = listOf("null", null, null),
             onDone = {},
             onDragAndDropEventReceived = { _, _ -> },
             shareWords = arrayListOf("ӈағзыр̆раӄ", "пʼиды пʼаӽ", "ӿатӽ пʼерӈ"),
+            shareLetters = arrayListOf("Aa", "Bb", "Cc"),
+            shareIcons = arrayListOf(null, null, null),
             currentWords = arrayListOf("ӈағзыр̆раӄ", "пʼиды пʼаӽ", "ӿатӽ пʼерӈ"),
+            currentLetters = arrayListOf("Aa", "Bb", "Cc"),
             isGuessWrong = false,
+            currentIcons = listOf(null, null, null)
         )
     }
 }

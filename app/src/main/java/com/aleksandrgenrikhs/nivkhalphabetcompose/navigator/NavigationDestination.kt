@@ -6,6 +6,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.LETTERS_SCREEN
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.REVISION_FIRST_SCREEN
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.REVISION_SECOND_SCREEN
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.REVISION_TASKS_SCREEN
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.REVISION_THIRD_SCREEN
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.SECOND_TASK_SCREEN
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.SPLASH_SCREEN
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.TASKS_SCREEN
@@ -22,4 +23,5 @@ sealed class NavigationDestination(val destination: String) {
     data object RevisionTaskScreen : NavigationDestination(REVISION_TASKS_SCREEN)
     data object RevisionFirstScreen : NavigationDestination(REVISION_FIRST_SCREEN)
     data object RevisionSecondScreen : NavigationDestination(REVISION_SECOND_SCREEN)
+    data object RevisionThirdScreen : NavigationDestination(REVISION_THIRD_SCREEN)
 }

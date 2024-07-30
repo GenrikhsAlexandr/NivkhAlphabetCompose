@@ -11,32 +11,33 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
-import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.Dialog
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.ThirdTaskLayout
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.ThirdTaskViewModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.RevisionThirdLayout
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.RevisionThirdViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 
 @Composable
-fun ThirdTaskScreen(
+fun RevisionThirdScreen(
     navController: NavController,
-    viewModel: ThirdTaskViewModel = hiltViewModel(),
-    letter: String,
+    viewModel: RevisionThirdViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    viewModel.setLetter(letter)
 
-    LaunchedEffect(key1 = Unit, block = { viewModel.getWords(letter) })
+    LaunchedEffect(key1 = Unit, block = { viewModel.getWords() })
 
     with(uiState) {
-        ThirdTaskLayout(
-            wordsId = wordsId,
+        RevisionThirdLayout(
+            titles = titles,
+            letters = letters,
             icons = icons,
             currentWords = currentWords,
+            currentLetters = currentLetters,
+            currentIcons = currentIcons,
             shareWords = shareWords,
+            shareLetters = shareLetters,
+            shareIcons = shareIcons,
             isGuessWrong = isGuessWrong,
-            onIconClick = (viewModel::playSound),
             onDone = (viewModel::checkAnswer),
         ) { transferData: DragAndDropEvent, index: Int ->
             viewModel.updateReceivingContainer(
@@ -52,26 +53,23 @@ fun ThirdTaskScreen(
             Dialog(
                 navigationBack = {
                     navController.popBackStack(
-                        NavigationDestination.LettersScreen.destination,
+                        NavigationDestination.RevisionThirdScreen.destination,
                         inclusive = false
                     )
                 },
                 navigationNext = {
                     navController.navigate(
-                        "${NavigationDestination.FourthTaskScreen.destination}/$letter"
+                        NavigationDestination.LettersScreen.destination
                     ) {
-                        popUpTo("${NavigationDestination.ThirdTaskScreen.destination}/$letter") {
+                        popUpTo(NavigationDestination.RevisionSecondScreen.destination) {
                             inclusive = true
                         }
                     }
                 },
                 painter = painter,
-                title = stringResource(id = R.string.textEndThirdTask),
-                textButtonBack = stringResource(id = R.string.backAlphabet),
-                textButtonNext = stringResource(
-                    id = R.string.nextTask,
-                    Task.FOURTH.stableId
-                ),
+                title = stringResource(id = R.string.textEndRevisionThird),
+                textButtonBack = stringResource(id = R.string.repeat),
+                textButtonNext = stringResource(id = R.string.backRevisionTasks),
                 isVisibleSecondButton = true,
                 onDismissRequest = {}
             )

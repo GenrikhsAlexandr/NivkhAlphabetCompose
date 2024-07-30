@@ -12,9 +12,11 @@ class UIStateRevisionThirdMapper
         return RevisionThirdUIState(
             titles = input.map { it.title },
             letters = input.map { it.letterId },
-            wordsId = input.map { it.wordId },
             icons = input.map { it.icon },
-            shareWords = input.shuffled().map { it.title },
+            shareIcons = input.filterIndexed { index, _ -> index != 0 }.map { it.icon },
+            shareWords = input.filterIndexed { index, _ -> index != 1 }.shuffled().map { it.title },
+            shareLetters = input.filterIndexed { index, _ -> index != 2 }.shuffled()
+                .map { it.letterId },
         )
     }
 }

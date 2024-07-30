@@ -100,6 +100,15 @@ fun AppBar(
                         minFontSize = 20.sp,
                     )
                 }
+
+                NavigationDestination.RevisionThirdScreen.destination -> {
+                    AutoSizeText(
+                        text = stringResource(id = R.string.revisionThird),
+                        style = MaterialTheme.typography.titleLarge,
+                        maxLines = 1,
+                        minFontSize = 20.sp,
+                    )
+                }
             }
         },
         navigationIcon = {
@@ -159,6 +168,10 @@ fun AppBar(
 
                 NavigationDestination.RevisionSecondScreen.destination -> DialogInfo(
                     title = stringResource(id = R.string.infoRevisionSecondScreen)
+                )
+
+                NavigationDestination.RevisionThirdScreen.destination -> DialogInfo(
+                    title = stringResource(id = R.string.infoThirdScreen)
                 )
             }
         },

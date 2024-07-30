@@ -36,6 +36,9 @@ class RevisionThirdViewModel
                     shareWords = shareWords,
                     shareLetters = shareLetters,
                     shareIcons = shareIcons,
+                    correctWords = correctWords,
+                    correctIcons = correctIcons,
+                    correctLetters = correctLetters,
                 )
             }
         }
@@ -99,8 +102,12 @@ class RevisionThirdViewModel
 
     fun checkAnswer() {
         val currentWords = uiState.value.currentWords
-        val correctWords = uiState.value.titles
-        if (currentWords == correctWords) {
+        val currentLetters = uiState.value.currentLetters
+        val currentIcons = uiState.value.currentIcons
+        val correctWords = uiState.value.correctWords
+        val correctIcons = uiState.value.correctIcons
+        val correctLetters = uiState.value.correctLetters
+        if (currentWords == correctWords && currentLetters == correctLetters && currentIcons == correctIcons) {
             _uiState.update { state ->
                 state.copy(
                     isAnswerCorrect = true
@@ -110,9 +117,9 @@ class RevisionThirdViewModel
             playSound(ERROR_AUDIO)
             _uiState.update { state ->
                 state.copy(
-                    currentWords = mutableListOf(null, null, null),
-                    currentLetters = mutableListOf(null, null, null),
-                    currentIcons = mutableListOf(null, null, null),
+                    currentWords = mutableListOf(null, null),
+                    currentLetters = mutableListOf(null, null),
+                    currentIcons = mutableListOf(null, null),
                     isGuessWrong = true,
                     shareIcons = listWords!!.shareIcons,
                     shareWords = listWords!!.shareWords,

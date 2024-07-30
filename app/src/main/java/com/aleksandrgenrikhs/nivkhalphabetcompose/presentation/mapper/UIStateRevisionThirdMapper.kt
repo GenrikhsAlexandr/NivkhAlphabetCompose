@@ -17,6 +17,9 @@ class UIStateRevisionThirdMapper
             shareWords = input.filterIndexed { index, _ -> index != 1 }.shuffled().map { it.title },
             shareLetters = input.filterIndexed { index, _ -> index != 2 }.shuffled()
                 .map { it.letterId },
+            correctWords = input.filterIndexed { index, _ -> index != 1 }.map { it.title },
+            correctIcons = input.filterIndexed { index, _ -> index != 0 }.map { it.icon },
+            correctLetters = input.filterIndexed { index, _ -> index != 2 }.map { it.letterId },
         )
     }
 }

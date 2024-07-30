@@ -53,23 +53,23 @@ fun RevisionThirdScreen(
             Dialog(
                 navigationBack = {
                     navController.popBackStack(
-                        NavigationDestination.RevisionThirdScreen.destination,
+                        NavigationDestination.RevisionTaskScreen.destination,
                         inclusive = false
                     )
                 },
                 navigationNext = {
                     navController.navigate(
-                        NavigationDestination.LettersScreen.destination
+                        NavigationDestination.RevisionThirdScreen.destination,
                     ) {
-                        popUpTo(NavigationDestination.RevisionSecondScreen.destination) {
+                        popUpTo(NavigationDestination.RevisionThirdScreen.destination) {
                             inclusive = true
                         }
                     }
                 },
                 painter = painter,
                 title = stringResource(id = R.string.textEndRevisionThird),
-                textButtonBack = stringResource(id = R.string.repeat),
-                textButtonNext = stringResource(id = R.string.backRevisionTasks),
+                textButtonBack = stringResource(id = R.string.backRevisionTasks),
+                textButtonNext = stringResource(id = R.string.repeat),
                 isVisibleSecondButton = true,
                 onDismissRequest = {}
             )

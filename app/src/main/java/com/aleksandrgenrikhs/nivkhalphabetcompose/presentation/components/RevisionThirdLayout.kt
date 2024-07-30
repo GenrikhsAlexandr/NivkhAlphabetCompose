@@ -134,8 +134,8 @@ fun RevisionThirdLayout(
             ) {
                 ReceivingContainerItem(
                     title = null,
-                    icon = currentIcons[1] ?: "",
-                    index = 1,
+                    icon = currentIcons[0] ?: "",
+                    index = 0,
                     onDragAndDropEventReceived = { transferData, index ->
                         onDragAndDropEventReceived(transferData, index)
                     },
@@ -173,8 +173,8 @@ fun RevisionThirdLayout(
             ) {
                 ReceivingContainerItem(
                     title = null,
-                    icon = currentIcons[2] ?: "",
-                    index = 2,
+                    icon = currentIcons[1] ?: "",
+                    index = 1,
                     onDragAndDropEventReceived = { transferData, index ->
                         onDragAndDropEventReceived(transferData, index)
                     },
@@ -193,9 +193,9 @@ fun RevisionThirdLayout(
                     )
                     Spacer(modifier = modifier.height(2.dp))
                     ReceivingContainerItem(
-                        title = currentWords[2] ?: "",
+                        title = currentWords[1] ?: "",
                         icon = null,
-                        index = 2,
+                        index = 1,
                         onDragAndDropEventReceived = { transferData, index ->
                             onDragAndDropEventReceived(transferData, index)
                         },
@@ -301,16 +301,13 @@ private fun ReceivingContainerItem(
         }
         if (icon != null) {
             AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(icon)
-                    .build(),
+                model = icon,
                 contentDescription = null,
                 contentScale = ContentScale.FillBounds
             )
         }
     }
 }
-
 
 @Composable
 private fun TextItem(

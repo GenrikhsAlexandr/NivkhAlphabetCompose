@@ -32,14 +32,15 @@ class RevisionFirstViewModel
     suspend fun getLetters() {
         _uiState.update { uiState ->
             isLoading.value = true
-            val letters = interactor.getLettersForRevisionFirst()
-            val newListLetters = mapper.map(letters)
-            uiState.copy(
-                letters = newListLetters.letters,
-                isCorrectAnswer = newListLetters.isCorrectAnswer,
-                correctLetter = newListLetters.correctLetter,
-                isUserAnswerCorrect = false
-            )
+            val listLetters = mapper.map(interactor.getLettersForRevisionFirst())
+            with(listLetters) {
+                uiState.copy(
+                    letters = letters,
+                    isCorrectAnswers = isCorrectAnswers,
+                    correctLetter = correctLetter,
+                    isUserAnswerCorrect = false
+                )
+            }
         }
         isLoading.value = false
     }
@@ -54,7 +55,7 @@ class RevisionFirstViewModel
             }
             val isCompleted = correctAnswersCount == 5
             val index = uiState.letters.indexOfFirst { it == letter }
-            val newIsCorrectAnswerList = uiState.isCorrectAnswer.toMutableList()
+            val newIsCorrectAnswerList = uiState.isCorrectAnswers.toMutableList()
             newIsCorrectAnswerList[index] = isCorrectAnswer
             if (isCorrectAnswer) {
                 playSound("${LETTER_AUDIO}${letter}")
@@ -70,7 +71,7 @@ class RevisionFirstViewModel
                 }
             }
             uiState.copy(
-                isCorrectAnswer = newIsCorrectAnswerList,
+                isCorrectAnswers = newIsCorrectAnswerList,
                 isCompleted = isCompleted,
                 isUserAnswerCorrect = isCorrectAnswer,
                 correctAnswersCount = correctAnswersCount
@@ -93,7 +94,6 @@ class RevisionFirstViewModel
 
     override fun onCleared() {
         super.onCleared()
-        interactor.clearPreviousWordsList()
         interactor.playerDestroy()
     }
 }

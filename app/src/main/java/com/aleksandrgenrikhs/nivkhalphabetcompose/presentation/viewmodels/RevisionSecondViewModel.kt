@@ -32,16 +32,17 @@ class RevisionSecondViewModel
     suspend fun getWords() {
         _uiState.update { uiState ->
             isLoading.value = true
-            val words = interactor.getWordsForRevisionSecond()
-            val newListWords = mapper.map(words)
-            uiState.copy(
-                correctWordId = newListWords.correctWordId,
-                wordsId = newListWords.wordsId,
-                words = newListWords.words,
-                icon = newListWords.icon,
-                isCorrectAnswer = newListWords.isCorrectAnswer,
-                isUserAnswerCorrect = false
-            )
+            val listWords = mapper.map(interactor.getWordsForRevisionSecond())
+            with(listWords) {
+                uiState.copy(
+                    correctWordId = correctWordId,
+                    wordsId = wordsId,
+                    words = words,
+                    icon = icon,
+                    isCorrectAnswers = isCorrectAnswers,
+                    isUserAnswerCorrect = false
+                )
+            }
         }
         isLoading.value = false
     }
@@ -56,7 +57,7 @@ class RevisionSecondViewModel
             }
             val isCompleted = correctAnswersCount == 5
             val index = uiState.wordsId.indexOfFirst { it == wordId }
-            val newIsCorrectAnswerList = uiState.isCorrectAnswer.toMutableList()
+            val newIsCorrectAnswerList = uiState.isCorrectAnswers.toMutableList()
             newIsCorrectAnswerList[index] = isCorrectAnswer
             if (isCorrectAnswer) {
                 playSound("${WORDS_AUDIO}${wordId}")
@@ -72,7 +73,7 @@ class RevisionSecondViewModel
                 }
             }
             uiState.copy(
-                isCorrectAnswer = newIsCorrectAnswerList,
+                isCorrectAnswers = newIsCorrectAnswerList,
                 isCompleted = isCompleted,
                 isUserAnswerCorrect = isCorrectAnswer,
                 correctAnswersCount = correctAnswersCount
@@ -95,7 +96,6 @@ class RevisionSecondViewModel
 
     override fun onCleared() {
         super.onCleared()
-        interactor.clearPreviousWordsList()
         interactor.playerDestroy()
     }
 }

@@ -39,17 +39,18 @@ class SecondTaskViewModel
     suspend fun getWords(letterId: String) {
         _uiState.update { uiState ->
             isLoading.value = true
-            val listWords = interactor.getWordsForSecondTask(letterId)
-            val newWordList = mapper.map(listWords)
-            uiState.copy(
-                letterId = newWordList.letterId,
-                wordId = newWordList.wordId,
-                icon = newWordList.icon,
-                isFlipped = newWordList.isFlipped,
-                title = newWordList.title,
-                isCorrectAnswer = newWordList.isCorrectAnswer,
-                isCorrectWord = false
-            )
+            val listWords = mapper.map(interactor.getWordsForSecondTask(letterId))
+            with(listWords) {
+                uiState.copy(
+                    lettersId = lettersId,
+                    wordsId = wordsId,
+                    icons = icons,
+                    isFlipped = isFlipped,
+                    titles = titles,
+                    isCorrectAnswers = isCorrectAnswers,
+                    isCorrectWord = false
+                )
+            }
         }
         isLoading.value = false
     }
@@ -63,10 +64,10 @@ class SecondTaskViewModel
                 uiState.correctAnswersCount
             }
             val isCompleted = correctAnswersCount == 3
-            val index = uiState.wordId.indexOfFirst { it == wordId }
+            val index = uiState.wordsId.indexOfFirst { it == wordId }
             val newIsFlippedList = uiState.isFlipped.toMutableList()
             newIsFlippedList[index] = !newIsFlippedList[index]
-            val newIsCorrectAnswerList = uiState.isCorrectAnswer.toMutableList()
+            val newIsCorrectAnswerList = uiState.isCorrectAnswers.toMutableList()
             newIsCorrectAnswerList[index] = isCorrectWord
 
             if (isCorrectWord) {
@@ -85,7 +86,7 @@ class SecondTaskViewModel
             }
             uiState.copy(
                 isFlipped = newIsFlippedList,
-                isCorrectAnswer = newIsCorrectAnswerList,
+                isCorrectAnswers = newIsCorrectAnswerList,
                 correctAnswersCount = correctAnswersCount,
                 isCompleted = isCompleted,
                 isCorrectWord = isCorrectWord,

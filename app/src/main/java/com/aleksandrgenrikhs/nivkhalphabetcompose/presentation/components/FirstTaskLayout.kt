@@ -61,8 +61,7 @@ fun FirstTaskLayout(
     isClickableLetter: Boolean,
     isPlaying: Boolean,
     progressLetter: Int,
-    isVisibleWord: Boolean,
-    getWordError: Boolean
+    isVisibleWord: Boolean
 ) {
     LazyColumn(
         modifier = modifier
@@ -99,7 +98,6 @@ fun FirstTaskLayout(
                     onClick = { onClick(wordId[index], index) },
                     isClickable = isClickable[index] && !isPlaying,
                     isVisible = isVisibleWord,
-                    getWordError = getWordError
                 )
             }
         }
@@ -153,7 +151,6 @@ private fun CardWord(
     onClick: () -> Unit,
     isClickable: Boolean,
     isVisible: Boolean,
-    getWordError: Boolean,
 ) {
     Box(
         modifier = modifier
@@ -207,7 +204,7 @@ private fun CardWord(
                     }
                 }
                 AutoSizeText(
-                    text = if (getWordError) stringResource(id = R.string.getWordError) else title,
+                    text = title,
                     maxLines = 1,
                     style = MaterialTheme.typography.displayMedium,
                     minFontSize = 28.sp,
@@ -244,7 +241,6 @@ private fun FirstTaskContentPreview() {
             isClickableLetter = false,
             progressLetter = 1,
             isVisibleWord = true,
-            getWordError = false,
             isPlaying = false,
         )
     }

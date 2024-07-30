@@ -7,14 +7,12 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.FirstTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.RevisionFirstMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.RevisionSecondMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.SecondTaskMapper
-import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.ThirdTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.WordMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.FirstTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.FourthTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.RevisionFirstModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.RevisionSecondModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.SecondTaskModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.ThirdTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.AlphabetRepository
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.AlphabetMediaPlayer
@@ -35,7 +33,6 @@ class AlphabetRepositoryImpl
     private val wordMapper: WordMapper,
     private val firstTaskMapper: FirstTaskMapper,
     private val secondTaskMapper: SecondTaskMapper,
-    private val thirdTaskMapper: ThirdTaskMapper,
     private val revisionFirstMapper: RevisionFirstMapper,
     private val revisionSecondMapper: RevisionSecondMapper,
     private val mediaPlayer: AlphabetMediaPlayer,
@@ -84,8 +81,8 @@ class AlphabetRepositoryImpl
         return secondTaskMapper.map(resultList.shuffled())
     }
 
-    override suspend fun getWordsForThirdTask(letterId: String): List<ThirdTaskModel> =
-        thirdTaskMapper.map(filterWords(letterId))
+    override suspend fun getWordsForThirdTask(letterId: String): List<WordModel> =
+        filterWords(letterId)
 
     override suspend fun getWordsForFourthTask(letterId: String): FourthTaskModel {
         val filterWordsList = filterWords(letterId)
@@ -112,6 +109,12 @@ class AlphabetRepositoryImpl
         val selectedWords = selectUniqueRandomElements(allWords, 4)
 
         return revisionSecondMapper.map(selectedWords)
+    }
+
+    override suspend fun getWordsForRevisionThird(): List<WordModel> {
+        val allWords = getWords()
+
+        return selectUniqueRandomElements<WordModel>(allWords, 3)
     }
 
     override fun clearPreviousWordsList() {

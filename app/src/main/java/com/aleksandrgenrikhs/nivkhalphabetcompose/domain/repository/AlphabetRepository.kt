@@ -5,7 +5,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.FourthTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.RevisionFirstModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.RevisionSecondModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.SecondTaskModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.ThirdTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
 import kotlinx.coroutines.flow.Flow
 
 interface AlphabetRepository {
@@ -14,7 +14,7 @@ interface AlphabetRepository {
 
     suspend fun getWordsForSecondTask(letterId: String): List<SecondTaskModel>
 
-    suspend fun getWordsForThirdTask(letterId: String): List<ThirdTaskModel>
+    suspend fun getWordsForThirdTask(letterId: String): List<WordModel>
 
     suspend fun getWordsForFourthTask(letterId: String): FourthTaskModel
 
@@ -22,6 +22,7 @@ interface AlphabetRepository {
 
     suspend fun getWordsForRevisionSecond(): List<RevisionSecondModel>
 
+    suspend fun getWordsForRevisionThird(): List<WordModel>
 
     fun clearPreviousWordsList()
 

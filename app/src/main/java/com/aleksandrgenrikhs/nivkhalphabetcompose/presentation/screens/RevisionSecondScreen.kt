@@ -36,7 +36,7 @@ fun RevisionSecondScreen(
             correctWordId = correctWordId,
             onWordClick = (viewModel::checkUserGuess),
             onIconClick = (viewModel::playSound),
-            isCorrectAnswer = isCorrectAnswer,
+            isCorrectAnswer = isCorrectAnswers,
             isClickable = !isUserAnswerCorrect,
         )
         if (isCompleted) {

@@ -33,13 +33,15 @@ class FourthTaskViewModel
 
     suspend fun getWord(letterId: String) {
         isLoading.value = true
-        val word = interactor.getWordsForFourthTask(letterId)
+        val listWords = interactor.getWordsForFourthTask(letterId)
         _uiState.update {
-            it.copy(
-                wordId = word.wordId,
-                title = word.title,
-                icon = word.icon,
-            )
+            with(listWords) {
+                it.copy(
+                    wordId = wordId,
+                    title = title,
+                    icon = icon,
+                )
+            }
         }
         isLoading.value = false
     }

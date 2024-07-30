@@ -34,7 +34,7 @@ fun RevisionFirstScreen(
             correctLetter = correctLetter,
             onLetterClick = (viewModel::checkUserGuess),
             onIconClick = (viewModel::playSound),
-            isCorrectAnswer = isCorrectAnswer,
+            isCorrectAnswer = isCorrectAnswers,
             isClickable = !isUserAnswerCorrect,
         )
         if (isCompleted) {

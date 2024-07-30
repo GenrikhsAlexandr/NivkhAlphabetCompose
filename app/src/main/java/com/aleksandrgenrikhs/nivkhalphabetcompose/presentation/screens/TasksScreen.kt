@@ -20,11 +20,11 @@ fun TasksScreen(
 
     with(uiState) {
         TaskLayout(
-            titleResId = titleResId,
-            iconId = iconId,
+            titles = titles,
+            icons = icons,
             isTaskCompleted = isTaskCompleted,
             isTaskVisible = isNextTaskVisible,
-            route = route,
+            routes = routes,
             letter = letter,
             onClick = { route, letter ->
                 navController.navigate("$route/$letter")

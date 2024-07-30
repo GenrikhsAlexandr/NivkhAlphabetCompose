@@ -51,18 +51,17 @@ import com.idapgroup.autosizetext.AutoSizeText
 @Composable
 fun FirstTaskLayout(
     modifier: Modifier = Modifier,
-    title: List<String>,
-    wordId: List<String>,
-    icon: List<String?>,
-    progress: List<Int>,
-    isClickable: List<Boolean>,
+    titles: List<String>,
+    wordsId: List<String>,
+    icons: List<String?>,
+    progressWords: List<Int>,
+    isClickableWords: List<Boolean>,
     letter: String,
     onClick: (String, Int?) -> Unit,
     isClickableLetter: Boolean,
     isPlaying: Boolean,
     progressLetter: Int,
-    isVisibleWord: Boolean,
-    getWordError: Boolean
+    isVisibleWord: Boolean
 ) {
     LazyColumn(
         modifier = modifier
@@ -90,16 +89,15 @@ fun FirstTaskLayout(
                 isClickable = isClickableLetter && !isPlaying,
             )
         }
-        if (title.isNotEmpty()) {
-            itemsIndexed(title) { index, title ->
+        if (titles.isNotEmpty()) {
+            itemsIndexed(titles) { index, title ->
                 CardWord(
-                    progress = progress[index],
+                    progress = progressWords[index],
                     title = title,
-                    icon = icon[index],
-                    onClick = { onClick(wordId[index], index) },
-                    isClickable = isClickable[index] && !isPlaying,
+                    icon = icons[index],
+                    onClick = { onClick(wordsId[index], index) },
+                    isClickable = isClickableWords[index] && !isPlaying,
                     isVisible = isVisibleWord,
-                    getWordError = getWordError
                 )
             }
         }
@@ -153,7 +151,6 @@ private fun CardWord(
     onClick: () -> Unit,
     isClickable: Boolean,
     isVisible: Boolean,
-    getWordError: Boolean,
 ) {
     Box(
         modifier = modifier
@@ -207,7 +204,7 @@ private fun CardWord(
                     }
                 }
                 AutoSizeText(
-                    text = if (getWordError) stringResource(id = R.string.getWordError) else title,
+                    text = title,
                     maxLines = 1,
                     style = MaterialTheme.typography.displayMedium,
                     minFontSize = 28.sp,
@@ -234,17 +231,16 @@ private fun CardWord(
 private fun FirstTaskContentPreview() {
     NivkhAlphabetComposeTheme {
         FirstTaskLayout(
-            title = listOf("Alpha", "Word", "Nivkh"),
-            wordId = listOf("1.2", "1.3", "1.1"),
-            icon = listOf("we", "wew", "ds"),
-            progress = listOf(3, 2, 0),
-            isClickable = listOf(true, false, false),
+            titles = listOf("Alpha", "Word", "Nivkh"),
+            wordsId = listOf("1.2", "1.3", "1.1"),
+            icons = listOf("we", "wew", "ds"),
+            progressWords = listOf(3, 2, 0),
+            isClickableWords = listOf(true, false, false),
             letter = "Aa",
             onClick = { _, _ -> },
             isClickableLetter = false,
             progressLetter = 1,
             isVisibleWord = true,
-            getWordError = false,
             isPlaying = false,
         )
     }

@@ -42,11 +42,11 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorTex
 
 @Composable
 fun TaskLayout(
-    @StringRes titleResId: List<Int>,
-    @DrawableRes iconId: List<Int>,
+    @StringRes titles: List<Int>,
+    @DrawableRes icons: List<Int>,
     isTaskCompleted: List<Boolean>,
     isTaskVisible: List<Boolean>,
-    route: List<String>,
+    routes: List<String>,
     letter: String,
     modifier: Modifier = Modifier,
     onClick: (String, String) -> Unit,
@@ -69,14 +69,14 @@ fun TaskLayout(
                 alignment = Alignment.Center
             )
         }
-        if (titleResId.isNotEmpty()) {
-            itemsIndexed(titleResId) { index, task ->
+        if (titles.isNotEmpty()) {
+            itemsIndexed(titles) { index, task ->
                 TaskItem(
                     task = task,
-                    iconResId = iconId[index],
+                    iconResId = icons[index],
                     onTaskClick = {
                         if (isTaskVisible[index]) {
-                            onClick(route[index], letter)
+                            onClick(routes[index], letter)
                         }
                     },
                     isClickable = isTaskVisible[index],
@@ -149,9 +149,9 @@ private fun TaskItem(
 private fun TaskItemPreview() {
     NivkhAlphabetComposeTheme {
         TaskLayout(
-            titleResId = listOf(R.string.firstTask, R.string.secondTask, R.string.thirdTask),
-            iconId = listOf(R.drawable.ic_task1, R.drawable.ic_task2, R.drawable.ic_task3),
-            route = listOf(),
+            titles = listOf(R.string.firstTask, R.string.secondTask, R.string.thirdTask),
+            icons = listOf(R.drawable.ic_task1, R.drawable.ic_task2, R.drawable.ic_task3),
+            routes = listOf(),
             isTaskCompleted = listOf(true, false, false),
             isTaskVisible = listOf(true, true, false),
             letter = "Aa",

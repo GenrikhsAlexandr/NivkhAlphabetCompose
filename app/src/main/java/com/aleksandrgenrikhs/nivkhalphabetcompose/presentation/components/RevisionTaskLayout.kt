@@ -32,9 +32,9 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPri
 
 @Composable
 fun RevisionTaskLayout(
-    @StringRes titleResId: List<Int>,
-    @DrawableRes iconId: List<Int>,
-    route: List<String>,
+    @StringRes titles: List<Int>,
+    @DrawableRes icons: List<Int>,
+    routes: List<String>,
     modifier: Modifier = Modifier,
     onClick: (String) -> Unit,
 ) {
@@ -47,13 +47,13 @@ fun RevisionTaskLayout(
         horizontalAlignment = Alignment.CenterHorizontally
 
     ) {
-        itemsIndexed(titleResId) { index, _ ->
+        itemsIndexed(titles) { index, _ ->
             RevisionTaskItem(
-                iconResId = iconId[index],
+                iconResId = icons[index],
                 onTaskClick = {
-                    onClick(route[index])
+                    onClick(routes[index])
                 },
-                title = titleResId[index]
+                title = titles[index]
             )
         }
     }
@@ -99,17 +99,17 @@ private fun RevisionTaskItem(
 private fun RevisionTaskLayoutPreview() {
     NivkhAlphabetComposeTheme {
         RevisionTaskLayout(
-            titleResId = listOf(
+            titles = listOf(
                 R.string.revisionFirst,
                 R.string.revisionSecond,
                 R.string.revisionThird
             ),
-            iconId = listOf(
+            icons = listOf(
                 R.drawable.ic_revision_task_first,
                 R.drawable.ic_revision_task_second,
                 R.drawable.ic_revision_task_third
             ),
-            route = listOf(),
+            routes = listOf(),
             onClick = { }
         )
     }

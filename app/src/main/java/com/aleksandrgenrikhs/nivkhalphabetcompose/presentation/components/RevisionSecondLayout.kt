@@ -42,7 +42,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO
 @Composable
 fun RevisionSecondLayout(
     words: List<String>,
-    wordId: List<String>,
+    wordsId: List<String>,
     correctWordId: String,
     icon: String?,
     modifier: Modifier = Modifier,
@@ -79,7 +79,7 @@ fun RevisionSecondLayout(
                 WordItem(
                     title = item,
                     onClick = {
-                        onWordClick(wordId[index])
+                        onWordClick(wordsId[index])
                     },
                     isCorrectAnswer = isCorrectAnswer[index],
                     isClickable = isClickable
@@ -159,7 +159,7 @@ private fun RevisionFirstLayoutPreview() {
     NivkhAlphabetComposeTheme {
         RevisionSecondLayout(
             words = listOf("Aa", "Bb", "Cc"),
-            wordId = listOf("1", "2", "3"),
+            wordsId = listOf("1", "2", "3"),
             icon = null,
             correctWordId = "1",
             onIconClick = {},

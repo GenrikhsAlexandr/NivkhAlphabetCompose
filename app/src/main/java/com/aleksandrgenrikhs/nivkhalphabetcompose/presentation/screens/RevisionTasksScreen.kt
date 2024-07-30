@@ -10,9 +10,9 @@ fun RevisionTasksScreen(
     navController: NavController,
 ) {
     RevisionTaskLayout(
-        titleResId = RevisionTask.entries.map { it.titleResId },
-        iconId = RevisionTask.entries.map { it.icon },
-        route = RevisionTask.entries.map { it.route },
+        titles = RevisionTask.entries.map { it.titleResId },
+        icons = RevisionTask.entries.map { it.icon },
+        routes = RevisionTask.entries.map { it.route },
         onClick = { route ->
             navController.navigate(route)
         }

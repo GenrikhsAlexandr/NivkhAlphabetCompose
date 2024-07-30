@@ -6,7 +6,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.FourthTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.RevisionFirstModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.RevisionSecondModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.SecondTaskModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.ThirdTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.AlphabetRepository
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.PrefRepository
 import kotlinx.coroutines.flow.Flow
@@ -24,7 +24,7 @@ class AlphabetInteractor
     suspend fun getWordsForSecondTask(letterId: String): List<SecondTaskModel> =
         alphabetRepository.getWordsForSecondTask(letterId)
 
-    suspend fun getWordsForThirdTask(letterId: String): List<ThirdTaskModel> =
+    suspend fun getWordsForThirdTask(letterId: String): List<WordModel> =
         alphabetRepository.getWordsForThirdTask(letterId)
 
     suspend fun getWordsForFourthTask(letterId: String): FourthTaskModel =
@@ -35,6 +35,9 @@ class AlphabetInteractor
 
     suspend fun getWordsForRevisionSecond(): List<RevisionSecondModel> =
         alphabetRepository.getWordsForRevisionSecond()
+
+    suspend fun getWordsForRevisionThird(): List<WordModel> =
+        alphabetRepository.getWordsForRevisionThird()
 
     fun clearPreviousWordsList() = alphabetRepository.clearPreviousWordsList()
 

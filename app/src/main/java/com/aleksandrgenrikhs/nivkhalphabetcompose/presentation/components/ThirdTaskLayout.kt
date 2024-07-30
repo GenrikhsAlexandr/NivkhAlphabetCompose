@@ -66,9 +66,9 @@ import com.idapgroup.autosizetext.AutoSizeText
 @Composable
 fun ThirdTaskLayout(
     modifier: Modifier = Modifier,
-    title: List<String>,
-    wordId: List<String>,
-    icon: List<String?>,
+    titles: List<String>,
+    wordsId: List<String>,
+    icons: List<String?>,
     shareWords: List<String?>,
     currentWords: List<String?>,
     onIconClick: (String) -> Unit,
@@ -84,7 +84,7 @@ fun ThirdTaskLayout(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        if (title.isNotEmpty()) {
+        if (titles.isNotEmpty()) {
             Row(
                 modifier = modifier
                     .fillMaxWidth()
@@ -93,8 +93,8 @@ fun ThirdTaskLayout(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 IconButton(
-                    icon = icon[0],
-                    onClick = { onIconClick("${WORDS_AUDIO}${wordId[0]}") },
+                    icon = icons[0],
+                    onClick = { onIconClick("${WORDS_AUDIO}${wordsId[0]}") },
                 )
                 Spacer(modifier = modifier.width(4.dp))
                 ReceivingContainer(
@@ -114,8 +114,8 @@ fun ThirdTaskLayout(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 IconButton(
-                    icon = icon[1],
-                    onClick = { onIconClick("${WORDS_AUDIO}${wordId[1]}") },
+                    icon = icons[1],
+                    onClick = { onIconClick("${WORDS_AUDIO}${wordsId[1]}") },
                 )
                 Spacer(modifier = modifier.width(4.dp))
                 ReceivingContainer(
@@ -135,8 +135,8 @@ fun ThirdTaskLayout(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 IconButton(
-                    icon = icon[2],
-                    onClick = { onIconClick("${WORDS_AUDIO}${wordId[2]}") },
+                    icon = icons[2],
+                    onClick = { onIconClick("${WORDS_AUDIO}${wordsId[2]}") },
                 )
                 Spacer(modifier = modifier.width(4.dp))
                 ReceivingContainer(
@@ -224,7 +224,7 @@ private fun ReceivingContainer(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ShareText(
+private fun ShareText(
     modifier: Modifier = Modifier,
     title: String,
 ) {
@@ -246,12 +246,12 @@ fun ShareText(
         contentAlignment = Alignment.Center
     )
     {
-        Text(
+        AutoSizeText(
             text = currentTitle,
             style = MaterialTheme.typography.titleLarge,
-            fontSize = 32.sp,
+            maxLines = 1,
             textAlign = TextAlign.Center,
-            modifier = modifier.padding(8.dp)
+            minFontSize = 22.sp,
         )
     }
 }
@@ -325,14 +325,14 @@ private fun SubmitButton(
 private fun ThirdTaskPreview() {
     NivkhAlphabetComposeTheme {
         ThirdTaskLayout(
-            title = listOf("Alpha", "Word", "Nivkh"),
-            wordId = listOf("1.2", "1.3", "1.1"),
-            icon = listOf(null, null, null),
+            titles = listOf("ӈағзыр̆раӄ", "пʼиды пʼаӽ", "ӿатӽ пʼерӈ"),
+            wordsId = listOf("1.2", "1.3", "1.1"),
+            icons = listOf(null, null, null),
             onIconClick = {},
             onDone = {},
             onDragAndDropEventReceived = { _, _ -> },
-            shareWords = arrayListOf("Alpha", "Word", "Nivkh"),
-            currentWords = arrayListOf("Alpha", "Word", "Nivkh"),
+            shareWords = arrayListOf("ӈағзыр̆раӄ", "пʼиды пʼаӽ", "ӿатӽ пʼерӈ"),
+            currentWords = arrayListOf("ӈағзыр̆раӄ", "пʼиды пʼаӽ", "ӿатӽ пʼерӈ"),
             isGuessWrong = false,
         )
     }

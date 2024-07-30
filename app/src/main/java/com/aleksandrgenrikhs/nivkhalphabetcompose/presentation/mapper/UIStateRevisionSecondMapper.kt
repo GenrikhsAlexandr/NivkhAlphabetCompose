@@ -17,7 +17,7 @@ class UIStateRevisionSecondMapper
             wordsId = input.map { it.wordId },
             words = input.map { it.title },
             icon = input[index].icon,
-            isCorrectAnswer = input.map { it.isCorrectAnswer },
+            isCorrectAnswers = input.map { it.isCorrectAnswer },
         )
     }
 }

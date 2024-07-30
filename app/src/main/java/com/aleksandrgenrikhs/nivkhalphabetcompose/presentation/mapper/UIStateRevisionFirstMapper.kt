@@ -12,7 +12,7 @@ class UIStateRevisionFirstMapper
         return RevisionFirstUIState(
             letters = input.map { it.letter },
             correctLetter = input.shuffled().first().letter,
-            isCorrectAnswer = input.map { it.isCorrectAnswer },
+            isCorrectAnswers = input.map { it.isCorrectAnswer },
         )
     }
 }

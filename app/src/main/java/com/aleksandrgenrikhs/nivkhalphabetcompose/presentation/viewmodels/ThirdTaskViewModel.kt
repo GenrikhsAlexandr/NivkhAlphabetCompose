@@ -32,14 +32,15 @@ class ThirdTaskViewModel
 
     suspend fun getWords(letterId: String) {
         _uiState.update {
-            val listWords = interactor.getWordsForThirdTask(letterId)
-            val newListWord = mapper.map(listWords)
-            it.copy(
-                title = newListWord.title,
-                wordId = newListWord.wordId,
-                icon = newListWord.icon,
-                shareWords = newListWord.shareWords,
-            )
+            val listWords = mapper.map(interactor.getWordsForThirdTask(letterId))
+            with(listWords) {
+                it.copy(
+                    titles = titles,
+                    wordsId = wordsId,
+                    icons = icons,
+                    shareWords = shareWords,
+                )
+            }
         }
     }
 
@@ -77,7 +78,7 @@ class ThirdTaskViewModel
 
     fun checkAnswer() {
         val currentWords = uiState.value.currentWords
-        val correctWords = uiState.value.title
+        val correctWords = uiState.value.titles
         if (currentWords == correctWords) {
             _uiState.update { state ->
                 state.copy(
@@ -91,7 +92,7 @@ class ThirdTaskViewModel
                 state.copy(
                     currentWords = mutableListOf(null, null, null),
                     isGuessWrong = true,
-                    shareWords = uiState.value.title.shuffled()
+                    shareWords = uiState.value.titles.shuffled()
                 )
             }
         }

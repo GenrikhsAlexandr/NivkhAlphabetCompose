@@ -33,12 +33,12 @@ fun SecondTaskScreen(
 
     with(uiState) {
         SecondTaskLayout(
-            letterId = letterId,
-            title = title,
-            wordId = wordId,
-            icon = icon,
+            lettersId = lettersId,
+            titles = titles,
+            wordsId = wordsId,
+            icons = icons,
             isFlipped = isFlipped,
-            isCorrectAnswer = isCorrectAnswer,
+            isCorrectAnswer = isCorrectAnswers,
             letter = letter,
             onClick = (viewModel::flipCard),
             isClickable = !isCorrectWord,

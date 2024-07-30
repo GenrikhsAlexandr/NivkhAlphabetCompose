@@ -10,12 +10,12 @@ class UIStateFirstTaskMapper
 
     override fun map(input: List<FirstTaskModel>): FirstTaskUIState {
         return FirstTaskUIState(
-            title = input.map { it.title },
-            wordId = input.map { it.wordId },
-            icon = input.map { it.icon },
-            isClickableWord = input.map { it.isClickable },
-            progressWord = input.map { it.progress },
-            isCompletedWord = input.map { it.isCompleted },
+            titles = input.map { it.title },
+            wordsId = input.map { it.wordId },
+            icons = input.map { it.icon },
+            isClickableWords = input.map { it.isClickable },
+            progressWords = input.map { it.progress },
+            isCompletedWords = input.map { it.isCompleted },
         )
     }
 }

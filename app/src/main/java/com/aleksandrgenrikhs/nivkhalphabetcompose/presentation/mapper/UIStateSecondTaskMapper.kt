@@ -10,12 +10,12 @@ class UIStateSecondTaskMapper
 
     override fun map(input: List<SecondTaskModel>): SecondTaskUIState {
         return SecondTaskUIState(
-            title = input.map { it.title },
-            wordId = input.map { it.wordId },
-            letterId = input.map { it.letterId },
-            icon = input.map { it.icon },
+            titles = input.map { it.title },
+            wordsId = input.map { it.wordId },
+            lettersId = input.map { it.letterId },
+            icons = input.map { it.icon },
             isFlipped = input.map { it.isFlipped },
-            isCorrectAnswer = input.map { it.isCorrectAnswer },
+            isCorrectAnswers = input.map { it.isCorrectAnswer },
         )
     }
 }

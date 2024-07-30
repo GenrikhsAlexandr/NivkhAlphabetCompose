@@ -18,10 +18,10 @@ class TasksViewModel
 
     private val _uiState: MutableStateFlow<TaskUIState> = MutableStateFlow(
         TaskUIState(
-            titleResId = Task.entries.map { it.titleResId },
-            iconId = Task.entries.map { it.icon },
-            stableId = Task.entries.map { it.stableId },
-            route = Task.entries.map { it.route },
+            titles = Task.entries.map { it.titleResId },
+            icons = Task.entries.map { it.icon },
+            stablesId = Task.entries.map { it.stableId },
+            routes = Task.entries.map { it.route },
         )
     )
     val uiState = _uiState.asStateFlow()
@@ -30,11 +30,11 @@ class TasksViewModel
         _uiState.update { uiState ->
             val newIsTaskCompleted = uiState.isTaskCompleted.toMutableList()
             val newIsNextTaskVisible = uiState.isNextTaskVisible.toMutableList()
-            uiState.stableId.mapIndexed { index, id ->
+            uiState.stablesId.mapIndexed { index, id ->
                 val isTaskCompleted = interactor.isTaskCompleted(id, letter)
                 newIsTaskCompleted[index] = isTaskCompleted
 
-                if (newIsTaskCompleted[index] && index < uiState.stableId.lastIndex) {
+                if (newIsTaskCompleted[index] && index < uiState.stablesId.lastIndex) {
                     newIsNextTaskVisible[index + 1] = true
                 } else {
                     newIsNextTaskVisible[0] = true

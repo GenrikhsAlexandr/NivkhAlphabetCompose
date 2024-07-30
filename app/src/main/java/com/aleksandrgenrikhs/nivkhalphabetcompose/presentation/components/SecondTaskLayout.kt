@@ -54,10 +54,10 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorTex
 @Composable
 fun SecondTaskLayout(
     modifier: Modifier = Modifier,
-    letterId: List<String>,
-    title: List<String>,
-    wordId: List<String>,
-    icon: List<String?>,
+    lettersId: List<String>,
+    titles: List<String>,
+    wordsId: List<String>,
+    icons: List<String?>,
     isFlipped: List<Boolean>,
     isCorrectAnswer: List<Boolean>,
     letter: String,
@@ -82,12 +82,12 @@ fun SecondTaskLayout(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(22.dp),
         ) {
-            itemsIndexed(title) { index, item ->
+            itemsIndexed(titles) { index, item ->
                 IconButton(
                     onClick = {
-                        onClick(wordId[index], letterId[index])
+                        onClick(wordsId[index], lettersId[index])
                     },
-                    icon = icon[index],
+                    icon = icons[index],
                     title = item,
                     isFlipped = isFlipped[index],
                     isClickable = isClickable,
@@ -215,10 +215,10 @@ private fun IconButton(
 private fun SecondTaskPreview() {
     NivkhAlphabetComposeTheme {
         SecondTaskLayout(
-            letterId = listOf("Aa", "Bb", "Cc"),
-            title = listOf("Hello", "Word", "Nivkh"),
-            wordId = listOf("1.2", "1.1", "1.3"),
-            icon = listOf(null, null, null),
+            lettersId = listOf("Aa", "Bb", "Cc"),
+            titles = listOf("Hello", "Word", "Nivkh"),
+            wordsId = listOf("1.2", "1.1", "1.3"),
+            icons = listOf(null, null, null),
             isFlipped = listOf(true, false, true),
             letter = "Aa",
             onClick = { _, _ -> },

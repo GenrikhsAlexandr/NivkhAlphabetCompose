@@ -26,7 +26,9 @@ fun RevisionFirstScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    LaunchedEffect(key1 = null, block = { viewModel.getLetters() })
+    LaunchedEffect(key1 = null, block = {
+        viewModel.getLetters()
+    })
 
     with(uiState) {
         RevisionFirstLayout(

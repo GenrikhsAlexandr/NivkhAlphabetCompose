@@ -72,7 +72,7 @@ class FourthTaskViewModel
         _uiState.update { uiState ->
             val isAnswerCorrect = word == uiState.title
             if (isAnswerCorrect) {
-                playSound("${WORDS_AUDIO}${uiState.wordId}")
+                playSound("$WORDS_AUDIO${uiState.wordId}")
             } else {
                 playSound(ERROR_AUDIO)
             }

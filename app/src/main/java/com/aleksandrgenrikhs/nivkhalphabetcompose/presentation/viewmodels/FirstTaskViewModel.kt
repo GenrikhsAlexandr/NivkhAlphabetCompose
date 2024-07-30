@@ -140,7 +140,7 @@ class FirstTaskViewModel
     fun playSound(element: String) {
         when (element) {
             uiState.value.selectedLetter -> {
-                interactor.initPlayer("$LETTER_AUDIO${element}")
+                interactor.initPlayer("$LETTER_AUDIO$element")
                 interactor.play()
             }
 

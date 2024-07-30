@@ -33,6 +33,7 @@ class RevisionFirstViewModel
         _uiState.update { uiState ->
             isLoading.value = true
             val listLetters = mapper.map(interactor.getLettersForRevisionFirst())
+            playSound("$LETTER_AUDIO${listLetters.correctLetter}")
             with(listLetters) {
                 uiState.copy(
                     letters = letters,
@@ -58,7 +59,7 @@ class RevisionFirstViewModel
             val newIsCorrectAnswerList = uiState.isCorrectAnswers.toMutableList()
             newIsCorrectAnswerList[index] = isCorrectAnswer
             if (isCorrectAnswer) {
-                playSound("${LETTER_AUDIO}${letter}")
+                playSound("$LETTER_AUDIO$letter")
             } else {
                 playSound(ERROR_AUDIO)
             }

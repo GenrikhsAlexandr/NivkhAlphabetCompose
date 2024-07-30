@@ -61,7 +61,7 @@ fun RevisionSecondLayout(
     ) {
         IconButton(
             onClick = {
-                onIconClick("${WORDS_AUDIO}$correctWordId")
+                onIconClick("$WORDS_AUDIO$correctWordId")
             },
             icon = icon
         )

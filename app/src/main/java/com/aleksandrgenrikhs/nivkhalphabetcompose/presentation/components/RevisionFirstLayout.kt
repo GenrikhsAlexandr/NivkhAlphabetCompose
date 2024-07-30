@@ -60,7 +60,7 @@ fun RevisionFirstLayout(
         )
         IconButton(
             onClick = {
-                onIconClick("${LETTER_AUDIO}$correctLetter")
+                onIconClick("$LETTER_AUDIO$correctLetter")
             }
         )
         LazyVerticalGrid(

@@ -71,7 +71,7 @@ class SecondTaskViewModel
             newIsCorrectAnswerList[index] = isCorrectWord
 
             if (isCorrectWord) {
-                playSound("${WORDS_AUDIO}$wordId")
+                playSound("$WORDS_AUDIO$wordId")
             } else {
                 playSound(ERROR_AUDIO)
             }

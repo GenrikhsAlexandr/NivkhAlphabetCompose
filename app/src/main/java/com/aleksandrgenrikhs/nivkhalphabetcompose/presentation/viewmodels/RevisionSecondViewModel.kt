@@ -60,7 +60,7 @@ class RevisionSecondViewModel
             val newIsCorrectAnswerList = uiState.isCorrectAnswers.toMutableList()
             newIsCorrectAnswerList[index] = isCorrectAnswer
             if (isCorrectAnswer) {
-                playSound("${WORDS_AUDIO}${wordId}")
+                playSound("$WORDS_AUDIO$wordId")
             } else {
                 playSound(ERROR_AUDIO)
             }

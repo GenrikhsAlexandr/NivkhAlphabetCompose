@@ -94,7 +94,7 @@ fun ThirdTaskLayout(
             ) {
                 IconButton(
                     icon = icons[0],
-                    onClick = { onIconClick("${WORDS_AUDIO}${wordsId[0]}") },
+                    onClick = { onIconClick("$WORDS_AUDIO${wordsId[0]}") },
                 )
                 Spacer(modifier = modifier.width(4.dp))
                 ReceivingContainer(
@@ -115,7 +115,7 @@ fun ThirdTaskLayout(
             ) {
                 IconButton(
                     icon = icons[1],
-                    onClick = { onIconClick("${WORDS_AUDIO}${wordsId[1]}") },
+                    onClick = { onIconClick("$WORDS_AUDIO${wordsId[1]}") },
                 )
                 Spacer(modifier = modifier.width(4.dp))
                 ReceivingContainer(
@@ -136,7 +136,7 @@ fun ThirdTaskLayout(
             ) {
                 IconButton(
                     icon = icons[2],
-                    onClick = { onIconClick("${WORDS_AUDIO}${wordsId[2]}") },
+                    onClick = { onIconClick("$WORDS_AUDIO${wordsId[2]}") },
                 )
                 Spacer(modifier = modifier.width(4.dp))
                 ReceivingContainer(

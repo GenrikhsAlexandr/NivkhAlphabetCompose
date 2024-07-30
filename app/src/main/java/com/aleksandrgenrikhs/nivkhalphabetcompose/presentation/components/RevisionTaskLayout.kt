@@ -6,26 +6,29 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ShapeDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 
 @Composable
 fun RevisionTaskLayout(
@@ -49,7 +52,8 @@ fun RevisionTaskLayout(
                 iconResId = iconId[index],
                 onTaskClick = {
                     onClick(route[index])
-                }
+                },
+                title = titleResId[index]
             )
         }
     }
@@ -60,22 +64,32 @@ private fun RevisionTaskItem(
     modifier: Modifier = Modifier,
     @DrawableRes iconResId: Int,
     onTaskClick: () -> Unit,
+    @StringRes title: Int
 ) {
-    Box(
-        modifier = modifier
+    Column(
+        modifier = Modifier
             .size(200.dp)
-            .padding(8.dp)
-            .clickable(onClick = onTaskClick)
-            .clip(ShapeDefaults.Small)
-            .background(colorProgressBar),
-        contentAlignment = Alignment.CenterStart
+            .clip(ShapeDefaults.Medium)
+            .clickable(
+                onClick = onTaskClick,
+            ),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
             painter = painterResource(id = iconResId),
             contentDescription = null,
-            modifier = modifier
-                .fillMaxHeight()
+            contentScale = ContentScale.Fit,
+            modifier = Modifier
+                .height(130.dp)
                 .padding(8.dp)
+        )
+        Text(
+            text = stringResource(id = title),
+            modifier = modifier
+                .padding(8.dp),
+            maxLines = 1,
+            style = MaterialTheme.typography.titleLarge,
         )
     }
 }

@@ -32,9 +32,9 @@
 
     <!--Повторение-->
     <string name="revisionTask">Повторение</string>
-    <string name="revisionFirst">Выбери правильную букву </string>
+    <string name="revisionFirst">Выбери букву </string>
     <string name="textEndRevisionFirst">Грандиозно! </string>
-    <string name="revisionSecond">Выбери правильное слово </string>
+    <string name="revisionSecond">Выбери слово </string>
     <string name="textEndRevisionSecond">Потрясающе! </string>
     <string name="revisionThird">Составь пары</string>
     <string name="textEndRevisionThird">Гениально! </string>

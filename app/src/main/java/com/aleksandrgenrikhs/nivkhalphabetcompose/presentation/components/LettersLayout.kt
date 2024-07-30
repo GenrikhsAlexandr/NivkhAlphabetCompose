@@ -109,7 +109,6 @@ private fun LetterItem(
 private fun RepeatItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    isVisible: Boolean = true,
 ) {
 
     Column(
@@ -118,7 +117,6 @@ private fun RepeatItem(
             .clip(ShapeDefaults.Medium)
             .clickable(
                 onClick = onClick,
-                enabled = isVisible
             ),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,

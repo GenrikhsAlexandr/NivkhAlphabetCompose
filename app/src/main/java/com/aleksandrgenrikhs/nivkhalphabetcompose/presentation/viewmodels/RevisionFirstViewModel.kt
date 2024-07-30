@@ -32,14 +32,15 @@ class RevisionFirstViewModel
     suspend fun getLetters() {
         _uiState.update { uiState ->
             isLoading.value = true
-            val letters = interactor.getLettersForRevisionFirst()
-            val newListLetters = mapper.map(letters)
-            uiState.copy(
-                letters = newListLetters.letters,
-                isCorrectAnswers = newListLetters.isCorrectAnswer,
-                correctLetter = newListLetters.correctLetter,
-                isUserAnswerCorrect = false
-            )
+            val listLetters = mapper.map(interactor.getLettersForRevisionFirst())
+            with(listLetters) {
+                uiState.copy(
+                    letters = letters,
+                    isCorrectAnswers = isCorrectAnswers,
+                    correctLetter = correctLetter,
+                    isUserAnswerCorrect = false
+                )
+            }
         }
         isLoading.value = false
     }

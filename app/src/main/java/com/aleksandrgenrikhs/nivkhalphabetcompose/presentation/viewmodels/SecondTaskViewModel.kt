@@ -31,17 +31,17 @@ class SecondTaskViewModel
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     fun setLetter(letter: String) {
-        _uiState.update { uiState ->
-            uiState.copy(selectedLetter = letter)
+        _uiState.update { state ->
+            state.copy(selectedLetter = letter)
         }
     }
 
     suspend fun getWords(letterId: String) {
-        _uiState.update { uiState ->
+        _uiState.update { state ->
             isLoading.value = true
             val listWords = mapper.map(interactor.getWordsForSecondTask(letterId))
             with(listWords) {
-                uiState.copy(
+                state.copy(
                     lettersId = lettersId,
                     wordsId = wordsId,
                     icons = icons,
@@ -56,18 +56,18 @@ class SecondTaskViewModel
     }
 
     fun flipCard(wordId: String, letterId: String) {
-        _uiState.update { uiState ->
-            val isCorrectWord = letterId == uiState.selectedLetter
+        _uiState.update { state ->
+            val isCorrectWord = letterId == state.selectedLetter
             val correctAnswersCount = if (isCorrectWord) {
-                uiState.correctAnswersCount + 1
+                state.correctAnswersCount + 1
             } else {
-                uiState.correctAnswersCount
+                state.correctAnswersCount
             }
             val isCompleted = correctAnswersCount == 3
-            val index = uiState.wordsId.indexOfFirst { it == wordId }
-            val newIsFlippedList = uiState.isFlipped.toMutableList()
+            val index = state.wordsId.indexOfFirst { it == wordId }
+            val newIsFlippedList = state.isFlipped.toMutableList()
             newIsFlippedList[index] = !newIsFlippedList[index]
-            val newIsCorrectAnswerList = uiState.isCorrectAnswers.toMutableList()
+            val newIsCorrectAnswerList = state.isCorrectAnswers.toMutableList()
             newIsCorrectAnswerList[index] = isCorrectWord
 
             if (isCorrectWord) {
@@ -84,7 +84,7 @@ class SecondTaskViewModel
                     }
                 }
             }
-            uiState.copy(
+            state.copy(
                 isFlipped = newIsFlippedList,
                 isCorrectAnswers = newIsCorrectAnswerList,
                 correctAnswersCount = correctAnswersCount,

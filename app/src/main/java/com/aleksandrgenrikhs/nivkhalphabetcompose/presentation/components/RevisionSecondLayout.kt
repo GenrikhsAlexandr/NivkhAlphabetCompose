@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -111,7 +112,7 @@ private fun IconButton(
                 .size(Size.ORIGINAL)
                 .build(),
             contentDescription = null,
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.Fit,
         ) {
             when (painter.state) {
                 is AsyncImagePainter.State.Loading -> CircularProgressIndicator()
@@ -136,6 +137,8 @@ private fun WordItem(
     Box(
         modifier = modifier
             .height(100.dp)
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
             .clip(CircleShape)
             .clickable(
                 enabled = isClickable,

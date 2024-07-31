@@ -26,21 +26,21 @@ class RevisionThirdViewModel
 
     private var listWords: RevisionThirdUIState? = null
     suspend fun getWords() {
-        _uiState.update {
+        _uiState.update { state ->
             listWords = mapper.map(interactor.getWordsForRevisionThird())
-            with(listWords!!) {
-                it.copy(
-                    titles = titles,
-                    letters = letters,
-                    icons = icons,
-                    shareWords = shareWords,
-                    shareLetters = shareLetters,
-                    shareIcons = shareIcons,
-                    correctWords = correctWords,
-                    correctIcons = correctIcons,
-                    correctLetters = correctLetters,
+            listWords?.let { words ->
+                state.copy(
+                    titles = words.titles,
+                    letters = words.letters,
+                    icons = words.icons,
+                    shareWords = words.shareWords,
+                    shareLetters = words.shareLetters,
+                    shareIcons = words.shareIcons,
+                    correctWords = words.correctWords,
+                    correctIcons = words.correctIcons,
+                    correctLetters = words.correctLetters,
                 )
-            }
+            } ?: state
         }
     }
 
@@ -116,15 +116,17 @@ class RevisionThirdViewModel
         } else {
             playSound(ERROR_AUDIO)
             _uiState.update { state ->
-                state.copy(
-                    currentWords = mutableListOf(null, null),
-                    currentLetters = mutableListOf(null, null),
-                    currentIcons = mutableListOf(null, null),
-                    isGuessWrong = true,
-                    shareIcons = listWords!!.shareIcons,
-                    shareWords = listWords!!.shareWords,
-                    shareLetters = listWords!!.shareLetters,
-                )
+                listWords?.let { words ->
+                    state.copy(
+                        currentWords = mutableListOf(null, null),
+                        currentLetters = mutableListOf(null, null),
+                        currentIcons = mutableListOf(null, null),
+                        isGuessWrong = true,
+                        shareIcons = words.shareIcons,
+                        shareWords = words.shareWords,
+                        shareLetters = words.shareLetters,
+                    )
+                } ?: state
             }
         }
     }

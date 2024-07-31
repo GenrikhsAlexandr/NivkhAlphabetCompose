@@ -25,16 +25,16 @@ class ThirdTaskViewModel
     val uiState = _uiState.asStateFlow()
 
     fun setLetter(letter: String) {
-        _uiState.update {
-            it.copy(selectedLetter = letter)
+        _uiState.update { state ->
+            state.copy(selectedLetter = letter)
         }
     }
 
     suspend fun getWords(letterId: String) {
-        _uiState.update {
+        _uiState.update { state ->
             val listWords = mapper.map(interactor.getWordsForThirdTask(letterId))
             with(listWords) {
-                it.copy(
+                state.copy(
                     titles = titles,
                     wordsId = wordsId,
                     icons = icons,
@@ -62,13 +62,13 @@ class ThirdTaskViewModel
         val sharedText = clipData.getItemAt(0).text.toString()
         val newShareWords = uiState.value.shareWords.toMutableList()
         val sharedTextIndex = newShareWords.indexOf(sharedText)
-        _uiState.update {
-            val newCurrentWords = it.currentWords.toMutableList()
+        _uiState.update { state ->
+            val newCurrentWords = state.currentWords.toMutableList()
             if (sharedTextIndex != -1 && newCurrentWords[index] == null) {
                 newShareWords[sharedTextIndex] = null
                 newCurrentWords[index] = sharedText
             }
-            it.copy(
+            state.copy(
                 currentWords = newCurrentWords,
                 shareWords = newShareWords,
                 isGuessWrong = false

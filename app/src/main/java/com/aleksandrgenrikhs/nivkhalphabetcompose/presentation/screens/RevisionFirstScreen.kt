@@ -53,13 +53,13 @@ fun RevisionFirstScreen(
                 Dialog(
                     navigationBack = {
                         navController.popBackStack(
-                            NavigationDestination.RevisionTaskScreen.destination,
+                            NavigationDestination.LettersScreen.destination,
                             inclusive = false
                         )
                     },
                     navigationNext = {
                         navController.navigate(
-                            NavigationDestination.LettersScreen.destination
+                            NavigationDestination.RevisionSecondScreen.destination
                         ) {
                             popUpTo(NavigationDestination.RevisionFirstScreen.destination) {
                                 inclusive = true
@@ -68,8 +68,8 @@ fun RevisionFirstScreen(
                     },
                     painter = painter,
                     title = stringResource(id = R.string.textEndRevisionFirst),
-                    textButtonBack = stringResource(id = R.string.backRevisionTasks),
-                    textButtonNext = stringResource(id = R.string.backAlphabet),
+                    textButtonBack = stringResource(id = R.string.backAlphabet),
+                    textButtonNext = stringResource(id = R.string.nextRevisionTasks),
                     isVisibleSecondButton = true,
                     onDismissRequest = {}
                 )

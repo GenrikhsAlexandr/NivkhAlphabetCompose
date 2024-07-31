@@ -30,11 +30,11 @@ class RevisionSecondViewModel
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     suspend fun getWords() {
-        _uiState.update { uiState ->
+        _uiState.update { state ->
             isLoading.value = true
             val listWords = mapper.map(interactor.getWordsForRevisionSecond())
             with(listWords) {
-                uiState.copy(
+                state.copy(
                     correctWordId = correctWordId,
                     wordsId = wordsId,
                     words = words,
@@ -48,16 +48,16 @@ class RevisionSecondViewModel
     }
 
     fun checkUserGuess(wordId: String) {
-        _uiState.update { uiState ->
-            val isCorrectAnswer = wordId == uiState.correctWordId
+        _uiState.update { state ->
+            val isCorrectAnswer = wordId == state.correctWordId
             val correctAnswersCount = if (isCorrectAnswer) {
-                uiState.correctAnswersCount + 1
+                state.correctAnswersCount + 1
             } else {
-                uiState.correctAnswersCount
+                state.correctAnswersCount
             }
             val isCompleted = correctAnswersCount == 5
-            val index = uiState.wordsId.indexOfFirst { it == wordId }
-            val newIsCorrectAnswerList = uiState.isCorrectAnswers.toMutableList()
+            val index = state.wordsId.indexOfFirst { it == wordId }
+            val newIsCorrectAnswerList = state.isCorrectAnswers.toMutableList()
             newIsCorrectAnswerList[index] = isCorrectAnswer
             if (isCorrectAnswer) {
                 playSound("$WORDS_AUDIO$wordId")
@@ -72,7 +72,7 @@ class RevisionSecondViewModel
                     }
                 }
             }
-            uiState.copy(
+            state.copy(
                 isCorrectAnswers = newIsCorrectAnswerList,
                 isCompleted = isCompleted,
                 isUserAnswerCorrect = isCorrectAnswer,

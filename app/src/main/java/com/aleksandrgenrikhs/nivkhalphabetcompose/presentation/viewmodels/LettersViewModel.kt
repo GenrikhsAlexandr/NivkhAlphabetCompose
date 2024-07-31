@@ -28,14 +28,14 @@ class LettersViewModel
             it.title
         }
         if (lettersCompleted != null) {
-            _uiState.update { uiState ->
-                val newIsLetterCompleted = uiState.isLetterCompleted.toMutableList()
-                uiState.letters.mapIndexed { index, letter ->
+            _uiState.update { state ->
+                val newIsLetterCompleted = state.isLetterCompleted.toMutableList()
+                state.letters.mapIndexed { index, letter ->
                     if (lettersCompleted.contains(letter)) {
                         newIsLetterCompleted[index] = true
                     }
                 }
-                uiState.copy(
+                state.copy(
                     isLetterCompleted = newIsLetterCompleted,
                 )
             }

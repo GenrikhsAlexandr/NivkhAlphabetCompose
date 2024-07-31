@@ -30,11 +30,12 @@ class RevisionFirstViewModel
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     suspend fun getLetters() {
-        _uiState.update { uiState ->
+        _uiState.update { state ->
             isLoading.value = true
             val listLetters = mapper.map(interactor.getLettersForRevisionFirst())
+            playSound("$LETTER_AUDIO${listLetters.correctLetter}")
             with(listLetters) {
-                uiState.copy(
+                state.copy(
                     letters = letters,
                     isCorrectAnswers = isCorrectAnswers,
                     correctLetter = correctLetter,
@@ -46,16 +47,16 @@ class RevisionFirstViewModel
     }
 
     fun checkUserGuess(letter: String) {
-        _uiState.update { uiState ->
-            val isCorrectAnswer = letter == uiState.correctLetter
+        _uiState.update { state ->
+            val isCorrectAnswer = letter == state.correctLetter
             val correctAnswersCount = if (isCorrectAnswer) {
-                uiState.correctAnswersCount + 1
+                state.correctAnswersCount + 1
             } else {
-                uiState.correctAnswersCount
+                state.correctAnswersCount
             }
             val isCompleted = correctAnswersCount == 5
-            val index = uiState.letters.indexOfFirst { it == letter }
-            val newIsCorrectAnswerList = uiState.isCorrectAnswers.toMutableList()
+            val index = state.letters.indexOfFirst { it == letter }
+            val newIsCorrectAnswerList = state.isCorrectAnswers.toMutableList()
             newIsCorrectAnswerList[index] = isCorrectAnswer
             if (isCorrectAnswer) {
                 playSound("$LETTER_AUDIO$letter")
@@ -70,7 +71,7 @@ class RevisionFirstViewModel
                     }
                 }
             }
-            uiState.copy(
+            state.copy(
                 isCorrectAnswers = newIsCorrectAnswerList,
                 isCompleted = isCompleted,
                 isUserAnswerCorrect = isCorrectAnswer,

@@ -36,7 +36,7 @@ fun AppBar(
             when (currentScreen) {
                 NavigationDestination.LettersScreen.destination -> {
                     Text(
-                        text = stringResource(id = R.string.app_name),
+                        text = stringResource(id = R.string.appName),
                         style = MaterialTheme.typography.titleLarge
                     )
                 }

@@ -34,9 +34,9 @@ class FourthTaskViewModel
     suspend fun getWord(letterId: String) {
         isLoading.value = true
         val listWords = interactor.getWordsForFourthTask(letterId)
-        _uiState.update {
+        _uiState.update { state ->
             with(listWords) {
-                it.copy(
+                state.copy(
                     wordId = wordId,
                     title = title,
                     icon = icon,
@@ -47,8 +47,8 @@ class FourthTaskViewModel
     }
 
     fun updateUserGuess(guessedWord: String) {
-        _uiState.update { uiState ->
-            uiState.copy(
+        _uiState.update { state ->
+            state.copy(
                 userGuess = guessedWord,
                 isGuessWrong = false,
                 isClickable = true
@@ -60,8 +60,8 @@ class FourthTaskViewModel
         val currentUserGuess = _uiState.value.userGuess
         if (currentUserGuess.isNotEmpty()) {
             val newUserGuess = currentUserGuess.dropLast(1)
-            _uiState.update { uiState ->
-                uiState.copy(
+            _uiState.update { state ->
+                state.copy(
                     userGuess = newUserGuess
                 )
             }
@@ -69,17 +69,17 @@ class FourthTaskViewModel
     }
 
     fun checkUserGuess(word: String) {
-        _uiState.update { uiState ->
-            val isAnswerCorrect = word == uiState.title
+        _uiState.update { state ->
+            val isAnswerCorrect = word == state.title
             if (isAnswerCorrect) {
-                playSound("$WORDS_AUDIO${uiState.wordId}")
+                playSound("$WORDS_AUDIO${state.wordId}")
             } else {
                 playSound(ERROR_AUDIO)
             }
             val correctAnswersCount = if (isAnswerCorrect) {
-                uiState.correctAnswersCount + 1
+                state.correctAnswersCount + 1
             } else {
-                uiState.correctAnswersCount
+                state.correctAnswersCount
             }
             val isCompleted = correctAnswersCount == 3
             if (isAnswerCorrect && !isCompleted) {
@@ -87,11 +87,11 @@ class FourthTaskViewModel
                     if (!isLoading.value) {
                         delay(2000)
                         updateUserGuess("")
-                        getWord(uiState.selectedLetter)
+                        getWord(state.selectedLetter)
                     }
                 }
             }
-            uiState.copy(
+            state.copy(
                 isCompleted = isCompleted,
                 correctAnswersCount = correctAnswersCount,
                 isGuessWrong = !isAnswerCorrect,

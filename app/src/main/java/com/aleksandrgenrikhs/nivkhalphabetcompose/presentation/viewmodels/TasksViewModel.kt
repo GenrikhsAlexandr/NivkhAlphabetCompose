@@ -27,20 +27,20 @@ class TasksViewModel
     val uiState = _uiState.asStateFlow()
 
     suspend fun isTaskCompleted(letter: String) {
-        _uiState.update { uiState ->
-            val newIsTaskCompleted = uiState.isTaskCompleted.toMutableList()
-            val newIsNextTaskVisible = uiState.isNextTaskVisible.toMutableList()
-            uiState.stablesId.mapIndexed { index, id ->
+        _uiState.update { state ->
+            val newIsTaskCompleted = state.isTaskCompleted.toMutableList()
+            val newIsNextTaskVisible = state.isNextTaskVisible.toMutableList()
+            state.stablesId.mapIndexed { index, id ->
                 val isTaskCompleted = interactor.isTaskCompleted(id, letter)
                 newIsTaskCompleted[index] = isTaskCompleted
 
-                if (newIsTaskCompleted[index] && index < uiState.stablesId.lastIndex) {
+                if (newIsTaskCompleted[index] && index < state.stablesId.lastIndex) {
                     newIsNextTaskVisible[index + 1] = true
                 } else {
                     newIsNextTaskVisible[0] = true
                 }
             }
-            uiState.copy(
+            state.copy(
                 isTaskCompleted = newIsTaskCompleted,
                 isNextTaskVisible = newIsNextTaskVisible
             )

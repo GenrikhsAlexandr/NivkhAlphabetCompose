@@ -51,28 +51,28 @@ class FirstTaskViewModel
     }
 
     suspend fun isTaskCompleted(letter: String) {
-        _uiState.update { uiState ->
+        _uiState.update { state ->
             val isTaskCompleted = interactor.isTaskCompleted(
                 Task.FIRST.stableId,
                 letter
             )
-            uiState.copy(
+            state.copy(
                 isVisibleWord = isTaskCompleted,
             )
         }
     }
 
     private fun isPlaying() {
-        _uiState.update { uiState ->
-            uiState.copy(
+        _uiState.update { state ->
+            state.copy(
                 isPlaying = true
             )
         }
         viewModelScope.launch {
             try {
                 interactor.isPlaying().collect {
-                    _uiState.update { uiState ->
-                        uiState.copy(
+                    _uiState.update { state ->
+                        state.copy(
                             isPlaying = it
                         )
                     }
@@ -94,17 +94,17 @@ class FirstTaskViewModel
         isPlaying()
         when (element) {
             uiState.value.selectedLetter -> {
-                _uiState.update { uiState ->
-                    val newProgressLetter = uiState.progressLetter + 1
-                    val newIsVisibleWord = newProgressLetter > 4 || uiState.isVisibleWord
+                _uiState.update { state ->
+                    val newProgressLetter = state.progressLetter + 1
+                    val newIsVisibleWord = newProgressLetter > 4 || state.isVisibleWord
                     val newIsCompletedLetter = newProgressLetter > 4
-                    val newIsClickable = uiState.isClickableWords.toMutableList()
-                    if (uiState.titles.isNotEmpty()) {
+                    val newIsClickable = state.isClickableWords.toMutableList()
+                    if (state.titles.isNotEmpty()) {
                         if (newIsCompletedLetter) {
                             newIsClickable[0] = true
                         }
                     }
-                    uiState.copy(
+                    state.copy(
                         progressLetter = newProgressLetter,
                         isVisibleWord = newIsVisibleWord,
                         isClickableWords = newIsClickable,
@@ -115,16 +115,16 @@ class FirstTaskViewModel
 
             else -> {
                 if (index == null) return
-                _uiState.update { uiState ->
-                    val newProgressWord = uiState.progressWords.toMutableList()
-                    val newWordIsCompleted = uiState.isCompletedWords.toMutableList()
-                    val newIsClickable = uiState.isClickableWords.toMutableList()
-                    newProgressWord[index] = uiState.progressWords[index] + 1
+                _uiState.update { state ->
+                    val newProgressWord = state.progressWords.toMutableList()
+                    val newWordIsCompleted = state.isCompletedWords.toMutableList()
+                    val newIsClickable = state.isClickableWords.toMutableList()
+                    newProgressWord[index] = state.progressWords[index] + 1
                     newWordIsCompleted[index] = newProgressWord[index] > 2
-                    if (newWordIsCompleted[index] && index < uiState.titles.lastIndex) {
+                    if (newWordIsCompleted[index] && index < state.titles.lastIndex) {
                         newIsClickable[index + 1] = true
                     }
-                    uiState.copy(
+                    state.copy(
                         progressWords = newProgressWord,
                         isCompletedWords = newWordIsCompleted,
                         isClickableWords = newIsClickable,
@@ -147,8 +147,8 @@ class FirstTaskViewModel
             FINISH_AUDIO -> {
                 interactor.initPlayer(FINISH_AUDIO)
                 interactor.play()
-                _uiState.update { uiState ->
-                    uiState.copy(
+                _uiState.update { state ->
+                    state.copy(
                         isFinishAudio = true
                     )
                 }

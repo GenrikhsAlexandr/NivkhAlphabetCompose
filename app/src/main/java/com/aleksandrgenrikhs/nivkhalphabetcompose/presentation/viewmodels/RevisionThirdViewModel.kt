@@ -30,9 +30,9 @@ class RevisionThirdViewModel
             listWords = mapper.map(interactor.getWordsForRevisionThird())
             listWords?.let { words ->
                 state.copy(
-                    titles = words.titles,
-                    letters = words.letters,
-                    icons = words.icons,
+                    title = words.title,
+                    letter = words.letter,
+                    icon = words.icon,
                     shareWords = words.shareWords,
                     shareLetters = words.shareLetters,
                     shareIcons = words.shareIcons,

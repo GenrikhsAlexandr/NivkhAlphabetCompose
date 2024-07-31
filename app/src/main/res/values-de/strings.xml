@@ -25,7 +25,7 @@
     <string name="reset">Zurücksetzen</string>
 
     <!--Vierte Aufgabe-->
-    <string name="textEndFourthTask">Das ist ein Erfolg! Du hast alle Aufgaben mit diesem Buchstaben erledigt! Mach weiter mit der nächsten.</string>
+    <string name="textEndFourthTask">Das ist ein Erfolg!\n Du hast alle Aufgaben mit diesem Buchstaben erledigt!\n Mach weiter mit der nächsten.</string>
     <string name="enterYourWord">Gebe dein Wort ein</string>
     <string name="repeat">Wiederhole das Wort</string>
 
@@ -43,12 +43,12 @@
     <string name="backAlphabet">Zurück zum Alphabet gehen</string>
     <string name="nextRevisionTasks">Fortfahren</string>
     <string name="backListTask">Wählen Sie eine Aufgabe aus</string>
-    <string name="infoLettersScreen">Wählen Sie den Buchstaben aus, den Sie lernen möchten. Die Wiederholung aller Buchstaben finden Sie am Ende des Alphabets.</string>
+    <string name="infoLettersScreen">Wählen Sie den Buchstaben aus, den Sie lernen möchten.\n Die Wiederholung aller Buchstaben finden Sie am Ende des Alphabets.</string>
     <string name="infoTasksScreen">Wählen Sie eine Aufgabe, um den Buchstaben „%1$s“ zu lernen.</string>
     <string name="infoFirstScreen">Hören Sie sich den Klang des Buchstabens „%1$s“ und die Wörter, die ihn enthalten, an und prägen Sie sie sich ein.</string>
     <string name="infoSecondScreen">Wählen Sie das Bild aus, hinter dem sich das Wort mit dem Buchstaben „%1$s“ verbirgt.</string>
-    <string name="infoThirdScreen">Neben jedem Bild steht das entsprechende Wort. Um einen Hinweis zu erhalten, klicke auf das Bild.</string>
-    <string name="infoFourthScreen">Verwenden Sie die Buchstaben des Alphabets, um das richtige Wort zu schreiben. Um das Wort zu überprüfen, drücken Sie ✓. Um einen Buchstaben zu löschen, drücken Sie ←. Um einen Hinweis zu erhalten, drücken Sie auf das Bild.</string>
+    <string name="infoThirdScreen">Neben jedem Bild steht das entsprechende Wort.\n Um einen Hinweis zu erhalten, klicke auf das Bild.</string>
+    <string name="infoFourthScreen">Verwenden Sie die Buchstaben des Alphabets, um das richtige Wort zu schreiben.\n Um das Wort zu überprüfen, drücken Sie ✓.\n Um einen Buchstaben zu löschen, drücken Sie ←.\n Um einen Hinweis zu erhalten, drücken Sie auf das Bild.</string>
     <string name="infoRevisionTasksScreen">Wählen Sie eine Aufgabe.</string>
     <string name="infoRevisionFirstScreen">Wählen Sie den Buchstaben, den der Sprecher gerade ausspricht. Um den Buchstaben noch einmal zu hören, klicken Sie auf das Tonsymbol.</string>
     <string name="infoRevisionSecondScreen">Wählen Sie das Wort aus, das zum Bild passt.</string>

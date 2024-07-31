@@ -1,9 +1,9 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate
 
 data class RevisionThirdUIState(
-    val titles: List<String> = emptyList(),
-    val letters: List<String> = emptyList(),
-    val icons: List<String?> = emptyList(),
+    val title: String = "",
+    val letter: String = "",
+    val icon: String = "",
     val shareWords: List<String?> = listOf(null, null),
     val shareLetters: List<String?> = listOf(null, null),
     val shareIcons: List<String?> = listOf(null, null),

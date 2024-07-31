@@ -9,17 +9,22 @@ class UIStateRevisionThirdMapper
 @Inject constructor() : Mapper<List<WordModel>, RevisionThirdUIState> {
 
     override fun map(input: List<WordModel>): RevisionThirdUIState {
+        val title = input[1].title
+        val letter = input[2].letterId
+        val icon = input[0].icon
+
         return RevisionThirdUIState(
-            titles = input.map { it.title },
-            letters = input.map { it.letterId },
-            icons = input.map { it.icon },
-            shareIcons = input.filterIndexed { index, _ -> index != 0 }.map { it.icon },
-            shareWords = input.filterIndexed { index, _ -> index != 1 }.shuffled().map { it.title },
-            shareLetters = input.filterIndexed { index, _ -> index != 2 }.shuffled()
+            title = title,
+            letter = letter,
+            icon = icon,
+            shareWords = input.filterNot { it.title == title }.shuffled().map { it.title },
+            shareLetters = input.filterNot { it.letterId == letter }.shuffled()
                 .map { it.letterId },
-            correctWords = input.filterIndexed { index, _ -> index != 1 }.map { it.title },
-            correctIcons = input.filterIndexed { index, _ -> index != 0 }.map { it.icon },
-            correctLetters = input.filterIndexed { index, _ -> index != 2 }.map { it.letterId },
+            shareIcons = input.filterNot { it.icon == icon }.shuffled().map { it.icon },
+
+            correctWords = input.filterNot { it.title == title }.map { it.title },
+            correctLetters = input.filterNot { it.letterId == letter }.map { it.letterId },
+            correctIcons = input.filterNot { it.icon == icon }.map { it.icon },
         )
     }
 }

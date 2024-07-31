@@ -49,7 +49,7 @@
     <string name="infoThirdScreen">Напротив каждой картинки поставь соответствующее слово.\nЧтобы получить подсказку, нажми на картинку.</string>
     <string name="infoFourthScreen">Используя буквы алфавита, напиши правильное слово.\nЧтобы проверить слово, нажми на ✓.\nЧтобы удалить символ, нажми на ←.\nЧтобы получить подсказку, нажми на картинку.</string>
     <string name="infoRevisionTasksScreen">Выбери задание.</string>
-    <string name="infoRevisionFirstScreen">Выбери букву, которую произносит диктор. Чтобы прослушать букву еще раз, нажми на иконку звука.</string>
+    <string name="infoRevisionFirstScreen">Выбери букву, которую произносит диктор.\n Чтобы прослушать букву еще раз, нажми на иконку звука.</string>
     <string name="infoRevisionSecondScreen">Выбери подходящее к картинке слово.\nЧтобы получить подсказку, нажми на картинку.</string>
     <string name="infoRevisionThirdScreen">Заполни пропуски подходящими буквами, словами и картинками.</string>
     <string name="ok">Понятно</string>

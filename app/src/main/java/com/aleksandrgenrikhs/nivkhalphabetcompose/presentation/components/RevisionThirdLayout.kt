@@ -56,9 +56,9 @@ import com.idapgroup.autosizetext.AutoSizeText
 @Composable
 fun RevisionThirdLayout(
     modifier: Modifier = Modifier,
-    titles: List<String>,
-    letters: List<String>,
-    icons: List<String?>,
+    title: String,
+    letter: String,
+    icon: String,
     shareWords: List<String?>,
     shareLetters: List<String?>,
     shareIcons: List<String?>,
@@ -78,7 +78,8 @@ fun RevisionThirdLayout(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        if (titles.isNotEmpty()) {
+        println("RevisionThirdLayout")
+        if (title.isNotEmpty()) {
             Row(
                 modifier = modifier
                     .fillMaxWidth()
@@ -87,7 +88,7 @@ fun RevisionThirdLayout(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 IconItem(
-                    icon = icons[0],
+                    icon = icon,
                 )
                 Spacer(modifier = modifier.width(4.dp))
                 Column(
@@ -153,7 +154,7 @@ fun RevisionThirdLayout(
                     )
                     Spacer(modifier = modifier.height(2.dp))
                     TextItem(
-                        title = titles[1],
+                        title = title,
                     )
                 }
             }
@@ -182,7 +183,7 @@ fun RevisionThirdLayout(
                         .wrapContentWidth(),
                 ) {
                     TextItem(
-                        title = letters[2],
+                        title = letter,
                     )
                     Spacer(modifier = modifier.height(2.dp))
                     ReceivingContainerItem(
@@ -368,8 +369,7 @@ private fun ShareWords(
 ) {
     Box(
         modifier = modifier
-            .height(50.dp)
-            .wrapContentWidth()
+            .wrapContentSize()
             .dragAndDropSource {
                 detectTapGestures(
                     onPress = {
@@ -402,8 +402,7 @@ private fun ShareLetters(
 ) {
     Box(
         modifier = modifier
-            .height(50.dp)
-            .wrapContentWidth()
+            .wrapContentSize()
             .dragAndDropSource {
                 detectTapGestures(
                     onPress = {
@@ -435,12 +434,9 @@ private fun ShareIcons(
     modifier: Modifier = Modifier,
     icon: String,
 ) {
-    AsyncImage(
-        model = icon,
-        contentDescription = null,
-        contentScale = ContentScale.FillBounds,
+    Box(
         modifier = modifier
-            .size(50.dp)
+            .wrapContentSize()
             .dragAndDropSource {
                 detectTapGestures(
                     onPress = {
@@ -451,8 +447,17 @@ private fun ShareIcons(
                         )
                     }
                 )
-            }
-    )
+            },
+        contentAlignment = Alignment.Center
+    ) {
+        AsyncImage(
+            model = icon,
+            contentDescription = null,
+            contentScale = ContentScale.FillBounds,
+            modifier = modifier
+                .size(50.dp)
+        )
+    }
 }
 
 @Composable
@@ -514,9 +519,9 @@ private fun SubmitButton(
 private fun ThirdTaskPreview() {
     NivkhAlphabetComposeTheme {
         RevisionThirdLayout(
-            titles = listOf("ӈағзыр̆раӄ", "пʼиды пʼаӽ", "ӿатӽ пʼерӈ"),
-            letters = listOf("Aa", "Bb", "Cc"),
-            icons = listOf("null", null, null),
+            title = "ӈағзыр̆раӄ",
+            letter = "Aa",
+            icon = "null",
             onDone = {},
             onReset = {},
             onDragAndDropEventReceived = { _, _ -> },

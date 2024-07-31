@@ -7,26 +7,25 @@
     <string name="firstTask">Выучи букву</string>
     <string name="secondTask">Найди слово</string>
     <string name="thirdTask">Составь пары</string>
-    <string name="fourthTask">Напечатай слово</string>
-    <string name="fifthTask">Составь слово</string>
+    <string name="fourthTask">Напиши слово правильно</string>
 
     <!--Первое задание-->
     <string name="titleFistTask">Нажми и послушай\nкак звучит буква</string>
     <string name="textEndFirstTask">Молодец!</string>
 
     <!--Второе задание-->
-    <string name="titleSecondTask">В каком слове есть буква \"%1$s\"?</string>
+    <string name="titleSecondTask">В каком слове есть буква \"%1$s\"</string>
     <string name="textEndSecondTask">Так держать!</string>
 
     <!--Третье задание-->
     <string name="titleThirdTask">Составь пары</string>
     <string name="textEndThirdTask">Супер!</string>
     <string name="submit">Проверить</string>
+    <string name="reset">Сбросить</string>
 
     <!--Четвертое задание-->
-    <string name="textEndFourthTask">Это успех!\nТы выполнил все задания с этой буквой!\nПереходи к следующей</string>
+    <string name="textEndFourthTask">Это успех!\nТы выполнил все задания с этой буквой!\nПереходи к следующей.</string>
     <string name="enterYourWord">Введите слово</string>
-    <string name="wrongGuess">Неверно!</string>
     <string name="repeat">Повторить еще раз</string>
 
     <!--Повторение-->
@@ -35,25 +34,24 @@
     <string name="textEndRevisionFirst">Грандиозно!</string>
     <string name="revisionSecond">Выбери слово</string>
     <string name="textEndRevisionSecond">Потрясающе!</string>
-    <string name="revisionThird">Составь пары</string>
+    <string name="revisionThird">Заполни пропуски</string>
     <string name="textEndRevisionThird">Гениально!</string>
 
-    <!--Диплоговое окно-->
+    <!--Диалоговое окно-->
     <string name="nextTask">Перейти к игре %1$s</string>
     <string name="backAlphabet">Вернуться к алфавиту</string>
     <string name="nextRevisionTasks">Продолжить</string>
     <string name="backListTask">Выбрать задание</string>
-    <string name="exitApp">Выйти из игры</string>
     <string name="infoLettersScreen">Выбери букву, которую хочешь изучить.\nВ конце алфавита можешь найти повторение всех букв.</string>
     <string name="infoTasksScreen">Выбери задание для изучения буквы \"%1$s\".</string>
-    <string name="infoFirstScreen">Сперва прослушай букву \"%1$s\" 5 раз, затем каждое слово по 3 раза.</string>
-    <string name="infoSecondScreen">По картинке определи, где находится слово с буквой \"%1$s\" и нажми на эту картинку.</string>
+    <string name="infoFirstScreen">Прослушай как звучит буква \"%1$s\" и слова, которые ее содержат, и запомни их.</string>
+    <string name="infoSecondScreen">Выбери картинку, за которой прячется слово с буквой \"%1$s\".</string>
     <string name="infoThirdScreen">Напротив каждой картинки поставь соответствующее слово.\nЧтобы получить подсказку, нажми на картинку.</string>
     <string name="infoFourthScreen">Используя буквы алфавита, напиши правильное слово.\nЧтобы проверить слово, нажми на ✓.\nЧтобы удалить символ, нажми на ←.\nЧтобы получить подсказку, нажми на картинку.</string>
-    <string name="infoRevisionTasksScreen">Нажми на картинку, чтобы приступить к заданию.</string>
-    <string name="infoRevisionFirstScreen">Выбери букву, которая произносится. Чтобы еще раз прослушать букву, нажми на иконку звука.</string>
-    <string name="infoRevisionSecondScreen">Выбери слово, которое звучит при нажатии на картинку.</string>
-    <string name="infoRevisionThirdScreen">Поставь каждый элемент на свое место.</string>
+    <string name="infoRevisionTasksScreen">Выбери задание.</string>
+    <string name="infoRevisionFirstScreen">Выбери букву, которую произносит диктор. Чтобы прослушать букву еще раз, нажми на иконку звука.</string>
+    <string name="infoRevisionSecondScreen">Выбери подходящее к картинке слово.\nЧтобы получить подсказку, нажми на картинку.</string>
+    <string name="infoRevisionThirdScreen">Заполни пропуски подходящими буквами, словами и картинками.</string>
     <string name="ok">Понятно</string>
 
     <!--Другое-->

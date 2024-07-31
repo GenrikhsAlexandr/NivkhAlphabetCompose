@@ -8,10 +8,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.MaterialTheme
@@ -67,8 +69,10 @@ private fun RevisionTaskItem(
     @StringRes title: Int
 ) {
     Column(
-        modifier = Modifier
-            .size(200.dp)
+        modifier = modifier
+            .height(200.dp)
+            .wrapContentWidth()
+            .padding(horizontal = 16.dp)
             .clip(ShapeDefaults.Medium)
             .clickable(
                 onClick = onTaskClick,
@@ -80,14 +84,12 @@ private fun RevisionTaskItem(
             painter = painterResource(id = iconResId),
             contentDescription = null,
             contentScale = ContentScale.Fit,
-            modifier = Modifier
-                .height(130.dp)
-                .padding(8.dp)
+            modifier = modifier
+                .size(130.dp)
         )
+        Spacer(modifier = modifier.height(8.dp))
         Text(
             text = stringResource(id = title),
-            modifier = modifier
-                .padding(8.dp),
             maxLines = 1,
             style = MaterialTheme.typography.titleLarge,
         )

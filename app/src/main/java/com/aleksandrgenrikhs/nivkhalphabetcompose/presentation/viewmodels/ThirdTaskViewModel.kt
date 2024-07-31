@@ -76,6 +76,16 @@ class ThirdTaskViewModel
         }
     }
 
+    fun reset() {
+        _uiState.update { state ->
+            state.copy(
+                currentWords = mutableListOf(null, null, null),
+                isGuessWrong = false,
+                shareWords = uiState.value.titles.shuffled()
+            )
+        }
+    }
+
     fun checkAnswer() {
         val currentWords = uiState.value.currentWords
         val correctWords = uiState.value.titles

@@ -131,6 +131,22 @@ class RevisionThirdViewModel
         }
     }
 
+    fun reset() {
+        _uiState.update { state ->
+            listWords?.let { words ->
+                state.copy(
+                    currentWords = mutableListOf(null, null),
+                    currentLetters = mutableListOf(null, null),
+                    currentIcons = mutableListOf(null, null),
+                    isGuessWrong = false,
+                    shareIcons = words.shareIcons,
+                    shareWords = words.shareWords,
+                    shareLetters = words.shareLetters,
+                )
+            } ?: state
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
         interactor.playerDestroy()

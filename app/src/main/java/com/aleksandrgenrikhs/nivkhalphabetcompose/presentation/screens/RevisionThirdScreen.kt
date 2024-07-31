@@ -39,6 +39,7 @@ fun RevisionThirdScreen(
             shareIcons = shareIcons,
             isGuessWrong = isGuessWrong,
             onDone = (viewModel::checkAnswer),
+            onReset = (viewModel::reset),
         ) { transferData: DragAndDropEvent, index: Int ->
             viewModel.updateReceivingContainer(
                 transferData.toAndroidDragEvent().clipData,
@@ -59,7 +60,7 @@ fun RevisionThirdScreen(
                 },
                 navigationNext = {
                     navController.navigate(
-                        NavigationDestination.RevisionFirstScreen.destination,
+                        NavigationDestination.RevisionTaskScreen.destination,
                     ) {
                         popUpTo(NavigationDestination.RevisionThirdScreen.destination) {
                             inclusive = true

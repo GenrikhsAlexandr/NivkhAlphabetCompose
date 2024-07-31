@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -73,6 +74,7 @@ fun ThirdTaskLayout(
     onIconClick: (String) -> Unit,
     isGuessWrong: Boolean,
     onDone: () -> Unit,
+    onReset: () -> Unit,
     onDragAndDropEventReceived: (DragAndDropEvent, Int) -> Unit,
 ) {
     Column(
@@ -160,13 +162,22 @@ fun ThirdTaskLayout(
                     )
                 }
             }
-            Spacer(modifier = modifier.weight(1f))
-            SubmitButton(
-                modifier = Modifier
+            Spacer(modifier = modifier.height(16.dp))
+            Row(
+                modifier = modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
-                onDone = onDone,
-            )
+                    .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                ResetButton(
+                    onReset = onReset,
+                )
+                Spacer(modifier = modifier.width(8.dp))
+                SubmitButton(
+                    onDone = onDone,
+                )
+            }
         }
     }
 }
@@ -292,6 +303,33 @@ private fun IconButton(
 }
 
 @Composable
+private fun ResetButton(
+    onReset: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Button(
+        onClick = {
+            onReset()
+        },
+        modifier = modifier
+            .wrapContentSize(),
+        colors = ButtonColors(
+            colorError,
+            colorRight,
+            colorRight,
+            colorRight
+        )
+    ) {
+        Text(
+            textAlign = TextAlign.Center,
+            text = stringResource(id = R.string.reset),
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.ExtraBold
+        )
+    }
+}
+
+@Composable
 private fun SubmitButton(
     onDone: () -> Unit,
     modifier: Modifier = Modifier,
@@ -301,8 +339,7 @@ private fun SubmitButton(
             onDone()
         },
         modifier = modifier
-            .wrapContentSize()
-            .padding(bottom = 16.dp),
+            .wrapContentSize(),
         colors = ButtonColors(
             colorProgressBar,
             colorRight,
@@ -328,6 +365,7 @@ private fun ThirdTaskPreview() {
             icons = listOf(null, null, null),
             onIconClick = {},
             onDone = {},
+            onReset = {},
             onDragAndDropEventReceived = { _, _ -> },
             shareWords = arrayListOf("ӈағзыр̆раӄ", "пʼиды пʼаӽ", "ӿатӽ пʼерӈ"),
             currentWords = arrayListOf("ӈағзыр̆раӄ", "пʼиды пʼаӽ", "ӿатӽ пʼерӈ"),

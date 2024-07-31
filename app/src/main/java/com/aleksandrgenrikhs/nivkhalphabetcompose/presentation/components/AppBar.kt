@@ -70,9 +70,11 @@ fun AppBar(
                 }
 
                 NavigationDestination.FourthTaskScreen.destination -> {
-                    Text(
+                    AutoSizeText(
                         text = stringResource(id = R.string.fourthTask),
-                        style = MaterialTheme.typography.titleLarge
+                        style = MaterialTheme.typography.titleLarge,
+                        maxLines = 1,
+                        minFontSize = 20.sp,
                     )
                 }
 

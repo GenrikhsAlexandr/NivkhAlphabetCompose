@@ -75,6 +75,7 @@ fun RevisionThirdLayout(
     currentIcons: List<String?>,
     isGuessWrong: Boolean,
     onDone: () -> Unit,
+    onReset: () -> Unit,
     onDragAndDropEventReceived: (DragAndDropEvent, Int) -> Unit,
 ) {
     Column(
@@ -101,7 +102,7 @@ fun RevisionThirdLayout(
                     modifier = modifier
                         .clip(ShapeDefaults.Small)
                         .padding(horizontal = 3.dp)
-                        .height(130.dp)
+                        .height(124.dp)
                         .wrapContentWidth(),
                 ) {
                     ReceivingContainerItem(
@@ -146,7 +147,7 @@ fun RevisionThirdLayout(
                     modifier = modifier
                         .clip(ShapeDefaults.Small)
                         .padding(horizontal = 3.dp)
-                        .height(130.dp)
+                        .height(124.dp)
                         .wrapContentWidth(),
                 ) {
                     ReceivingContainerItem(
@@ -185,7 +186,7 @@ fun RevisionThirdLayout(
                     modifier = modifier
                         .clip(ShapeDefaults.Small)
                         .padding(horizontal = 3.dp)
-                        .height(130.dp)
+                        .height(124.dp)
                         .wrapContentWidth(),
                 ) {
                     TextItem(
@@ -241,12 +242,21 @@ fun RevisionThirdLayout(
             }
         }
         Spacer(modifier = modifier.height(8.dp))
-        SubmitButton(
-            modifier = Modifier
+        Row(
+            modifier = modifier
                 .fillMaxWidth()
-                .padding(8.dp),
-            onDone = onDone,
-        )
+                .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            ResetButton(
+                onReset = onReset,
+            )
+            Spacer(modifier = modifier.width(8.dp))
+            SubmitButton(
+                onDone = onDone,
+            )
+        }
     }
 }
 
@@ -271,8 +281,8 @@ private fun ReceivingContainerItem(
     Box(
         modifier = modifier
             .clip(ShapeDefaults.Small)
-            .height(if (icon == null) 64.dp else 130.dp)
-            .width(if (icon == null) 170.dp else 130.dp)
+            .height(if (icon == null) 61.dp else 124.dp)
+            .width(if (icon == null) 176.dp else 124.dp)
             .border(
                 width = 2.dp,
                 color = if (isError) colorError else colorProgressBar,
@@ -317,8 +327,8 @@ private fun TextItem(
     Box(
         modifier = modifier
             .clip(ShapeDefaults.Small)
-            .height(64.dp)
-            .width(170.dp)
+            .height(61.dp)
+            .width(176.dp)
             .border(
                 width = 2.dp,
                 color = colorProgressBar,
@@ -345,7 +355,7 @@ private fun IconItem(
 ) {
     Box(
         modifier = modifier
-            .size(130.dp)
+            .size(124.dp)
             .clip(ShapeDefaults.Small)
             .background(colorProgressBar),
         contentAlignment = Alignment.Center
@@ -472,6 +482,33 @@ private fun ShareIcons(
 }
 
 @Composable
+private fun ResetButton(
+    onReset: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Button(
+        onClick = {
+            onReset()
+        },
+        modifier = modifier
+            .wrapContentSize(),
+        colors = ButtonColors(
+            colorError,
+            colorRight,
+            colorRight,
+            colorRight
+        )
+    ) {
+        Text(
+            textAlign = TextAlign.Center,
+            text = stringResource(id = R.string.reset),
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.ExtraBold
+        )
+    }
+}
+
+@Composable
 private fun SubmitButton(
     onDone: () -> Unit,
     modifier: Modifier = Modifier,
@@ -481,8 +518,7 @@ private fun SubmitButton(
             onDone()
         },
         modifier = modifier
-            .wrapContentSize()
-            .padding(bottom = 16.dp),
+            .wrapContentSize(),
         colors = ButtonColors(
             colorProgressBar,
             colorRight,
@@ -508,6 +544,7 @@ private fun ThirdTaskPreview() {
             letters = listOf("Aa", "Bb", "Cc"),
             icons = listOf("null", null, null),
             onDone = {},
+            onReset = {},
             onDragAndDropEventReceived = { _, _ -> },
             shareWords = arrayListOf("ӈағзыр̆раӄ", "пʼиды пʼаӽ", "ӿатӽ пʼерӈ"),
             shareLetters = arrayListOf("Aa", "Bb", "Cc"),

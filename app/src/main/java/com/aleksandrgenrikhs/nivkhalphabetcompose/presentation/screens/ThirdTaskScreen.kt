@@ -38,6 +38,7 @@ fun ThirdTaskScreen(
             isGuessWrong = isGuessWrong,
             onIconClick = (viewModel::playSound),
             onDone = (viewModel::checkAnswer),
+            onReset = (viewModel::reset),
         ) { transferData: DragAndDropEvent, index: Int ->
             viewModel.updateReceivingContainer(
                 transferData.toAndroidDragEvent().clipData,

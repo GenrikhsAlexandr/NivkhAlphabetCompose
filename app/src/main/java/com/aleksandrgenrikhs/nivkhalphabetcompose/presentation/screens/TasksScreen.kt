@@ -16,7 +16,7 @@ fun TasksScreen(
     tasksViewModel: TasksViewModel = hiltViewModel()
 ) {
     val uiState by tasksViewModel.uiState.collectAsState()
-    LaunchedEffect(key1 = letter, block = { tasksViewModel.isTaskCompleted(letter) })
+    LaunchedEffect(Unit) { tasksViewModel.isTaskCompleted(letter) }
 
     with(uiState) {
         TaskLayout(

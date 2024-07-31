@@ -5,7 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -29,7 +29,14 @@ fun FourthTaskScreen(
     val uiState by viewModel.uiState.collectAsState()
     viewModel.setLetter(letter)
 
-    LaunchedEffect(key1 = letter, block = { viewModel.getWord(letter) })
+    var isLaunchedEffectCalled by rememberSaveable { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        if (!isLaunchedEffectCalled) {
+            viewModel.getWords(letter)
+            isLaunchedEffectCalled = true
+        }
+    }
 
     with(uiState) {
         FourthTaskLayout(
@@ -44,7 +51,7 @@ fun FourthTaskScreen(
         )
         if (isCompleted) {
             val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task4)
-            var showDialog by remember { mutableStateOf(false) }
+            var showDialog by rememberSaveable { mutableStateOf(false) }
             LaunchedEffect(key1 = null) {
                 delay(2000)
                 showDialog = true

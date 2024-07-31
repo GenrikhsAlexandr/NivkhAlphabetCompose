@@ -6,6 +6,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -26,9 +27,14 @@ fun RevisionFirstScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    LaunchedEffect(key1 = null, block = {
-        viewModel.getLetters()
-    })
+    var isLaunchedEffectCalled by rememberSaveable { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        if (!isLaunchedEffectCalled) {
+            viewModel.getLetters()
+            isLaunchedEffectCalled = true
+        }
+    }
 
     with(uiState) {
         RevisionFirstLayout(

@@ -30,7 +30,7 @@
     <string name="repeat">Repeat again</string>
 
     <!--Repeat-->
-    <string name="revisionTask">Repeat</string>
+    <string name="revisionTask">Revision</string>
     <string name="revisionFirst">Select a letter</string>
     <string name="textEndRevisionFirst">Great!</string>
     <string name="revisionSecond">Select a word</string>

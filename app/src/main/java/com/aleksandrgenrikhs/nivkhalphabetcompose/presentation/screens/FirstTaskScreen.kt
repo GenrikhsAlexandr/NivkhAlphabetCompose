@@ -4,6 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -25,11 +28,13 @@ fun FirstTaskScreen(
     val uiState by viewModel.uiState.collectAsState()
     viewModel.setLetter(letter)
 
+    var showDialog by rememberSaveable { mutableStateOf(false) }
+
     with(uiState) {
-        LaunchedEffect(key1 = selectedLetter, block = {
+        LaunchedEffect(Unit) {
             viewModel.getWords(letter)
             viewModel.isTaskCompleted(letter)
-        })
+        }
 
         FirstTaskLayout(
             titles = titles,
@@ -46,6 +51,9 @@ fun FirstTaskScreen(
         )
 
         if (isCompletedWords.isNotEmpty() && isCompletedWords.last() && !isPlaying) {
+            showDialog = true
+        }
+        if (showDialog) {
             if (!isFinishAudio) {
                 viewModel.playSound(FINISH_AUDIO)
             }

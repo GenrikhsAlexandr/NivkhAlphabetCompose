@@ -20,7 +20,9 @@ fun LetterScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     with(uiState) {
-        LaunchedEffect(key1 = isLetterCompleted, block = { viewModel.isLetterCompleted() })
+        LaunchedEffect(Unit) {
+            viewModel.isLetterCompleted()
+        }
 
         LettersLayout(
             letters = letters,

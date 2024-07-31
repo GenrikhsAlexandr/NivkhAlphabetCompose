@@ -8,22 +8,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImagePainter
-import coil.compose.SubcomposeAsyncImage
-import coil.compose.SubcomposeAsyncImageContent
-import coil.request.ImageRequest
-import coil.size.Size
+import coil.compose.AsyncImage
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorCardLetterItem
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
@@ -60,24 +51,12 @@ fun FourthTaskLayout(
                 ),
             contentAlignment = Alignment.Center
         ) {
-            SubcomposeAsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(icon)
-                    .crossfade(true)
-                    .size(Size.ORIGINAL)
-                    .build(),
+            AsyncImage(
+                model = icon,
                 contentDescription = null,
-                contentScale = ContentScale.Crop,
-            ) {
-                when (painter.state) {
-                    is AsyncImagePainter.State.Loading -> CircularProgressIndicator()
-                    is AsyncImagePainter.State.Success -> SubcomposeAsyncImageContent()
-                    else -> Icon(
-                        imageVector = Icons.Default.Warning,
-                        contentDescription = null,
-                    )
-                }
-            }
+                contentScale = ContentScale.FillBounds,
+                modifier = modifier.fillMaxSize()
+            )
         }
         NivkhKeyboard(
             input = userGuess,

@@ -4,6 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.draganddrop.DragAndDropEvent
 import androidx.compose.ui.draganddrop.toAndroidDragEvent
 import androidx.compose.ui.res.stringResource
@@ -27,7 +30,15 @@ fun ThirdTaskScreen(
     val uiState by viewModel.uiState.collectAsState()
     viewModel.setLetter(letter)
 
-    LaunchedEffect(key1 = Unit, block = { viewModel.getWords(letter) })
+    var isLaunchedEffectCalled by rememberSaveable { mutableStateOf(false) }
+    var showDialog by rememberSaveable { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        if (!isLaunchedEffectCalled) {
+            viewModel.getWords(letter)
+            isLaunchedEffectCalled = true
+        }
+    }
 
     with(uiState) {
         ThirdTaskLayout(
@@ -46,6 +57,9 @@ fun ThirdTaskScreen(
             )
         }
         if (isAnswerCorrect) {
+            showDialog = true
+        }
+        if (showDialog) {
             if (!isFinishAudio) {
                 viewModel.playSound(FINISH_AUDIO)
             }

@@ -25,14 +25,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draganddrop.DragAndDropEvent
@@ -41,7 +38,6 @@ import androidx.compose.ui.draganddrop.DragAndDropTransferData
 import androidx.compose.ui.draganddrop.mimeTypes
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -49,10 +45,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import coil.compose.AsyncImagePainter
-import coil.compose.SubcomposeAsyncImage
-import coil.compose.SubcomposeAsyncImageContent
-import coil.request.ImageRequest
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorError
@@ -374,7 +366,6 @@ private fun ShareWords(
     modifier: Modifier = Modifier,
     title: String,
 ) {
-    val currentTitle by rememberUpdatedState(title)
     Box(
         modifier = modifier
             .height(50.dp)
@@ -384,7 +375,7 @@ private fun ShareWords(
                     onPress = {
                         startTransfer(
                             DragAndDropTransferData(
-                                clipData = ClipData.newPlainText("text", currentTitle)
+                                clipData = ClipData.newPlainText("text", title)
                             )
                         )
                     }
@@ -394,7 +385,7 @@ private fun ShareWords(
     )
     {
         AutoSizeText(
-            text = currentTitle,
+            text = title,
             style = MaterialTheme.typography.titleLarge,
             maxLines = 1,
             textAlign = TextAlign.Center,
@@ -409,7 +400,6 @@ private fun ShareLetters(
     modifier: Modifier = Modifier,
     letter: String,
 ) {
-    val currentLetter by rememberUpdatedState(letter)
     Box(
         modifier = modifier
             .height(50.dp)
@@ -419,7 +409,7 @@ private fun ShareLetters(
                     onPress = {
                         startTransfer(
                             DragAndDropTransferData(
-                                clipData = ClipData.newPlainText("text", currentLetter)
+                                clipData = ClipData.newPlainText("text", letter)
                             )
                         )
                     }
@@ -429,7 +419,7 @@ private fun ShareLetters(
     )
     {
         AutoSizeText(
-            text = currentLetter,
+            text = letter,
             style = MaterialTheme.typography.titleLarge,
             maxLines = 1,
             textAlign = TextAlign.Center,
@@ -445,8 +435,10 @@ private fun ShareIcons(
     modifier: Modifier = Modifier,
     icon: String,
 ) {
-    val url by rememberUpdatedState(icon)
-    Box(
+    AsyncImage(
+        model = icon,
+        contentDescription = null,
+        contentScale = ContentScale.FillBounds,
         modifier = modifier
             .size(50.dp)
             .dragAndDropSource {
@@ -454,31 +446,13 @@ private fun ShareIcons(
                     onPress = {
                         startTransfer(
                             DragAndDropTransferData(
-                                clipData = ClipData.newPlainText("image Url", url)
+                                clipData = ClipData.newPlainText("image Url", icon)
                             )
                         )
                     }
                 )
-            },
-        contentAlignment = Alignment.Center
-    )
-    {
-        SubcomposeAsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(url)
-                .crossfade(true)
-                .build(),
-            contentDescription = null,
-            contentScale = ContentScale.FillBounds,
-        ) {
-            val state = painter.state
-            when (state) {
-                is AsyncImagePainter.State.Loading -> CircularProgressIndicator()
-                is AsyncImagePainter.State.Success -> SubcomposeAsyncImageContent()
-                else -> {}
             }
-        }
-    }
+    )
 }
 
 @Composable

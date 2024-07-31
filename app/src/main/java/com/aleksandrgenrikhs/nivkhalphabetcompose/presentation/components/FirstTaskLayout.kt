@@ -17,8 +17,6 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -30,16 +28,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImagePainter
-import coil.compose.SubcomposeAsyncImage
-import coil.compose.SubcomposeAsyncImageContent
-import coil.request.ImageRequest
+import coil.compose.AsyncImage
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorCardLetterItem
@@ -180,29 +174,15 @@ private fun CardWord(
                     .fillMaxSize()
                     .padding(start = 8.dp)
             ) {
-                SubcomposeAsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(icon)
-                        .crossfade(true)
-                        .build(),
+                AsyncImage(
+                    model = icon,
                     contentDescription = null,
-                    contentScale = ContentScale.Crop,
+                    contentScale = ContentScale.FillBounds,
                     modifier = Modifier
                         .clip(CircleShape)
                         .size(130.dp)
                         .align(Alignment.CenterVertically),
-                ) {
-                    val state = painter.state
-                    when (state) {
-                        is AsyncImagePainter.State.Loading -> CircularProgressIndicator()
-                        is AsyncImagePainter.State.Success -> SubcomposeAsyncImageContent()
-                        else -> Icon(
-                            imageVector = Icons.Default.Warning,
-                            tint = colorText,
-                            contentDescription = null,
-                        )
-                    }
-                }
+                )
                 AutoSizeText(
                     text = title,
                     maxLines = 1,

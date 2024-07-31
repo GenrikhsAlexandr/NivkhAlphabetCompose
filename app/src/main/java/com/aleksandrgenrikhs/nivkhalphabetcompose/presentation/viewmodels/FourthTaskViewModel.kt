@@ -31,19 +31,21 @@ class FourthTaskViewModel
         }
     }
 
-    suspend fun getWord(letterId: String) {
-        isLoading.value = true
-        val listWords = interactor.getWordsForFourthTask(letterId)
-        _uiState.update { state ->
-            with(listWords) {
-                state.copy(
-                    wordId = wordId,
-                    title = title,
-                    icon = icon,
-                )
+    fun getWords(letterId: String) {
+        viewModelScope.launch {
+            isLoading.value = true
+            val listWords = interactor.getWordsForFourthTask(letterId)
+            _uiState.update { state ->
+                with(listWords) {
+                    state.copy(
+                        wordId = wordId,
+                        title = title,
+                        icon = icon,
+                    )
+                }
             }
+            isLoading.value = false
         }
-        isLoading.value = false
     }
 
     fun updateUserGuess(guessedWord: String) {
@@ -87,7 +89,7 @@ class FourthTaskViewModel
                     if (!isLoading.value) {
                         delay(2000)
                         updateUserGuess("")
-                        getWord(state.selectedLetter)
+                        getWords(state.selectedLetter)
                     }
                 }
             }

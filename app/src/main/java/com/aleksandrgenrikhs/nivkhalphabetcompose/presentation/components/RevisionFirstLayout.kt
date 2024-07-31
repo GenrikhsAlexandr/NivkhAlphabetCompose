@@ -5,13 +5,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
@@ -43,49 +43,42 @@ fun RevisionFirstLayout(
     isCorrectAnswer: List<Boolean?>,
     isClickable: Boolean
 ) {
-    Column(
+    LazyVerticalGrid(
         modifier = modifier
-            .fillMaxSize()
             .background(colorPrimary)
-            .padding(8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_revision_first),
-            contentDescription = null,
-            modifier = modifier
-                .size(200.dp),
-            alignment = Alignment.Center
-        )
-        IconButton(
-            onClick = {
-                onIconClick("$LETTER_AUDIO$correctLetter")
-            }
-        )
-        LazyVerticalGrid(
-            modifier = modifier
-                .background(colorPrimary)
-                .padding(
-                    start = 16.dp,
-                    end = 16.dp,
-                ),
-            contentPadding = PaddingValues(vertical = 8.dp),
-            columns = GridCells.Fixed(2),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            itemsIndexed(letters) { index, item ->
-                LetterItem(
-                    letter = item,
-                    onClick = {
-                        onLetterClick(item)
-                    },
-                    isCorrectAnswer = isCorrectAnswer[index],
-                    isClickable = isClickable
-                )
-
-            }
+            .fillMaxSize()
+            .padding(horizontal = 16.dp),
+        contentPadding = PaddingValues(vertical = 8.dp),
+        columns = GridCells.Fixed(2),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    )
+    {
+        item(span = { GridItemSpan(maxLineSpan) }) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_revision_first),
+                contentDescription = null,
+                modifier = modifier
+                    .size(200.dp),
+                alignment = Alignment.Center
+            )
+        }
+        item(span = { GridItemSpan(maxLineSpan) }) {
+            IconButton(
+                onClick = {
+                    onIconClick("$LETTER_AUDIO$correctLetter")
+                }
+            )
+        }
+        itemsIndexed(letters) { index, item ->
+            LetterItem(
+                letter = item,
+                onClick = {
+                    onLetterClick(item)
+                },
+                isCorrectAnswer = isCorrectAnswer[index],
+                isClickable = isClickable
+            )
 
         }
     }

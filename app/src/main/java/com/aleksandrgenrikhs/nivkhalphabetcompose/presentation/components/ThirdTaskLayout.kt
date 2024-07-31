@@ -22,20 +22,14 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draganddrop.DragAndDropEvent
@@ -44,17 +38,13 @@ import androidx.compose.ui.draganddrop.DragAndDropTransferData
 import androidx.compose.ui.draganddrop.mimeTypes
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImagePainter
-import coil.compose.SubcomposeAsyncImage
-import coil.compose.SubcomposeAsyncImageContent
-import coil.request.ImageRequest
+import coil.compose.AsyncImage
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorError
@@ -238,7 +228,6 @@ private fun ShareText(
     modifier: Modifier = Modifier,
     title: String,
 ) {
-    val currentTitle by rememberUpdatedState(title)
     Box(
         modifier = modifier
             .wrapContentSize()
@@ -247,7 +236,7 @@ private fun ShareText(
                     onPress = {
                         startTransfer(
                             DragAndDropTransferData(
-                                clipData = ClipData.newPlainText("text", currentTitle)
+                                clipData = ClipData.newPlainText("text", title)
                             )
                         )
                     }
@@ -257,7 +246,7 @@ private fun ShareText(
     )
     {
         AutoSizeText(
-            text = currentTitle,
+            text = title,
             style = MaterialTheme.typography.titleLarge,
             maxLines = 1,
             textAlign = TextAlign.Center,
@@ -280,25 +269,13 @@ private fun IconButton(
             .background(colorProgressBar),
         onClick = onClick
     ) {
-        SubcomposeAsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(icon)
-                .crossfade(true)
-                .build(),
+        AsyncImage(
+            model = icon,
             contentDescription = null,
-            contentScale = ContentScale.Crop,
-        ) {
-            val state = painter.state
-            when (state) {
-                is AsyncImagePainter.State.Loading -> CircularProgressIndicator()
-                is AsyncImagePainter.State.Success -> SubcomposeAsyncImageContent()
-                else -> Icon(
-                    imageVector = Icons.Default.Warning,
-                    contentDescription = null,
-                )
-            }
-        }
-
+            contentScale = ContentScale.FillBounds,
+            modifier = modifier
+                .fillMaxSize()
+        )
     }
 }
 

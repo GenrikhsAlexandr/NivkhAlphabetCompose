@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--header screen-->
+    <string name="appName">Nivkh alphabet</string>
+    <string name="letsGo">Let\'s go to knowledge!</string>
+
+    <!--list of tasks-->
+    <string name="firstTask">Learn a letter</string>
+    <string name="secondTask">Find a word</string>
+    <string name="thirdTask">Match pairs</string>
+    <string name="fourthTask">Spell the word correctly</string>
+
+    <!--First Task-->
+    <string name="titleFirstTask">Click and listen to how the letter sounds</string>
+    <string name="textEndFirstTask">Good job!</string>
+
+    <!--Second task-->
+    <string name="titleSecondTask">What word has the letter \"%1$s\"</string>
+    <string name="textEndSecondTask">Have at it.</string>
+
+    <!--Third Task-->
+    <string name="titleThirdTask">Pair up.</string>
+    <string name="textEndThirdTask">Super!</string>
+    <string name="submit">Check</string>
+    <string name="reset">Reset</string>
+
+    <!--Fourth task-->
+    <string name="textEndFourthTask">This is a success! You\'ve completed all the tasks with this letter! Move on to the next one.</string>
+    <string name="enterYourWord">Enter your word</string>
+    <string name="repeat">Repeat again</string>
+
+    <!--Repeat-->
+    <string name="revisionTask">Repeat</string>
+    <string name="revisionFirst">Select a letter</string>
+    <string name="textEndRevisionFirst">Great!</string>
+    <string name="revisionSecond">Select a word</string>
+    <string name="textEndRevisionSecond">Stunning!</string>
+    <string name="revisionThird">Fill in the blanks</string>
+    <string name="textEndRevisionThird">Genius!</string>
+
+    <!--Dialog Box-->
+    <string name="nextTask">Go to game %1$s</string>
+    <string name="backAlphabet">Go back to the alphabet</string>
+    <string name="nextRevisionTasks">Continue</string>
+    <string name="backListTask">Select a task</string>
+    <string name="infoLettersScreen">Select the letter you want to learn. You can find the repetition of all letters at the end of the alphabet.</string>
+    <string name="infoTasksScreen">Select a task to learn the letter \"%1$s\".</string>
+    <string name="infoFirstScreen">Listen to the sound of the letter \"%1$s\" and the words that contain it and memorize them.</string>
+    <string name="infoSecondScreen">Select the picture behind which the word with the letter \"%1$s\" is hidden.</string>
+    <string name="infoThirdScreen">Opposite each picture, put the corresponding word. To get a hint, click on the picture.</string>
+    <string name="infoFourthScreen">Use the letters of the alphabet to write the correct word. To check the word, press ✓. To delete a character, press ←. To get a hint, press the picture.</string>
+    <string name="infoRevisionTasksScreen">Select a task.</string>
+    <string name="infoRevisionFirstScreen">Select the letter the speaker pronounces. Click the sound icon to listen to the letter again.</string>
+    <string name="infoRevisionSecondScreen">Choose the word that matches the picture.</string>
+    <string name="infoRevisionThirdScreen">Fill in the blanks with matching letters, words, and pictures.</string>
+    <string name="ok">OK</string>
+
+    <!--Other-->
+    <string name="space">space</string>
+
+</resources>

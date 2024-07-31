@@ -10,7 +10,7 @@
     <string name="fourthTask">Напиши слово правильно</string>
 
     <!--Первое задание-->
-    <string name="titleFistTask">Нажми и послушай\nкак звучит буква</string>
+    <string name="titleFirstTask">Нажми и послушай\nкак звучит буква</string>
     <string name="textEndFirstTask">Молодец!</string>
 
     <!--Второе задание-->

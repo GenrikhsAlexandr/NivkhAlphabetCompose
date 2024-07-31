@@ -74,7 +74,7 @@ fun FirstTaskLayout(
     {
         item {
             Text(
-                text = stringResource(id = R.string.titleFistTask),
+                text = stringResource(id = R.string.titleFirstTask),
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Center
             )

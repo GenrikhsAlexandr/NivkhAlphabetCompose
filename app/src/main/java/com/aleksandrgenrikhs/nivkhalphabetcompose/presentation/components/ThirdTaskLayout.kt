@@ -10,7 +10,7 @@ import androidx.compose.foundation.draganddrop.dragAndDropTarget
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,8 +20,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.IconButton
@@ -29,7 +29,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draganddrop.DragAndDropEvent
@@ -67,78 +69,30 @@ fun ThirdTaskLayout(
     onReset: () -> Unit,
     onDragAndDropEventReceived: (DragAndDropEvent, Int) -> Unit,
 ) {
-    Column(
+    LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .background(colorPrimary)
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+            .background(colorPrimary),
+        contentPadding = PaddingValues(8.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+
     ) {
         if (wordsId.isNotEmpty()) {
-            Row(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                IconButton(
-                    icon = icons[0],
-                    onClick = { onIconClick("$WORDS_AUDIO${wordsId[0]}") },
-                )
-                Spacer(modifier = modifier.width(4.dp))
-                ReceivingContainer(
-                    title = currentWords[0] ?: "",
-                    index = 0,
-                    onDragAndDropEventReceived = { transferData, index ->
-                        onDragAndDropEventReceived(transferData, index)
+            itemsIndexed(wordsId) { index, _ ->
+                ReceivingContainerItem(
+                    title = currentWords[index] ?: "",
+                    index = index,
+                    icon = icons[index] ?: "",
+                    onClick = { onIconClick("$WORDS_AUDIO${wordsId[index]}") },
+                    onDragAndDropEventReceived = { transferData, indexes ->
+                        onDragAndDropEventReceived(transferData, indexes)
                     },
                     isError = isGuessWrong
                 )
             }
-            Row(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                IconButton(
-                    icon = icons[1],
-                    onClick = { onIconClick("$WORDS_AUDIO${wordsId[1]}") },
-                )
-                Spacer(modifier = modifier.width(4.dp))
-                ReceivingContainer(
-                    title = currentWords[1] ?: "",
-                    index = 1,
-                    onDragAndDropEventReceived = { transferData, index ->
-                        onDragAndDropEventReceived(transferData, index)
-                    },
-                    isError = isGuessWrong,
-                )
-            }
-            Row(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                IconButton(
-                    icon = icons[2],
-                    onClick = { onIconClick("$WORDS_AUDIO${wordsId[2]}") },
-                )
-                Spacer(modifier = modifier.width(4.dp))
-                ReceivingContainer(
-                    title = currentWords[2] ?: "",
-                    index = 2,
-                    onDragAndDropEventReceived = { transferData, index ->
-                        onDragAndDropEventReceived(transferData, index)
-                    },
-                    isError = isGuessWrong,
-                )
-            }
+        }
+        item {
             Row(
                 modifier = modifier
                     .fillMaxWidth()
@@ -174,45 +128,58 @@ fun ThirdTaskLayout(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun ReceivingContainer(
-    title: String?,
+private fun ReceivingContainerItem(
     modifier: Modifier = Modifier,
+    title: String,
     index: Int,
-    isError: Boolean,
+    icon: String,
+    onClick: () -> Unit,
     onDragAndDropEventReceived: (DragAndDropEvent, Int) -> Unit,
+    isError: Boolean,
 ) {
-    val callback = remember {
-        object : DragAndDropTarget {
-            override fun onDrop(event: DragAndDropEvent): Boolean {
-                onDragAndDropEventReceived(event, index)
-                return true
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        IconButton(
+            icon = icon,
+            onClick = onClick,
+        )
+        Spacer(modifier = modifier.width(4.dp))
+        val callback = remember {
+            object : DragAndDropTarget {
+                override fun onDrop(event: DragAndDropEvent): Boolean {
+                    onDragAndDropEventReceived(event, index)
+                    return true
+                }
             }
         }
-    }
-    Box(
-        modifier = modifier
-            .clip(ShapeDefaults.Small)
-            .border(
-                width = 2.dp,
-                color = if (isError) colorError else colorProgressBar,
-                shape = ShapeDefaults.Small
-            )
-            .background(colorProgressBar)
-            .padding(horizontal = 3.dp)
-            .size(150.dp)
-            .dragAndDropTarget(
-                shouldStartDragAndDrop = { startEvent: DragAndDropEvent ->
-                    startEvent
-                        .mimeTypes()
-                        .contains(ClipDescription.MIMETYPE_TEXT_PLAIN)
-                },
-                target = callback
-            ),
-        contentAlignment = Alignment.Center
-    ) {
-        title?.let {
+        Box(
+            modifier = modifier
+                .clip(ShapeDefaults.Small)
+                .border(
+                    width = 2.dp,
+                    color = if (isError) colorError else colorProgressBar,
+                    shape = ShapeDefaults.Small
+                )
+                .background(colorProgressBar)
+                .padding(horizontal = 3.dp)
+                .size(150.dp)
+                .dragAndDropTarget(
+                    shouldStartDragAndDrop = { startEvent: DragAndDropEvent ->
+                        startEvent
+                            .mimeTypes()
+                            .contains(ClipDescription.MIMETYPE_TEXT_PLAIN)
+                    },
+                    target = callback
+                ),
+            contentAlignment = Alignment.Center
+        ) {
             AutoSizeText(
-                text = it,
+                text = title,
                 textAlign = TextAlign.Center,
                 maxLines = 1,
                 style = MaterialTheme.typography.displayMedium,
@@ -228,6 +195,7 @@ private fun ShareText(
     modifier: Modifier = Modifier,
     title: String,
 ) {
+    val currentTitle by rememberUpdatedState(title)
     Box(
         modifier = modifier
             .wrapContentSize()
@@ -236,7 +204,7 @@ private fun ShareText(
                     onPress = {
                         startTransfer(
                             DragAndDropTransferData(
-                                clipData = ClipData.newPlainText("text", title)
+                                clipData = ClipData.newPlainText("text", currentTitle)
                             )
                         )
                     }
@@ -246,7 +214,7 @@ private fun ShareText(
     )
     {
         AutoSizeText(
-            text = title,
+            text = currentTitle,
             style = MaterialTheme.typography.titleLarge,
             maxLines = 1,
             textAlign = TextAlign.Center,

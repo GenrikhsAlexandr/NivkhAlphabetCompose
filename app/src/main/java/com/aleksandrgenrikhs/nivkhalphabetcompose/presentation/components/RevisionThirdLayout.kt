@@ -78,7 +78,6 @@ fun RevisionThirdLayout(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        println("RevisionThirdLayout")
         if (title.isNotEmpty()) {
             Row(
                 modifier = modifier

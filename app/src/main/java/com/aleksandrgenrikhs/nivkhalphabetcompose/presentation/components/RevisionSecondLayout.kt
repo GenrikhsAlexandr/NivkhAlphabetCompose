@@ -169,7 +169,6 @@ private fun RevisionFirstLayoutPreview() {
             onWordClick = {},
             isCorrectAnswer = listOf(null, true, false),
             isClickable = true
-
         )
     }
 }

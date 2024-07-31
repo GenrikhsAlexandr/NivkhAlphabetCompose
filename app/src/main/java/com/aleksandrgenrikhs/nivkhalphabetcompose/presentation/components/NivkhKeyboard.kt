@@ -117,10 +117,6 @@ fun NivkhKeyboard(
         }
         item(span = { GridItemSpan(maxLineSpan) }) {
             SpaceButton(
-                modifier = Modifier
-                    .wrapContentSize(
-                        unbounded = true,
-                    ),
                 onClick = onValueChange
             )
         }
@@ -196,7 +192,7 @@ private fun DoneButton(
                 enabled = onClickable
             ),
         contentAlignment = Alignment.Center
-        ) {
+    ) {
         Text(
             text = "✓",
             style = MaterialTheme.typography.displayMedium,

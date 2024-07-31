@@ -66,10 +66,6 @@ fun LettersLayout(
             }
             item(span = { GridItemSpan(maxLineSpan) }) {
                 RepeatItem(
-                    modifier = Modifier
-                        .wrapContentSize(
-                            unbounded = true,
-                        ),
                     onClick = {
                         onClickRevision()
                     },
@@ -110,14 +106,11 @@ private fun RepeatItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-
     Column(
         modifier = Modifier
             .wrapContentSize()
             .clip(ShapeDefaults.Medium)
-            .clickable(
-                onClick = onClick,
-            ),
+            .clickable(onClick = onClick),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {

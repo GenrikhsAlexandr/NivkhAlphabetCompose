@@ -37,7 +37,6 @@ fun RevisionThirdScreen(
     }
 
     with(uiState) {
-        println("RevisionThirdLayoutScreen =$uiState ")
         RevisionThirdLayout(
             title = title,
             letter = letter,

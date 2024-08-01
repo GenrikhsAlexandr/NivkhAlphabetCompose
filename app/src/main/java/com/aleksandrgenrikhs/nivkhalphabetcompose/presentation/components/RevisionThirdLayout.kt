@@ -2,6 +2,7 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components
 
 import android.content.ClipData
 import android.content.ClipDescription
+import android.graphics.drawable.BitmapDrawable
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -29,7 +30,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draganddrop.DragAndDropEvent
@@ -37,7 +42,10 @@ import androidx.compose.ui.draganddrop.DragAndDropTarget
 import androidx.compose.ui.draganddrop.DragAndDropTransferData
 import androidx.compose.ui.draganddrop.mimeTypes
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -45,6 +53,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorError
@@ -433,30 +443,43 @@ private fun ShareIcons(
     modifier: Modifier = Modifier,
     icon: String,
 ) {
-    Box(
-        modifier = modifier
-            .wrapContentSize()
-            .dragAndDropSource {
-                detectTapGestures(
-                    onPress = {
-                        startTransfer(
-                            DragAndDropTransferData(
-                                clipData = ClipData.newPlainText("image Url", icon)
-                            )
-                        )
-                    }
-                )
-            },
-        contentAlignment = Alignment.Center
-    ) {
-        AsyncImage(
-            model = icon,
-            contentDescription = null,
-            contentScale = ContentScale.FillBounds,
-            modifier = modifier
-                .size(50.dp)
-        )
+    val painter = rememberAsyncImagePainter(
+        ImageRequest.Builder(LocalContext.current)
+            .data(icon)
+            .size(100)
+            .build()
+    )
+    var imageBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
+
+    LaunchedEffect(painter) {
+        val result = painter.imageLoader.execute(painter.request).drawable
+        (result as BitmapDrawable).bitmap.asImageBitmap().let {
+            imageBitmap = it
+        }
     }
+    AsyncImage(
+        model = icon,
+        contentDescription = null,
+        contentScale = ContentScale.FillBounds,
+        modifier = modifier
+            .size(50.dp)
+            .dragAndDropSource(
+                drawDragDecoration = {
+                    imageBitmap?.let { drawImage(it) }
+                },
+                block = {
+                    detectTapGestures(
+                        onPress = {
+                            startTransfer(
+                                DragAndDropTransferData(
+                                    clipData = ClipData.newPlainText("image Url", icon)
+                                )
+                            )
+                        }
+                    )
+                }
+            )
+    )
 }
 
 @Composable

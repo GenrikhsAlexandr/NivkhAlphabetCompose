@@ -72,7 +72,7 @@ fun RevisionThirdScreen(
                     navController.navigate(
                         NavigationDestination.RevisionTaskScreen.destination,
                     ) {
-                        popUpTo(NavigationDestination.RevisionThirdScreen.destination) {
+                        popUpTo(NavigationDestination.RevisionTaskScreen.destination) {
                             inclusive = true
                         }
                     }

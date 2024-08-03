@@ -15,11 +15,14 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,6 +37,9 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlp
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.LazyGridScrollableState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ScrollableState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ShowDividerWhenScrolled
 import com.idapgroup.autosizetext.AutoSizeText
 
 @Composable
@@ -43,8 +49,21 @@ fun LettersLayout(
     isLetterCompleted: List<Boolean>,
     onClickLetter: (String) -> Unit,
     onClickRevision: () -> Unit,
+    onDividerVisibilityChange: (Boolean) -> Unit
 ) {
+    val listState = rememberLazyGridState()
+    val scrollableState: ScrollableState = LazyGridScrollableState(listState)
+    val savedScrollPosition = rememberSaveable { listState.firstVisibleItemScrollOffset }
+
+    // Восстанавливаем позицию прокрутки при загрузке экрана
+    LaunchedEffect(Unit) {
+        listState.scrollToItem(savedScrollPosition)
+    }
+
+    ShowDividerWhenScrolled(onDividerVisibilityChange, scrollableState)
+
     LazyVerticalGrid(
+        state = listState,
         modifier = modifier
             .background(colorPrimary)
             .padding(
@@ -140,7 +159,8 @@ private fun LetterElementPreview() {
             isLetterCompleted = listOf(true, false, false),
             modifier = Modifier,
             onClickLetter = {},
-            onClickRevision = {}
+            onClickRevision = {},
+            onDividerVisibilityChange = {}
         )
     }
 }

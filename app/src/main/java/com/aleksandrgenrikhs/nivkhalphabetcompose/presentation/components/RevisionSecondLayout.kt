@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -30,6 +30,9 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPri
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.LazyListScrollableState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ScrollableState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ShowDividerWhenScrolled
 
 @Composable
 fun RevisionSecondLayout(
@@ -41,45 +44,46 @@ fun RevisionSecondLayout(
     onWordClick: (String) -> Unit,
     onIconClick: (String) -> Unit,
     isCorrectAnswer: List<Boolean?>,
-    isClickable: Boolean
+    isClickable: Boolean,
+    onDividerVisibilityChange: (Boolean) -> Unit
 ) {
-    Column(
+    val listState = rememberLazyListState()
+    val scrollableState: ScrollableState = LazyListScrollableState(listState)
+
+    ShowDividerWhenScrolled(onDividerVisibilityChange, scrollableState)
+
+    LazyColumn(
         modifier = modifier
-            .fillMaxSize()
             .background(colorPrimary)
-            .padding(8.dp),
+            .fillMaxSize()
+            .padding(
+                start = 16.dp,
+                end = 16.dp,
+            ),
+        contentPadding = PaddingValues(vertical = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        state = listState
     ) {
-        IconButton(
-            onClick = {
-                onIconClick("$WORDS_AUDIO$correctWordId")
-            },
-            icon = icon
-        )
-        LazyColumn(
-            modifier = modifier
-                .background(colorPrimary)
-                .padding(
-                    start = 16.dp,
-                    end = 16.dp,
-                ),
-            contentPadding = PaddingValues(vertical = 8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            itemsIndexed(words) { index, item ->
-                WordItem(
-                    title = item,
-                    onClick = {
-                        onWordClick(wordsId[index])
-                    },
-                    isCorrectAnswer = isCorrectAnswer[index],
-                    isClickable = isClickable
-                )
-
-            }
-
+        item {
+            IconButton(
+                onClick = {
+                    onIconClick("$WORDS_AUDIO$correctWordId")
+                },
+                icon = icon
+            )
         }
+        itemsIndexed(words) { index, item ->
+            WordItem(
+                title = item,
+                onClick = {
+                    onWordClick(wordsId[index])
+                },
+                isCorrectAnswer = isCorrectAnswer[index],
+                isClickable = isClickable
+            )
+        }
+
     }
 }
 
@@ -147,7 +151,8 @@ private fun RevisionFirstLayoutPreview() {
             onIconClick = {},
             onWordClick = {},
             isCorrectAnswer = listOf(null, true, false),
-            isClickable = true
+            isClickable = true,
+            onDividerVisibilityChange = {}
         )
     }
 }

@@ -15,7 +15,8 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.TASKS_SCREEN
 @Composable
 fun LetterScreen(
     navController: NavController,
-    viewModel: LettersViewModel = hiltViewModel()
+    viewModel: LettersViewModel = hiltViewModel(),
+    onDividerVisibilityChange: (Boolean) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -29,8 +30,13 @@ fun LetterScreen(
             isLetterCompleted = isLetterCompleted,
             onClickLetter = { letter ->
                 navController.navigate("${TASKS_SCREEN}/$letter")
+                onDividerVisibilityChange(false)
             },
-            onClickRevision = { navController.navigate(REVISION_TASKS_SCREEN) }
+            onClickRevision = {
+                navController.navigate(REVISION_TASKS_SCREEN)
+                onDividerVisibilityChange(false)
+            },
+            onDividerVisibilityChange = onDividerVisibilityChange
         )
     }
 }

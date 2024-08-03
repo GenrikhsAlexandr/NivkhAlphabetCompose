@@ -24,9 +24,9 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 fun RevisionThirdScreen(
     navController: NavController,
     viewModel: RevisionThirdViewModel = hiltViewModel(),
+    onDividerVisibilityChange: (Boolean) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
-
     var isLaunchedEffectCalled by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
@@ -50,6 +50,7 @@ fun RevisionThirdScreen(
             isGuessWrong = isGuessWrong,
             onDone = (viewModel::checkAnswer),
             onReset = (viewModel::reset),
+            onDividerVisibilityChange = onDividerVisibilityChange
         ) { transferData: DragAndDropEvent, index: Int ->
             viewModel.updateReceivingContainer(
                 transferData.toAndroidDragEvent().clipData,
@@ -63,12 +64,14 @@ fun RevisionThirdScreen(
             val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task3)
             Dialog(
                 navigationBack = {
+                    onDividerVisibilityChange(false)
                     navController.popBackStack(
                         NavigationDestination.LettersScreen.destination,
                         inclusive = false
                     )
                 },
                 navigationNext = {
+                    onDividerVisibilityChange(false)
                     navController.navigate(
                         NavigationDestination.RevisionTaskScreen.destination,
                     ) {

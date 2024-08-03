@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
@@ -40,6 +41,9 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorCar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.LazyListScrollableState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ScrollableState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ShowDividerWhenScrolled
 import com.idapgroup.autosizetext.AutoSizeText
 
 @Composable
@@ -55,9 +59,16 @@ fun FirstTaskLayout(
     isClickableLetter: Boolean,
     isPlaying: Boolean,
     progressLetter: Int,
-    isVisibleWord: Boolean
+    isVisibleWord: Boolean,
+    onDividerVisibilityChange: (Boolean) -> Unit
 ) {
+    val listState = rememberLazyListState()
+    val scrollableState: ScrollableState = LazyListScrollableState(listState)
+
+    ShowDividerWhenScrolled(onDividerVisibilityChange, scrollableState)
+
     LazyColumn(
+        state = listState,
         modifier = modifier
             .fillMaxSize()
             .background(colorPrimary),
@@ -115,7 +126,6 @@ private fun CardLetter(
                 onClick = onClick
             ),
         contentAlignment = Alignment.Center
-
     )
     {
         LinearProgressIndicator(
@@ -222,6 +232,7 @@ private fun FirstTaskContentPreview() {
             progressLetter = 1,
             isVisibleWord = true,
             isPlaying = false,
+            onDividerVisibilityChange = {}
         )
     }
 }

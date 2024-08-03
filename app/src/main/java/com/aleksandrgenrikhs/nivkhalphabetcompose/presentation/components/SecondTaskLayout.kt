@@ -5,16 +5,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
@@ -41,6 +39,9 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorErr
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorRight
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.LazyListScrollableState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ScrollableState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ShowDividerWhenScrolled
 
 @Composable
 fun SecondTaskLayout(
@@ -53,38 +54,39 @@ fun SecondTaskLayout(
     isCorrectAnswer: List<Boolean>,
     letter: String,
     onClick: (String, String) -> Unit,
-    isClickable: Boolean
+    isClickable: Boolean,
+    onDividerVisibilityChange: (Boolean) -> Unit
 ) {
-    Column(
+    val listState = rememberLazyListState()
+    val scrollableState: ScrollableState = LazyListScrollableState(listState)
+
+    ShowDividerWhenScrolled(onDividerVisibilityChange, scrollableState)
+
+    LazyColumn(
+        state = listState,
         modifier = modifier
-            .fillMaxSize()
-            .background(colorPrimary),
+            .background(colorPrimary)
+            .fillMaxSize(),
+        contentPadding = PaddingValues(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(22.dp),
     ) {
-        TitleTask(
-            letter = letter
-        )
-        Spacer(modifier = Modifier.height(32.dp))
-        LazyColumn(
-            modifier = modifier
-                .fillMaxSize(),
-            contentPadding = PaddingValues(0.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(22.dp),
-        ) {
-            itemsIndexed(titles) { index, item ->
-                IconButton(
-                    onClick = {
-                        onClick(wordsId[index], lettersId[index])
-                    },
-                    icon = icons[index],
-                    title = item,
-                    isFlipped = isFlipped[index],
-                    isClickable = isClickable,
-                    isCorrectAnswer = isCorrectAnswer[index],
-                )
-            }
+        item {
+            TitleTask(
+                letter = letter
+            )
+        }
+        itemsIndexed(titles) { index, item ->
+            IconButton(
+                onClick = {
+                    onClick(wordsId[index], lettersId[index])
+                },
+                icon = icons[index],
+                title = item,
+                isFlipped = isFlipped[index],
+                isClickable = isClickable,
+                isCorrectAnswer = isCorrectAnswer[index],
+            )
         }
     }
 }
@@ -130,7 +132,6 @@ private fun IconButton(
     isFlipped: Boolean,
     isClickable: Boolean,
     isCorrectAnswer: Boolean
-
 ) {
     val rotationAngle by animateFloatAsState(
         targetValue = if (isFlipped) 180f else 0f, label = "",
@@ -203,6 +204,7 @@ private fun SecondTaskPreview() {
             onClick = { _, _ -> },
             isClickable = true,
             isCorrectAnswer = listOf(true, true, false),
+            onDividerVisibilityChange = {}
         )
     }
 }

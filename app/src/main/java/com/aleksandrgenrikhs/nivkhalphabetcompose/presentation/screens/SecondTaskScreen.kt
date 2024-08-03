@@ -26,11 +26,12 @@ fun SecondTaskScreen(
     navController: NavController,
     viewModel: SecondTaskViewModel = hiltViewModel(),
     letter: String,
+    onDividerVisibilityChange: (Boolean) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    viewModel.setLetter(letter)
-
     var isLaunchedEffectCalled by rememberSaveable { mutableStateOf(false) }
+
+    viewModel.setLetter(letter)
 
     LaunchedEffect(Unit) {
         if (!isLaunchedEffectCalled) {
@@ -50,6 +51,7 @@ fun SecondTaskScreen(
             letter = letter,
             onClick = (viewModel::flipCard),
             isClickable = !isCorrectWord,
+            onDividerVisibilityChange = onDividerVisibilityChange
         )
         if (isCompleted) {
             val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task2)
@@ -64,12 +66,14 @@ fun SecondTaskScreen(
                 }
                 Dialog(
                     navigationBack = {
+                        onDividerVisibilityChange(false)
                         navController.popBackStack(
                             NavigationDestination.LettersScreen.destination,
                             inclusive = false
                         )
                     },
                     navigationNext = {
+                        onDividerVisibilityChange(false)
                         navController.navigate(
                             "${NavigationDestination.ThirdTaskScreen.destination}/$letter"
                         ) {

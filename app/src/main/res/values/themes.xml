@@ -4,6 +4,7 @@
     <style name="Theme.NivkhAlphabetCompose" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
 </resources>

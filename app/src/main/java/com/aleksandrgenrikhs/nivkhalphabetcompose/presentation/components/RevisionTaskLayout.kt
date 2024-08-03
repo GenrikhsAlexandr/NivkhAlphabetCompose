@@ -16,10 +16,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,6 +34,9 @@ import androidx.compose.ui.unit.dp
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.LazyListScrollableState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ScrollableState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ShowDividerWhenScrolled
 
 @Composable
 fun RevisionTaskLayout(
@@ -39,15 +45,27 @@ fun RevisionTaskLayout(
     routes: List<String>,
     modifier: Modifier = Modifier,
     onClick: (String) -> Unit,
+    onDividerVisibilityChange: (Boolean) -> Unit
 ) {
+    val listState = rememberLazyListState()
+    val scrollableState: ScrollableState = LazyListScrollableState(listState)
+    val savedScrollPosition = rememberSaveable { listState.firstVisibleItemScrollOffset }
+
+    // Восстанавливаем позицию прокрутки при загрузке экрана
+    LaunchedEffect(Unit) {
+        listState.scrollToItem(savedScrollPosition)
+    }
+
+    ShowDividerWhenScrolled(onDividerVisibilityChange, scrollableState)
+
     LazyColumn(
+        state = listState,
         modifier = modifier
             .fillMaxSize()
             .background(colorPrimary),
         contentPadding = PaddingValues(32.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
-
     ) {
         itemsIndexed(titles) { index, _ ->
             RevisionTaskItem(
@@ -112,7 +130,8 @@ private fun RevisionTaskLayoutPreview() {
                 R.drawable.ic_revision_task_third
             ),
             routes = listOf(),
-            onClick = { }
+            onClick = { },
+            onDividerVisibilityChange = {}
         )
     }
 }

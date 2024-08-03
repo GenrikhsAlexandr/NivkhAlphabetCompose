@@ -26,12 +26,13 @@ fun ThirdTaskScreen(
     navController: NavController,
     viewModel: ThirdTaskViewModel = hiltViewModel(),
     letter: String,
+    onDividerVisibilityChange: (Boolean) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    viewModel.setLetter(letter)
-
     var isLaunchedEffectCalled by rememberSaveable { mutableStateOf(false) }
     var showDialog by rememberSaveable { mutableStateOf(false) }
+
+    viewModel.setLetter(letter)
 
     LaunchedEffect(Unit) {
         if (!isLaunchedEffectCalled) {
@@ -50,6 +51,7 @@ fun ThirdTaskScreen(
             onIconClick = (viewModel::playSound),
             onDone = (viewModel::checkAnswer),
             onReset = (viewModel::reset),
+            onDividerVisibilityChange = onDividerVisibilityChange,
         ) { transferData: DragAndDropEvent, index: Int ->
             viewModel.updateReceivingContainer(
                 transferData.toAndroidDragEvent().clipData,
@@ -66,12 +68,14 @@ fun ThirdTaskScreen(
             val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task3)
             Dialog(
                 navigationBack = {
+                    onDividerVisibilityChange(false)
                     navController.popBackStack(
                         NavigationDestination.LettersScreen.destination,
                         inclusive = false
                     )
                 },
                 navigationNext = {
+                    onDividerVisibilityChange(false)
                     navController.navigate(
                         "${NavigationDestination.FourthTaskScreen.destination}/$letter"
                     ) {

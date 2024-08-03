@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -106,8 +108,8 @@ fun NivkhKeyboard(
                 end = 16.dp,
             ),
         contentPadding = PaddingValues(vertical = 8.dp),
-        columns = GridCells.Adaptive(80.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        columns = GridCells.Adaptive(50.dp),
+        verticalArrangement = Arrangement.spacedBy(1.dp),
     ) {
         items(letter) {
             LetterButton(
@@ -115,7 +117,7 @@ fun NivkhKeyboard(
                 onClick = onValueChange,
             )
         }
-        item(span = { GridItemSpan(maxLineSpan) }) {
+        item(span = { GridItemSpan(maxCurrentLineSpan) }) {
             SpaceButton(
                 onClick = onValueChange
             )
@@ -131,7 +133,8 @@ private fun LetterButton(
 ) {
     Box(
         modifier = modifier
-            .wrapContentSize()
+            .wrapContentHeight()
+            .width(25.dp)
             .background(colorPrimary)
             .clip(CircleShape)
             .clickable(onClick = {
@@ -139,11 +142,11 @@ private fun LetterButton(
             }),
         contentAlignment = Alignment.Center
     ) {
-        Text(
-            modifier = modifier
-                .padding(horizontal = 16.dp),
+        AutoSizeText(
             text = letter,
-            style = MaterialTheme.typography.displayMedium,
+            style = MaterialTheme.typography.displaySmall,
+            maxLines = 1,
+            minFontSize = 20.sp,
         )
     }
 }
@@ -220,8 +223,9 @@ private fun SpaceButton(
         contentAlignment = Alignment.Center
     ) {
         Text(
+            color = colorProgressBar,
             text = stringResource(id = R.string.space),
-            style = MaterialTheme.typography.displayMedium,
+            style = MaterialTheme.typography.displaySmall,
         )
     }
 }

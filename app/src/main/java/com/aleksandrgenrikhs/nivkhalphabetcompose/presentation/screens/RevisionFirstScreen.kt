@@ -23,10 +23,10 @@ import kotlinx.coroutines.delay
 @Composable
 fun RevisionFirstScreen(
     navController: NavController,
-    viewModel: RevisionFirstViewModel = hiltViewModel()
+    viewModel: RevisionFirstViewModel = hiltViewModel(),
+    onDividerVisibilityChange: (Boolean) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
-
     var isLaunchedEffectCalled by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
@@ -44,6 +44,7 @@ fun RevisionFirstScreen(
             onIconClick = (viewModel::playSound),
             isCorrectAnswer = isCorrectAnswers,
             isClickable = !isUserAnswerCorrect,
+            onDividerVisibilityChange = onDividerVisibilityChange
         )
         if (isCompleted) {
             val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_revision1)
@@ -58,12 +59,14 @@ fun RevisionFirstScreen(
                 }
                 Dialog(
                     navigationBack = {
+                        onDividerVisibilityChange(false)
                         navController.popBackStack(
                             NavigationDestination.LettersScreen.destination,
                             inclusive = false
                         )
                     },
                     navigationNext = {
+                        onDividerVisibilityChange(false)
                         navController.navigate(
                             NavigationDestination.RevisionSecondScreen.destination
                         ) {

@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.IconButton
@@ -54,6 +55,9 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPri
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorRight
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.LazyListScrollableState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ScrollableState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ShowDividerWhenScrolled
 import com.idapgroup.autosizetext.AutoSizeText
 
 @Composable
@@ -67,9 +71,16 @@ fun ThirdTaskLayout(
     isGuessWrong: Boolean,
     onDone: () -> Unit,
     onReset: () -> Unit,
+    onDividerVisibilityChange: (Boolean) -> Unit,
     onDragAndDropEventReceived: (DragAndDropEvent, Int) -> Unit,
 ) {
+    val listState = rememberLazyListState()
+    val scrollableState: ScrollableState = LazyListScrollableState(listState)
+
+    ShowDividerWhenScrolled(onDividerVisibilityChange, scrollableState)
+
     LazyColumn(
+        state = listState,
         modifier = modifier
             .fillMaxSize()
             .background(colorPrimary),
@@ -315,6 +326,7 @@ private fun ThirdTaskPreview() {
             shareWords = arrayListOf("ӈағзыр̆раӄ", "пʼиды пʼаӽ", "ӿатӽ пʼерӈ"),
             currentWords = arrayListOf("ӈағзыр̆раӄ", "пʼиды пʼаӽ", "ӿатӽ пʼерӈ"),
             isGuessWrong = false,
+            onDividerVisibilityChange = {}
         )
     }
 }

@@ -24,18 +24,18 @@ fun FirstTaskScreen(
     navController: NavController,
     viewModel: FirstTaskViewModel = hiltViewModel(),
     letter: String,
+    onDividerVisibilityChange: (Boolean) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    viewModel.setLetter(letter)
-
     var showDialog by rememberSaveable { mutableStateOf(false) }
+
+    viewModel.setLetter(letter)
 
     with(uiState) {
         LaunchedEffect(Unit) {
             viewModel.getWords(letter)
             viewModel.isTaskCompleted(letter)
         }
-
         FirstTaskLayout(
             titles = titles,
             wordsId = wordsId,
@@ -48,6 +48,7 @@ fun FirstTaskScreen(
             isPlaying = isPlaying,
             isVisibleWord = isVisibleWord,
             progressLetter = progressLetter,
+            onDividerVisibilityChange = onDividerVisibilityChange
         )
 
         if (isCompletedWords.isNotEmpty() && isCompletedWords.last() && !isPlaying) {
@@ -60,12 +61,14 @@ fun FirstTaskScreen(
             val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task1)
             Dialog(
                 navigationBack = {
+                    onDividerVisibilityChange(false)
                     navController.popBackStack(
                         NavigationDestination.LettersScreen.destination,
                         inclusive = false
                     )
                 },
                 navigationNext = {
+                    onDividerVisibilityChange(false)
                     navController.navigate(
                         "${NavigationDestination.SecondTaskScreen.destination}/$letter"
                     ) {

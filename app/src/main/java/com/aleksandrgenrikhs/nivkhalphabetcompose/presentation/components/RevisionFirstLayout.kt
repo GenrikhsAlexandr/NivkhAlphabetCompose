@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -32,6 +33,9 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPri
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.LETTER_AUDIO
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.LazyGridScrollableState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ScrollableState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ShowDividerWhenScrolled
 
 @Composable
 fun RevisionFirstLayout(
@@ -41,9 +45,16 @@ fun RevisionFirstLayout(
     onLetterClick: (String) -> Unit,
     onIconClick: (String) -> Unit,
     isCorrectAnswer: List<Boolean?>,
-    isClickable: Boolean
+    isClickable: Boolean,
+    onDividerVisibilityChange: (Boolean) -> Unit
 ) {
+    val listState = rememberLazyGridState()
+    val scrollableState: ScrollableState = LazyGridScrollableState(listState)
+
+    ShowDividerWhenScrolled(onDividerVisibilityChange, scrollableState)
+
     LazyVerticalGrid(
+        state = listState,
         modifier = modifier
             .background(colorPrimary)
             .fillMaxSize()
@@ -144,8 +155,8 @@ private fun RevisionFirstLayoutPreview() {
             onIconClick = {},
             onLetterClick = {},
             isCorrectAnswer = listOf(null, true, false),
-            isClickable = true
-
+            isClickable = true,
+            onDividerVisibilityChange = {}
         )
     }
 }

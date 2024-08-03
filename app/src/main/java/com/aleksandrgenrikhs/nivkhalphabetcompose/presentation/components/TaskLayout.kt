@@ -17,13 +17,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,6 +43,9 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorOnP
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.LazyListScrollableState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ScrollableState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ShowDividerWhenScrolled
 
 @Composable
 fun TaskLayout(
@@ -50,8 +57,21 @@ fun TaskLayout(
     letter: String,
     modifier: Modifier = Modifier,
     onClick: (String, String) -> Unit,
+    onDividerVisibilityChange: (Boolean) -> Unit
 ) {
+    val listState = rememberLazyListState()
+    val scrollableState: ScrollableState = LazyListScrollableState(listState)
+    val savedScrollPosition = rememberSaveable { listState.firstVisibleItemScrollOffset }
+
+    // Восстанавливаем позицию прокрутки при загрузке экрана
+    LaunchedEffect(Unit) {
+        listState.scrollToItem(savedScrollPosition)
+    }
+
+    ShowDividerWhenScrolled(onDividerVisibilityChange, scrollableState)
+
     LazyColumn(
+        state = listState,
         modifier = modifier
             .fillMaxSize()
             .background(colorPrimary),
@@ -123,7 +143,7 @@ private fun TaskItem(
             Text(
                 fontSize = 32.sp,
                 text = stringResource(task),
-                color = if (isCompleted) colorProgressBar else colorText,
+                color = colorText,
                 style = MaterialTheme.typography.displayMedium,
                 modifier = modifier
                     .align(Alignment.CenterVertically)
@@ -136,7 +156,19 @@ private fun TaskItem(
                 tint = colorText,
                 modifier = modifier
                     .align(
-                        Alignment.TopEnd
+                        Alignment.BottomEnd
+                    )
+                    .padding(8.dp)
+            )
+        }
+        if (isCompleted) {
+            Icon(
+                imageVector = Icons.Default.Done,
+                contentDescription = null,
+                tint = colorProgressBar,
+                modifier = modifier
+                    .align(
+                        Alignment.BottomEnd
                     )
                     .padding(8.dp)
             )
@@ -155,7 +187,8 @@ private fun TaskItemPreview() {
             isTaskCompleted = listOf(true, false, false),
             isTaskVisible = listOf(true, true, false),
             letter = "Aa",
-            onClick = { _, _ -> }
+            onClick = { _, _ -> },
+            onDividerVisibilityChange = {}
         )
     }
 }

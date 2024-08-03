@@ -10,7 +10,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -29,7 +28,7 @@ fun AppBar(
     currentScreen: String,
     navController: NavHostController?,
     letter: String?,
-    scrollBehavior: TopAppBarScrollBehavior?
+    onDividerVisibilityChange: (Boolean) -> Unit
 ) {
     CenterAlignedTopAppBar(
         title = {
@@ -74,7 +73,7 @@ fun AppBar(
                         text = stringResource(id = R.string.fourthTask),
                         style = MaterialTheme.typography.titleLarge,
                         maxLines = 1,
-                        minFontSize = 20.sp,
+                        minFontSize = 16.sp,
                     )
                 }
 
@@ -119,6 +118,7 @@ fun AppBar(
             ) {
                 IconButton(onClick = {
                     navController?.popBackStack()
+                    onDividerVisibilityChange(false)
                 }) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -181,8 +181,6 @@ fun AppBar(
             .background(colorPrimary),
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = colorPrimary,
-            scrolledContainerColor = (colorPrimary)
-        ),
-        scrollBehavior = scrollBehavior,
+        )
     )
 }

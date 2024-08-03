@@ -13,7 +13,8 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.TasksV
 fun TasksScreen(
     navController: NavController,
     letter: String,
-    tasksViewModel: TasksViewModel = hiltViewModel()
+    tasksViewModel: TasksViewModel = hiltViewModel(),
+    onDividerVisibilityChange: (Boolean) -> Unit
 ) {
     val uiState by tasksViewModel.uiState.collectAsState()
     LaunchedEffect(Unit) { tasksViewModel.isTaskCompleted(letter) }
@@ -28,7 +29,9 @@ fun TasksScreen(
             letter = letter,
             onClick = { route, letter ->
                 navController.navigate("$route/$letter")
-            }
+                onDividerVisibilityChange(false)
+            },
+            onDividerVisibilityChange = onDividerVisibilityChange
         )
     }
 }

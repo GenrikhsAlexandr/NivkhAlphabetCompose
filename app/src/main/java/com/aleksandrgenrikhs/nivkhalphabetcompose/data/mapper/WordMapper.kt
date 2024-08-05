@@ -7,9 +7,9 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.IMAGE_URL
 import javax.inject.Inject
 
 class WordMapper
-@Inject constructor() : Mapper<List<SubjectDto>, List<WordModel>> {
+@Inject constructor() : Mapper<List<SubjectDto>, Map<String, List<WordModel>>> {
 
-    override fun map(input: List<SubjectDto>): List<WordModel> =
+    override fun map(input: List<SubjectDto>): Map<String, List<WordModel>> =
         input.flatMap { words ->
             words.words.map {
                 WordModel(
@@ -19,5 +19,7 @@ class WordMapper
                     icon = "${IMAGE_URL}${it.wordId}.webp"
                 )
             }
+        }.groupBy {
+            it.letterId
         }
 }

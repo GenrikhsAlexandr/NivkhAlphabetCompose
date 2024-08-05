@@ -13,6 +13,5 @@ inline fun <reified T> selectUniqueRandomElements(allElements: List<T>, count: I
             resultList.add(allElements[index])
         }
     }
-
     return resultList
 }

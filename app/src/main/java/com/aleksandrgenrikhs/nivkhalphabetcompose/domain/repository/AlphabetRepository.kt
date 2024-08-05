@@ -6,9 +6,10 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.RevisionFirstMode
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.RevisionSecondModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.SecondTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
-import kotlinx.coroutines.flow.Flow
 
 interface AlphabetRepository {
+
+    suspend fun getWords(): Map<String, List<WordModel>>
 
     suspend fun getWordsForFirstTask(letterId: String): List<FirstTaskModel>
 
@@ -25,12 +26,4 @@ interface AlphabetRepository {
     suspend fun getWordsForRevisionThird(): List<WordModel>
 
     fun clearPreviousWordsList()
-
-   fun initPlayer(url: String)
-
-    fun play()
-
-    fun isPlaying(): Flow<Boolean>
-
-   fun playerDestroy()
 }

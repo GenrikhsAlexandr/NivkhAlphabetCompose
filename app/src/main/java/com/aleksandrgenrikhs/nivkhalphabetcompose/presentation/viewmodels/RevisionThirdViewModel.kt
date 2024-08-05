@@ -1,8 +1,10 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels
 
 import android.content.ClipData
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.AlphabetInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateRevisionThirdMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.RevisionThirdUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
@@ -17,7 +19,9 @@ import javax.inject.Inject
 class RevisionThirdViewModel
 @Inject constructor(
     val interactor: AlphabetInteractor,
-    val mapper: UIStateRevisionThirdMapper
+    val mapper: UIStateRevisionThirdMapper,
+    private val mediaPlayer: MediaPlayerInteractor,
+    private val context: Context
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<RevisionThirdUIState> =
@@ -52,9 +56,8 @@ class RevisionThirdViewModel
                 )
             }
         }
-        interactor.playerDestroy()
-        interactor.initPlayer(url)
-        interactor.play()
+        mediaPlayer.playerDestroy()
+        mediaPlayer.initPlayer(context, url)
     }
 
     fun updateReceivingContainer(clipData: ClipData?, index: Int) {
@@ -149,6 +152,6 @@ class RevisionThirdViewModel
 
     override fun onCleared() {
         super.onCleared()
-        interactor.playerDestroy()
+        mediaPlayer.playerDestroy()
     }
 }

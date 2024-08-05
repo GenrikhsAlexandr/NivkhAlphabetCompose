@@ -9,7 +9,6 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.SecondTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.AlphabetRepository
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.PrefRepository
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class AlphabetInteractor
@@ -17,6 +16,8 @@ class AlphabetInteractor
     private val alphabetRepository: AlphabetRepository,
     private val sharedPreferencesRepository: PrefRepository
 ) {
+
+    suspend fun getWords(): Map<String, List<WordModel>> = alphabetRepository.getWords()
 
     suspend fun getWordsForFirstTask(letterId: String): List<FirstTaskModel> =
         alphabetRepository.getWordsForFirstTask(letterId)
@@ -40,14 +41,6 @@ class AlphabetInteractor
         alphabetRepository.getWordsForRevisionThird()
 
     fun clearPreviousWordsList() = alphabetRepository.clearPreviousWordsList()
-
-    fun initPlayer(url: String) = alphabetRepository.initPlayer(url)
-
-    fun play() = alphabetRepository.play()
-
-    fun isPlaying(): Flow<Boolean> = alphabetRepository.isPlaying()
-
-    fun playerDestroy() = alphabetRepository.playerDestroy()
 
     fun taskCompleted(taskId: Int, letterId: String) =
         sharedPreferencesRepository.taskCompleted(taskId, letterId)

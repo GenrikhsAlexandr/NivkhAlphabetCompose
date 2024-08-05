@@ -1,9 +1,11 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels
 
 import android.content.ClipData
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.AlphabetInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateThirdTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.ThirdTaskUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
@@ -18,7 +20,9 @@ import javax.inject.Inject
 class ThirdTaskViewModel
 @Inject constructor(
     val interactor: AlphabetInteractor,
-    val mapper: UIStateThirdTaskMapper
+    val mapper: UIStateThirdTaskMapper,
+    private val mediaPlayer: MediaPlayerInteractor,
+    private val context: Context
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<ThirdTaskUIState> = MutableStateFlow(ThirdTaskUIState())
@@ -52,9 +56,8 @@ class ThirdTaskViewModel
                 )
             }
         }
-        interactor.playerDestroy()
-        interactor.initPlayer(url)
-        interactor.play()
+        mediaPlayer.playerDestroy()
+        mediaPlayer.initPlayer(context, url)
     }
 
     fun updateReceivingContainer(clipData: ClipData?, index: Int) {
@@ -110,6 +113,6 @@ class ThirdTaskViewModel
 
     override fun onCleared() {
         super.onCleared()
-        interactor.playerDestroy()
+        mediaPlayer.playerDestroy()
     }
 }

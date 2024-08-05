@@ -1,8 +1,10 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.AlphabetInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateRevisionFirstMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.RevisionFirstUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
@@ -20,7 +22,9 @@ import javax.inject.Inject
 class RevisionFirstViewModel
 @Inject constructor(
     val interactor: AlphabetInteractor,
-    val mapper: UIStateRevisionFirstMapper
+    val mapper: UIStateRevisionFirstMapper,
+    private val mediaPlayer: MediaPlayerInteractor,
+    private val context: Context
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<RevisionFirstUIState> =
@@ -88,13 +92,12 @@ class RevisionFirstViewModel
                 )
             }
         }
-        interactor.playerDestroy()
-        interactor.initPlayer(url)
-        interactor.play()
+        mediaPlayer.playerDestroy()
+        mediaPlayer.initPlayer(context, url)
     }
 
     override fun onCleared() {
         super.onCleared()
-        interactor.playerDestroy()
+        mediaPlayer.playerDestroy()
     }
 }

@@ -1,9 +1,11 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.AlphabetInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateFirstTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.FirstTaskUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
@@ -20,7 +22,9 @@ import javax.inject.Inject
 class FirstTaskViewModel
 @Inject constructor(
     val interactor: AlphabetInteractor,
-    val mapper: UIStateFirstTaskMapper
+    val mapper: UIStateFirstTaskMapper,
+    private val mediaPlayer: MediaPlayerInteractor,
+    private val context: Context
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<FirstTaskUIState> = MutableStateFlow(FirstTaskUIState())
@@ -70,7 +74,7 @@ class FirstTaskViewModel
         }
         viewModelScope.launch {
             try {
-                interactor.isPlaying().collect {
+                mediaPlayer.isPlaying().collect {
                     _uiState.update { state ->
                         state.copy(
                             isPlaying = it
@@ -79,7 +83,7 @@ class FirstTaskViewModel
                     when {
                         !it && uiState.value.isCompletedLetter
                                 || !it && uiState.value.isCompletedWords[0]
-                                || !it && uiState.value.isCompletedWords[1] -> interactor.playerDestroy()
+                                || !it && uiState.value.isCompletedWords[1] -> mediaPlayer.playerDestroy()
 
                     }
                 }
@@ -140,13 +144,11 @@ class FirstTaskViewModel
     fun playSound(element: String) {
         when (element) {
             uiState.value.selectedLetter -> {
-                interactor.initPlayer("$LETTER_AUDIO$element")
-                interactor.play()
+                mediaPlayer.initPlayer(context, "$LETTER_AUDIO$element")
             }
 
             FINISH_AUDIO -> {
-                interactor.initPlayer(FINISH_AUDIO)
-                interactor.play()
+                mediaPlayer.initPlayer(context, FINISH_AUDIO)
                 _uiState.update { state ->
                     state.copy(
                         isFinishAudio = true
@@ -155,14 +157,13 @@ class FirstTaskViewModel
             }
 
             else -> {
-                interactor.initPlayer("$WORDS_AUDIO$element")
-                interactor.play()
+                mediaPlayer.initPlayer(context, "$WORDS_AUDIO$element")
             }
         }
     }
 
     override fun onCleared() {
         super.onCleared()
-        interactor.playerDestroy()
+        mediaPlayer.playerDestroy()
     }
 }

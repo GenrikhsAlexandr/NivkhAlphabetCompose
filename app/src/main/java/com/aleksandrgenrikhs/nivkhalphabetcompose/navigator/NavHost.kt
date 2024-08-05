@@ -58,7 +58,6 @@ fun NavHost(
                             }
                         )
                         if (isDividerVisible) {
-                            println("HorizontalDivider")
                             HorizontalDivider()
                         }
                     }
@@ -139,7 +138,6 @@ fun NavHost(
                     navController = navController,
                     onDividerVisibilityChange = { isVisibility ->
                         isDividerVisible = isVisibility
-                        println("onDividerVisibilityChange = $isVisibility")
                     }
                 )
             }

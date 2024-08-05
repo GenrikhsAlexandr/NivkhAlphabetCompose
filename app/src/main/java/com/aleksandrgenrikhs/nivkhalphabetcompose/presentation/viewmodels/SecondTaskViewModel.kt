@@ -1,9 +1,11 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.AlphabetInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateSecondTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.SecondTaskUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
@@ -21,7 +23,9 @@ import javax.inject.Inject
 class SecondTaskViewModel
 @Inject constructor(
     val interactor: AlphabetInteractor,
-    val mapper: UIStateSecondTaskMapper
+    val mapper: UIStateSecondTaskMapper,
+    private val mediaPlayer: MediaPlayerInteractor,
+    private val context: Context
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<SecondTaskUIState> =
@@ -105,14 +109,13 @@ class SecondTaskViewModel
                 )
             }
         }
-        interactor.playerDestroy()
-        interactor.initPlayer(url)
-        interactor.play()
+        mediaPlayer.playerDestroy()
+        mediaPlayer.initPlayer(context, url)
     }
 
     override fun onCleared() {
         super.onCleared()
         interactor.clearPreviousWordsList()
-        interactor.playerDestroy()
+        mediaPlayer.playerDestroy()
     }
 }

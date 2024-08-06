@@ -20,12 +20,13 @@ composeBom = "2024.06.00"
 material3WindowSize = "1.2.1"
 mockitoCore = "5.8.0"
 mockitoInline = "4.0.0"
-mockkVersion = "1.12.0"
+mockitoKotlin = "4.0.0"
+mockkVersion = "1.12.1"
 navigationCompose = "2.7.7"
 kotlinSerialization = "2.0.0"
 uiTextGoogleFonts = "1.6.8"
 junitJupiter = "5.10.2"
-kotestRunnerJunit5Jvm = "4.6.0"
+kotestRunnerJunit5Jvm = "5.7.2"
 
 [libraries]
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
@@ -62,6 +63,7 @@ junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.r
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore" }
 mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockitoInline" }
 kotest-runner-junit5-jvm = { group = "io.kotest", name = "kotest-runner-junit5-jvm", version.ref = "kotestRunnerJunit5Jvm" }
+mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
 mockk-mockk = { module = "io.mockk:mockk", version.ref = "mockkVersion" }
 
 [plugins]

@@ -1,8 +1,8 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.data.repository
 
-import android.content.Context
+import androidx.annotation.VisibleForTesting
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Letters
-import com.aleksandrgenrikhs.nivkhalphabetcompose.data.dto.SubjectDto
+import com.aleksandrgenrikhs.nivkhalphabetcompose.data.AlphabetDataSource
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.FirstTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.RevisionFirstMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.RevisionSecondMapper
@@ -15,41 +15,30 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.RevisionSecondMod
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.SecondTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.AlphabetRepository
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_URL
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.selectUniqueRandomElements
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
-import java.io.BufferedReader
-import java.io.InputStreamReader
 import javax.inject.Inject
 
 class AlphabetRepositoryImpl
 @Inject constructor(
-    private val context: Context,
     private val wordMapper: WordMapper,
     private val firstTaskMapper: FirstTaskMapper,
     private val secondTaskMapper: SecondTaskMapper,
     private val revisionFirstMapper: RevisionFirstMapper,
     private val revisionSecondMapper: RevisionSecondMapper,
-    private val json: Json = Json { ignoreUnknownKeys = true }
+    private val dataSource: AlphabetDataSource
 ) : AlphabetRepository {
 
     private val previousList = mutableSetOf<String>()
-    private var words: Map<String, List<WordModel>>? = null
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    var words: Map<String, List<WordModel>>? = null
 
     override suspend fun getWords(): Map<String, List<WordModel>> {
-        if (words != null) {
-            return words!!
-        }
-        return withContext(Dispatchers.IO) {
+        return words ?: withContext(Dispatchers.IO) {
             try {
-                val inputStream = context.assets.open(WORDS_URL)
-                val reader = BufferedReader(InputStreamReader(inputStream))
-                val jsonString = reader.use { it.readText() }
-                val response = json.decodeFromString<List<SubjectDto>>(jsonString)
-                words = wordMapper.map(response)
+                words = wordMapper.map(dataSource.getWords())
                 words!!
             } catch (e: Exception) {
                 emptyMap()

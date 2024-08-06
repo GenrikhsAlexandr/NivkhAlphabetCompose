@@ -9,17 +9,18 @@ import javax.inject.Inject
 class WordMapper
 @Inject constructor() : Mapper<List<SubjectDto>, Map<String, List<WordModel>>> {
 
-    override fun map(input: List<SubjectDto>): Map<String, List<WordModel>> =
-        input.flatMap { words ->
-            words.words.map {
+    override fun map(input: List<SubjectDto>): Map<String, List<WordModel>> {
+        val result = mutableMapOf<String, List<WordModel>>()
+        input.forEach() { group ->
+            result[group.id] = group.words.map { word ->
                 WordModel(
-                    letterId = words.id,
-                    title = it.title,
-                    wordId = it.wordId,
-                    icon = "${IMAGE_URL}${it.wordId}.webp"
+                    letterId = group.id,
+                    title = word.title,
+                    wordId = word.wordId,
+                    icon = "${IMAGE_URL}${word.wordId}.webp"
                 )
             }
-        }.groupBy {
-            it.letterId
         }
+        return result
+    }
 }

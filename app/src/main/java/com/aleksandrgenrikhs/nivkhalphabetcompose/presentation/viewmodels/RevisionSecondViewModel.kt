@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.AlphabetInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.RevisionSecondInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateRevisionSecondMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.RevisionSecondUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
@@ -21,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class RevisionSecondViewModel
 @Inject constructor(
-    val interactor: AlphabetInteractor,
+    val alphabetInteractor: AlphabetInteractor,
+    val revisionSecondInteractor: RevisionSecondInteractor,
     val mapper: UIStateRevisionSecondMapper,
     private val mediaPlayer: MediaPlayerInteractor,
     private val context: Context
@@ -36,12 +38,13 @@ class RevisionSecondViewModel
     suspend fun getWords() {
         _uiState.update { state ->
             isLoading.value = true
-            val listWords = mapper.map(interactor.getWordsForRevisionSecond())
-            with(listWords) {
+            val words = revisionSecondInteractor.getWordsForRevisionSecond()
+            val mappedWords = mapper.map(words)
+            with(mappedWords) {
                 state.copy(
                     correctWordId = correctWordId,
                     wordsId = wordsId,
-                    words = words,
+                    title = title,
                     icon = icon,
                     isCorrectAnswers = isCorrectAnswers,
                     isUserAnswerCorrect = false

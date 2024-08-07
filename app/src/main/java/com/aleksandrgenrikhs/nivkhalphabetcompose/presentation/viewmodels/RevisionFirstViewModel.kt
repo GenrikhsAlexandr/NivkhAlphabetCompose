@@ -3,8 +3,8 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.AlphabetInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.RevisionFirstInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateRevisionFirstMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.RevisionFirstUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
@@ -21,8 +21,8 @@ import javax.inject.Inject
 @HiltViewModel
 class RevisionFirstViewModel
 @Inject constructor(
-    val interactor: AlphabetInteractor,
-    val mapper: UIStateRevisionFirstMapper,
+    private val revisionFirstInteractor: RevisionFirstInteractor,
+    private val mapper: UIStateRevisionFirstMapper,
     private val mediaPlayer: MediaPlayerInteractor,
     private val context: Context
 ) : ViewModel() {
@@ -33,12 +33,13 @@ class RevisionFirstViewModel
 
     private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    suspend fun getLetters() {
+    fun getLetters() {
         _uiState.update { state ->
             isLoading.value = true
-            val listLetters = mapper.map(interactor.getLettersForRevisionFirst())
-            playSound("$LETTER_AUDIO${listLetters.correctLetter}")
-            with(listLetters) {
+            val allLetters = revisionFirstInteractor.getLettersForRevisionFirst()
+            val mappedLetters = mapper.map(allLetters)
+            playSound("$LETTER_AUDIO${mappedLetters.correctLetter}")
+            with(mappedLetters) {
                 state.copy(
                     letters = letters,
                     isCorrectAnswers = isCorrectAnswers,

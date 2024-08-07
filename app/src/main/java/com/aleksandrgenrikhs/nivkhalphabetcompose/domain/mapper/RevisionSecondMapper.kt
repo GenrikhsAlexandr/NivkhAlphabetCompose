@@ -1,6 +1,6 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper
 
-import com.aleksandrgenrikhs.nivkhalphabet.utils.Mapper
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.mapper.Mapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.RevisionSecondModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
 import javax.inject.Inject

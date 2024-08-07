@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.AlphabetInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.FirstTaskInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateFirstTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.FirstTaskUIState
@@ -21,8 +22,9 @@ import javax.inject.Inject
 @HiltViewModel
 class FirstTaskViewModel
 @Inject constructor(
-    val interactor: AlphabetInteractor,
-    val mapper: UIStateFirstTaskMapper,
+    private val alphabetInteractor: AlphabetInteractor,
+    private val firstInteractor: FirstTaskInteractor,
+    private val mapper: UIStateFirstTaskMapper,
     private val mediaPlayer: MediaPlayerInteractor,
     private val context: Context
 ) : ViewModel() {
@@ -39,9 +41,10 @@ class FirstTaskViewModel
     }
 
     suspend fun getWords(letterId: String) {
-        val listWords = mapper.map(interactor.getWordsForFirstTask(letterId))
+        val letterWords = firstInteractor.getWordsForFirstTask(letterId)
+        val mappedWords = mapper.map(letterWords)
         _uiState.update {
-            with(listWords) {
+            with(mappedWords) {
                 _uiState.value.copy(
                     titles = titles,
                     wordsId = wordsId,
@@ -56,7 +59,7 @@ class FirstTaskViewModel
 
     suspend fun isTaskCompleted(letter: String) {
         _uiState.update { state ->
-            val isTaskCompleted = interactor.isTaskCompleted(
+            val isTaskCompleted = alphabetInteractor.isTaskCompleted(
                 Task.FIRST.stableId,
                 letter
             )
@@ -135,7 +138,10 @@ class FirstTaskViewModel
                     )
                 }
                 if (uiState.value.isCompletedWords.last()) {
-                    interactor.taskCompleted(Task.FIRST.stableId, uiState.value.selectedLetter)
+                    alphabetInteractor.taskCompleted(
+                        Task.FIRST.stableId,
+                        uiState.value.selectedLetter
+                    )
                 }
             }
         }

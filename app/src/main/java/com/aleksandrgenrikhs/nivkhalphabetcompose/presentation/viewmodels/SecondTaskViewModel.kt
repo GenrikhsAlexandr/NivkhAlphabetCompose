@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.AlphabetInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.SecondTaskInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateSecondTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.SecondTaskUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
@@ -22,8 +23,9 @@ import javax.inject.Inject
 @HiltViewModel
 class SecondTaskViewModel
 @Inject constructor(
-    val interactor: AlphabetInteractor,
-    val mapper: UIStateSecondTaskMapper,
+    private val secondInteractor: SecondTaskInteractor,
+    private val alphabetInteractor: AlphabetInteractor,
+    private val mapper: UIStateSecondTaskMapper,
     private val mediaPlayer: MediaPlayerInteractor,
     private val context: Context
 ) : ViewModel() {
@@ -43,8 +45,9 @@ class SecondTaskViewModel
     suspend fun getWords(letterId: String) {
         _uiState.update { state ->
             isLoading.value = true
-            val listWords = mapper.map(interactor.getWordsForSecondTask(letterId))
-            with(listWords) {
+            val filterWords = secondInteractor.getWordsForSecondTask(letterId)
+            val mappedWords = mapper.map(filterWords)
+            with(mappedWords) {
                 state.copy(
                     lettersId = lettersId,
                     wordsId = wordsId,
@@ -97,7 +100,7 @@ class SecondTaskViewModel
             )
         }
         if (uiState.value.isCompleted) {
-            interactor.taskCompleted(Task.SECOND.stableId, uiState.value.selectedLetter)
+            alphabetInteractor.taskCompleted(Task.SECOND.stableId, uiState.value.selectedLetter)
         }
     }
 
@@ -115,7 +118,7 @@ class SecondTaskViewModel
 
     override fun onCleared() {
         super.onCleared()
-        interactor.clearPreviousWordsList()
+        secondInteractor.clearPreviousWordsList()
         mediaPlayer.playerDestroy()
     }
 }

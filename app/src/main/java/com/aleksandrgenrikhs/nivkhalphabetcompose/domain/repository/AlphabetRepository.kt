@@ -1,29 +1,8 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository
 
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.FirstTaskModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.FourthTaskModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.RevisionFirstModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.RevisionSecondModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.SecondTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
 
 interface AlphabetRepository {
 
     suspend fun getWords(): Map<String, List<WordModel>>
-
-    suspend fun getWordsForFirstTask(letterId: String): List<FirstTaskModel>
-
-    suspend fun getWordsForSecondTask(letterId: String): List<SecondTaskModel>
-
-    suspend fun getWordsForThirdTask(letterId: String): List<WordModel>
-
-    suspend fun getWordsForFourthTask(letterId: String): FourthTaskModel
-
-    suspend fun getLettersForRevisionFirst(): List<RevisionFirstModel>
-
-    suspend fun getWordsForRevisionSecond(): List<RevisionSecondModel>
-
-    suspend fun getWordsForRevisionThird(): List<WordModel>
-
-    fun clearPreviousWordsList()
 }

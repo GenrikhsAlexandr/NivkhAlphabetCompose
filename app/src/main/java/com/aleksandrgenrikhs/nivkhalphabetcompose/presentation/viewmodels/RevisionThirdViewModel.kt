@@ -3,8 +3,8 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels
 import android.content.ClipData
 import android.content.Context
 import androidx.lifecycle.ViewModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.AlphabetInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.RevisionThirdInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateRevisionThirdMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.RevisionThirdUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RevisionThirdViewModel
 @Inject constructor(
-    val interactor: AlphabetInteractor,
+    val revisionThirdInteractor: RevisionThirdInteractor,
     val mapper: UIStateRevisionThirdMapper,
     private val mediaPlayer: MediaPlayerInteractor,
     private val context: Context
@@ -28,22 +28,26 @@ class RevisionThirdViewModel
         MutableStateFlow(RevisionThirdUIState())
     val uiState = _uiState.asStateFlow()
 
-    private var listWords: RevisionThirdUIState? = null
+    private var wordsUIState: RevisionThirdUIState? = null
+
     suspend fun getWords() {
         _uiState.update { state ->
-            listWords = mapper.map(interactor.getWordsForRevisionThird())
-            listWords?.let { words ->
-                state.copy(
-                    title = words.title,
-                    letter = words.letter,
-                    icon = words.icon,
-                    shareWords = words.shareWords,
-                    shareLetters = words.shareLetters,
-                    shareIcons = words.shareIcons,
-                    correctWords = words.correctWords,
-                    correctIcons = words.correctIcons,
-                    correctLetters = words.correctLetters,
-                )
+            val words = revisionThirdInteractor.getWordsForRevisionThird()
+            wordsUIState = mapper.map(words)
+            wordsUIState?.let { mappedWords ->
+                with(mappedWords) {
+                    state.copy(
+                        title = title,
+                        letter = letter,
+                        icon = icon,
+                        shareWords = shareWords,
+                        shareLetters = shareLetters,
+                        shareIcons = shareIcons,
+                        correctWords = correctWords,
+                        correctIcons = correctIcons,
+                        correctLetters = correctLetters,
+                    )
+                }
             } ?: state
         }
     }
@@ -119,7 +123,7 @@ class RevisionThirdViewModel
         } else {
             playSound(ERROR_AUDIO)
             _uiState.update { state ->
-                listWords?.let { words ->
+                wordsUIState?.let { words ->
                     state.copy(
                         currentWords = mutableListOf(null, null),
                         currentLetters = mutableListOf(null, null),
@@ -136,7 +140,7 @@ class RevisionThirdViewModel
 
     fun reset() {
         _uiState.update { state ->
-            listWords?.let { words ->
+            wordsUIState?.let { words ->
                 state.copy(
                     currentWords = mutableListOf(null, null),
                     currentLetters = mutableListOf(null, null),

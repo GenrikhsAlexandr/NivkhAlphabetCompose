@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.AlphabetInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.ThirdTaskInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateThirdTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.ThirdTaskUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
@@ -19,8 +20,9 @@ import javax.inject.Inject
 @HiltViewModel
 class ThirdTaskViewModel
 @Inject constructor(
-    val interactor: AlphabetInteractor,
-    val mapper: UIStateThirdTaskMapper,
+    private val alphabetInteractor: AlphabetInteractor,
+    private val thirdInteractor: ThirdTaskInteractor,
+    private val mapper: UIStateThirdTaskMapper,
     private val mediaPlayer: MediaPlayerInteractor,
     private val context: Context
 ) : ViewModel() {
@@ -36,13 +38,14 @@ class ThirdTaskViewModel
 
     suspend fun getWords(letterId: String) {
         _uiState.update { state ->
-            val listWords = mapper.map(interactor.getWordsForThirdTask(letterId))
-            with(listWords) {
+            val filteredWords = thirdInteractor.getWordsForThirdTask(letterId)
+            val mappedWords = mapper.map(filteredWords)
+            with(mappedWords) {
                 state.copy(
                     titles = titles,
                     wordsId = wordsId,
                     icons = icons,
-                    shareWords = shareWords,
+                    shareableWords = shareableWords,
                 )
             }
         }
@@ -63,7 +66,7 @@ class ThirdTaskViewModel
     fun updateReceivingContainer(clipData: ClipData?, index: Int) {
         if (clipData == null) return
         val sharedText = clipData.getItemAt(0).text.toString()
-        val newShareWords = uiState.value.shareWords.toMutableList()
+        val newShareWords = uiState.value.shareableWords.toMutableList()
         val sharedTextIndex = newShareWords.indexOf(sharedText)
         _uiState.update { state ->
             val newCurrentWords = state.currentWords.toMutableList()
@@ -73,7 +76,7 @@ class ThirdTaskViewModel
             }
             state.copy(
                 currentWords = newCurrentWords,
-                shareWords = newShareWords,
+                shareableWords = newShareWords,
                 isGuessWrong = false
             )
         }
@@ -84,7 +87,7 @@ class ThirdTaskViewModel
             state.copy(
                 currentWords = mutableListOf(null, null, null),
                 isGuessWrong = false,
-                shareWords = uiState.value.titles.shuffled()
+                shareableWords = uiState.value.titles.shuffled()
             )
         }
     }
@@ -98,14 +101,14 @@ class ThirdTaskViewModel
                     isAnswerCorrect = true
                 )
             }
-            interactor.taskCompleted(Task.THIRD.stableId, uiState.value.selectedLetter)
+            alphabetInteractor.taskCompleted(Task.THIRD.stableId, uiState.value.selectedLetter)
         } else {
             playSound(ERROR_AUDIO)
             _uiState.update { state ->
                 state.copy(
                     currentWords = mutableListOf(null, null, null),
                     isGuessWrong = true,
-                    shareWords = uiState.value.titles.shuffled()
+                    shareableWords = uiState.value.titles.shuffled()
                 )
             }
         }

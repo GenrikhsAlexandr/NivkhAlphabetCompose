@@ -1,6 +1,6 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper
 
-import com.aleksandrgenrikhs.nivkhalphabet.utils.Mapper
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.mapper.Mapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.RevisionSecondModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.RevisionSecondUIState
 import javax.inject.Inject
@@ -15,7 +15,7 @@ class UIStateRevisionSecondMapper
         return RevisionSecondUIState(
             correctWordId = input[index].wordId,
             wordsId = input.map { it.wordId },
-            words = input.map { it.title },
+            title = input.map { it.title },
             icon = input[index].icon,
             isCorrectAnswers = input.map { it.isCorrectAnswer },
         )

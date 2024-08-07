@@ -46,7 +46,7 @@ fun ThirdTaskScreen(
             wordsId = wordsId,
             icons = icons,
             currentWords = currentWords,
-            shareWords = shareWords,
+            shareWords = shareableWords,
             isGuessWrong = isGuessWrong,
             onIconClick = (viewModel::playSound),
             onDone = (viewModel::checkAnswer),

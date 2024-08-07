@@ -1,16 +1,16 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper
 
-import com.aleksandrgenrikhs.nivkhalphabet.utils.Mapper
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.SecondTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.mapper.Mapper
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.FirstTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
 import javax.inject.Inject
 
-class SecondTaskMapper
-@Inject constructor() : Mapper<List<WordModel>, List<SecondTaskModel>> {
+class FirstTaskMapper
+@Inject constructor() : Mapper<List<WordModel>, List<FirstTaskModel>> {
 
-    override fun map(input: List<WordModel>): List<SecondTaskModel> =
+    override fun map(input: List<WordModel>): List<FirstTaskModel> =
         input.map { word ->
-            SecondTaskModel(
+            FirstTaskModel(
                 letterId = word.letterId,
                 title = word.title,
                 wordId = word.wordId,

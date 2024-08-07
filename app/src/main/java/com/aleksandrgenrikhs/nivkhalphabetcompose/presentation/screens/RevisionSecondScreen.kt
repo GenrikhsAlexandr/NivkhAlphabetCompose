@@ -38,7 +38,7 @@ fun RevisionSecondScreen(
 
     with(uiState) {
         RevisionSecondLayout(
-            words = words,
+            words = title,
             wordsId = wordsId,
             icon = icon,
             correctWordId = correctWordId,

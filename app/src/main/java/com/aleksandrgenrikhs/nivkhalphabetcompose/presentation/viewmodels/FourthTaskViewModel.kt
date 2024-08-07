@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.AlphabetInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.FourthTaskInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.FourthTaskUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
@@ -21,7 +22,8 @@ import javax.inject.Inject
 @HiltViewModel
 class FourthTaskViewModel
 @Inject constructor(
-    val interactor: AlphabetInteractor,
+    val alphabetInteractor: AlphabetInteractor,
+    val fourthInteractor: FourthTaskInteractor,
     private val mediaPlayer: MediaPlayerInteractor,
     private val context: Context
 ) : ViewModel() {
@@ -40,9 +42,9 @@ class FourthTaskViewModel
     fun getWords(letterId: String) {
         viewModelScope.launch {
             isLoading.value = true
-            val listWords = interactor.getWordsForFourthTask(letterId)
+            val filterWords = fourthInteractor.getWordsForFourthTask(letterId)
             _uiState.update { state ->
-                with(listWords) {
+                with(filterWords) {
                     state.copy(
                         wordId = wordId,
                         title = title,
@@ -107,7 +109,7 @@ class FourthTaskViewModel
             )
         }
         if (uiState.value.isCompleted) {
-            interactor.taskCompleted(Task.FOURTH.stableId, uiState.value.selectedLetter)
+            alphabetInteractor.taskCompleted(Task.FOURTH.stableId, uiState.value.selectedLetter)
         }
     }
 
@@ -125,7 +127,7 @@ class FourthTaskViewModel
 
     override fun onCleared() {
         super.onCleared()
-        interactor.clearPreviousWordsList()
+        fourthInteractor.clearPreviousWordsList()
         mediaPlayer.playerDestroy()
     }
 }

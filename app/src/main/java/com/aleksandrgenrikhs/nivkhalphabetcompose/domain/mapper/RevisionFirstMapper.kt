@@ -1,7 +1,7 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper
 
-import com.aleksandrgenrikhs.nivkhalphabet.utils.Mapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Letters
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.mapper.Mapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.RevisionFirstModel
 import javax.inject.Inject
 

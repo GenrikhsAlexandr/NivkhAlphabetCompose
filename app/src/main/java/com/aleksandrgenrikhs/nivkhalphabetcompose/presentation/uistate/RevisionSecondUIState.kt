@@ -3,7 +3,7 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate
 data class RevisionSecondUIState(
     val correctWordId: String = "",
     val wordsId: List<String> = emptyList(),
-    val words: List<String> = emptyList(),
+    val title: List<String> = emptyList(),
     val icon: String? = null,
     val isCorrectAnswers: List<Boolean?> = emptyList(),
     val isUserAnswerCorrect: Boolean = false,

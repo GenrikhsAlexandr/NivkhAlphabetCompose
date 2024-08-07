@@ -6,7 +6,6 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.data.dto.WordDto
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.FirstTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.RevisionFirstMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.RevisionSecondMapper
-import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.SecondTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.WordMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
 import kotlinx.coroutines.test.runTest
@@ -64,7 +63,6 @@ class AlphabetRepositoryImplTest {
 
     private val wordMapper: WordMapper = spy(WordMapper())
     private val firstTaskMapper: FirstTaskMapper = mock()
-    private val secondTaskMapper: SecondTaskMapper = mock()
     private val revisionFirstMapper: RevisionFirstMapper = mock()
     private val revisionSecondMapper: RevisionSecondMapper = mock()
     private val dataSource: AlphabetDataSource =
@@ -72,10 +70,6 @@ class AlphabetRepositoryImplTest {
 
     private val repository = AlphabetRepositoryImpl(
         wordMapper = wordMapper,
-        firstTaskMapper = firstTaskMapper,
-        secondTaskMapper = secondTaskMapper,
-        revisionFirstMapper = revisionFirstMapper,
-        revisionSecondMapper = revisionSecondMapper,
         dataSource = dataSource,
     )
 
@@ -104,5 +98,10 @@ class AlphabetRepositoryImplTest {
         assertEquals(emptyMap<String, List<WordModel>>(), result)
         verify(dataSource).getWords()
         verify(wordMapper, never()).map(wordsDtos)
+    }
+
+    @Test
+    fun `WHEN getWordsForSecondTask`() {
+
     }
 }

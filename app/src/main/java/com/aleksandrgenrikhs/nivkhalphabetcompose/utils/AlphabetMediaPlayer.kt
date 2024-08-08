@@ -2,6 +2,8 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.utils
 
 import android.content.Context
 import android.media.MediaPlayer
+import android.widget.Toast
+import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -10,9 +12,11 @@ import kotlinx.coroutines.flow.flowOn
 object AlphabetMediaPlayer {
 
     private var mediaPlayer: MediaPlayer? = null
-    fun initPlayer(application: Context, url: String): MediaPlayer? {
+    private var showToast: Boolean = false
+
+    fun initPlayer(context: Context, url: String): MediaPlayer? {
         return try {
-            val afd = application.assets.openFd("$url.mp3")
+            val afd = context.assets.openFd("$url.mp3")
             if (mediaPlayer == null) {
                 mediaPlayer = MediaPlayer().apply {
                     setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
@@ -22,6 +26,14 @@ object AlphabetMediaPlayer {
             mediaPlayer
         } catch (e: Exception) {
             e.printStackTrace()
+            if (!showToast) {
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.noSoundtrack),
+                    Toast.LENGTH_SHORT
+                ).show()
+                showToast = true
+            }
             null
         }
     }
@@ -31,18 +43,21 @@ object AlphabetMediaPlayer {
     }
 
     fun isPlayingPlayer(): Flow<Boolean> = flow {
-        mediaPlayer?.let {
+        if (mediaPlayer != null) {
             while (true) {
-                if (!it.isPlaying) {
+                if (!mediaPlayer!!.isPlaying) {
                     emit(false)
                     break
                 }
             }
+        } else {
+            emit(false)
         }
     }.flowOn(Dispatchers.Default)
 
     fun destroyPlayer() {
         mediaPlayer?.release()
         mediaPlayer = null
+        showToast = false
     }
 }

@@ -57,5 +57,6 @@
 
     <!--Andere-->
     <string name="space">Leerzeichen</string>
+    <string name="noSoundtrack">kein Soundtrack</string>
 
 </resources>

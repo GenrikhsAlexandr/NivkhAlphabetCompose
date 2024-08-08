@@ -56,4 +56,5 @@
 
     <!--Другое-->
     <string name="space">пробел</string>
+    <string name="noSoundtrack">нет звукового сопровождения</string>
 </resources>

@@ -57,5 +57,6 @@
 
     <!--Other-->
     <string name="space">space</string>
+    <string name="noSoundtrack">no soundtrack</string>
 
 </resources>

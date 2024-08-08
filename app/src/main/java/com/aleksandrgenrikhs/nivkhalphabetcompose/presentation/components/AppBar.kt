@@ -110,6 +110,15 @@ fun AppBar(
                         minFontSize = 20.sp,
                     )
                 }
+
+                NavigationDestination.AboutScreen.destination -> {
+                    AutoSizeText(
+                        text = stringResource(id = R.string.about),
+                        style = MaterialTheme.typography.titleLarge,
+                        maxLines = 1,
+                        minFontSize = 20.sp,
+                    )
+                }
             }
         },
         navigationIcon = {
@@ -130,6 +139,10 @@ fun AppBar(
         },
         actions = {
             when (currentScreen) {
+                NavigationDestination.LettersScreen.destination -> DialogInfo(
+                    title = stringResource(id = R.string.infoLettersScreen)
+                )
+
                 NavigationDestination.LettersScreen.destination -> DialogInfo(
                     title = stringResource(id = R.string.infoLettersScreen)
                 )
@@ -175,6 +188,11 @@ fun AppBar(
                 NavigationDestination.RevisionThirdScreen.destination -> DialogInfo(
                     title = stringResource(id = R.string.infoThirdScreen)
                 )
+            }
+            if (currentScreen == NavigationDestination.LettersScreen.destination) {
+                AboutMenu {
+                    navController?.navigate(NavigationDestination.AboutScreen.destination)
+                }
             }
         },
         modifier = modifier

@@ -20,6 +20,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.AppBar
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.AboutScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.FirstTaskScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.FourthTaskScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.LetterScreen
@@ -222,6 +223,15 @@ fun NavHost(
                         isDividerVisible = isVisibility
                     }
                 )
+            }
+            composable(
+                route = NavigationDestination.AboutScreen.destination
+            )
+            {
+                AboutScreen(
+                    onDividerVisibilityChange = { isVisibility ->
+                        isDividerVisible = isVisibility
+                    })
             }
         }
     }

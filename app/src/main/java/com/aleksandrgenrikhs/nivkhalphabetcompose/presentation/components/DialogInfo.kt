@@ -43,7 +43,7 @@ fun DialogInfo(
     Box(
         modifier = modifier
             .clip(CircleShape)
-            .padding(end = 16.dp)
+            .padding(end = 8.dp)
             .clickable { expanded = true },
         contentAlignment = Alignment.Center
     ) {

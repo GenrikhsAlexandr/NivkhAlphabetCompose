@@ -13,6 +13,7 @@ object Constants {
     const val REVISION_FIRST_SCREEN = "revision_first_screen"
     const val REVISION_SECOND_SCREEN = "revision_second__screen"
     const val REVISION_THIRD_SCREEN = "revision_third_screen"
+    const val ABOUT_SCREEN = "about_screen"
 
     //Костанты для передачи аргументов
     const val LETTER_KEY = "letter"

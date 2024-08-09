@@ -1,5 +1,6 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator
 
+import androidx.annotation.VisibleForTesting
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.mapper.SecondTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.SecondTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
@@ -14,11 +15,12 @@ constructor(
     private val repository: AlphabetRepository,
 ) {
 
-    private val usedWords: MutableSet<WordModel> = mutableSetOf()
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    val usedWords: MutableSet<WordModel> = mutableSetOf()
 
     suspend fun getWordsForSecondTask(letterId: String): List<SecondTaskModel> {
         val words = repository.getWords()
-        val letterWords = words[letterId] ?: error("Not found letterWords")
+        val letterWords = words[letterId] ?: error("Can't find words for letter $letterId")
         val otherWords = words.minus(letterId)
             .values
             .flatten()

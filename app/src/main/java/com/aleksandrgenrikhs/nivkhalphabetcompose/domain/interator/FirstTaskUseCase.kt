@@ -12,7 +12,7 @@ class FirstTaskUseCase
 ) {
     suspend fun getWordsForFirstTask(letterId: String): List<FirstTaskModel> {
         val words = repository.getWords()
-        val letterWords = words[letterId] ?: error("Not found letterWords")
+        val letterWords = words[letterId] ?: error("Can't find words for letter $letterId")
         return mapper.map(letterWords)
     }
 }

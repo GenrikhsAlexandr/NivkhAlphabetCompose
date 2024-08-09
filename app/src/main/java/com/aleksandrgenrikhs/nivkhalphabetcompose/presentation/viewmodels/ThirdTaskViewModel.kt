@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.AlphabetInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.ThirdTaskInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.ThirdTaskUseCase
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateThirdTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.ThirdTaskUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
@@ -21,25 +21,25 @@ import javax.inject.Inject
 class ThirdTaskViewModel
 @Inject constructor(
     private val alphabetInteractor: AlphabetInteractor,
-    private val thirdInteractor: ThirdTaskInteractor,
-    private val mapper: UIStateThirdTaskMapper,
-    private val mediaPlayer: MediaPlayerInteractor,
+    private val thirdUseCase: ThirdTaskUseCase,
+    private val uiStateMapper: UIStateThirdTaskMapper,
+    private val mediaPlayerInteractor: MediaPlayerInteractor,
     private val context: Context
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<ThirdTaskUIState> = MutableStateFlow(ThirdTaskUIState())
     val uiState = _uiState.asStateFlow()
 
-    fun setLetter(letter: String) {
+    fun setSelectedLetter(letter: String) {
         _uiState.update { state ->
             state.copy(selectedLetter = letter)
         }
     }
 
-    suspend fun getWords(letterId: String) {
+    suspend fun updateWordsForLetter(letterId: String) {
         _uiState.update { state ->
-            val filteredWords = thirdInteractor.getWordsForThirdTask(letterId)
-            val mappedWords = mapper.map(filteredWords)
+            val filteredWords = thirdUseCase.getWordsForThirdTask(letterId)
+            val mappedWords = uiStateMapper.map(filteredWords)
             with(mappedWords) {
                 state.copy(
                     titles = titles,
@@ -59,8 +59,8 @@ class ThirdTaskViewModel
                 )
             }
         }
-        mediaPlayer.playerDestroy()
-        mediaPlayer.initPlayer(context, url)
+        mediaPlayerInteractor.playerDestroy()
+        mediaPlayerInteractor.initPlayer(context, url)
     }
 
     fun updateReceivingContainer(clipData: ClipData?, index: Int) {
@@ -82,7 +82,7 @@ class ThirdTaskViewModel
         }
     }
 
-    fun reset() {
+    fun resetState() {
         _uiState.update { state ->
             state.copy(
                 currentWords = mutableListOf(null, null, null),
@@ -116,6 +116,6 @@ class ThirdTaskViewModel
 
     override fun onCleared() {
         super.onCleared()
-        mediaPlayer.playerDestroy()
+        mediaPlayerInteractor.playerDestroy()
     }
 }

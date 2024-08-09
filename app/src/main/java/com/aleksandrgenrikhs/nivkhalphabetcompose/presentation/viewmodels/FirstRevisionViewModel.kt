@@ -3,10 +3,10 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.FirstRevisionUseCase
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.RevisionFirstInteractor
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateRevisionFirstMapper
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.RevisionFirstUIState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateFirstRevisionMapper
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.FirstRevisionUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.LETTER_AUDIO
@@ -19,25 +19,22 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RevisionFirstViewModel
+class FirstRevisionViewModel
 @Inject constructor(
-    private val revisionFirstInteractor: RevisionFirstInteractor,
-    private val mapper: UIStateRevisionFirstMapper,
-    private val mediaPlayer: MediaPlayerInteractor,
+    private val firstRevisionUseCase: FirstRevisionUseCase,
+    private val uiStateMapper: UIStateFirstRevisionMapper,
+    private val mediaPlayerInteractor: MediaPlayerInteractor,
     private val context: Context
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<RevisionFirstUIState> =
-        MutableStateFlow(RevisionFirstUIState())
+    private val _uiState: MutableStateFlow<FirstRevisionUIState> =
+        MutableStateFlow(FirstRevisionUIState())
     val uiState = _uiState.asStateFlow()
 
-    private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
-
-    fun getLetters() {
+    fun updateLetters() {
         _uiState.update { state ->
-            isLoading.value = true
-            val allLetters = revisionFirstInteractor.getLettersForRevisionFirst()
-            val mappedLetters = mapper.map(allLetters)
+            val allLetters = firstRevisionUseCase.getLettersForFirstRevision()
+            val mappedLetters = uiStateMapper.map(allLetters)
             playSound("$LETTER_AUDIO${mappedLetters.correctLetter}")
             with(mappedLetters) {
                 state.copy(
@@ -48,7 +45,6 @@ class RevisionFirstViewModel
                 )
             }
         }
-        isLoading.value = false
     }
 
     fun checkUserGuess(letter: String) {
@@ -68,20 +64,22 @@ class RevisionFirstViewModel
             } else {
                 playSound(ERROR_AUDIO)
             }
-            if (isCorrectAnswer && !isCompleted) {
-                viewModelScope.launch {
-                    if (!isLoading.value) {
-                        delay(1000)
-                        getLetters()
-                    }
-                }
-            }
             state.copy(
                 isCorrectAnswers = newIsCorrectAnswerList,
                 isCompleted = isCompleted,
                 isUserAnswerCorrect = isCorrectAnswer,
                 correctAnswersCount = correctAnswersCount
             )
+        }
+        processCorrectGuess()
+    }
+
+    private fun processCorrectGuess() {
+        if (uiState.value.isUserAnswerCorrect && !uiState.value.isCompleted) {
+            viewModelScope.launch {
+                delay(1000)
+                updateLetters()
+            }
         }
     }
 
@@ -93,12 +91,12 @@ class RevisionFirstViewModel
                 )
             }
         }
-        mediaPlayer.playerDestroy()
-        mediaPlayer.initPlayer(context, url)
+        mediaPlayerInteractor.playerDestroy()
+        mediaPlayerInteractor.initPlayer(context, url)
     }
 
     override fun onCleared() {
         super.onCleared()
-        mediaPlayer.playerDestroy()
+        mediaPlayerInteractor.playerDestroy()
     }
 }

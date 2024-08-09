@@ -39,7 +39,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ScrollableState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ShowDividerWhenScrolled
 
 @Composable
-fun RevisionTaskLayout(
+fun TaskRevisionLayout(
     @StringRes titles: List<Int>,
     @DrawableRes icons: List<Int>,
     routes: List<String>,
@@ -116,9 +116,9 @@ private fun RevisionTaskItem(
 
 @Preview(widthDp = 600, heightDp = 700)
 @Composable
-private fun RevisionTaskLayoutPreview() {
+private fun TaskRevisionLayoutPreview() {
     NivkhAlphabetComposeTheme {
-        RevisionTaskLayout(
+        TaskRevisionLayout(
             titles = listOf(
                 R.string.revisionFirst,
                 R.string.revisionSecond,

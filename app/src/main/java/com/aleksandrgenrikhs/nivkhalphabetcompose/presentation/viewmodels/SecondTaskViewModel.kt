@@ -25,8 +25,8 @@ class SecondTaskViewModel
 @Inject constructor(
     private val secondInteractor: SecondTaskInteractor,
     private val alphabetInteractor: AlphabetInteractor,
-    private val mapper: UIStateSecondTaskMapper,
-    private val mediaPlayer: MediaPlayerInteractor,
+    private val uiStateMapper: UIStateSecondTaskMapper,
+    private val mediaPlayerInteractor: MediaPlayerInteractor,
     private val context: Context
 ) : ViewModel() {
 
@@ -34,36 +34,36 @@ class SecondTaskViewModel
         MutableStateFlow(SecondTaskUIState())
     val uiState = _uiState.asStateFlow()
 
-    private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
-
-    fun setLetter(letter: String) {
+    fun setSelectedLetter(letter: String) {
         _uiState.update { state ->
             state.copy(selectedLetter = letter)
         }
     }
 
-    suspend fun getWords(letterId: String) {
-        _uiState.update { state ->
-            isLoading.value = true
-            val filterWords = secondInteractor.getWordsForSecondTask(letterId)
-            val mappedWords = mapper.map(filterWords)
-            with(mappedWords) {
-                state.copy(
-                    lettersId = lettersId,
-                    wordsId = wordsId,
-                    icons = icons,
-                    isFlipped = isFlipped,
-                    titles = titles,
-                    isCorrectAnswers = isCorrectAnswers,
-                    isCorrectWord = false
-                )
+    fun updateWordsForLetter(letterId: String) {
+        viewModelScope.launch {
+            _uiState.update { state ->
+                val filteredWords = secondInteractor.getWordsForSecondTask(letterId)
+                val mappedWords = uiStateMapper.map(filteredWords)
+                with(mappedWords) {
+                    state.copy(
+                        lettersId = lettersId,
+                        wordsId = wordsId,
+                        icons = icons,
+                        isFlipped = isFlipped,
+                        titles = titles,
+                        isCorrectAnswers = isCorrectAnswers,
+                        isCorrectWord = false
+                    )
+                }
             }
         }
-        isLoading.value = false
     }
 
     fun flipCard(wordId: String, letterId: String) {
         _uiState.update { state ->
+            if (!state.wordsId.contains(wordId)) return@update state
+
             val isCorrectWord = letterId == state.selectedLetter
             val correctAnswersCount = if (isCorrectWord) {
                 state.correctAnswersCount + 1
@@ -76,21 +76,6 @@ class SecondTaskViewModel
             newIsFlippedList[index] = !newIsFlippedList[index]
             val newIsCorrectAnswerList = state.isCorrectAnswers.toMutableList()
             newIsCorrectAnswerList[index] = isCorrectWord
-
-            if (isCorrectWord) {
-                playSound("$WORDS_AUDIO$wordId")
-            } else {
-                playSound(ERROR_AUDIO)
-            }
-
-            if (isCorrectWord && !isCompleted) {
-                viewModelScope.launch {
-                    if (!isLoading.value) {
-                        delay(2000)
-                        getWords(letterId)
-                    }
-                }
-            }
             state.copy(
                 isFlipped = newIsFlippedList,
                 isCorrectAnswers = newIsCorrectAnswerList,
@@ -99,6 +84,25 @@ class SecondTaskViewModel
                 isCorrectWord = isCorrectWord,
             )
         }
+        if (uiState.value.isCorrectWord) {
+            playSound("$WORDS_AUDIO$wordId")
+        } else {
+            playSound(ERROR_AUDIO)
+        }
+        processCorrectGuess()
+        saveTaskProgress()
+    }
+
+    private fun processCorrectGuess() {
+        if (uiState.value.isCorrectWord && !uiState.value.isCompleted) {
+            viewModelScope.launch {
+                delay(2000)
+                updateWordsForLetter(uiState.value.selectedLetter)
+            }
+        }
+    }
+
+    private fun saveTaskProgress() {
         if (uiState.value.isCompleted) {
             alphabetInteractor.taskCompleted(Task.SECOND.stableId, uiState.value.selectedLetter)
         }
@@ -112,13 +116,13 @@ class SecondTaskViewModel
                 )
             }
         }
-        mediaPlayer.playerDestroy()
-        mediaPlayer.initPlayer(context, url)
+        mediaPlayerInteractor.playerDestroy()
+        mediaPlayerInteractor.initPlayer(context, url)
     }
 
     override fun onCleared() {
         super.onCleared()
         secondInteractor.clearPreviousWordsList()
-        mediaPlayer.playerDestroy()
+        mediaPlayerInteractor.playerDestroy()
     }
 }

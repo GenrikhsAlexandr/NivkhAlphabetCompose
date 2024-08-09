@@ -1,97 +1,89 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.GridItemSpan
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.aleksandrgenrikhs.nivkhalphabetcompose.R
+import coil.compose.AsyncImage
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorError
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.LETTER_AUDIO
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.LazyGridScrollableState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.LazyListScrollableState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ScrollableState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ShowDividerWhenScrolled
 
 @Composable
-fun RevisionFirstLayout(
-    letters: List<String>,
-    correctLetter: String,
+fun SecondRevisionLayout(
+    words: List<String>,
+    wordsId: List<String>,
+    correctWordId: String,
+    icon: String?,
     modifier: Modifier = Modifier,
-    onLetterClick: (String) -> Unit,
+    onWordClick: (String) -> Unit,
     onIconClick: (String) -> Unit,
     isCorrectAnswer: List<Boolean?>,
     isClickable: Boolean,
     onDividerVisibilityChange: (Boolean) -> Unit
 ) {
-    val listState = rememberLazyGridState()
-    val scrollableState: ScrollableState = LazyGridScrollableState(listState)
+    val listState = rememberLazyListState()
+    val scrollableState: ScrollableState = LazyListScrollableState(listState)
 
     ShowDividerWhenScrolled(onDividerVisibilityChange, scrollableState)
 
-    LazyVerticalGrid(
-        state = listState,
+    LazyColumn(
         modifier = modifier
             .background(colorPrimary)
             .fillMaxSize()
-            .padding(horizontal = 16.dp),
+            .padding(
+                start = 16.dp,
+                end = 16.dp,
+            ),
         contentPadding = PaddingValues(vertical = 8.dp),
-        columns = GridCells.Fixed(2),
         verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-    )
-    {
-        item(span = { GridItemSpan(maxLineSpan) }) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_revision_first),
-                contentDescription = null,
-                modifier = modifier
-                    .size(200.dp),
-                alignment = Alignment.Center
-            )
-        }
-        item(span = { GridItemSpan(maxLineSpan) }) {
+        horizontalAlignment = Alignment.CenterHorizontally,
+        state = listState
+    ) {
+        item {
             IconButton(
                 onClick = {
-                    onIconClick("$LETTER_AUDIO$correctLetter")
-                }
+                    onIconClick("$WORDS_AUDIO$correctWordId")
+                },
+                icon = icon
             )
         }
-        itemsIndexed(letters) { index, item ->
-            LetterItem(
-                letter = item,
+        itemsIndexed(words) { index, item ->
+            WordItem(
+                title = item,
                 onClick = {
-                    onLetterClick(item)
+                    onWordClick(wordsId[index])
                 },
                 isCorrectAnswer = isCorrectAnswer[index],
                 isClickable = isClickable
             )
-
         }
+
     }
 }
 
@@ -99,6 +91,7 @@ fun RevisionFirstLayout(
 private fun IconButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
+    icon: String?
 ) {
     Box(
         modifier = modifier
@@ -107,19 +100,18 @@ private fun IconButton(
             .clickable(onClick = onClick),
         contentAlignment = Alignment.Center
     ) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_revision_first_sound),
+        AsyncImage(
+            model = icon,
             contentDescription = null,
-            tint = colorText,
-            modifier = modifier
-                .fillMaxSize()
+            contentScale = ContentScale.FillBounds,
+            modifier = modifier.fillMaxSize()
         )
     }
 }
 
 @Composable
-private fun LetterItem(
-    letter: String,
+private fun WordItem(
+    title: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     isCorrectAnswer: Boolean?,
@@ -128,6 +120,8 @@ private fun LetterItem(
     Box(
         modifier = modifier
             .height(100.dp)
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
             .clip(CircleShape)
             .clickable(
                 enabled = isClickable,
@@ -136,7 +130,7 @@ private fun LetterItem(
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = letter,
+            text = title,
             color = if (isCorrectAnswer != null && !isCorrectAnswer) colorError else if (isCorrectAnswer == null) colorText else colorProgressBar,
             maxLines = 1,
             style = MaterialTheme.typography.displayLarge,
@@ -147,13 +141,15 @@ private fun LetterItem(
 
 @Preview(widthDp = 600, heightDp = 700)
 @Composable
-private fun RevisionFirstLayoutPreview() {
+private fun SecondRevisionLayoutPreview() {
     NivkhAlphabetComposeTheme {
-        RevisionFirstLayout(
-            letters = listOf("Aa", "Bb", "Cc"),
-            correctLetter = "Aa",
+        SecondRevisionLayout(
+            words = listOf("Aa", "Bb", "Cc"),
+            wordsId = listOf("1", "2", "3"),
+            icon = null,
+            correctWordId = "1",
             onIconClick = {},
-            onLetterClick = {},
+            onWordClick = {},
             isCorrectAnswer = listOf(null, true, false),
             isClickable = true,
             onDividerVisibilityChange = {}

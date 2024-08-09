@@ -21,17 +21,18 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.AppBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.AboutScreen
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.FirstRevisionScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.FirstTaskScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.FourthTaskScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.LetterScreen
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.RevisionFirstScreen
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.RevisionSecondScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.RevisionTasksScreen
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.RevisionThirdScreen
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.SecondRevisionScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.SecondTaskScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.SplashScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.TasksScreen
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.ThirdRevisionScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.ThirdTaskScreen
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -59,7 +60,9 @@ fun NavHost(
                             }
                         )
                         if (isDividerVisible) {
-                            HorizontalDivider()
+                            HorizontalDivider(
+                                color = colorText
+                            )
                         }
                     }
                 }
@@ -197,7 +200,7 @@ fun NavHost(
             composable(
                 route = NavigationDestination.RevisionFirstScreen.destination,
             ) {
-                RevisionFirstScreen(
+                FirstRevisionScreen(
                     navController = navController,
                     onDividerVisibilityChange = { isVisibility ->
                         isDividerVisible = isVisibility
@@ -207,7 +210,7 @@ fun NavHost(
             composable(
                 route = NavigationDestination.RevisionSecondScreen.destination,
             ) {
-                RevisionSecondScreen(
+                SecondRevisionScreen(
                     navController = navController,
                     onDividerVisibilityChange = { isVisibility ->
                         isDividerVisible = isVisibility
@@ -217,7 +220,7 @@ fun NavHost(
             composable(
                 route = NavigationDestination.RevisionThirdScreen.destination,
             ) {
-                RevisionThirdScreen(
+                ThirdRevisionScreen(
                     navController = navController,
                     onDividerVisibilityChange = { isVisibility ->
                         isDividerVisible = isVisibility

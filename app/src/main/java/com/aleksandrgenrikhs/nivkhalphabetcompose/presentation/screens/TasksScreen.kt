@@ -17,7 +17,7 @@ fun TasksScreen(
     onDividerVisibilityChange: (Boolean) -> Unit
 ) {
     val uiState by tasksViewModel.uiState.collectAsState()
-    LaunchedEffect(Unit) { tasksViewModel.isTaskCompleted(letter) }
+    LaunchedEffect(Unit) { tasksViewModel.checkTaskCompletion(letter) }
 
     with(uiState) {
         TaskLayout(

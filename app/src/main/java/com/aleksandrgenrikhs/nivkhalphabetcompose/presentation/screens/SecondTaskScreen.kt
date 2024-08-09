@@ -31,11 +31,11 @@ fun SecondTaskScreen(
     val uiState by viewModel.uiState.collectAsState()
     var isLaunchedEffectCalled by rememberSaveable { mutableStateOf(false) }
 
-    viewModel.setLetter(letter)
+    viewModel.setSelectedLetter(letter)
 
     LaunchedEffect(Unit) {
         if (!isLaunchedEffectCalled) {
-            viewModel.getWords(letter)
+            viewModel.updateWordsForLetter(letter)
             isLaunchedEffectCalled = true
         }
     }

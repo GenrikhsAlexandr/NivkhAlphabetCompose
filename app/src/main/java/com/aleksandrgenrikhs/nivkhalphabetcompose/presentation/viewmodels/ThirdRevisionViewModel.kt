@@ -4,9 +4,9 @@ import android.content.ClipData
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.RevisionThirdInteractor
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateRevisionThirdMapper
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.RevisionThirdUIState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.ThirdRevisionUseCase
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateThirdRevisionMapper
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.ThirdRevisionUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,24 +16,24 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class RevisionThirdViewModel
+class ThirdRevisionViewModel
 @Inject constructor(
-    val revisionThirdInteractor: RevisionThirdInteractor,
-    val mapper: UIStateRevisionThirdMapper,
-    private val mediaPlayer: MediaPlayerInteractor,
+    private val thirdRevisionUseCase: ThirdRevisionUseCase,
+    private val uiStateMapper: UIStateThirdRevisionMapper,
+    private val mediaPlayerInteractor: MediaPlayerInteractor,
     private val context: Context
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<RevisionThirdUIState> =
-        MutableStateFlow(RevisionThirdUIState())
+    private val _uiState: MutableStateFlow<ThirdRevisionUIState> =
+        MutableStateFlow(ThirdRevisionUIState())
     val uiState = _uiState.asStateFlow()
 
-    private var wordsUIState: RevisionThirdUIState? = null
+    private var wordsUIState: ThirdRevisionUIState? = null
 
-    suspend fun getWords() {
+    suspend fun updateWords() {
         _uiState.update { state ->
-            val words = revisionThirdInteractor.getWordsForRevisionThird()
-            wordsUIState = mapper.map(words)
+            val words = thirdRevisionUseCase.getWordsForRevisionThird()
+            wordsUIState = uiStateMapper.map(words)
             wordsUIState?.let { mappedWords ->
                 with(mappedWords) {
                     state.copy(
@@ -60,8 +60,8 @@ class RevisionThirdViewModel
                 )
             }
         }
-        mediaPlayer.playerDestroy()
-        mediaPlayer.initPlayer(context, url)
+        mediaPlayerInteractor.playerDestroy()
+        mediaPlayerInteractor.initPlayer(context, url)
     }
 
     fun updateReceivingContainer(clipData: ClipData?, index: Int) {
@@ -138,7 +138,7 @@ class RevisionThirdViewModel
         }
     }
 
-    fun reset() {
+    fun resetState() {
         _uiState.update { state ->
             wordsUIState?.let { words ->
                 state.copy(
@@ -156,6 +156,6 @@ class RevisionThirdViewModel
 
     override fun onCleared() {
         super.onCleared()
-        mediaPlayer.playerDestroy()
+        mediaPlayerInteractor.playerDestroy()
     }
 }

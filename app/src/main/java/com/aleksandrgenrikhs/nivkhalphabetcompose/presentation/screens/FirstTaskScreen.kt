@@ -29,12 +29,12 @@ fun FirstTaskScreen(
     val uiState by viewModel.uiState.collectAsState()
     var showDialog by rememberSaveable { mutableStateOf(false) }
 
-    viewModel.setLetter(letter)
+    viewModel.setSelectedLetter(letter)
 
     with(uiState) {
         LaunchedEffect(Unit) {
-            viewModel.getWords(letter)
-            viewModel.isTaskCompleted(letter)
+            viewModel.updateWordsForLetter(letter)
+            viewModel.checkTaskCompletion(letter)
         }
         FirstTaskLayout(
             titles = titles,
@@ -56,7 +56,7 @@ fun FirstTaskScreen(
         }
         if (showDialog) {
             if (!isFinishAudio) {
-                viewModel.playSound(FINISH_AUDIO)
+                viewModel.playSoundForElement(FINISH_AUDIO)
             }
             val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task1)
             Dialog(

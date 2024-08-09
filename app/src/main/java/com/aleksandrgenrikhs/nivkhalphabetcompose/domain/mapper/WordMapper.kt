@@ -1,7 +1,7 @@
-package com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper
+package com.aleksandrgenrikhs.nivkhalphabetcompose.domain.mapper
 
+import com.aleksandrgenrikhs.nivkhalphabetcompose.Mapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.dto.SubjectDto
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.mapper.Mapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.IMAGE_URL
 import javax.inject.Inject

@@ -68,7 +68,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ShowDividerWhenScrolled
 import com.idapgroup.autosizetext.AutoSizeText
 
 @Composable
-fun RevisionThirdLayout(
+fun ThirdRevisionLayout(
     modifier: Modifier = Modifier,
     title: String,
     letter: String,
@@ -558,7 +558,7 @@ private fun SubmitButton(
 @Composable
 private fun ThirdTaskPreview() {
     NivkhAlphabetComposeTheme {
-        RevisionThirdLayout(
+        ThirdRevisionLayout(
             title = "ӈағзыр̆раӄ",
             letter = "Aa",
             icon = "null",

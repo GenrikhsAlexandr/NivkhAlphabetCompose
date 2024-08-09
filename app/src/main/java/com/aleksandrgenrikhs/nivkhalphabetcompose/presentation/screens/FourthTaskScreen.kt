@@ -27,13 +27,13 @@ fun FourthTaskScreen(
     letter: String,
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    viewModel.setLetter(letter)
+    viewModel.setSelectedLetter(letter)
 
     var isLaunchedEffectCalled by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         if (!isLaunchedEffectCalled) {
-            viewModel.getWords(letter)
+            viewModel.updateWordsForLetter(letter)
             isLaunchedEffectCalled = true
         }
     }

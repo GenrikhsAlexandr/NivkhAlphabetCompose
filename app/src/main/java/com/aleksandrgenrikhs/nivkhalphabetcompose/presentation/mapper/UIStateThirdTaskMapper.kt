@@ -1,6 +1,6 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper
 
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.mapper.Mapper
+import com.aleksandrgenrikhs.nivkhalphabetcompose.Mapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.ThirdTaskUIState
 import javax.inject.Inject

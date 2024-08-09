@@ -138,7 +138,10 @@ private fun IconButton(
     )
     Box(
         modifier = modifier
-            .clickable { onClick() }
+            .clickable(
+                enabled = isClickable,
+                onClick = onClick
+            )
             .size(180.dp)
             .clip(ShapeDefaults.Medium)
             .background(colorCardLetterItem)
@@ -152,10 +155,6 @@ private fun IconButton(
         Box(
             modifier = modifier
                 .size(180.dp)
-                .clickable(
-                    enabled = isClickable,
-                    onClick = onClick
-                )
                 .background(
                     if (isCorrectAnswer && isFlipped) {
                         colorRight

@@ -2,7 +2,7 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.data.repository
 
 import androidx.annotation.VisibleForTesting
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.AlphabetDataSource
-import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.WordMapper
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.mapper.WordMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.AlphabetRepository
 import kotlinx.coroutines.Dispatchers

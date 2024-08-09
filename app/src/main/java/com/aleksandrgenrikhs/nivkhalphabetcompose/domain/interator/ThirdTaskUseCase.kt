@@ -4,7 +4,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.AlphabetRepository
 import javax.inject.Inject
 
-class ThirdTaskInteractor
+class ThirdTaskUseCase
 @Inject constructor(
     private val repository: AlphabetRepository
 ) {

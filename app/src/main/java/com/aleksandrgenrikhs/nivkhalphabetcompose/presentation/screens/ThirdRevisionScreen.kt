@@ -16,14 +16,14 @@ import coil.compose.rememberAsyncImagePainter
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.Dialog
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.RevisionThirdLayout
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.RevisionThirdViewModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.ThirdRevisionLayout
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.ThirdRevisionViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 
 @Composable
-fun RevisionThirdScreen(
+fun ThirdRevisionScreen(
     navController: NavController,
-    viewModel: RevisionThirdViewModel = hiltViewModel(),
+    viewModel: ThirdRevisionViewModel = hiltViewModel(),
     onDividerVisibilityChange: (Boolean) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -31,13 +31,13 @@ fun RevisionThirdScreen(
 
     LaunchedEffect(Unit) {
         if (!isLaunchedEffectCalled) {
-            viewModel.getWords()
+            viewModel.updateWords()
             isLaunchedEffectCalled = true
         }
     }
 
     with(uiState) {
-        RevisionThirdLayout(
+        ThirdRevisionLayout(
             title = title,
             letter = letter,
             icon = icon,
@@ -49,7 +49,7 @@ fun RevisionThirdScreen(
             shareIcons = shareIcons,
             isGuessWrong = isGuessWrong,
             onDone = (viewModel::checkAnswer),
-            onReset = (viewModel::reset),
+            onReset = (viewModel::resetState),
             onDividerVisibilityChange = onDividerVisibilityChange
         ) { transferData: DragAndDropEvent, index: Int ->
             viewModel.updateReceivingContainer(

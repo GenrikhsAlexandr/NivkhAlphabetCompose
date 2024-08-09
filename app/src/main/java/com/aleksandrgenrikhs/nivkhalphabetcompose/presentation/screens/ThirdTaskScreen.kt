@@ -32,11 +32,11 @@ fun ThirdTaskScreen(
     var isLaunchedEffectCalled by rememberSaveable { mutableStateOf(false) }
     var showDialog by rememberSaveable { mutableStateOf(false) }
 
-    viewModel.setLetter(letter)
+    viewModel.setSelectedLetter(letter)
 
     LaunchedEffect(Unit) {
         if (!isLaunchedEffectCalled) {
-            viewModel.getWords(letter)
+            viewModel.updateWordsForLetter(letter)
             isLaunchedEffectCalled = true
         }
     }
@@ -50,7 +50,7 @@ fun ThirdTaskScreen(
             isGuessWrong = isGuessWrong,
             onIconClick = (viewModel::playSound),
             onDone = (viewModel::checkAnswer),
-            onReset = (viewModel::reset),
+            onReset = (viewModel::resetState),
             onDividerVisibilityChange = onDividerVisibilityChange,
         ) { transferData: DragAndDropEvent, index: Int ->
             viewModel.updateReceivingContainer(

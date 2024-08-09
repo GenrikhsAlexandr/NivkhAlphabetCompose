@@ -5,7 +5,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.AlphabetRepo
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.selectUniqueRandomElements
 import javax.inject.Inject
 
-class RevisionThirdInteractor
+class ThirdRevisionUseCase
 @Inject constructor(
     private val repository: AlphabetRepository,
 ) {

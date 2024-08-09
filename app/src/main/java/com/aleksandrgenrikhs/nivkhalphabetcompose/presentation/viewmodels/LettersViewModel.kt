@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Letters
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.AlphabetInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateLettersMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.LettersUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,17 +15,26 @@ import javax.inject.Inject
 @HiltViewModel
 class LettersViewModel
 @Inject constructor(
-    private val interactor: AlphabetInteractor
+    private val alphabetInteractor: AlphabetInteractor,
+    private val uiStateMapper: UIStateLettersMapper
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<LettersUIState> = MutableStateFlow(LettersUIState(
-        letters = Letters.entries.map { it.title },
-        isLetterCompleted = Letters.entries.map { it.isCompleted }
-    ))
+    private val _uiState: MutableStateFlow<LettersUIState> = MutableStateFlow(LettersUIState())
     val uiState = _uiState.asStateFlow()
 
-    suspend fun isLetterCompleted() {
-        val lettersCompleted = interactor.getLetterCompleted(Task.FOURTH.stableId)?.map {
+    fun updateLetters() {
+        val letters = Letters.entries
+        val mappedLetters = uiStateMapper.map(letters)
+        _uiState.update { state ->
+            state.copy(
+                letters = mappedLetters.letters,
+                isLetterCompleted = mappedLetters.isLetterCompleted
+            )
+        }
+    }
+
+    suspend fun checkLetterCompletion() {
+        val lettersCompleted = alphabetInteractor.getLetterCompleted(Task.FOURTH.stableId)?.map {
             it.title
         }
         if (lettersCompleted != null) {

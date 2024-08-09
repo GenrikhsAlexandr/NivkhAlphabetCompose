@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TasksViewModel
 @Inject constructor(
-    private val interactor: AlphabetInteractor,
+    private val alphabetInteractor: AlphabetInteractor,
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<TaskUIState> = MutableStateFlow(
@@ -26,12 +26,12 @@ class TasksViewModel
     )
     val uiState = _uiState.asStateFlow()
 
-    suspend fun isTaskCompleted(letter: String) {
+    suspend fun checkTaskCompletion(letter: String) {
         _uiState.update { state ->
             val newIsTaskCompleted = state.isTaskCompleted.toMutableList()
             val newIsNextTaskVisible = state.isNextTaskVisible.toMutableList()
             state.stablesId.mapIndexed { index, id ->
-                val isTaskCompleted = interactor.isTaskCompleted(id, letter)
+                val isTaskCompleted = alphabetInteractor.isTaskCompleted(id, letter)
                 newIsTaskCompleted[index] = isTaskCompleted
 
                 if (newIsTaskCompleted[index] && index < state.stablesId.lastIndex) {

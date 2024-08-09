@@ -1,6 +1,6 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator
 
-import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.SecondTaskMapper
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.mapper.SecondTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.SecondTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.AlphabetRepository

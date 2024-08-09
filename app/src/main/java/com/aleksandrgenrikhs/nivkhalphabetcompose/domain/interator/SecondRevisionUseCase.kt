@@ -1,18 +1,18 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator
 
-import com.aleksandrgenrikhs.nivkhalphabetcompose.data.mapper.RevisionSecondMapper
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.RevisionSecondModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.mapper.SecondRevisionMapper
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.SecondRevisionModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.AlphabetRepository
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.selectUniqueRandomElements
 import javax.inject.Inject
 
-class RevisionSecondInteractor
+class SecondRevisionUseCase
 @Inject constructor(
     private val repository: AlphabetRepository,
-    private val revisionSecondMapper: RevisionSecondMapper,
+    private val revisionSecondMapper: SecondRevisionMapper,
 ) {
 
-    suspend fun getWordsForRevisionSecond(): List<RevisionSecondModel> {
+    suspend fun getWordsForRevisionSecond(): List<SecondRevisionModel> {
         val words = repository.getWords()
             .values
             .flatten()

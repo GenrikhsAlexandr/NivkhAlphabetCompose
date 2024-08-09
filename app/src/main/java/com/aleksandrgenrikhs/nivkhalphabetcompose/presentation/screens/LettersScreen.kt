@@ -22,7 +22,8 @@ fun LetterScreen(
 
     with(uiState) {
         LaunchedEffect(Unit) {
-            viewModel.isLetterCompleted()
+            viewModel.updateLetters()
+            viewModel.checkLetterCompletion()
         }
 
         LettersLayout(

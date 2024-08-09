@@ -22,29 +22,27 @@ import javax.inject.Inject
 @HiltViewModel
 class FourthTaskViewModel
 @Inject constructor(
-    val alphabetInteractor: AlphabetInteractor,
-    val fourthInteractor: FourthTaskInteractor,
-    private val mediaPlayer: MediaPlayerInteractor,
+    private val alphabetInteractor: AlphabetInteractor,
+    private val fourthTaskInteractor: FourthTaskInteractor,
+    private val mediaPlayerInteractor: MediaPlayerInteractor,
     private val context: Context
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<FourthTaskUIState> =
         MutableStateFlow(FourthTaskUIState())
     val uiState = _uiState.asStateFlow()
-    private val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    fun setLetter(letter: String) {
+    fun setSelectedLetter(letter: String) {
         _uiState.update {
             _uiState.value.copy(selectedLetter = letter)
         }
     }
 
-    fun getWords(letterId: String) {
+    fun updateWordsForLetter(letterId: String) {
         viewModelScope.launch {
-            isLoading.value = true
-            val filterWords = fourthInteractor.getWordsForFourthTask(letterId)
+            val filteredWords = fourthTaskInteractor.getWordsForFourthTask(letterId)
             _uiState.update { state ->
-                with(filterWords) {
+                with(filteredWords) {
                     state.copy(
                         wordId = wordId,
                         title = title,
@@ -52,7 +50,6 @@ class FourthTaskViewModel
                     )
                 }
             }
-            isLoading.value = false
         }
     }
 
@@ -67,7 +64,7 @@ class FourthTaskViewModel
     }
 
     fun deleteLastLetter() {
-        val currentUserGuess = _uiState.value.userGuess
+        val currentUserGuess = uiState.value.userGuess
         if (currentUserGuess.isNotEmpty()) {
             val newUserGuess = currentUserGuess.dropLast(1)
             _uiState.update { state ->
@@ -92,15 +89,6 @@ class FourthTaskViewModel
                 state.correctAnswersCount
             }
             val isCompleted = correctAnswersCount == 3
-            if (isAnswerCorrect && !isCompleted) {
-                viewModelScope.launch {
-                    if (!isLoading.value) {
-                        delay(2000)
-                        updateUserGuess("")
-                        getWords(state.selectedLetter)
-                    }
-                }
-            }
             state.copy(
                 isCompleted = isCompleted,
                 correctAnswersCount = correctAnswersCount,
@@ -108,6 +96,21 @@ class FourthTaskViewModel
                 isClickable = false
             )
         }
+        processCorrectGuess()
+        saveTaskProgress()
+    }
+
+    private fun processCorrectGuess() {
+        if (!uiState.value.isGuessWrong && !uiState.value.isCompleted) {
+            viewModelScope.launch {
+                delay(2000)
+                updateUserGuess("")
+                updateWordsForLetter(uiState.value.selectedLetter)
+            }
+        }
+    }
+
+    private fun saveTaskProgress() {
         if (uiState.value.isCompleted) {
             alphabetInteractor.taskCompleted(Task.FOURTH.stableId, uiState.value.selectedLetter)
         }
@@ -121,13 +124,13 @@ class FourthTaskViewModel
                 )
             }
         }
-        mediaPlayer.playerDestroy()
-        mediaPlayer.initPlayer(context, url)
+        mediaPlayerInteractor.playerDestroy()
+        mediaPlayerInteractor.initPlayer(context, url)
     }
 
     override fun onCleared() {
         super.onCleared()
-        fourthInteractor.clearPreviousWordsList()
-        mediaPlayer.playerDestroy()
+        fourthTaskInteractor.clearPreviousWordsList()
+        mediaPlayerInteractor.playerDestroy()
     }
 }

@@ -42,23 +42,22 @@ fun AboutScreen(
             .fillMaxSize()
             .background(colorPrimary)
             .padding(horizontal = 8.dp),
-        contentPadding = PaddingValues(16.dp),
+        contentPadding = PaddingValues(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     )
     {
         item {
-            Spacer(modifier = modifier.height(16.dp))
             Text(
                 text = stringResource(id = R.string.aboutText),
                 style = MaterialTheme.typography.bodyLarge,
-                textAlign = TextAlign.Justify,
+                textAlign = TextAlign.Start,
             )
             Spacer(modifier = modifier.height(16.dp))
             Text(
                 text = stringResource(id = R.string.aboutSubText),
                 style = MaterialTheme.typography.labelSmall,
-                textAlign = TextAlign.Justify,
+                textAlign = TextAlign.Start,
                 fontWeight = FontWeight.Normal
             )
         }

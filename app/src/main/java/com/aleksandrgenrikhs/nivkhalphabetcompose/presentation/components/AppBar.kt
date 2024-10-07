@@ -214,15 +214,15 @@ fun TitleAbout() {
         AutoSizeText(
             text = stringResource(id = R.string.aboutTitle),
             style = MaterialTheme.typography.titleLarge,
+            maxLines = 1,
             fontSize = 22.sp,
-            maxLines = 2,
-            minFontSize = 18.sp,
+            minFontSize = 16.sp,
             textAlign = TextAlign.Center
         )
         Text(
             text = stringResource(id = R.string.aboutSubTitle),
-            style = MaterialTheme.typography.bodyLarge,
-            fontWeight = FontWeight.Normal
+            style = MaterialTheme.typography.labelSmall,
+            fontWeight = FontWeight.Normal,
         )
     }
 }

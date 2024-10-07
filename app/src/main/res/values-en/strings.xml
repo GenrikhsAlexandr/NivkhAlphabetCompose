@@ -59,8 +59,15 @@
     <string name="space">space</string>
     <string name="noSoundtrack">no soundtrack</string>
     <string name="about">About</string>
-    <string name="about_text">\t\tПеред вами игра для изучения нивхского алфавита для детей. Нивхские слова озвучил Владимир Михайлович Санги —  нивхский писатель, создатель нивхского алфавита, Лауреат Государственной премии России.\n\n
-\t\tМы надеемся, что создание игра для изучения нивхского алфавита поможет педагогам — в организации занятий на нивхском языке в дошкольных заведениях и общеобразовательных школах.\n\n
-</string>
-
+    <string name="aboutTitle">Nivkh alphabet \n learning application</string>
+    <string name="aboutSubTitle">sakhalin dialect</string>
+    <string name="aboutText">The educational application “Nivkh Alphabet” offers children interesting and understandable tasks about letters. Thanks to cheerful and bright pictures, the child will easily learn all the letters of the Nivkh alphabet. Simple interface and sound accompaniment will allow him to do without your help. After completing all the tasks, the student will be able to get a personalized diploma.</string>
+    <string name="aboutSubText">The project “45 Years of the Nivkh Alphabet” was implemented by the Nogliki Central Model Library named after V.M. Sangi. V.M. Sangi Central Model Library of Nogliki, Dominanta Information and Cultural Enlightenment Center with the support of Sakhalin Energy LLC.
+    \n\nAuthors of the idea:/nInga Valeryevna Krasilnikova,
+        \nOlga Evgenievna Rozhnova,
+        \nLina Vladimirovna Zhamyanova
+    \n\nApplication developer: \nAlexander Yakovlevich Genrikhs
+    \n\nArtist:\nEkaterina Genrikhs
+    \n\nMethodological development:\nEkaterina Alekseevna Genrikhs
+    </string>
 </resources>

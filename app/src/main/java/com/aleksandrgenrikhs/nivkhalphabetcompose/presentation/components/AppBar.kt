@@ -1,6 +1,9 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -11,8 +14,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
@@ -31,6 +37,12 @@ fun AppBar(
     onDividerVisibilityChange: (Boolean) -> Unit
 ) {
     CenterAlignedTopAppBar(
+        modifier = modifier
+            .wrapContentHeight()
+            .background(colorPrimary),
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = colorPrimary,
+        ),
         title = {
             when (currentScreen) {
                 NavigationDestination.LettersScreen.destination -> {
@@ -112,14 +124,9 @@ fun AppBar(
                 }
 
                 NavigationDestination.AboutScreen.destination -> {
-                    AutoSizeText(
-                        text = stringResource(id = R.string.about),
-                        style = MaterialTheme.typography.titleLarge,
-                        maxLines = 1,
-                        minFontSize = 20.sp,
-                    )
+                    TitleAbout()
                 }
-            }
+                }
         },
         navigationIcon = {
             if (currentScreen != NavigationDestination.LettersScreen.destination
@@ -195,10 +202,27 @@ fun AppBar(
                 }
             }
         },
-        modifier = modifier
-            .background(colorPrimary),
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = colorPrimary,
-        )
     )
+}
+
+@Composable
+fun TitleAbout() {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        AutoSizeText(
+            text = stringResource(id = R.string.aboutTitle),
+            style = MaterialTheme.typography.titleLarge,
+            fontSize = 22.sp,
+            maxLines = 2,
+            minFontSize = 18.sp,
+            textAlign = TextAlign.Center
+        )
+        Text(
+            text = stringResource(id = R.string.aboutSubTitle),
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.Normal
+        )
+    }
 }

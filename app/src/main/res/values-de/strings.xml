@@ -59,8 +59,16 @@
     <string name="space">Leerzeichen</string>
     <string name="noSoundtrack">kein Soundtrack</string>
     <string name="about">About</string>
-    <string name="about_text">\t\tПеред вами игра для изучения нивхского алфавита для детей. Нивхские слова озвучил Владимир Михайлович Санги —  нивхский писатель, создатель нивхского алфавита, Лауреат Государственной премии России.\n\n
-\t\tМы надеемся, что создание игра для изучения нивхского алфавита поможет педагогам — в организации занятий на нивхском языке в дошкольных заведениях и общеобразовательных школах.\n\n
-</string>
-
+    <string name="aboutTitle">Nivkh Alphabet \n Lern-App</string>
+    <string name="aboutSubTitle">Sachalin-Dialekt</string>
+    <string name="aboutText">Die Lern-App Nivkh Alphabet bietet Kindern interessante und verständliche Aufgaben zum Thema Buchstaben. Dank der fröhlichen und hellen Bilder wird das Kind leicht alle Buchstaben des Nivkh-Alphabets lernen. Die einfache Benutzeroberfläche und die akustische Begleitung ermöglichen es ihm, die Aufgaben ohne Ihre Hilfe zu lösen. Nach Abschluss aller Aufgaben kann der Schüler ein personalisiertes Diplom erhalten.</string>
+    <string name="aboutSubText">Das Projekt „45 Jahre Nivkh-Alphabet“ wurde von der nach V.M. Sangi benannten Zentralen Modellbibliothek Nogliki durchgeführt. V.M. Sangi Zentrale Modellbibliothek von Nogliki, Dominanta Informations- und Kulturaufklärungszentrum mit der Unterstützung von Sakhalin Energy Ltd.
+    \n\nAutoren der Idee:
+        \nInga Valeryevna Krasilnikova,
+        \nOlga Evgenievna Rozhnova,
+        \nLina Vladimirovna Zhamyanova
+    \n\n Anwendungsentwickler:\nAlexander Jakowlewitsch Heinrichs
+    \n\nKünstlerin:/nEkaterina Alekseevna Heinrichs
+    \n\nMethodische Entwicklung:\nEkaterina Alekseevna Heinrichs
+    </string>
 </resources>

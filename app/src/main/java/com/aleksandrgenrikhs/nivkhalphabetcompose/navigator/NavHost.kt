@@ -21,6 +21,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.AppBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.AboutScreen
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.CertificateScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.FirstRevisionScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.FirstTaskScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.FourthTaskScreen
@@ -39,12 +40,13 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants
 @Composable
 fun NavHost(
     modifier: Modifier = Modifier,
-    navController: NavHostController?
+    navController: NavHostController
 ) {
-    val currentBackStackEntry by navController!!.currentBackStackEntryAsState()
+    val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStackEntry?.destination?.route?.substringBefore("/")
     val letter = currentBackStackEntry?.arguments?.getString(Constants.LETTER_KEY)
     var isDividerVisible by remember { mutableStateOf(false) }
+    var isLetterCompleted by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -55,6 +57,7 @@ fun NavHost(
                             currentScreen = it,
                             letter = letter,
                             navController = navController,
+                            isLettersCompleted = isLetterCompleted,
                             onDividerVisibilityChange = { isVisibility ->
                                 isDividerVisible = isVisibility
                             }
@@ -113,6 +116,9 @@ fun NavHost(
                     navController = navController,
                     onDividerVisibilityChange = { isVisibility ->
                         isDividerVisible = isVisibility
+                    },
+                    isLettersCompleted = { isCompleted ->
+                        isLetterCompleted = isCompleted
                     }
                 )
             }
@@ -235,6 +241,20 @@ fun NavHost(
                     onDividerVisibilityChange = { isVisibility ->
                         isDividerVisible = isVisibility
                     })
+            }
+            composable(
+                route = "${NavigationDestination.CertificateScreen.destination}/{${Constants.NAME_KEY}}",
+                arguments = listOf(navArgument(Constants.NAME_KEY) { type = NavType.StringType })
+            ) { backStackEntry ->
+                backStackEntry.arguments?.getString(Constants.NAME_KEY)?.let {
+                    CertificateScreen(
+                        navController = navController,
+                        name = it,
+                        onDividerVisibilityChange = { isVisibility ->
+                            isDividerVisible = isVisibility
+                        }
+                    )
+                }
             }
         }
     }

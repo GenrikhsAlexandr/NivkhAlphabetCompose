@@ -38,6 +38,22 @@ class PrefRepositoryImpl
         }
     }
 
+    override fun saveName(name: String) {
+        val currentValue = preferences.getString("fullName", "")
+        if (!currentValue.isNullOrEmpty() && currentValue != name) {
+            preferences.edit()
+                .remove("fullName")
+                .apply()
+        }
+        preferences.edit()
+            .putString("fullName", name)
+            .apply()
+    }
+
+    override suspend fun getName(): String {
+        return preferences.getString("fullName", "") ?: ""
+    }
+
     override suspend fun isTaskCompleted(taskId: Int, letterId: String): Boolean {
         val completedLetters = getLetterCompleted(taskId)
         return completedLetters?.contains(Letters.getById(letterId)) ?: false

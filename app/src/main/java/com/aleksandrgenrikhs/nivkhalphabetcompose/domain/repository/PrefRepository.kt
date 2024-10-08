@@ -9,4 +9,8 @@ interface PrefRepository {
     suspend fun isTaskCompleted(taskId: Int, letterId: String): Boolean
 
     suspend fun getLetterCompleted(taskId: Int): List<Letters>?
+
+    fun saveName(name: String)
+
+    suspend fun getName(): String
 }

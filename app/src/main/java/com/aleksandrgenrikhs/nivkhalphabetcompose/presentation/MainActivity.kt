@@ -47,7 +47,7 @@ fun TopAppBarAlphabetPreview(
 ) {
     NivkhAlphabetComposeTheme {
         NavHost(
-            navController = null
+            navController = rememberNavController()
         )
     }
 }

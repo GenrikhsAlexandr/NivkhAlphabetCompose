@@ -32,8 +32,9 @@ import com.idapgroup.autosizetext.AutoSizeText
 fun AppBar(
     modifier: Modifier = Modifier,
     currentScreen: String,
-    navController: NavHostController?,
+    navController: NavHostController,
     letter: String?,
+    isLettersCompleted: Boolean,
     onDividerVisibilityChange: (Boolean) -> Unit
 ) {
     CenterAlignedTopAppBar(
@@ -133,7 +134,7 @@ fun AppBar(
                 && currentScreen != NavigationDestination.SplashScreen.destination
             ) {
                 IconButton(onClick = {
-                    navController?.popBackStack()
+                    navController.popBackStack()
                     onDividerVisibilityChange(false)
                 }) {
                     Icon(
@@ -146,14 +147,18 @@ fun AppBar(
         },
         actions = {
             when (currentScreen) {
-                NavigationDestination.LettersScreen.destination -> DialogInfo(
-                    title = stringResource(id = R.string.infoLettersScreen)
-                )
-
-                NavigationDestination.LettersScreen.destination -> DialogInfo(
-                    title = stringResource(id = R.string.infoLettersScreen)
-                )
-
+                NavigationDestination.LettersScreen.destination -> {
+                    DialogInfo(
+                        title = stringResource(id = R.string.infoLettersScreen)
+                    )
+                    DialogGift(
+                        isLettersCompleted = isLettersCompleted,
+                        navController = navController
+                    )
+                    AboutMenu {
+                        navController.navigate(NavigationDestination.AboutScreen.destination)
+                    }
+                }
                 NavigationDestination.TasksScreen.destination -> DialogInfo(
                     title = stringResource(id = R.string.infoTasksScreen, letter!!)
                 )
@@ -195,11 +200,6 @@ fun AppBar(
                 NavigationDestination.RevisionThirdScreen.destination -> DialogInfo(
                     title = stringResource(id = R.string.infoThirdScreen)
                 )
-            }
-            if (currentScreen == NavigationDestination.LettersScreen.destination) {
-                AboutMenu {
-                    navController?.navigate(NavigationDestination.AboutScreen.destination)
-                }
             }
         },
     )

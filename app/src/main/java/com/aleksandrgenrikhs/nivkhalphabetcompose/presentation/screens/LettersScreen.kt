@@ -4,6 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.LettersLayout
@@ -16,15 +19,19 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.TASKS_SCREEN
 fun LetterScreen(
     navController: NavController,
     viewModel: LettersViewModel = hiltViewModel(),
-    onDividerVisibilityChange: (Boolean) -> Unit
+    onDividerVisibilityChange: (Boolean) -> Unit,
+    isLettersCompleted: (Boolean) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    var isCompleted by remember { mutableStateOf(false) }
 
     with(uiState) {
         LaunchedEffect(Unit) {
             viewModel.updateLetters()
             viewModel.checkLetterCompletion()
+            isCompleted = viewModel.isLettersCompleted()
         }
+        isLettersCompleted(isCompleted)
 
         LettersLayout(
             letters = letters,

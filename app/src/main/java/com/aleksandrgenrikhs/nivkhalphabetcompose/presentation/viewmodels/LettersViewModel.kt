@@ -51,4 +51,18 @@ class LettersViewModel
             }
         }
     }
+
+    suspend fun isLettersCompleted(): Boolean {
+        val countLetters = alphabetInteractor.getLetterCompleted(Task.FOURTH.stableId)?.size ?: 0
+        println("countLetters $countLetters")
+        return countLetters > 45
+    }
+
+    suspend fun checkName(): String {
+        return alphabetInteractor.getName()
+    }
+
+    fun saveName(name: String) {
+        alphabetInteractor.saveName(name)
+    }
 }

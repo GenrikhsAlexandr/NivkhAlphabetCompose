@@ -14,9 +14,11 @@ object Constants {
     const val REVISION_SECOND_SCREEN = "revision_second__screen"
     const val REVISION_THIRD_SCREEN = "revision_third_screen"
     const val ABOUT_SCREEN = "about_screen"
+    const val CERTIFICATE_SCREEN = "certificate_screen"
 
     //Костанты для передачи аргументов
     const val LETTER_KEY = "letter"
+    const val NAME_KEY = "name"
 
     //URI константы
     const val WORDS_URL = "words/words.json"

@@ -1,6 +1,7 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.navigator
 
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ABOUT_SCREEN
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.CERTIFICATE_SCREEN
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FIRST_TASK_SCREEN
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FOURTH_TASK_SCREEN
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.LETTERS_SCREEN
@@ -26,4 +27,5 @@ sealed class NavigationDestination(val destination: String) {
     data object RevisionSecondScreen : NavigationDestination(REVISION_SECOND_SCREEN)
     data object RevisionThirdScreen : NavigationDestination(REVISION_THIRD_SCREEN)
     data object AboutScreen : NavigationDestination(ABOUT_SCREEN)
+    data object CertificateScreen : NavigationDestination(CERTIFICATE_SCREEN)
 }

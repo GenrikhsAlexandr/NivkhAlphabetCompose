@@ -22,4 +22,8 @@ class AlphabetInteractor
 
     suspend fun getLetterCompleted(taskId: Int): List<Letters>? =
         sharedPreferencesRepository.getLetterCompleted(taskId)
+
+    fun saveName(name: String) = sharedPreferencesRepository.saveName(name)
+
+    suspend fun getName(): String = sharedPreferencesRepository.getName()
 }

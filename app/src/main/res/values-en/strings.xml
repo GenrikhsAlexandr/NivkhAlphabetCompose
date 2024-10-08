@@ -55,6 +55,12 @@
     <string name="infoRevisionThirdScreen">Fill in the blanks with matching letters, words, and pictures.</string>
     <string name="ok">OK</string>
 
+    <!--Gift-->
+    <string name="notYet">Пройди все буквы нивхского алфавита и вернись сюда еще раз!</string>
+    <string name="congratulation">Потрясающе!!!\nТы прошел все буквы нивхского алфавита за %1$s часов!!! \nЭто удивительный результат, который надо зафиксировать.
+    \nВведи свое имя и фамилию.</string>
+    <string name="next">Готово</string>
+
     <!--Other-->
     <string name="space">space</string>
     <string name="noSoundtrack">no soundtrack</string>

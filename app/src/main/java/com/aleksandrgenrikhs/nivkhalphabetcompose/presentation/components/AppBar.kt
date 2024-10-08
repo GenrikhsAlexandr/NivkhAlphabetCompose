@@ -35,6 +35,8 @@ fun AppBar(
     navController: NavHostController,
     letter: String?,
     isLettersCompleted: Boolean,
+    isNameNotEmpty: Boolean,
+    name: String,
     onDividerVisibilityChange: (Boolean) -> Unit
 ) {
     CenterAlignedTopAppBar(
@@ -127,7 +129,7 @@ fun AppBar(
                 NavigationDestination.AboutScreen.destination -> {
                     TitleAbout()
                 }
-                }
+            }
         },
         navigationIcon = {
             if (currentScreen != NavigationDestination.LettersScreen.destination
@@ -153,12 +155,15 @@ fun AppBar(
                     )
                     DialogGift(
                         isLettersCompleted = isLettersCompleted,
-                        navController = navController
+                        navController = navController,
+                        isNameNotEmpty = isNameNotEmpty,
+                        name = name
                     )
                     AboutMenu {
                         navController.navigate(NavigationDestination.AboutScreen.destination)
                     }
                 }
+
                 NavigationDestination.TasksScreen.destination -> DialogInfo(
                     title = stringResource(id = R.string.infoTasksScreen, letter!!)
                 )

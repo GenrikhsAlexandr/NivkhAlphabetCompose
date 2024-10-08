@@ -33,8 +33,12 @@ class LettersViewModel
         }
     }
 
-    suspend fun checkLetterCompletion() {
-        val lettersCompleted = alphabetInteractor.getLetterCompleted(Task.FOURTH.stableId)?.map {
+    private suspend fun getLetterCompleted(): List<Letters>? {
+        return alphabetInteractor.getLetterCompleted(Task.FOURTH.stableId)
+    }
+
+    suspend fun checkLetterCompleted() {
+        val lettersCompleted = getLetterCompleted()?.map {
             it.title
         }
         if (lettersCompleted != null) {
@@ -52,17 +56,24 @@ class LettersViewModel
         }
     }
 
-    suspend fun isLettersCompleted(): Boolean {
-        val countLetters = alphabetInteractor.getLetterCompleted(Task.FOURTH.stableId)?.size ?: 0
-        println("countLetters $countLetters")
-        return countLetters > 45
+    suspend fun checkAllLettersCompleted() {
+        val lettersCompletedSize = getLetterCompleted()?.size ?: 0
+        if (lettersCompletedSize > 45) {
+            _uiState.update { state ->
+                state.copy(
+                    isAllLettersCompleted = true
+                )
+            }
+        }
     }
 
-    suspend fun checkName(): String {
-        return alphabetInteractor.getName()
-    }
-
-    fun saveName(name: String) {
-        alphabetInteractor.saveName(name)
+    suspend fun checkName() {
+        val name = alphabetInteractor.getName()
+        _uiState.update { state ->
+            state.copy(
+                nameUser = name,
+                isUserNameNotEmpty = name.isNotEmpty()
+            )
+        }
     }
 }

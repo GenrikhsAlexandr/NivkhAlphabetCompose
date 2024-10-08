@@ -53,7 +53,9 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.CERTIFICATE_SC
 fun DialogGift(
     isLettersCompleted: Boolean,
     modifier: Modifier = Modifier,
-    navController: NavController
+    navController: NavController,
+    name: String,
+    isNameNotEmpty: Boolean
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -61,7 +63,12 @@ fun DialogGift(
         modifier = modifier
             .clip(CircleShape)
             .padding(end = 8.dp)
-            .clickable { expanded = true },
+            .clickable {
+                if (isNameNotEmpty) {
+                    navController.navigate("$CERTIFICATE_SCREEN/$name")
+                }
+                expanded = true
+            },
         contentAlignment = Alignment.Center
     ) {
         Image(
@@ -76,7 +83,7 @@ fun DialogGift(
         DialogGifItem(
             onDismissRequest = { expanded = false },
             isLettersCompleted = isLettersCompleted,
-            navController = navController
+            navController = navController,
         )
     }
 }
@@ -197,7 +204,9 @@ private fun DialogGiftPreview() {
     NivkhAlphabetComposeTheme {
         DialogGift(
             isLettersCompleted = true,
-            navController = rememberNavController()
+            navController = rememberNavController(),
+            name = "Иванов Иван Иванович",
+            isNameNotEmpty = false
         )
     }
 }

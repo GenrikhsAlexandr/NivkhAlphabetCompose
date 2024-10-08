@@ -47,6 +47,8 @@ fun NavHost(
     val letter = currentBackStackEntry?.arguments?.getString(Constants.LETTER_KEY)
     var isDividerVisible by remember { mutableStateOf(false) }
     var isLetterCompleted by remember { mutableStateOf(false) }
+    var isNameNotEmpty by remember { mutableStateOf(false) }
+    var nameUser by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
@@ -60,7 +62,9 @@ fun NavHost(
                             isLettersCompleted = isLetterCompleted,
                             onDividerVisibilityChange = { isVisibility ->
                                 isDividerVisible = isVisibility
-                            }
+                            },
+                            isNameNotEmpty = isNameNotEmpty,
+                            name = nameUser
                         )
                         if (isDividerVisible) {
                             HorizontalDivider(
@@ -119,12 +123,20 @@ fun NavHost(
                     },
                     isLettersCompleted = { isCompleted ->
                         isLetterCompleted = isCompleted
+                    },
+                    isNameNotEmpty = { isNotEmpty ->
+                        isNameNotEmpty = isNotEmpty
+                    },
+                    name = { name ->
+                        nameUser = name
                     }
                 )
             }
             composable(
                 route = "${NavigationDestination.TasksScreen.destination}/{${Constants.LETTER_KEY}}",
-                arguments = listOf(navArgument(Constants.LETTER_KEY) { type = NavType.StringType })
+                arguments = listOf(navArgument(Constants.LETTER_KEY) {
+                    type = NavType.StringType
+                })
             ) { backStackEntry ->
                 backStackEntry.arguments?.getString(Constants.LETTER_KEY)?.let {
                     TasksScreen(
@@ -138,7 +150,9 @@ fun NavHost(
             }
             composable(
                 route = "${NavigationDestination.FirstTaskScreen.destination}/{${Constants.LETTER_KEY}}",
-                arguments = listOf(navArgument(Constants.LETTER_KEY) { type = NavType.StringType }
+                arguments = listOf(navArgument(Constants.LETTER_KEY) {
+                    type = NavType.StringType
+                }
                 )
             )
             { backStackEntry ->
@@ -244,11 +258,12 @@ fun NavHost(
             }
             composable(
                 route = "${NavigationDestination.CertificateScreen.destination}/{${Constants.NAME_KEY}}",
-                arguments = listOf(navArgument(Constants.NAME_KEY) { type = NavType.StringType })
+                arguments = listOf(navArgument(Constants.NAME_KEY) {
+                    type = NavType.StringType
+                })
             ) { backStackEntry ->
                 backStackEntry.arguments?.getString(Constants.NAME_KEY)?.let {
                     CertificateScreen(
-                        navController = navController,
                         name = it,
                         onDividerVisibilityChange = { isVisibility ->
                             isDividerVisible = isVisibility

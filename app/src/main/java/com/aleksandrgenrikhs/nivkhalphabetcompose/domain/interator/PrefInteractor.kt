@@ -19,7 +19,7 @@ class PrefInteractor
 
     suspend fun saveName(name: String) {
         val currentValue = sharedPreferencesRepository.getName()
-        if (currentValue.isNotEmpty()) {
+        if (currentValue.isEmpty()) {
             sharedPreferencesRepository.saveName(name)
         }
     }
@@ -40,7 +40,10 @@ class PrefInteractor
             val millisInDay = 24 * 60 * 60 * 1000
             val differenceInMillis =
                 (timeEnd - sharedPreferencesRepository.getStartTimeLearningAlphabet()) / millisInDay
-            sharedPreferencesRepository.saveTimeLearningAlphabet(differenceInMillis.toInt())
+            if (differenceInMillis < 1) {
+                sharedPreferencesRepository.saveTimeLearningAlphabet(1)
+            } else
+                sharedPreferencesRepository.saveTimeLearningAlphabet(differenceInMillis.toInt())
         }
     }
 

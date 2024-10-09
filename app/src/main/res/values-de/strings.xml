@@ -57,9 +57,12 @@
 
     <!--Gift-->
     <string name="notYet">Пройди все буквы нивхского алфавита и вернись сюда еще раз!</string>
-    <string name="congratulation">Потрясающе!!!\nТы прошел все буквы нивхского алфавита за %1$s часов!!! \nЭто удивительный результат, который надо зафиксировать.
+    <string name="congratulation">Потрясающе!!!\nТы прошел все буквы нивхского алфавита за %1$s дней!!! \nЭто удивительный результат, который надо зафиксировать.
     \nВведи свое имя и фамилию.</string>
     <string name="next">Готово</string>
+    <string name="certificate">Certificate</string>
+    <string name="down_load_receipt_success">Загрузка завершена успешно</string>
+    <string name="download_receipt_error">Ошибка загрузки: %1$s</string>
 
     <!--Andere-->
     <string name="space">Leerzeichen</string>

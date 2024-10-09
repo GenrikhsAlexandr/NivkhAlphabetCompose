@@ -30,4 +30,9 @@ object Constants {
 
     //Количество букв в алфавите
     const val COUNT_LETTERS = 46
+
+    //PDF константы
+    const val FILE_NAME = "certificate.pdf"
+    const val CONTENT_TYPE_PDF = "application/pdf"
+
 }

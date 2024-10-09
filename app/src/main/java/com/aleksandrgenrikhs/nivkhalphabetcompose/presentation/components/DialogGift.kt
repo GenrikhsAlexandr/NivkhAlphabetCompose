@@ -62,8 +62,8 @@ fun DialogGift(
 
     Box(
         modifier = modifier
-            .clip(CircleShape)
             .padding(end = 8.dp)
+            .clip(CircleShape)
             .clickable {
                 if (isNameNotEmpty) {
                     navController.navigate("$CERTIFICATE_SCREEN/$name")
@@ -153,7 +153,9 @@ fun DialogGifItem(
                             if (isError) Text("Поле не должно быть пустым") else
                                 Text(text = "Имя Фамилия")
                         },
-                        onValueChange = { newName -> name = newName },
+                        onValueChange = { newName ->
+                            name = newName.filter { it.isLetter() || it.isWhitespace() }
+                        },
                         modifier = modifier
                             .padding(8.dp)
                             .fillMaxWidth(),

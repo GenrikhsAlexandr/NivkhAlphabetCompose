@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
@@ -33,8 +34,9 @@ fun AboutMenu(
     var expanded by remember { mutableStateOf(false) }
     Box(
         modifier = modifier
-            .wrapContentSize()
             .padding(end = 8.dp)
+            .clip(MaterialTheme.shapes.medium)
+            .wrapContentSize()
             .clickable { expanded = true },
         contentAlignment = Alignment.Center
     ) {

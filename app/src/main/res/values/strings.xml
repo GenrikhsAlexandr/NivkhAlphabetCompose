@@ -59,6 +59,9 @@
     <string name="congratulation">Потрясающе!!!\nТы прошел все буквы нивхского алфавита за %1$s дней!!! \nЭто удивительный результат, который надо зафиксировать.
     \nВведи свое имя и фамилию.</string>
     <string name="next">Готово</string>
+    <string name="certificate">Сертификат</string>
+    <string name="down_load_receipt_success">Загрузка завершена успешно</string>
+    <string name="download_receipt_error">Ошибка загрузки: %1$s</string>
 
     <!--Другое-->
     <string name="space">пробел</string>

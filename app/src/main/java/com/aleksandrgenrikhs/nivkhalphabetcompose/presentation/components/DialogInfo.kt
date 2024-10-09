@@ -42,8 +42,8 @@ fun DialogInfo(
     var expanded by remember { mutableStateOf(false) }
     Box(
         modifier = modifier
-            .clip(CircleShape)
             .padding(end = 8.dp)
+            .clip(CircleShape)
             .clickable { expanded = true },
         contentAlignment = Alignment.Center
     ) {

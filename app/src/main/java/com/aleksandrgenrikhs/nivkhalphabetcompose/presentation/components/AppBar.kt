@@ -130,6 +130,13 @@ fun AppBar(
                 NavigationDestination.AboutScreen.destination -> {
                     TitleAbout()
                 }
+
+                NavigationDestination.CertificateScreen.destination -> {
+                    Text(
+                        text = stringResource(id = R.string.certificate),
+                        style = MaterialTheme.typography.titleLarge,
+                    )
+                }
             }
         },
         navigationIcon = {
@@ -207,8 +214,10 @@ fun AppBar(
                 NavigationDestination.RevisionThirdScreen.destination -> DialogInfo(
                     title = stringResource(id = R.string.infoThirdScreen)
                 )
+
+                NavigationDestination.CertificateScreen.destination -> DownloadButton()
             }
-        },
+        }
     )
 }
 

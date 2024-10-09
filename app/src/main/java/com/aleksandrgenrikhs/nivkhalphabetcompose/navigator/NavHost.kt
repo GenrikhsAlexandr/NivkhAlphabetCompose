@@ -271,9 +271,6 @@ fun NavHost(
                 backStackEntry.arguments?.getString(Constants.NAME_KEY)?.let {
                     CertificateScreen(
                         name = it,
-                        onDividerVisibilityChange = { isVisibility ->
-                            isDividerVisible = isVisibility
-                        }
                     )
                 }
             }

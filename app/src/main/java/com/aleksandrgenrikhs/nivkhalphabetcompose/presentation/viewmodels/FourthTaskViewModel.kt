@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.AlphabetInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.FourthTaskInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.PrefInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.FourthTaskUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
@@ -22,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FourthTaskViewModel
 @Inject constructor(
-    private val alphabetInteractor: AlphabetInteractor,
+    private val prefInteractor: PrefInteractor,
     private val fourthTaskInteractor: FourthTaskInteractor,
     private val mediaPlayerInteractor: MediaPlayerInteractor,
     private val context: Context
@@ -112,7 +112,7 @@ class FourthTaskViewModel
 
     private fun saveTaskProgress() {
         if (uiState.value.isCompleted) {
-            alphabetInteractor.taskCompleted(Task.FOURTH.stableId, uiState.value.selectedLetter)
+            prefInteractor.taskCompleted(Task.FOURTH.stableId, uiState.value.selectedLetter)
         }
     }
 

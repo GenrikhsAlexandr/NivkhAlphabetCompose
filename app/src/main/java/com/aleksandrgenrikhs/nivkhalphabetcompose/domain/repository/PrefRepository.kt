@@ -13,4 +13,12 @@ interface PrefRepository {
     fun saveName(name: String)
 
     suspend fun getName(): String
+
+    fun saveStartTimeLearningAlphabet()
+
+    suspend fun getStartTimeLearningAlphabet(): Long
+
+    suspend fun saveTimeLearningAlphabet(time: Int)
+
+    suspend fun getTimeLearningAlphabet(): Int
 }

@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.AlphabetInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.FirstTaskUseCase
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.PrefInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateFirstTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.FirstTaskUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
@@ -22,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FirstTaskViewModel
 @Inject constructor(
-    private val alphabetInteractor: AlphabetInteractor,
+    private val prefInteractor: PrefInteractor,
     private val firstTaskUseCase: FirstTaskUseCase,
     private val uiStateMapper: UIStateFirstTaskMapper,
     private val mediaPlayerInteractor: MediaPlayerInteractor,
@@ -37,6 +37,12 @@ class FirstTaskViewModel
             _uiState.value.copy(
                 selectedLetter = letter,
             )
+        }
+    }
+
+    init {
+        viewModelScope.launch {
+            prefInteractor.saveStartTimeLearning()
         }
     }
 
@@ -59,7 +65,7 @@ class FirstTaskViewModel
 
     suspend fun checkTaskCompletion(letter: String) {
         _uiState.update { state ->
-            val isTaskCompleted = alphabetInteractor.isTaskCompleted(
+            val isTaskCompleted = prefInteractor.isTaskCompleted(
                 Task.FIRST.stableId,
                 letter
             )
@@ -137,7 +143,7 @@ class FirstTaskViewModel
 
     private fun saveTaskProgress() {
         if (uiState.value.isCompletedWords.last()) {
-            alphabetInteractor.taskCompleted(
+            prefInteractor.taskCompleted(
                 Task.FIRST.stableId,
                 uiState.value.selectedLetter
             )

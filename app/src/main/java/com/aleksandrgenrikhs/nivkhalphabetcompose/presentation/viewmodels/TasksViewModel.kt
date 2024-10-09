@@ -2,7 +2,7 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.AlphabetInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.PrefInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.TaskUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class TasksViewModel
 @Inject constructor(
-    private val alphabetInteractor: AlphabetInteractor,
+    private val prefInteractor: PrefInteractor,
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<TaskUIState> = MutableStateFlow(
@@ -31,7 +31,7 @@ class TasksViewModel
             val newIsTaskCompleted = state.isTaskCompleted.toMutableList()
             val newIsNextTaskVisible = state.isNextTaskVisible.toMutableList()
             state.stablesId.mapIndexed { index, id ->
-                val isTaskCompleted = alphabetInteractor.isTaskCompleted(id, letter)
+                val isTaskCompleted = prefInteractor.isTaskCompleted(id, letter)
                 newIsTaskCompleted[index] = isTaskCompleted
 
                 if (newIsTaskCompleted[index] && index < state.stablesId.lastIndex) {

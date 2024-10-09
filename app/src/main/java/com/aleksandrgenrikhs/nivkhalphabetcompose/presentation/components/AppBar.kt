@@ -37,6 +37,7 @@ fun AppBar(
     isLettersCompleted: Boolean,
     isNameNotEmpty: Boolean,
     name: String,
+    timeLearning: Int,
     onDividerVisibilityChange: (Boolean) -> Unit
 ) {
     CenterAlignedTopAppBar(
@@ -157,7 +158,8 @@ fun AppBar(
                         isLettersCompleted = isLettersCompleted,
                         navController = navController,
                         isNameNotEmpty = isNameNotEmpty,
-                        name = name
+                        name = name,
+                        timeLearning = timeLearning
                     )
                     AboutMenu {
                         navController.navigate(NavigationDestination.AboutScreen.destination)

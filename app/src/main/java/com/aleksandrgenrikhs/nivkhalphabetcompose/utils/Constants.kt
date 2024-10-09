@@ -27,4 +27,7 @@ object Constants {
     const val WORDS_AUDIO = "audio/words/"
     const val ERROR_AUDIO = "audio/error"
     const val FINISH_AUDIO = "audio/finish"
+
+    //Количество букв в алфавите
+    const val COUNT_LETTERS = 46
 }

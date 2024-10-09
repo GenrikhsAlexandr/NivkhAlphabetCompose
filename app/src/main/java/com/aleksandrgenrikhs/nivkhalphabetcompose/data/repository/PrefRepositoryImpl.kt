@@ -39,12 +39,6 @@ class PrefRepositoryImpl
     }
 
     override fun saveName(name: String) {
-        val currentValue = preferences.getString("fullName", "")
-        if (!currentValue.isNullOrEmpty() && currentValue != name) {
-            preferences.edit()
-                .remove("fullName")
-                .apply()
-        }
         preferences.edit()
             .putString("fullName", name)
             .apply()
@@ -53,6 +47,25 @@ class PrefRepositoryImpl
     override suspend fun getName(): String {
         return preferences.getString("fullName", "") ?: ""
     }
+
+    override fun saveStartTimeLearningAlphabet() {
+        val time = System.currentTimeMillis()
+        preferences.edit()
+            .putLong("startTime", time)
+            .apply()
+    }
+
+    override suspend fun getStartTimeLearningAlphabet(): Long =
+        preferences.getLong("startTime", 0L)
+
+    override suspend fun saveTimeLearningAlphabet(time: Int) {
+        preferences.edit()
+            .putInt("timeLearningAlphabet", time)
+            .apply()
+    }
+
+    override suspend fun getTimeLearningAlphabet(): Int =
+        preferences.getInt("timeLearningAlphabet", 0)
 
     override suspend fun isTaskCompleted(taskId: Int, letterId: String): Boolean {
         val completedLetters = getLetterCompleted(taskId)

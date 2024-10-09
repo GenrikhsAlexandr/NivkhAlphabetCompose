@@ -3,9 +3,10 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels
 import androidx.lifecycle.ViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Letters
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.AlphabetInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.PrefInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateLettersMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.LettersUIState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.COUNT_LETTERS
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LettersViewModel
 @Inject constructor(
-    private val alphabetInteractor: AlphabetInteractor,
+    private val prefInteractor: PrefInteractor,
     private val uiStateMapper: UIStateLettersMapper
 ) : ViewModel() {
 
@@ -34,7 +35,7 @@ class LettersViewModel
     }
 
     private suspend fun getLetterCompleted(): List<Letters>? {
-        return alphabetInteractor.getLetterCompleted(Task.FOURTH.stableId)
+        return prefInteractor.getLetterCompleted(Task.FOURTH.stableId)
     }
 
     suspend fun checkLetterCompleted() {
@@ -58,7 +59,8 @@ class LettersViewModel
 
     suspend fun checkAllLettersCompleted() {
         val lettersCompletedSize = getLetterCompleted()?.size ?: 0
-        if (lettersCompletedSize > 45) {
+        if (lettersCompletedSize == COUNT_LETTERS) {
+            prefInteractor.saveTimeLearning()
             _uiState.update { state ->
                 state.copy(
                     isAllLettersCompleted = true
@@ -68,11 +70,20 @@ class LettersViewModel
     }
 
     suspend fun checkName() {
-        val name = alphabetInteractor.getName()
+        val name = prefInteractor.getName()
         _uiState.update { state ->
             state.copy(
                 nameUser = name,
                 isUserNameNotEmpty = name.isNotEmpty()
+            )
+        }
+    }
+
+    suspend fun getTimeLearning() {
+        val time = prefInteractor.getTimeLearning()
+        _uiState.update { state ->
+            state.copy(
+                timeLearning = time
             )
         }
     }

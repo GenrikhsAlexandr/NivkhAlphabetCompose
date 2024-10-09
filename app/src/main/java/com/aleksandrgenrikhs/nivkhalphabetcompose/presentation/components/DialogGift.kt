@@ -55,7 +55,8 @@ fun DialogGift(
     modifier: Modifier = Modifier,
     navController: NavController,
     name: String,
-    isNameNotEmpty: Boolean
+    isNameNotEmpty: Boolean,
+    timeLearning: Int
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -84,6 +85,7 @@ fun DialogGift(
             onDismissRequest = { expanded = false },
             isLettersCompleted = isLettersCompleted,
             navController = navController,
+            timeLearning = timeLearning
         )
     }
 }
@@ -93,6 +95,7 @@ fun DialogGifItem(
     navController: NavController,
     onDismissRequest: () -> Unit,
     isLettersCompleted: Boolean,
+    timeLearning: Int,
     modifier: Modifier = Modifier
 ) {
     var name by remember { mutableStateOf("") }
@@ -136,7 +139,7 @@ fun DialogGifItem(
                 )
                 Text(
                     text = if (!isLettersCompleted) stringResource(id = R.string.notYet) else stringResource(
-                        id = R.string.congratulation
+                        id = R.string.congratulation, timeLearning
                     ),
                     style = MaterialTheme.typography.titleLarge,
                     modifier = modifier.padding(16.dp),
@@ -206,7 +209,8 @@ private fun DialogGiftPreview() {
             isLettersCompleted = true,
             navController = rememberNavController(),
             name = "Иванов Иван Иванович",
-            isNameNotEmpty = false
+            isNameNotEmpty = false,
+            timeLearning = 0
         )
     }
 }

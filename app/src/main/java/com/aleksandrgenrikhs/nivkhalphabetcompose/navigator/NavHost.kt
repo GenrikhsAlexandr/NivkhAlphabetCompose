@@ -9,6 +9,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -49,6 +50,7 @@ fun NavHost(
     var isLetterCompleted by remember { mutableStateOf(false) }
     var isNameNotEmpty by remember { mutableStateOf(false) }
     var nameUser by remember { mutableStateOf("") }
+    var timeLearningAlphabet by remember { mutableIntStateOf(0) }
 
     Scaffold(
         topBar = {
@@ -64,7 +66,8 @@ fun NavHost(
                                 isDividerVisible = isVisibility
                             },
                             isNameNotEmpty = isNameNotEmpty,
-                            name = nameUser
+                            name = nameUser,
+                            timeLearning = timeLearningAlphabet,
                         )
                         if (isDividerVisible) {
                             HorizontalDivider(
@@ -129,6 +132,9 @@ fun NavHost(
                     },
                     name = { name ->
                         nameUser = name
+                    },
+                    timeLearningAlphabet = { time ->
+                        timeLearningAlphabet = time
                     }
                 )
             }

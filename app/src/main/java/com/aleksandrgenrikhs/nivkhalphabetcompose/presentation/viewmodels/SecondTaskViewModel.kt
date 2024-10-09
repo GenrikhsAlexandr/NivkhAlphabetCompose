@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.AlphabetInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.PrefInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.SecondTaskInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateSecondTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.SecondTaskUIState
@@ -24,7 +24,7 @@ import javax.inject.Inject
 class SecondTaskViewModel
 @Inject constructor(
     private val secondInteractor: SecondTaskInteractor,
-    private val alphabetInteractor: AlphabetInteractor,
+    private val prefInteractor: PrefInteractor,
     private val uiStateMapper: UIStateSecondTaskMapper,
     private val mediaPlayerInteractor: MediaPlayerInteractor,
     private val context: Context
@@ -104,7 +104,7 @@ class SecondTaskViewModel
 
     private fun saveTaskProgress() {
         if (uiState.value.isCompleted) {
-            alphabetInteractor.taskCompleted(Task.SECOND.stableId, uiState.value.selectedLetter)
+            prefInteractor.taskCompleted(Task.SECOND.stableId, uiState.value.selectedLetter)
         }
     }
 

@@ -4,8 +4,8 @@ import android.content.ClipData
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.AlphabetInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.PrefInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.ThirdTaskUseCase
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateThirdTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.ThirdTaskUIState
@@ -20,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ThirdTaskViewModel
 @Inject constructor(
-    private val alphabetInteractor: AlphabetInteractor,
+    private val prefInteractor: PrefInteractor,
     private val thirdUseCase: ThirdTaskUseCase,
     private val uiStateMapper: UIStateThirdTaskMapper,
     private val mediaPlayerInteractor: MediaPlayerInteractor,
@@ -101,7 +101,7 @@ class ThirdTaskViewModel
                     isAnswerCorrect = true
                 )
             }
-            alphabetInteractor.taskCompleted(Task.THIRD.stableId, uiState.value.selectedLetter)
+            prefInteractor.taskCompleted(Task.THIRD.stableId, uiState.value.selectedLetter)
         } else {
             playSound(ERROR_AUDIO)
             _uiState.update { state ->

@@ -5,5 +5,6 @@ data class LettersUIState(
     val isLetterCompleted: List<Boolean> = emptyList(),
     val nameUser: String = "",
     val isUserNameNotEmpty: Boolean = false,
-    val isAllLettersCompleted: Boolean = false
+    val isAllLettersCompleted: Boolean = false,
+    val timeLearning: Int = 0
 )

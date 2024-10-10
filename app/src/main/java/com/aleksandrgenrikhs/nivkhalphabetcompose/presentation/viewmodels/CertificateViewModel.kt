@@ -45,6 +45,8 @@ class CertificateViewModel
                 _uiState.update { state ->
                     state.copy(
                         error = true,
+                        errorMessage = result.exceptionOrNull()?.message ?: "unknown error",
+                        pdfFile = null,
                         loading = false
                     )
                 }

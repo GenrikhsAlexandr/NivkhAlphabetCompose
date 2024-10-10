@@ -38,7 +38,8 @@ fun AppBar(
     isNameNotEmpty: Boolean,
     name: String,
     timeLearning: Int,
-    onDividerVisibilityChange: (Boolean) -> Unit
+    onDividerVisibilityChange: (Boolean) -> Unit,
+    pdfByteArray: ByteArray
 ) {
     CenterAlignedTopAppBar(
         modifier = modifier
@@ -215,7 +216,9 @@ fun AppBar(
                     title = stringResource(id = R.string.infoThirdScreen)
                 )
 
-                NavigationDestination.CertificateScreen.destination -> DownloadButton()
+                NavigationDestination.CertificateScreen.destination -> DownloadButton(
+                    pdfByteArray = pdfByteArray
+                )
             }
         }
     )

@@ -25,7 +25,8 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.Certif
 
 @Composable
 fun DownloadButton(
-    viewModel: CertificateViewModel = hiltViewModel()
+    viewModel: CertificateViewModel = hiltViewModel(),
+    pdfByteArray: ByteArray
 ) {
     var downloadButtonClickable by remember { mutableStateOf(true) }
     val context = LocalContext.current
@@ -40,7 +41,7 @@ fun DownloadButton(
             .clickable(
                 enabled = downloadButtonClickable,
                 onClick = {
-                    val downLoadResult = viewModel.downloadCertificate()
+                    val downLoadResult = viewModel.downloadCertificate(pdfByteArray)
                     when {
                         downLoadResult.isSuccess -> {
                             showToast(context.getString(R.string.down_load_receipt_success))

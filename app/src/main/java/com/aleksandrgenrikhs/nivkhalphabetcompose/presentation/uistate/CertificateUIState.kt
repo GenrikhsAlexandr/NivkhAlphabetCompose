@@ -1,5 +1,7 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate
 
 data class CertificateUIState(
-    val name: String = "",
+    val loading: Boolean = false,
+    val error: Boolean = false,
+    val pdfFile: ByteArray? = null
 )

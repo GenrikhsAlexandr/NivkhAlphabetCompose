@@ -51,6 +51,7 @@ fun NavHost(
     var isNameNotEmpty by remember { mutableStateOf(false) }
     var nameUser by remember { mutableStateOf("") }
     var timeLearningAlphabet by remember { mutableIntStateOf(0) }
+    var pdfByteArray by remember { mutableStateOf(ByteArray(0)) }
 
     Scaffold(
         topBar = {
@@ -68,6 +69,7 @@ fun NavHost(
                             isNameNotEmpty = isNameNotEmpty,
                             name = nameUser,
                             timeLearning = timeLearningAlphabet,
+                            pdfByteArray = pdfByteArray
                         )
                         if (isDividerVisible) {
                             HorizontalDivider(
@@ -271,6 +273,9 @@ fun NavHost(
                 backStackEntry.arguments?.getString(Constants.NAME_KEY)?.let {
                     CertificateScreen(
                         name = it,
+                        pdfByteArray = { pdf ->
+                            pdfByteArray = pdf
+                        },
                     )
                 }
             }

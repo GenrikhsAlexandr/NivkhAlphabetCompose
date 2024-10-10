@@ -67,7 +67,7 @@ fun DownloadButton(
             contentDescription = null,
             contentScale = ContentScale.Fit,
             modifier = Modifier
-                .size(50.dp)
+                .size(40.dp)
         )
     }
 }

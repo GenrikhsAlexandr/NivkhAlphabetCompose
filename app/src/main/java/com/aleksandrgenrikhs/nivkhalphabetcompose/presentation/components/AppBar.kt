@@ -51,9 +51,11 @@ fun AppBar(
         title = {
             when (currentScreen) {
                 NavigationDestination.LettersScreen.destination -> {
-                    Text(
+                    AutoSizeText(
                         text = stringResource(id = R.string.appName),
-                        style = MaterialTheme.typography.titleLarge
+                        style = MaterialTheme.typography.titleLarge,
+                        maxLines = 1,
+                        minFontSize = 20.sp,
                     )
                 }
 

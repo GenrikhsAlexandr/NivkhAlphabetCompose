@@ -77,7 +77,7 @@ fun DialogGift(
             contentDescription = null,
             contentScale = ContentScale.Fit,
             modifier = modifier
-                .height(50.dp)
+                .height(30.dp)
         )
     }
     if (expanded) {

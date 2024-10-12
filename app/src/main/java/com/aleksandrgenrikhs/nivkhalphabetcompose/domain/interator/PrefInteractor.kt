@@ -17,14 +17,14 @@ class PrefInteractor
     suspend fun getLetterCompleted(taskId: Int): List<Letters>? =
         sharedPreferencesRepository.getLetterCompleted(taskId)
 
-    suspend fun saveName(name: String) {
-        val currentValue = sharedPreferencesRepository.getName()
-        if (currentValue.isEmpty()) {
-            sharedPreferencesRepository.saveName(name)
+    suspend fun saveIsCertificateCreated(value: Boolean) {
+        val currentValue = sharedPreferencesRepository.getCertificateStatus()
+        if (!currentValue) {
+            sharedPreferencesRepository.saveIsCertificateCreated(value)
         }
     }
 
-    suspend fun getName(): String = sharedPreferencesRepository.getName()
+    suspend fun getCertificateStatus(): Boolean = sharedPreferencesRepository.getCertificateStatus()
 
     suspend fun saveStartTimeLearning() {
         val currentValue = sharedPreferencesRepository.getStartTimeLearningAlphabet()

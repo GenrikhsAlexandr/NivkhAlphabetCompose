@@ -27,7 +27,7 @@ import javax.inject.Inject
 class AlphabetDataSource
 @Inject constructor(
     private val context: Context,
-    private val json: Json = Json { ignoreUnknownKeys = true }
+    private val json: Json = Json { ignoreUnknownKeys = true },
 ) {
 
     suspend fun getWords(): List<SubjectDto> {
@@ -44,11 +44,35 @@ class AlphabetDataSource
         }
     }
 
-    suspend fun generateCertificatePdf(name: String): Result<String> {
-        val pdfFile = File(context.cacheDir, FILE_NAME)
+    fun getPdfFilePath(): File {
+        return File(context.cacheDir, FILE_NAME)
+    }
 
+    suspend fun renderPdfPage(name: String): Bitmap? {
+        generateCertificatePdf(name)
+        return try {
+            val fileDescriptor =
+                ParcelFileDescriptor.open(getPdfFilePath(), ParcelFileDescriptor.MODE_READ_ONLY)
+            val pdfRenderer = PdfRenderer(fileDescriptor)
+            val page = pdfRenderer.openPage(0)
+            val width = page.width
+            val height = page.height
+            val tempBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+            page.render(tempBitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
+            page.close()
+            pdfRenderer.close()
+            fileDescriptor.close()
+            tempBitmap
+        } catch (e: IOException) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    private suspend fun generateCertificatePdf(name: String): String {
+        val pdfFile = getPdfFilePath()
         if (pdfFile.exists()) {
-            return Result.success(pdfFile.absolutePath)
+            return pdfFile.absolutePath
         }
         return withContext(Dispatchers.IO) {
             try {
@@ -77,30 +101,11 @@ class AlphabetDataSource
                 }
                 document.close()
 
-                Result.success(pdfFile.absolutePath)
+                pdfFile.absolutePath
             } catch (e: IOException) {
-                Result.failure(IOException("Error generating PDF ${e.message}"))
+                e.printStackTrace()
+                throw e
             }
-        }
-    }
-
-    fun renderPdfPage(pdfFile: File): Bitmap? {
-        return try {
-            val fileDescriptor =
-                ParcelFileDescriptor.open(pdfFile, ParcelFileDescriptor.MODE_READ_ONLY)
-            val pdfRenderer = PdfRenderer(fileDescriptor)
-            val page = pdfRenderer.openPage(0)
-            val width = page.width
-            val height = page.height
-            val tempBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-            page.render(tempBitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
-            page.close()
-            pdfRenderer.close()
-            fileDescriptor.close()
-            tempBitmap
-        } catch (e: IOException) {
-            e.printStackTrace()
-            null
         }
     }
 

@@ -35,11 +35,9 @@ fun AppBar(
     navController: NavHostController,
     letter: String?,
     isLettersCompleted: Boolean,
-    isNameNotEmpty: Boolean,
-    name: String,
+    isCertificateCreated: Boolean,
     timeLearning: Int,
     onDividerVisibilityChange: (Boolean) -> Unit,
-    pdfFilePath: String
 ) {
     CenterAlignedTopAppBar(
         modifier = modifier
@@ -167,8 +165,7 @@ fun AppBar(
                     DialogGift(
                         isLettersCompleted = isLettersCompleted,
                         navController = navController,
-                        isNameNotEmpty = isNameNotEmpty,
-                        name = name,
+                        isCertificateCreated = isCertificateCreated,
                         timeLearning = timeLearning
                     )
                     AboutMenu {
@@ -218,9 +215,7 @@ fun AppBar(
                     title = stringResource(id = R.string.infoThirdScreen)
                 )
 
-                NavigationDestination.CertificateScreen.destination -> DownloadButton(
-                    pdfFilePath = pdfFilePath
-                )
+                NavigationDestination.CertificateScreen.destination -> DownloadButton()
             }
         }
     )

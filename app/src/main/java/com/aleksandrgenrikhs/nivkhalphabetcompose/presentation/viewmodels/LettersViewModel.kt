@@ -69,12 +69,11 @@ class LettersViewModel
         }
     }
 
-    suspend fun checkName() {
-        val name = prefInteractor.getName()
+    suspend fun checkCertificateStatus() {
+        val currentValue = prefInteractor.getCertificateStatus()
         _uiState.update { state ->
             state.copy(
-                nameUser = name,
-                isUserNameNotEmpty = name.isNotEmpty()
+                getCertificateStatus = currentValue
             )
         }
     }

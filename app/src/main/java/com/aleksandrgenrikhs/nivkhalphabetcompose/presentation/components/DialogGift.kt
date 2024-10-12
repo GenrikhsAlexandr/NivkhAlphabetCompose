@@ -54,8 +54,7 @@ fun DialogGift(
     isLettersCompleted: Boolean,
     modifier: Modifier = Modifier,
     navController: NavController,
-    name: String,
-    isNameNotEmpty: Boolean,
+    isCertificateCreated: Boolean,
     timeLearning: Int
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -65,7 +64,8 @@ fun DialogGift(
             .padding(end = 8.dp)
             .clip(CircleShape)
             .clickable {
-                if (isNameNotEmpty) {
+                if (isCertificateCreated) {
+                    val name = ""
                     navController.navigate("$CERTIFICATE_SCREEN/$name")
                 }
                 expanded = true
@@ -210,8 +210,7 @@ private fun DialogGiftPreview() {
         DialogGift(
             isLettersCompleted = true,
             navController = rememberNavController(),
-            name = "Иванов Иван Иванович",
-            isNameNotEmpty = false,
+            isCertificateCreated = false,
             timeLearning = 0
         )
     }

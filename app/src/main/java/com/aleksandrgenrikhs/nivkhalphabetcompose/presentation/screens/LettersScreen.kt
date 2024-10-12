@@ -18,8 +18,7 @@ fun LetterScreen(
     viewModel: LettersViewModel = hiltViewModel(),
     onDividerVisibilityChange: (Boolean) -> Unit,
     isLettersCompleted: (Boolean) -> Unit,
-    isNameNotEmpty: (Boolean) -> Unit,
-    name: (String) -> Unit,
+    isCertificateCreated: (Boolean) -> Unit,
     timeLearningAlphabet: (Int) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -28,13 +27,12 @@ fun LetterScreen(
         LaunchedEffect(Unit) {
             viewModel.updateLetters()
             viewModel.checkLetterCompleted()
-            viewModel.checkName()
+            viewModel.checkCertificateStatus()
             viewModel.checkAllLettersCompleted()
             viewModel.getTimeLearning()
         }
         isLettersCompleted(isAllLettersCompleted)
-        isNameNotEmpty(isUserNameNotEmpty)
-        name(nameUser)
+        isCertificateCreated(getCertificateStatus)
         timeLearningAlphabet(timeLearning)
 
         LettersLayout(

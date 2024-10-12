@@ -26,27 +26,18 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorErr
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.CertificateUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.CertificateViewModel
-import java.io.File
 
 @Composable
 fun CertificateScreen(
     name: String,
     viewModel: CertificateViewModel = hiltViewModel(),
-    pdfPath: (String) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
-    val pdfFile = File(uiState.pdfPath)
 
-    LaunchedEffect(uiState.pdfPath) {
-        viewModel.generateCertificate(name)
-        viewModel.saveName(name)
-        if (!pdfFile.exists()) {
-            return@LaunchedEffect
-        }
-        bitmap = viewModel.rendersCertificate(pdfFile)
+    LaunchedEffect(Unit) {
+        bitmap = viewModel.rendersCertificate(name)
     }
-    pdfPath(uiState.pdfPath)
     CertificateLayout(uiState, bitmap)
 }
 

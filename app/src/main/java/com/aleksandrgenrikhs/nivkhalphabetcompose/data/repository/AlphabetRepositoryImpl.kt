@@ -11,6 +11,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.mapper.WordMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.AlphabetRepository
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.CONTENT_TYPE_PDF
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FILE_NAME
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -38,15 +39,12 @@ class AlphabetRepositoryImpl
         }
     }
 
-    override suspend fun generateCertificatePdf(name: String): Result<String> {
-        return dataSource.generateCertificatePdf(name)
+    override suspend fun getPdfPage(name: String): Bitmap? {
+        return dataSource.renderPdfPage(name)
     }
 
-    override suspend fun renderPdfPage(pdfFile: File): Bitmap? {
-        return dataSource.renderPdfPage(pdfFile)
-    }
-
-    override fun downloadCertificatePdf(pdfFilePath: String, fileName: String): Result<Unit> {
+    override fun downloadCertificatePdf(): Result<Unit> {
+        val pdfFilePath = dataSource.getPdfFilePath().absolutePath
         val contentResolver = dataSource.getContentResolver()
         val pdfByteArray: ByteArray
         try {
@@ -57,7 +55,7 @@ class AlphabetRepositoryImpl
         return try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 val contentValues = ContentValues().apply {
-                    put(MediaStore.Downloads.DISPLAY_NAME, fileName)
+                    put(MediaStore.Downloads.DISPLAY_NAME, FILE_NAME)
                     put(MediaStore.Downloads.MIME_TYPE, CONTENT_TYPE_PDF)
                 }
                 val uri =
@@ -75,7 +73,7 @@ class AlphabetRepositoryImpl
             } else {
                 val downloadsDirectory =
                     Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                val file = File(downloadsDirectory, fileName)
+                val file = File(downloadsDirectory, FILE_NAME)
                 FileOutputStream(file).use { outputStream ->
                     outputStream.write(pdfByteArray)
                 }

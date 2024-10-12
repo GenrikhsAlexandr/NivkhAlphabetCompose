@@ -10,9 +10,9 @@ interface PrefRepository {
 
     suspend fun getLetterCompleted(taskId: Int): List<Letters>?
 
-    fun saveName(name: String)
+    fun saveIsCertificateCreated(value: Boolean)
 
-    suspend fun getName(): String
+    suspend fun getCertificateStatus(): Boolean
 
     fun saveStartTimeLearningAlphabet()
 

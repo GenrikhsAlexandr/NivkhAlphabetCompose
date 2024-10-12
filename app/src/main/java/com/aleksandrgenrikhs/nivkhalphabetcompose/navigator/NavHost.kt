@@ -48,10 +48,8 @@ fun NavHost(
     val letter = currentBackStackEntry?.arguments?.getString(Constants.LETTER_KEY)
     var isDividerVisible by remember { mutableStateOf(false) }
     var isLetterCompleted by remember { mutableStateOf(false) }
-    var isNameNotEmpty by remember { mutableStateOf(false) }
-    var nameUser by remember { mutableStateOf("") }
+    var isCertificateCreated by remember { mutableStateOf(false) }
     var timeLearningAlphabet by remember { mutableIntStateOf(0) }
-    var pdfFilePath by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
@@ -66,10 +64,8 @@ fun NavHost(
                             onDividerVisibilityChange = { isVisibility ->
                                 isDividerVisible = isVisibility
                             },
-                            isNameNotEmpty = isNameNotEmpty,
-                            name = nameUser,
+                            isCertificateCreated = isCertificateCreated,
                             timeLearning = timeLearningAlphabet,
-                            pdfFilePath = pdfFilePath
                         )
                         if (isDividerVisible) {
                             HorizontalDivider(
@@ -129,11 +125,8 @@ fun NavHost(
                     isLettersCompleted = { isCompleted ->
                         isLetterCompleted = isCompleted
                     },
-                    isNameNotEmpty = { isNotEmpty ->
-                        isNameNotEmpty = isNotEmpty
-                    },
-                    name = { name ->
-                        nameUser = name
+                    isCertificateCreated = { isCreated ->
+                        isCertificateCreated = isCreated
                     },
                     timeLearningAlphabet = { time ->
                         timeLearningAlphabet = time
@@ -271,12 +264,7 @@ fun NavHost(
                 })
             ) { backStackEntry ->
                 backStackEntry.arguments?.getString(Constants.NAME_KEY)?.let {
-                    CertificateScreen(
-                        name = it,
-                        pdfPath = { pdf ->
-                            pdfFilePath = pdf
-                        },
-                    )
+                    CertificateScreen(name = it)
                 }
             }
         }

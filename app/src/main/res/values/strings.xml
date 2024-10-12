@@ -60,8 +60,9 @@
     \nВведи свое имя и фамилию.</string>
     <string name="next">Готово</string>
     <string name="certificate">Сертификат</string>
-    <string name="down_load_receipt_success">Загрузка завершена успешно</string>
-    <string name="download_receipt_error">Ошибка загрузки: %1$s</string>
+    <string name="downLoadReceiptSuccess">Загрузка завершена успешно</string>
+    <string name="downloadReceiptError">Ошибка загрузки: %1$s</string>
+    <string name="permissionDenied">Разрешение отклонено. Невозможно загрузить PDF.</string>
 
     <!--Другое-->
     <string name="space">пробел</string>

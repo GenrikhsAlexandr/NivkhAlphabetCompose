@@ -38,14 +38,14 @@ class PrefRepositoryImpl
         }
     }
 
-    override fun saveName(name: String) {
+    override fun saveIsCertificateCreated(value: Boolean) {
         preferences.edit()
-            .putString("fullName", name)
+            .putBoolean("fullName", value)
             .apply()
     }
 
-    override suspend fun getName(): String {
-        return preferences.getString("fullName", "") ?: ""
+    override suspend fun getCertificateStatus(): Boolean {
+        return preferences.getBoolean("fullName", false)
     }
 
     override fun saveStartTimeLearningAlphabet() {

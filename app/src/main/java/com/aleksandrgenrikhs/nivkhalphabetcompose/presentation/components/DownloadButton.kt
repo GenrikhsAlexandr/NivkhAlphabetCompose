@@ -33,7 +33,6 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.Certif
 @Composable
 fun DownloadButton(
     viewModel: CertificateViewModel = hiltViewModel(),
-    pdfFilePath: String
 ) {
     var downloadButtonClickable by remember { mutableStateOf(true) }
     val context = LocalContext.current
@@ -45,9 +44,9 @@ fun DownloadButton(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         if (isGranted) {
-            handleDownload(viewModel, pdfFilePath, context)
+            handleDownload(viewModel, context)
         } else {
-            showToast("Permission Denied. Can't download PDF.")
+            showToast(context.getString(R.string.permissionDenied))
         }
     }
 
@@ -64,13 +63,13 @@ fun DownloadButton(
                                 Manifest.permission.WRITE_EXTERNAL_STORAGE
                             ) == PackageManager.PERMISSION_GRANTED
                         ) {
-                            handleDownload(viewModel, pdfFilePath, context)
+                            handleDownload(viewModel, context)
                             downloadButtonClickable = false
                         } else {
                             permission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         }
                     } else {
-                        handleDownload(viewModel, pdfFilePath, context)
+                        handleDownload(viewModel, context)
                         downloadButtonClickable = false
                     }
                 }
@@ -89,16 +88,15 @@ fun DownloadButton(
 
 private fun handleDownload(
     viewModel: CertificateViewModel,
-    pdfFilePath: String,
     context: Context
 ) {
-    val downLoadResult = viewModel.downloadCertificate(pdfFilePath)
+    val downLoadResult = viewModel.downloadCertificate()
     when {
         downLoadResult.isSuccess -> {
             Toast
                 .makeText(
                     context,
-                    context.getString(R.string.down_load_receipt_success),
+                    context.getString(R.string.downLoadReceiptSuccess),
                     Toast.LENGTH_SHORT
                 )
                 .show()
@@ -110,7 +108,7 @@ private fun handleDownload(
                 .makeText(
                     context,
                     context.getString(
-                        R.string.download_receipt_error,
+                        R.string.downloadReceiptError,
                         exception?.message ?: "unknown error"
                     ),
                     Toast.LENGTH_SHORT

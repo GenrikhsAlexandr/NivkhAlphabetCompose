@@ -4,5 +4,4 @@ data class CertificateUIState(
     val loading: Boolean = false,
     val error: Boolean = false,
     val errorMessage: String = "",
-    val pdfPath: String = ""
 )

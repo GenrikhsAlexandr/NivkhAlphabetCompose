@@ -1,6 +1,5 @@
 [versions]
 agp = "8.5.2"
-androidPdfViewer = "3.2.0-beta.3"
 autosizetextCompose = "0.3.0"
 coilCompose = "2.7.0"
 hilt = "2.51.1"
@@ -30,7 +29,6 @@ junitJupiter = "5.10.2"
 kotestRunnerJunit5Jvm = "5.7.2"
 
 [libraries]
-android-pdf-viewer = { module = "com.github.mhiew:android-pdf-viewer", version.ref = "androidPdfViewer" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

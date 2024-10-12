@@ -56,13 +56,13 @@
     <string name="ok">OK</string>
 
     <!--Gift-->
-    <string name="notYet">Пройди все буквы нивхского алфавита и вернись сюда еще раз!</string>
-    <string name="congratulation">Потрясающе!!!\nТы прошел все буквы нивхского алфавита за %1$s дней!!! \nЭто удивительный результат, который надо зафиксировать.
-    \nВведи свое имя и фамилию.</string>
-    <string name="next">Готово</string>
+    <string name="notYet">Gehe alle Buchstaben des Nivkh-Alphabets durch und komme wieder hierher zurück!</string>
+    <string name="congratulation">Erstaunlich!!! \nDu hast alle Buchstaben des Nivkh-Alphabets in %1$s Tagen geschafft!!! \nDas ist ein erstaunliches Ergebnis, das festgehalten werden muss.
+    \nGeben Sie Ihren Vor- und Nachnamen ein. </string>
+    <string name="next">Next</string>
     <string name="certificate">Certificate</string>
-    <string name="down_load_receipt_success">Загрузка завершена успешно</string>
-    <string name="download_receipt_error">Ошибка загрузки: %1$s</string>
+    <string name="down_load_receipt_success">Upload erfolgreich beendet</string>
+    <string name="download_receipt_error">Download-Fehler: %1$s</string>
 
     <!--Andere-->
     <string name="space">Leerzeichen</string>

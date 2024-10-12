@@ -1,6 +1,12 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -19,6 +25,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.CertificateViewModel
@@ -26,14 +33,24 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.Certif
 @Composable
 fun DownloadButton(
     viewModel: CertificateViewModel = hiltViewModel(),
-    pdfByteArray: ByteArray
+    pdfFilePath: String
 ) {
     var downloadButtonClickable by remember { mutableStateOf(true) }
     val context = LocalContext.current
-
     fun showToast(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
+
+    val permission = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            handleDownload(viewModel, pdfFilePath, context)
+        } else {
+            showToast("Permission Denied. Can't download PDF.")
+        }
+    }
+
     Box(
         modifier = Modifier
             .padding(end = 8.dp)
@@ -41,23 +58,21 @@ fun DownloadButton(
             .clickable(
                 enabled = downloadButtonClickable,
                 onClick = {
-                    val downLoadResult = viewModel.downloadCertificate(pdfByteArray)
-                    when {
-                        downLoadResult.isSuccess -> {
-                            showToast(context.getString(R.string.down_load_receipt_success))
+                    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+                        if (ContextCompat.checkSelfPermission(
+                                context,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                            ) == PackageManager.PERMISSION_GRANTED
+                        ) {
+                            handleDownload(viewModel, pdfFilePath, context)
+                            downloadButtonClickable = false
+                        } else {
+                            permission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         }
-
-                        downLoadResult.isFailure -> {
-                            val exception = downLoadResult.exceptionOrNull()
-                            showToast(
-                                context.getString(
-                                    R.string.download_receipt_error,
-                                    exception?.message ?: "unknown error"
-                                )
-                            )
-                        }
+                    } else {
+                        handleDownload(viewModel, pdfFilePath, context)
+                        downloadButtonClickable = false
                     }
-                    downloadButtonClickable = false
                 }
             ),
         contentAlignment = Alignment.Center
@@ -69,5 +84,38 @@ fun DownloadButton(
             modifier = Modifier
                 .size(40.dp)
         )
+    }
+}
+
+private fun handleDownload(
+    viewModel: CertificateViewModel,
+    pdfFilePath: String,
+    context: Context
+) {
+    val downLoadResult = viewModel.downloadCertificate(pdfFilePath)
+    when {
+        downLoadResult.isSuccess -> {
+            Toast
+                .makeText(
+                    context,
+                    context.getString(R.string.down_load_receipt_success),
+                    Toast.LENGTH_SHORT
+                )
+                .show()
+        }
+
+        downLoadResult.isFailure -> {
+            val exception = downLoadResult.exceptionOrNull()
+            Toast
+                .makeText(
+                    context,
+                    context.getString(
+                        R.string.download_receipt_error,
+                        exception?.message ?: "unknown error"
+                    ),
+                    Toast.LENGTH_SHORT
+                )
+                .show()
+        }
     }
 }

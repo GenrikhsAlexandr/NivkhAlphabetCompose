@@ -39,7 +39,7 @@ fun AppBar(
     name: String,
     timeLearning: Int,
     onDividerVisibilityChange: (Boolean) -> Unit,
-    pdfByteArray: ByteArray
+    pdfFilePath: String
 ) {
     CenterAlignedTopAppBar(
         modifier = modifier
@@ -219,7 +219,7 @@ fun AppBar(
                 )
 
                 NavigationDestination.CertificateScreen.destination -> DownloadButton(
-                    pdfByteArray = pdfByteArray
+                    pdfFilePath = pdfFilePath
                 )
             }
         }

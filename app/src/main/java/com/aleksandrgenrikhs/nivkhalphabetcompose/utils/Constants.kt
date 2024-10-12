@@ -34,5 +34,4 @@ object Constants {
     //PDF константы
     const val FILE_NAME = "certificate.pdf"
     const val CONTENT_TYPE_PDF = "application/pdf"
-
 }

@@ -210,7 +210,7 @@ private fun DoneButton(
 private fun SpaceButton(
     modifier: Modifier = Modifier,
     onClick: (space: String) -> Unit,
-    space: String = "\u2005"
+    space: String = " "
 ) {
     Box(
         modifier = modifier

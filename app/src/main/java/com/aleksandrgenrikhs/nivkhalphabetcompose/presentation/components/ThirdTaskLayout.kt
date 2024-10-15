@@ -194,7 +194,7 @@ private fun ReceivingContainerItem(
                 textAlign = TextAlign.Center,
                 maxLines = 1,
                 style = MaterialTheme.typography.displayMedium,
-                minFontSize = 32.sp,
+                minFontSize = 25.sp,
             )
         }
     }

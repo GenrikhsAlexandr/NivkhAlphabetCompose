@@ -44,6 +44,13 @@ class FirstTaskViewModel
         viewModelScope.launch {
             prefInteractor.saveStartTimeLearning()
         }
+
+        viewModelScope.launch {
+            val currentValue = mediaPlayerInteractor.getIsSoundEnable()
+            _uiState.update { state ->
+                state.copy(shouldPlayFinishAudio = currentValue)
+            }
+        }
     }
 
     suspend fun updateWordsForLetter(letterId: String) {
@@ -160,7 +167,7 @@ class FirstTaskViewModel
                 mediaPlayerInteractor.initPlayer(context, FINISH_AUDIO)
                 _uiState.update { state ->
                     state.copy(
-                        isFinishAudio = true
+                        shouldPlayFinishAudio = false
                     )
                 }
             }

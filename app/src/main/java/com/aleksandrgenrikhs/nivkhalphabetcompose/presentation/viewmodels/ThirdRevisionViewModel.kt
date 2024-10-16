@@ -3,6 +3,7 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels
 import android.content.ClipData
 import android.content.Context
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.ThirdRevisionInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateThirdRevisionMapper
@@ -13,6 +14,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,6 +31,15 @@ class ThirdRevisionViewModel
     val uiState = _uiState.asStateFlow()
 
     private var wordsUIState: ThirdRevisionUIState? = null
+
+    init {
+        viewModelScope.launch {
+            val currentValue = mediaPlayerInteractor.getIsSoundEnable()
+            _uiState.update { state ->
+                state.copy(shouldPlayFinishAudio = currentValue)
+            }
+        }
+    }
 
     suspend fun updateWords() {
         _uiState.update { state ->
@@ -56,7 +67,7 @@ class ThirdRevisionViewModel
         if (url == FINISH_AUDIO) {
             _uiState.update { state ->
                 state.copy(
-                    isFinishAudio = true
+                    shouldPlayFinishAudio = false
                 )
             }
         }

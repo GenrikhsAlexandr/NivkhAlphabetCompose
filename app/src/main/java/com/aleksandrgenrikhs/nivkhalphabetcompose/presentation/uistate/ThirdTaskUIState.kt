@@ -8,6 +8,6 @@ data class ThirdTaskUIState(
     val shareableWords: List<String?> = listOf(null, null, null),
     val isAnswerCorrect: Boolean = false,
     val currentWords: List<String?> = listOf(null, null, null),
-    val isFinishAudio: Boolean = false,
+    val shouldPlayFinishAudio: Boolean = false,
     val isGuessWrong: Boolean = false,
 )

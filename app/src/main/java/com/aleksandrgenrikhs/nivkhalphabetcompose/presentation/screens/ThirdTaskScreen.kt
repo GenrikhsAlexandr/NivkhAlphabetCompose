@@ -18,7 +18,6 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.DialogSuccess
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.ThirdTaskLayout
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.SettingViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.ThirdTaskViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 
@@ -26,12 +25,10 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 fun ThirdTaskScreen(
     navController: NavController,
     viewModel: ThirdTaskViewModel = hiltViewModel(),
-    settingViewModel: SettingViewModel = hiltViewModel(),
     letter: String,
     onDividerVisibilityChange: (Boolean) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val settingUiState by settingViewModel.uiState.collectAsState()
     var isLaunchedEffectCalled by rememberSaveable { mutableStateOf(false) }
     var showDialog by rememberSaveable { mutableStateOf(false) }
 
@@ -65,7 +62,7 @@ fun ThirdTaskScreen(
             showDialog = true
         }
         if (showDialog) {
-            if (!isFinishAudio && settingUiState.isSoundEnable) {
+            if (shouldPlayFinishAudio) {
                 viewModel.playSound(FINISH_AUDIO)
             }
             val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task3)

@@ -17,7 +17,6 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestinatio
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.DialogSuccess
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.SecondRevisionLayout
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.SecondRevisionViewModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.SettingViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants
 import kotlinx.coroutines.delay
 
@@ -25,11 +24,9 @@ import kotlinx.coroutines.delay
 fun SecondRevisionScreen(
     navController: NavController,
     viewModel: SecondRevisionViewModel = hiltViewModel(),
-    settingViewModel: SettingViewModel = hiltViewModel(),
     onDividerVisibilityChange: (Boolean) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val settingState by settingViewModel.uiState.collectAsState()
     var isLaunchedEffectCalled by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
@@ -59,7 +56,7 @@ fun SecondRevisionScreen(
                 showDialog = true
             }
             if (showDialog) {
-                if (!isFinishAudio && settingState.isSoundEnable) {
+                if (shouldPlayFinishAudio) {
                     viewModel.playSound(Constants.FINISH_AUDIO)
                 }
                 DialogSuccess(

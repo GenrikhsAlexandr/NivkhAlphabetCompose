@@ -44,11 +44,15 @@ object AlphabetMediaPlayer {
 
     fun isPlayingPlayer(): Flow<Boolean> = flow {
         if (mediaPlayer != null) {
-            while (true) {
-                if (!mediaPlayer!!.isPlaying) {
-                    emit(false)
-                    break
+            try {
+                while (true) {
+                    if (!mediaPlayer!!.isPlaying) {
+                        emit(false)
+                        break
+                    }
                 }
+            } catch (e: IllegalStateException) {
+                emit(false)
             }
         } else {
             emit(false)

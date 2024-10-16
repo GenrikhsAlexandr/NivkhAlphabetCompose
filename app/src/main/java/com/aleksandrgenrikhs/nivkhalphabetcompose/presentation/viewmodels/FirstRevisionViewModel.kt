@@ -31,6 +31,15 @@ class FirstRevisionViewModel
         MutableStateFlow(FirstRevisionUIState())
     val uiState = _uiState.asStateFlow()
 
+    init {
+        viewModelScope.launch {
+            val currentValue = mediaPlayerInteractor.getIsSoundEnable()
+            _uiState.update { state ->
+                state.copy(shouldPlayFinishAudio = currentValue)
+            }
+        }
+    }
+
     fun updateLetters() {
         _uiState.update { state ->
             val allLetters = firstRevisionUseCase.getLettersForFirstRevision()
@@ -87,7 +96,7 @@ class FirstRevisionViewModel
         if (url == FINISH_AUDIO) {
             _uiState.update { state ->
                 state.copy(
-                    isFinishAudio = true
+                    shouldPlayFinishAudio = false
                 )
             }
         }

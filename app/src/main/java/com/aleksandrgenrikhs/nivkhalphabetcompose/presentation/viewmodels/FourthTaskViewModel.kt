@@ -32,6 +32,15 @@ class FourthTaskViewModel
         MutableStateFlow(FourthTaskUIState())
     val uiState = _uiState.asStateFlow()
 
+    init {
+        viewModelScope.launch {
+            val currentValue = mediaPlayerInteractor.getIsSoundEnable()
+            _uiState.update { state ->
+                state.copy(shouldPlayFinishAudio = currentValue)
+            }
+        }
+    }
+
     fun setSelectedLetter(letter: String) {
         _uiState.update {
             _uiState.value.copy(selectedLetter = letter)
@@ -120,7 +129,7 @@ class FourthTaskViewModel
         if (url == FINISH_AUDIO) {
             _uiState.update { state ->
                 state.copy(
-                    isFinishAudio = true
+                    shouldPlayFinishAudio = false
                 )
             }
         }

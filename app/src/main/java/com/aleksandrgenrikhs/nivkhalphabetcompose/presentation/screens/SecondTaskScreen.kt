@@ -18,7 +18,6 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestinatio
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.DialogSuccess
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.SecondTaskLayout
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.SecondTaskViewModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.SettingViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 import kotlinx.coroutines.delay
 
@@ -26,12 +25,10 @@ import kotlinx.coroutines.delay
 fun SecondTaskScreen(
     navController: NavController,
     viewModel: SecondTaskViewModel = hiltViewModel(),
-    settingViewModel: SettingViewModel = hiltViewModel(),
     letter: String,
     onDividerVisibilityChange: (Boolean) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val settingUiState by settingViewModel.uiState.collectAsState()
     var isLaunchedEffectCalled by rememberSaveable { mutableStateOf(false) }
 
     viewModel.setSelectedLetter(letter)
@@ -64,7 +61,7 @@ fun SecondTaskScreen(
                 showDialog = true
             }
             if (showDialog) {
-                if (!isFinishAudio && settingUiState.isSoundEnable) {
+                if (shouldPlayFinishAudio) {
                     viewModel.playSound(FINISH_AUDIO)
                 }
                 DialogSuccess(

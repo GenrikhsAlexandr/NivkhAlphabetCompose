@@ -9,5 +9,5 @@ data class SecondRevisionUIState(
     val isUserAnswerCorrect: Boolean = false,
     val correctAnswersCount: Int = 0,
     val isCompleted: Boolean = false,
-    val isFinishAudio: Boolean = false,
+    val shouldPlayFinishAudio: Boolean = false,
 )

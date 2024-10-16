@@ -40,6 +40,15 @@ class SecondTaskViewModel
         }
     }
 
+    init {
+        viewModelScope.launch {
+            val currentValue = mediaPlayerInteractor.getIsSoundEnable()
+            _uiState.update { state ->
+                state.copy(shouldPlayFinishAudio = currentValue)
+            }
+        }
+    }
+
     fun updateWordsForLetter(letterId: String) {
         viewModelScope.launch {
             _uiState.update { state ->
@@ -112,7 +121,7 @@ class SecondTaskViewModel
         if (url == FINISH_AUDIO) {
             _uiState.update { state ->
                 state.copy(
-                    isFinishAudio = true
+                    shouldPlayFinishAudio = false
                 )
             }
         }

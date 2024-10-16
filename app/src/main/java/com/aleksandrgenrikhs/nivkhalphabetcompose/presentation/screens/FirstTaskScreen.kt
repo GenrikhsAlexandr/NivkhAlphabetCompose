@@ -17,19 +17,16 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestinatio
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.DialogSuccess
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.FirstTaskLayout
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.FirstTaskViewModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.SettingViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 
 @Composable
 fun FirstTaskScreen(
     navController: NavController,
     viewModel: FirstTaskViewModel = hiltViewModel(),
-    settingViewModel: SettingViewModel = hiltViewModel(),
     letter: String,
     onDividerVisibilityChange: (Boolean) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val settingUiState by settingViewModel.uiState.collectAsState()
     var showDialog by rememberSaveable { mutableStateOf(false) }
 
     viewModel.setSelectedLetter(letter)
@@ -58,7 +55,7 @@ fun FirstTaskScreen(
             showDialog = true
         }
         if (showDialog) {
-            if (!isFinishAudio && settingUiState.isSoundEnable) {
+            if (shouldPlayFinishAudio) {
                 viewModel.playSoundForElement(FINISH_AUDIO)
             }
             val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task1)

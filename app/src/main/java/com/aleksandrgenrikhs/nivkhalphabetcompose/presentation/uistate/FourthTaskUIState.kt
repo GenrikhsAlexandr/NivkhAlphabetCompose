@@ -11,5 +11,5 @@ data class FourthTaskUIState(
     val userGuess: String = "",
     val isClickable: Boolean = false,
     val isLoading: Boolean = false,
-    val isFinishAudio: Boolean = false,
+    val shouldPlayFinishAudio: Boolean = false,
 )

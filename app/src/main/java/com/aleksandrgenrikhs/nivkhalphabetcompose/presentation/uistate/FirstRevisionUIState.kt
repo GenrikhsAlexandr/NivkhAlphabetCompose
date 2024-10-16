@@ -7,5 +7,5 @@ data class FirstRevisionUIState(
     val correctAnswersCount: Int = 0,
     val isCompleted: Boolean = false,
     val isUserAnswerCorrect: Boolean = false,
-    val isFinishAudio: Boolean = false,
+    val shouldPlayFinishAudio: Boolean = false,
 )

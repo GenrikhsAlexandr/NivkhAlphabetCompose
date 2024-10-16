@@ -11,5 +11,5 @@ data class SecondTaskUIState(
     val correctAnswersCount: Int = 0,
     val isCorrectWord: Boolean = false,
     val isCompleted: Boolean = false,
-    val isFinishAudio: Boolean = false,
+    val shouldPlayFinishAudio: Boolean = false,
 )

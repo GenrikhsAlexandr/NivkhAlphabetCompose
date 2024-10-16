@@ -31,6 +31,15 @@ class SecondRevisionViewModel
         MutableStateFlow(SecondRevisionUIState())
     val uiState = _uiState.asStateFlow()
 
+    init {
+        viewModelScope.launch {
+            val currentValue = mediaPlayerInteractor.getIsSoundEnable()
+            _uiState.update { state ->
+                state.copy(shouldPlayFinishAudio = currentValue)
+            }
+        }
+    }
+
     suspend fun updateWords() {
         _uiState.update { state ->
             val words = secondRevisionUseCase.getWordsForRevisionSecond()
@@ -88,7 +97,7 @@ class SecondRevisionViewModel
         if (url == FINISH_AUDIO) {
             _uiState.update { state ->
                 state.copy(
-                    isFinishAudio = true
+                    shouldPlayFinishAudio = false
                 )
             }
         }

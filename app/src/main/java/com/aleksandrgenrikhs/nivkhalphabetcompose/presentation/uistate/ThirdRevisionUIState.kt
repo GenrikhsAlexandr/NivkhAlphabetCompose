@@ -14,6 +14,6 @@ data class ThirdRevisionUIState(
     val correctWords: List<String?> = listOf(null, null),
     val correctLetters: List<String?> = listOf(null, null),
     val correctIcons: List<String?> = listOf(null, null),
-    val isFinishAudio: Boolean = false,
+    val shouldPlayFinishAudio: Boolean = false,
     val isGuessWrong: Boolean = false,
 )

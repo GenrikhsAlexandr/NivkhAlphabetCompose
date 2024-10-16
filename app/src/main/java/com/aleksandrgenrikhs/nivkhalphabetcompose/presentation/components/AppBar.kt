@@ -168,7 +168,7 @@ fun AppBar(
                         isCertificateCreated = isCertificateCreated,
                         timeLearning = timeLearning
                     )
-                    AboutMenu {
+                    DropdownMenu {
                         navController.navigate(NavigationDestination.AboutScreen.destination)
                     }
                 }

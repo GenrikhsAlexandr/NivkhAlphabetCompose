@@ -48,4 +48,10 @@ class PrefInteractor
     }
 
     suspend fun getTimeLearning(): Int = sharedPreferencesRepository.getTimeLearningAlphabet()
+
+    suspend fun saveSoundEnabled(value: Boolean) {
+        sharedPreferencesRepository.saveSoundEnabled(value)
+    }
+
+    suspend fun getSoundEnabled(): Boolean = sharedPreferencesRepository.getSoundEnabled()
 }

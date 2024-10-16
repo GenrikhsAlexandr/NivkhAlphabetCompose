@@ -15,8 +15,9 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.Dialog
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.DialogSuccess
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.ThirdRevisionLayout
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.SettingViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.ThirdRevisionViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 
@@ -24,9 +25,11 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 fun ThirdRevisionScreen(
     navController: NavController,
     viewModel: ThirdRevisionViewModel = hiltViewModel(),
+    settingViewModel: SettingViewModel = hiltViewModel(),
     onDividerVisibilityChange: (Boolean) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val settingUiState by settingViewModel.uiState.collectAsState()
     var isLaunchedEffectCalled by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
@@ -37,6 +40,8 @@ fun ThirdRevisionScreen(
     }
 
     with(uiState) {
+        println("shareWords =$shareWords")
+        println("shareLetters =$shareLetters")
         ThirdRevisionLayout(
             title = title,
             letter = letter,
@@ -58,11 +63,11 @@ fun ThirdRevisionScreen(
             )
         }
         if (isAnswerCorrect) {
-            if (!isFinishAudio) {
+            if (!isFinishAudio && settingUiState.isSoundEnable) {
                 viewModel.playSound(FINISH_AUDIO)
             }
             val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task3)
-            Dialog(
+            DialogSuccess(
                 navigationBack = {
                     onDividerVisibilityChange(false)
                     navController.popBackStack(

@@ -14,9 +14,10 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.Dialog
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.DialogSuccess
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.SecondRevisionLayout
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.SecondRevisionViewModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.SettingViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants
 import kotlinx.coroutines.delay
 
@@ -24,9 +25,11 @@ import kotlinx.coroutines.delay
 fun SecondRevisionScreen(
     navController: NavController,
     viewModel: SecondRevisionViewModel = hiltViewModel(),
+    settingViewModel: SettingViewModel = hiltViewModel(),
     onDividerVisibilityChange: (Boolean) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val settingState by settingViewModel.uiState.collectAsState()
     var isLaunchedEffectCalled by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
@@ -56,10 +59,10 @@ fun SecondRevisionScreen(
                 showDialog = true
             }
             if (showDialog) {
-                if (!isFinishAudio) {
+                if (!isFinishAudio && settingState.isSoundEnable) {
                     viewModel.playSound(Constants.FINISH_AUDIO)
                 }
-                Dialog(
+                DialogSuccess(
                     navigationBack = {
                         onDividerVisibilityChange(false)
                         navController.popBackStack(

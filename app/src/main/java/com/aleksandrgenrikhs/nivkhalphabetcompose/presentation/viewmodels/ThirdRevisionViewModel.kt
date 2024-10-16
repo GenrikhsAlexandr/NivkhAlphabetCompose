@@ -4,7 +4,7 @@ import android.content.ClipData
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.ThirdRevisionUseCase
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.ThirdRevisionInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateThirdRevisionMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.ThirdRevisionUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ThirdRevisionViewModel
 @Inject constructor(
-    private val thirdRevisionUseCase: ThirdRevisionUseCase,
+    private val thirdRevisionUseCase: ThirdRevisionInteractor,
     private val uiStateMapper: UIStateThirdRevisionMapper,
     private val mediaPlayerInteractor: MediaPlayerInteractor,
     private val context: Context

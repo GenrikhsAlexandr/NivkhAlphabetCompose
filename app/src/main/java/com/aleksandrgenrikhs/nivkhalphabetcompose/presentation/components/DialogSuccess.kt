@@ -30,7 +30,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPri
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 
 @Composable
-fun Dialog(
+fun DialogSuccess(
     title: String,
     textButtonBack: String,
     textButtonNext: String,

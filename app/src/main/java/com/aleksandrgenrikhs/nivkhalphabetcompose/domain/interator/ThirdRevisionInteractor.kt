@@ -2,10 +2,9 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator
 
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.AlphabetRepository
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.selectUniqueRandomElements
 import javax.inject.Inject
 
-class ThirdRevisionUseCase
+class ThirdRevisionInteractor
 @Inject constructor(
     private val repository: AlphabetRepository,
 ) {
@@ -14,6 +13,12 @@ class ThirdRevisionUseCase
         val allWords = repository.getWords()
             .values
             .flatten()
-        return selectUniqueRandomElements<WordModel>(allWords, 3)
+        return selectUniqueWordsByLetterId(allWords)
+    }
+
+    private fun selectUniqueWordsByLetterId(words: List<WordModel>): List<WordModel> {
+        return words.shuffled()
+            .distinctBy { it.letterId }
+            .take(3)
     }
 }

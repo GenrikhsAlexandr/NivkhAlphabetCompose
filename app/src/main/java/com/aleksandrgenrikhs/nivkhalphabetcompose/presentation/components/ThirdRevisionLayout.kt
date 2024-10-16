@@ -521,7 +521,7 @@ private fun ResetButton(
         Text(
             textAlign = TextAlign.Center,
             text = stringResource(id = R.string.reset),
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.ExtraBold
         )
     }
@@ -548,7 +548,7 @@ private fun SubmitButton(
         Text(
             textAlign = TextAlign.Center,
             text = stringResource(id = R.string.submit),
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.ExtraBold
         )
     }

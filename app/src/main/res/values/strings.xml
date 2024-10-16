@@ -52,7 +52,7 @@
     <string name="infoRevisionFirstScreen">Выбери букву, которую произносит диктор.\n Чтобы прослушать букву еще раз, нажми на иконку звука.</string>
     <string name="infoRevisionSecondScreen">Выбери подходящее к картинке слово.\nЧтобы получить подсказку, нажми на картинку.</string>
     <string name="infoRevisionThirdScreen">Заполни пропуски подходящими буквами, словами и картинками.</string>
-    <string name="ok">Понятно</string>
+    <string name="ok">Закрыть</string>
 
     <!--Подарок-->
     <string name="notYet">Пройди все буквы нивхского алфавита и вернись сюда еще раз!</string>
@@ -68,6 +68,7 @@
     <string name="space">пробел</string>
     <string name="noSoundtrack">нет звукового сопровождения</string>
     <string name="about">О приложении</string>
+    <string name="setting">Настройки</string>
     <string name="aboutTitle">Обучающее приложение «Нивхская азбука»</string>
     <string name="aboutSubTitle">сахалинский диалект</string>
     <string name="aboutText">\tОбучающее приложение «Нивхская азбука» предлагает детям интересные и понятные задания про буквы. Благодаря веселым и ярким картинкам, ребенок легко выучит все буквы нивхского алфавита. Простой интерфейс и звуковое сопровождение позволят ему обходиться без вашей помощи.

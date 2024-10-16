@@ -67,6 +67,16 @@ class PrefRepositoryImpl
     override suspend fun getTimeLearningAlphabet(): Int =
         preferences.getInt("timeLearningAlphabet", 0)
 
+    override suspend fun saveSoundEnabled(enabled: Boolean) {
+        preferences.edit()
+            .putBoolean("soundEnabled", enabled)
+            .apply()
+    }
+
+    override suspend fun getSoundEnabled(): Boolean {
+        return preferences.getBoolean("soundEnabled", true)
+    }
+
     override suspend fun isTaskCompleted(taskId: Int, letterId: String): Boolean {
         val completedLetters = getLetterCompleted(taskId)
         return completedLetters?.contains(Letters.getById(letterId)) ?: false

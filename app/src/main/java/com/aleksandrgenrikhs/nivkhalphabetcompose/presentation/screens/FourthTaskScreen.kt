@@ -13,9 +13,10 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.Dialog
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.DialogSuccess
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.FourthTaskLayout
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.FourthTaskViewModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.SettingViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO
 import kotlinx.coroutines.delay
@@ -24,9 +25,11 @@ import kotlinx.coroutines.delay
 fun FourthTaskScreen(
     navController: NavController,
     viewModel: FourthTaskViewModel = hiltViewModel(),
+    settingViewModel: SettingViewModel = hiltViewModel(),
     letter: String,
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val settingState by settingViewModel.uiState.collectAsState()
     viewModel.setSelectedLetter(letter)
 
     var isLaunchedEffectCalled by rememberSaveable { mutableStateOf(false) }
@@ -57,10 +60,10 @@ fun FourthTaskScreen(
                 showDialog = true
             }
             if (showDialog) {
-                if (!isFinishAudio) {
+                if (!isFinishAudio && settingState.isSoundEnable) {
                     viewModel.playSound(FINISH_AUDIO)
                 }
-                Dialog(
+                DialogSuccess(
                     navigationBack = {
                         navController.popBackStack(
                             NavigationDestination.LettersScreen.destination,

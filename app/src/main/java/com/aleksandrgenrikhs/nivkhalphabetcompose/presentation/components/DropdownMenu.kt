@@ -27,11 +27,13 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPro
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
 
 @Composable
-fun AboutMenu(
+fun DropdownMenu(
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
+    var showDialog by remember { mutableStateOf(false) }
+
     Box(
         modifier = modifier
             .padding(end = 8.dp)
@@ -63,6 +65,24 @@ fun AboutMenu(
                         color = colorText
                     )
                 }
+            )
+            DropdownMenuItem(
+                onClick = {
+                    expanded = false;
+                    showDialog = true
+                },
+                text = {
+                    Text(
+                        text = stringResource(id = R.string.setting),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = colorText
+                    )
+                }
+            )
+        }
+        if (showDialog) {
+            DialogSettings(
+                onDismissRequest = { showDialog = false }
             )
         }
     }

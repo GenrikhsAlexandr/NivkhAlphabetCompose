@@ -21,4 +21,8 @@ interface PrefRepository {
     suspend fun saveTimeLearningAlphabet(time: Int)
 
     suspend fun getTimeLearningAlphabet(): Int
+
+    suspend fun saveSoundEnabled(enabled: Boolean)
+
+    suspend fun getSoundEnabled(): Boolean
 }

@@ -16,7 +16,7 @@ val provider = GoogleFont.Provider(
     providerPackage = "com.google.android.gms",
     certificates = R.array.com_google_android_gms_fonts_certs
 )
-val fontName = GoogleFont("Balsamiq Sans")
+val fontName = GoogleFont("Nunito")
 val fontFamily = FontFamily(
     Font(
         googleFont = fontName,

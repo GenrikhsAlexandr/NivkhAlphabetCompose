@@ -1,6 +1,7 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator
 
 import android.content.Context
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.PrefRepository
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.AlphabetMediaPlayer
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -15,7 +16,10 @@ import org.mockito.kotlin.whenever
 class MediaPlayerInteractorTest {
 
     private val mediaPlayer: AlphabetMediaPlayer = mock()
-    private val playerInteractor = MediaPlayerInteractor(mediaPlayer)
+    private val prefRepository: PrefRepository = mock()
+
+    private val playerInteractor = MediaPlayerInteractor(mediaPlayer, prefRepository)
+
 
     @Test
     fun `WHEN call mediaplayer THEN player is initialized and play`() {
@@ -41,5 +45,17 @@ class MediaPlayerInteractorTest {
     fun `WHEN playerDestroy called THEN player is destroyed`() {
         playerInteractor.playerDestroy()
         verify(mediaPlayer).destroyPlayer()
+    }
+
+    @Test
+    fun `WHEN getIsSoundEnable called THEN return sound enable state`() = runTest {
+        whenever(prefRepository.getSoundEnabled()).thenReturn(true)
+
+        // Act: вызываем метод interactor
+        val result = playerInteractor.getIsSoundEnable()
+
+        // Assert: проверяем, что возвращено true и что метод репозитория был вызван
+        assertEquals(true, result)
+        verify(prefRepository).getSoundEnabled()
     }
 }

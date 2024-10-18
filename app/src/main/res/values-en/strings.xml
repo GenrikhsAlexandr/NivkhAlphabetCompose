@@ -64,6 +64,9 @@
     <string name="downLoadReceiptSuccess">Download completed successfully</string>
     <string name="downloadReceiptError">Download Error: %1$s</string>
     <string name="permissionDenied">Permission Denied. Can\'t download PDF.</string>
+    <string name="fieldEmpty">The field shouldn\'t be empty</string>
+    <string name="fullName">Name Surname</string>
+    <string name="error">Something went wrong</string>
 
     <!--Other-->
     <string name="space">space</string>

@@ -8,6 +8,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.Certifica
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,6 +26,19 @@ class CertificateViewModel
         val certificate = alphabetRepository.getPdfPage(name)
         if (certificate != null) {
             interactor.saveIsCertificateCreated(true)
+
+            _uiState.update { state ->
+                state.copy(
+                    loading = false
+                )
+            }
+        } else {
+            _uiState.update { state ->
+                state.copy(
+                    loading = false,
+                    error = true,
+                )
+            }
         }
         return certificate
     }

@@ -63,6 +63,9 @@
     <string name="downLoadReceiptSuccess">Загрузка завершена успешно</string>
     <string name="downloadReceiptError">Ошибка загрузки: %1$s</string>
     <string name="permissionDenied">Разрешение отклонено. Невозможно загрузить PDF.</string>
+    <string name="fieldEmpty">Поле не должно быть пустым</string>
+    <string name="fullName">Имя Фамилия</string>
+    <string name="error">Что-то пошло не так</string>
 
     <!--Другое-->
     <string name="space">пробел</string>

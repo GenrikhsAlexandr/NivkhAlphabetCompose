@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
@@ -43,6 +42,7 @@ import androidx.navigation.compose.rememberNavController
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorCardLetterItem
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorError
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorOnPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
@@ -103,9 +103,9 @@ fun DialogGifItem(
     var isError by remember { mutableStateOf(false) }
 
     val targetTextColor = if (isError) {
-        MaterialTheme.colorScheme.error
+        colorError
     } else {
-        LocalContentColor.current
+        colorProgressBar
     }
 
     val textStyle = MaterialTheme.typography.labelSmall.copy(
@@ -150,11 +150,20 @@ fun DialogGifItem(
                         value = name,
                         textStyle = textStyle,
                         placeholder = {
-                            if (isError) Text("Поле не должно быть пустым") else
-                                Text(text = "Имя Фамилия")
+                            if (isError) {
+                                Text(
+                                    text = stringResource(id = R.string.fieldEmpty),
+                                    style = textStyle
+                                )
+                            } else
+                                Text(
+                                    text = stringResource(id = R.string.fullName),
+                                    style = textStyle
+                                )
                         },
                         onValueChange = { newName ->
                             name = newName.filter { it.isLetter() || it.isWhitespace() }
+                            isError = false
                         },
                         modifier = modifier
                             .padding(8.dp)

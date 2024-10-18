@@ -64,6 +64,9 @@
     <string name="downLoadReceiptSuccess">Upload erfolgreich beendet</string>
     <string name="downloadReceiptError">Download-Fehler: %1$s</string>
     <string name="permissionDenied">Erlaubnis verweigert. PDF kann nicht heruntergeladen werden.</string>
+    <string name="fieldEmpty">Das Feld sollte nicht leer sein</string>
+    <string name="fullName">Vorname Nachname</string>
+    <string name="error">Etwas ist schief gelaufen</string>
 
     <!--Andere-->
     <string name="space">Leerzeichen</string>

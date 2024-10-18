@@ -10,6 +10,7 @@ import android.graphics.Rect
 import android.graphics.pdf.PdfDocument
 import android.graphics.pdf.PdfRenderer
 import android.os.ParcelFileDescriptor
+import androidx.core.content.res.ResourcesCompat
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.dto.SubjectDto
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FILE_NAME
@@ -78,7 +79,7 @@ class AlphabetDataSource
             try {
                 val pageWidth = 2480
                 val pageHeight = 3508
-                val bmp = BitmapFactory.decodeResource(context.resources, R.drawable.certificate)
+                val bmp = BitmapFactory.decodeResource(context.resources, R.drawable.ic_certificate)
                 val document = PdfDocument()
                 val pageInfo = PdfDocument.PageInfo.Builder(pageWidth, pageHeight, 1).create()
                 val page = document.startPage(pageInfo)
@@ -86,13 +87,15 @@ class AlphabetDataSource
                 val srcRect = Rect(0, 0, bmp.width, bmp.height)
                 val destRect = Rect(0, 0, pageWidth, pageHeight)
                 canvas.drawBitmap(bmp, srcRect, destRect, null)
+                val typeface = ResourcesCompat.getFont(context, R.font.nunito_bold_italic)
                 val paint = Paint().apply {
-                    color = Color.BLACK
+                    color = Color.argb(255, 255, 90, 64)
                     textSize = 200f
                     textAlign = Paint.Align.CENTER
+                    this.typeface = typeface
                 }
                 val x = pageWidth / 2f
-                val y = pageHeight / 2f
+                val y = pageHeight / 2f + 400f
                 canvas.drawText(name, x, y, paint)
                 document.finishPage(page)
 

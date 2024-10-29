@@ -57,7 +57,7 @@
     <!--Подарок-->
     <string name="notYet">Пройди все буквы нивхского алфавита и вернись сюда еще раз!</string>
     <string name="congratulation">Потрясающе!!!\nТы прошел все буквы нивхского алфавита за %1$s дней!!! \nЭто удивительный результат, который надо зафиксировать.
-    \nВведи свое имя и фамилию.</string>
+    \n\nВведи свое имя и фамилию.</string>
     <string name="next">Готово</string>
     <string name="certificate">Сертификат</string>
     <string name="downLoadReceiptSuccess">Загрузка завершена успешно</string>

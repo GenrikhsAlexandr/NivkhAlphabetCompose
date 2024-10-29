@@ -90,7 +90,7 @@ class AlphabetDataSource
                 val typeface = ResourcesCompat.getFont(context, R.font.nunito_bold_italic)
                 val paint = Paint().apply {
                     color = Color.argb(255, 255, 90, 64)
-                    textSize = 200f
+                    textSize = 150f
                     textAlign = Paint.Align.CENTER
                     this.typeface = typeface
                 }

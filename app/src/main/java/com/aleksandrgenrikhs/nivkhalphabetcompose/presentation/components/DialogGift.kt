@@ -141,7 +141,7 @@ fun DialogGifItem(
                     text = if (!isLettersCompleted) stringResource(id = R.string.notYet) else stringResource(
                         id = R.string.congratulation, timeLearning
                     ),
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleMedium,
                     modifier = modifier.padding(16.dp),
                     textAlign = TextAlign.Center
                 )
@@ -212,15 +212,15 @@ fun DialogGifItem(
     }
 }
 
-@Preview(widthDp = 300, heightDp = 400)
+@Preview(widthDp = 300, heightDp = 600)
 @Composable
 private fun DialogGiftPreview() {
     NivkhAlphabetComposeTheme {
-        DialogGift(
+        DialogGifItem(
             isLettersCompleted = true,
             navController = rememberNavController(),
-            isCertificateCreated = false,
-            timeLearning = 0
+            onDismissRequest = {},
+            timeLearning = 12
         )
     }
 }

@@ -58,7 +58,7 @@
     <!--Gift-->
     <string name="notYet">Gehe alle Buchstaben des Nivkh-Alphabets durch und komme wieder hierher zurück!</string>
     <string name="congratulation">Erstaunlich!!! \nDu hast alle Buchstaben des Nivkh-Alphabets in %1$s Tagen geschafft!!! \nDas ist ein erstaunliches Ergebnis, das festgehalten werden muss.
-    \nGeben Sie Ihren Vor- und Nachnamen ein. </string>
+    \n\nGeben Sie Ihren Vor- und Nachnamen ein. </string>
     <string name="next">Next</string>
     <string name="certificate">Certificate</string>
     <string name="downLoadReceiptSuccess">Upload erfolgreich beendet</string>

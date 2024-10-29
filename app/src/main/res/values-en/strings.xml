@@ -58,7 +58,7 @@
     <!--Gift-->
     <string name="notYet">Go through all the letters of the Nivkh alphabet and come back here again!</string>
     <string name="congratulation">Amazing!!!\nYou passed all the letters of the Nivkh alphabet in %1$s days!!! \nThis is an amazing result that needs to be recorded.
-    \nEnter your first and last name. </string>
+   \n\nEnter your first and last name. </string>
     <string name="next">Next</string>
     <string name="certificate">Certificate</string>
     <string name="downLoadReceiptSuccess">Download completed successfully</string>

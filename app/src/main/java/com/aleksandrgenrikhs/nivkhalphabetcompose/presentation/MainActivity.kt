@@ -13,7 +13,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.compose.rememberNavController
-import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavHost
+import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavGraph
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier
                         .fillMaxSize(),
                 ) {
-                    NavHost(navController = navController)
+                    NavGraph(navController = navController)
                 }
             }
         }
@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
 fun TopAppBarAlphabetPreview(
 ) {
     NivkhAlphabetComposeTheme {
-        NavHost(
+        NavGraph(
             navController = rememberNavController()
         )
     }

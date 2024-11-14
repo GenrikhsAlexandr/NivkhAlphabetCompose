@@ -47,7 +47,8 @@ fun FourthTaskScreen(
             isGuessWrong = isGuessWrong,
             onUserGuessChanged = { viewModel.updateUserGuess(it.appendChar(userGuess)) },
             userGuess = userGuess,
-            onDelete = { viewModel.deleteLastLetter() }
+            onDelete = { viewModel.deleteLastLetter() },
+            onBack = navController::popBackStack
         )
         if (isCompleted) {
             val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task4)

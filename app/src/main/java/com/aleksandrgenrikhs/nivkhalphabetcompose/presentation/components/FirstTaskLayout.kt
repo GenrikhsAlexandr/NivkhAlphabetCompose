@@ -4,8 +4,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,12 +20,21 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,6 +45,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
@@ -46,6 +59,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ScrollableState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ShowDividerWhenScrolled
 import com.idapgroup.autosizetext.AutoSizeText
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FirstTaskLayout(
     modifier: Modifier = Modifier,
@@ -60,50 +74,93 @@ fun FirstTaskLayout(
     isPlaying: Boolean,
     progressLetter: Int,
     isVisibleWord: Boolean,
-    onDividerVisibilityChange: (Boolean) -> Unit
+    onBack: () -> Unit
 ) {
+    var isDividerVisible by remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
     val scrollableState: ScrollableState = LazyListScrollableState(listState)
-
-    ShowDividerWhenScrolled(onDividerVisibilityChange, scrollableState)
-
-    LazyColumn(
-        state = listState,
-        modifier = modifier
-            .fillMaxSize()
-            .background(colorPrimary),
-        contentPadding = PaddingValues(8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+    val savedScrollPosition = rememberSaveable { listState.firstVisibleItemScrollOffset }
+    ShowDividerWhenScrolled(
+        onDividerVisibilityChange = { isVisible ->
+            isDividerVisible = isVisible
+        },
+        scrollableState = scrollableState
     )
-    {
-        item {
-            Text(
-                text = stringResource(id = R.string.titleFirstTask),
-                style = MaterialTheme.typography.titleLarge,
-                textAlign = TextAlign.Center
-            )
-        }
-        item {
-            CardLetter(
-                progress = progressLetter,
-                title = letter,
-                onClick = {
-                    onClick(letter, null)
-                },
-                isClickable = isClickableLetter && !isPlaying,
-            )
-        }
-        if (titles.isNotEmpty()) {
-            itemsIndexed(titles) { index, title ->
-                CardWord(
-                    progress = progressWords[index],
-                    title = title,
-                    icon = icons[index],
-                    onClick = { onClick(wordsId[index], index) },
-                    isClickable = isClickableWords[index] && !isPlaying,
-                    isVisible = isVisibleWord,
+
+// Восстанавливаем позицию прокрутки при загрузке экрана
+    LaunchedEffect(Unit) {
+        listState.scrollToItem(savedScrollPosition)
+    }
+
+    val action: @Composable RowScope.() -> Unit = {
+        DialogInfo(title = stringResource(id = R.string.infoFirstScreen, letter))
+    }
+
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize(),
+        topBar = {
+            Column {
+                AppBar.Render(
+                    config = AppBar.AppBarConfig.AppBarTask(
+                        title = stringResource(id = R.string.firstTask),
+                        actions = action,
+
+                        ),
+                    navigation = onBack
                 )
+                if (isDividerVisible) {
+                    HorizontalDivider(
+                        color = colorText
+                    )
+                }
+            }
+        }
+    ) { paddingValues ->
+
+        LazyColumn(
+            state = listState,
+            modifier = modifier
+                .fillMaxSize()
+                .background(colorPrimary),
+            contentPadding = PaddingValues(
+                top = paddingValues.calculateTopPadding() + 8.dp,
+                start = 16.dp,
+                end = 16.dp,
+                bottom = 8.dp
+            ),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        )
+        {
+            item {
+                Text(
+                    text = stringResource(id = R.string.titleFirstTask),
+                    style = MaterialTheme.typography.titleLarge,
+                    textAlign = TextAlign.Center
+                )
+            }
+            item {
+                CardLetter(
+                    progress = progressLetter,
+                    title = letter,
+                    onClick = {
+                        onClick(letter, null)
+                    },
+                    isClickable = isClickableLetter && !isPlaying,
+                )
+            }
+            if (titles.isNotEmpty()) {
+                itemsIndexed(titles) { index, title ->
+                    CardWord(
+                        progress = progressWords[index],
+                        title = title,
+                        icon = icons[index],
+                        onClick = { onClick(wordsId[index], index) },
+                        isClickable = isClickableWords[index] && !isPlaying,
+                        isVisible = isVisibleWord,
+                    )
+                }
             }
         }
     }
@@ -232,7 +289,7 @@ private fun FirstTaskContentPreview() {
             progressLetter = 1,
             isVisibleWord = true,
             isPlaying = false,
-            onDividerVisibilityChange = {}
+            onBack = {}
         )
     }
 }

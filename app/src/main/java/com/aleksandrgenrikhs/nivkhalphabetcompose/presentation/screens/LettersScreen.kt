@@ -16,37 +16,25 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.TASKS_SCREEN
 fun LetterScreen(
     navController: NavController,
     viewModel: LettersViewModel = hiltViewModel(),
-    onDividerVisibilityChange: (Boolean) -> Unit,
-    isLettersCompleted: (Boolean) -> Unit,
-    isCertificateCreated: (Boolean) -> Unit,
-    timeLearningAlphabet: (Int) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
-    with(uiState) {
-        LaunchedEffect(Unit) {
-            viewModel.updateLetters()
-            viewModel.checkLetterCompleted()
-            viewModel.checkCertificateStatus()
-            viewModel.checkAllLettersCompleted()
-            viewModel.getTimeLearning()
-        }
-        isLettersCompleted(isAllLettersCompleted)
-        isCertificateCreated(getCertificateStatus)
-        timeLearningAlphabet(timeLearning)
-
-        LettersLayout(
-            letters = letters,
-            isLetterCompleted = isLetterCompleted,
-            onClickLetter = { letter ->
-                navController.navigate("${TASKS_SCREEN}/$letter")
-                onDividerVisibilityChange(false)
-            },
-            onClickRevision = {
-                navController.navigate(REVISION_TASKS_SCREEN)
-                onDividerVisibilityChange(false)
-            },
-            onDividerVisibilityChange = onDividerVisibilityChange
-        )
+    LaunchedEffect(uiState.letters) {
+        viewModel.updateLetters()
+        viewModel.checkLetterCompleted()
+        viewModel.checkCertificateStatus()
+        viewModel.checkAllLettersCompleted()
+        viewModel.getTimeLearning()
     }
+
+    LettersLayout(
+        state = uiState,
+        navController = navController,
+        onClickLetter = { letter ->
+            navController.navigate("${TASKS_SCREEN}/$letter")
+        },
+        onClickRevision = {
+            navController.navigate(REVISION_TASKS_SCREEN)
+        }
+    )
 }

@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,7 +28,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,6 +38,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -67,6 +71,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ScrollableState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ShowDividerWhenScrolled
 import com.idapgroup.autosizetext.AutoSizeText
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ThirdRevisionLayout(
     modifier: Modifier = Modifier,
@@ -82,199 +87,234 @@ fun ThirdRevisionLayout(
     isGuessWrong: Boolean,
     onDone: () -> Unit,
     onReset: () -> Unit,
-    onDividerVisibilityChange: (Boolean) -> Unit,
+    onBack: () -> Unit,
     onDragAndDropEventReceived: (DragAndDropEvent, Int) -> Unit,
 ) {
+    var isDividerVisible by remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
     val scrollableState: ScrollableState = LazyListScrollableState(listState)
+    val savedScrollPosition = rememberSaveable { listState.firstVisibleItemScrollOffset }
+    ShowDividerWhenScrolled(
+        onDividerVisibilityChange = { isVisible ->
+            isDividerVisible = isVisible
+        },
+        scrollableState = scrollableState
+    )
+// Восстанавливаем позицию прокрутки при загрузке экрана
+    LaunchedEffect(Unit) {
+        listState.scrollToItem(savedScrollPosition)
+    }
 
-    ShowDividerWhenScrolled(onDividerVisibilityChange, scrollableState)
+    val action: @Composable RowScope.() -> Unit = {
+        DialogInfo(title = stringResource(R.string.infoThirdScreen))
+    }
 
-    LazyColumn(
-        state = listState,
-        modifier = modifier
-            .fillMaxSize()
-            .background(colorPrimary),
-        contentPadding = PaddingValues(8.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        if (title.isNotEmpty()) {
-            item {
-                Row(
-                    modifier = modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    IconItem(
-                        icon = icon,
-                    )
-                    Spacer(modifier = modifier.width(4.dp))
-                    Column(
-                        modifier = modifier
-                            .clip(ShapeDefaults.Small)
-                            .padding(horizontal = 3.dp)
-                            .height(124.dp)
-                            .wrapContentWidth(),
-                    ) {
-                        ReceivingContainerItem(
-                            title = currentLetters[0] ?: "",
-                            icon = null,
-                            index = 0,
-                            onDragAndDropEventReceived = { transferData, index ->
-                                onDragAndDropEventReceived(transferData, index)
-                            },
-                            isError = isGuessWrong
-                        )
-                        Spacer(modifier = modifier.height(2.dp))
-                        ReceivingContainerItem(
-                            title = currentWords[0] ?: "",
-                            icon = null,
-                            index = 0,
-                            onDragAndDropEventReceived = { transferData, index ->
-                                onDragAndDropEventReceived(transferData, index)
-                            },
-                            isError = isGuessWrong
-                        )
-                    }
-                }
-            }
-            item {
-                Row(
-                    modifier = modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    ReceivingContainerItem(
-                        title = null,
-                        icon = currentIcons[0] ?: "",
-                        index = 0,
-                        onDragAndDropEventReceived = { transferData, index ->
-                            onDragAndDropEventReceived(transferData, index)
-                        },
-                        isError = isGuessWrong,
-                    )
-                    Spacer(modifier = modifier.width(4.dp))
-                    Column(
-                        modifier = modifier
-                            .clip(ShapeDefaults.Small)
-                            .padding(horizontal = 3.dp)
-                            .height(124.dp)
-                            .wrapContentWidth(),
-                    ) {
-                        ReceivingContainerItem(
-                            title = currentLetters[1] ?: "",
-                            icon = null,
-                            index = 1,
-                            onDragAndDropEventReceived = { transferData, index ->
-                                onDragAndDropEventReceived(transferData, index)
-                            },
-                            isError = isGuessWrong
-                        )
-                        Spacer(modifier = modifier.height(2.dp))
-                        TextItem(
-                            title = title,
-                        )
-                    }
-                }
-            }
-            item {
-                Row(
-                    modifier = modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    ReceivingContainerItem(
-                        title = null,
-                        icon = currentIcons[1] ?: "",
-                        index = 1,
-                        onDragAndDropEventReceived = { transferData, index ->
-                            onDragAndDropEventReceived(transferData, index)
-                        },
-                        isError = isGuessWrong,
-                    )
-                    Spacer(modifier = modifier.width(4.dp))
-                    Column(
-                        modifier = modifier
-                            .clip(ShapeDefaults.Small)
-                            .padding(horizontal = 3.dp)
-                            .height(124.dp)
-                            .wrapContentWidth(),
-                    ) {
-                        TextItem(
-                            title = letter,
-                        )
-                        Spacer(modifier = modifier.height(2.dp))
-                        ReceivingContainerItem(
-                            title = currentWords[1] ?: "",
-                            icon = null,
-                            index = 1,
-                            onDragAndDropEventReceived = { transferData, index ->
-                                onDragAndDropEventReceived(transferData, index)
-                            },
-                            isError = isGuessWrong
-                        )
-                    }
-                }
-            }
-            item {
-                Row(
-                    modifier = modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                ) {
-                    shareIcons.map { icon ->
-                        ShareIcons(
-                            icon = icon ?: ""
-                        )
-                    }
-                }
-            }
-            item {
-                Row(
-                    modifier = modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                ) {
-                    shareWords.map { title ->
-                        ShareWords(
-                            title = title ?: "",
-                        )
-                    }
-                }
-            }
-            item {
-                Row(
-                    modifier = modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                ) {
-                    shareLetters.map { letter ->
-                        ShareLetters(
-                            letter = letter ?: "",
-                        )
-                    }
-                }
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize(),
+        topBar = {
+            Column {
+                AppBar.Render(
+                    config = AppBar.AppBarConfig.AppBarTask(
+                        title = stringResource(id = R.string.thirdTask),
+                        actions = action,
+
+                        ),
+                    navigation = onBack
+                )
             }
         }
-        item {
-            Row(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                ResetButton(
-                    onReset = onReset,
-                )
-                Spacer(modifier = modifier.width(8.dp))
-                SubmitButton(
-                    onDone = onDone,
-                )
+    ) { paddingValues ->
+        LazyColumn(
+            state = listState,
+            modifier = modifier
+                .fillMaxSize()
+                .background(colorPrimary),
+            contentPadding = PaddingValues(
+                top = paddingValues.calculateTopPadding() + 8.dp,
+                start = 16.dp,
+                end = 16.dp,
+                bottom = 8.dp
+            ), verticalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            if (title.isNotEmpty()) {
+                item {
+                    Row(
+                        modifier = modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        IconItem(
+                            icon = icon,
+                        )
+                        Spacer(modifier = modifier.width(4.dp))
+                        Column(
+                            modifier = modifier
+                                .clip(ShapeDefaults.Small)
+                                .padding(horizontal = 3.dp)
+                                .height(124.dp)
+                                .wrapContentWidth(),
+                        ) {
+                            ReceivingContainerItem(
+                                title = currentLetters[0] ?: "",
+                                icon = null,
+                                index = 0,
+                                onDragAndDropEventReceived = { transferData, index ->
+                                    onDragAndDropEventReceived(transferData, index)
+                                },
+                                isError = isGuessWrong
+                            )
+                            Spacer(modifier = modifier.height(2.dp))
+                            ReceivingContainerItem(
+                                title = currentWords[0] ?: "",
+                                icon = null,
+                                index = 0,
+                                onDragAndDropEventReceived = { transferData, index ->
+                                    onDragAndDropEventReceived(transferData, index)
+                                },
+                                isError = isGuessWrong
+                            )
+                        }
+                    }
+                }
+                item {
+                    Row(
+                        modifier = modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        ReceivingContainerItem(
+                            title = null,
+                            icon = currentIcons[0] ?: "",
+                            index = 0,
+                            onDragAndDropEventReceived = { transferData, index ->
+                                onDragAndDropEventReceived(transferData, index)
+                            },
+                            isError = isGuessWrong,
+                        )
+                        Spacer(modifier = modifier.width(4.dp))
+                        Column(
+                            modifier = modifier
+                                .clip(ShapeDefaults.Small)
+                                .padding(horizontal = 3.dp)
+                                .height(124.dp)
+                                .wrapContentWidth(),
+                        ) {
+                            ReceivingContainerItem(
+                                title = currentLetters[1] ?: "",
+                                icon = null,
+                                index = 1,
+                                onDragAndDropEventReceived = { transferData, index ->
+                                    onDragAndDropEventReceived(transferData, index)
+                                },
+                                isError = isGuessWrong
+                            )
+                            Spacer(modifier = modifier.height(2.dp))
+                            TextItem(
+                                title = title,
+                            )
+                        }
+                    }
+                }
+                item {
+                    Row(
+                        modifier = modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        ReceivingContainerItem(
+                            title = null,
+                            icon = currentIcons[1] ?: "",
+                            index = 1,
+                            onDragAndDropEventReceived = { transferData, index ->
+                                onDragAndDropEventReceived(transferData, index)
+                            },
+                            isError = isGuessWrong,
+                        )
+                        Spacer(modifier = modifier.width(4.dp))
+                        Column(
+                            modifier = modifier
+                                .clip(ShapeDefaults.Small)
+                                .padding(horizontal = 3.dp)
+                                .height(124.dp)
+                                .wrapContentWidth(),
+                        ) {
+                            TextItem(
+                                title = letter,
+                            )
+                            Spacer(modifier = modifier.height(2.dp))
+                            ReceivingContainerItem(
+                                title = currentWords[1] ?: "",
+                                icon = null,
+                                index = 1,
+                                onDragAndDropEventReceived = { transferData, index ->
+                                    onDragAndDropEventReceived(transferData, index)
+                                },
+                                isError = isGuessWrong
+                            )
+                        }
+                    }
+                }
+                item {
+                    Row(
+                        modifier = modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                    ) {
+                        shareIcons.map { icon ->
+                            ShareIcons(
+                                icon = icon ?: ""
+                            )
+                        }
+                    }
+                }
+                item {
+                    Row(
+                        modifier = modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                    ) {
+                        shareWords.map { title ->
+                            ShareWords(
+                                title = title ?: "",
+                            )
+                        }
+                    }
+                }
+                item {
+                    Row(
+                        modifier = modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                    ) {
+                        shareLetters.map { letter ->
+                            ShareLetters(
+                                letter = letter ?: "",
+                            )
+                        }
+                    }
+                }
+            }
+            item {
+                Row(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    ResetButton(
+                        onReset = onReset,
+                    )
+                    Spacer(modifier = modifier.width(8.dp))
+                    SubmitButton(
+                        onDone = onDone,
+                    )
+                }
             }
         }
     }
@@ -572,7 +612,7 @@ private fun ThirdTaskPreview() {
             currentLetters = arrayListOf("Aa", "Bb", "Cc"),
             isGuessWrong = false,
             currentIcons = listOf(null, null, null),
-            onDividerVisibilityChange = {}
+            onBack = {}
         )
     }
 }

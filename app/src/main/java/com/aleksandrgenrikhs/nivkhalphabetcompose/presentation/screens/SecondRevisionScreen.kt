@@ -24,7 +24,6 @@ import kotlinx.coroutines.delay
 fun SecondRevisionScreen(
     navController: NavController,
     viewModel: SecondRevisionViewModel = hiltViewModel(),
-    onDividerVisibilityChange: (Boolean) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var isLaunchedEffectCalled by rememberSaveable { mutableStateOf(false) }
@@ -46,7 +45,7 @@ fun SecondRevisionScreen(
             onIconClick = (viewModel::playSound),
             isCorrectAnswer = isCorrectAnswers,
             isClickable = !isUserAnswerCorrect,
-            onDividerVisibilityChange = onDividerVisibilityChange
+            onBack = navController::popBackStack
         )
         if (isCompleted) {
             val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_revision2)
@@ -61,14 +60,12 @@ fun SecondRevisionScreen(
                 }
                 DialogSuccess(
                     navigationBack = {
-                        onDividerVisibilityChange(false)
                         navController.popBackStack(
                             NavigationDestination.LettersScreen.destination,
                             inclusive = false
                         )
                     },
                     navigationNext = {
-                        onDividerVisibilityChange(false)
                         navController.navigate(
                             NavigationDestination.RevisionThirdScreen.destination
                         ) {

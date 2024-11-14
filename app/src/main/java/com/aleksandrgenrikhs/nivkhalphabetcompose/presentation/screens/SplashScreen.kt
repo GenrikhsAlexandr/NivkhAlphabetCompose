@@ -22,36 +22,27 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.SplashScreenViewModel
-import kotlinx.coroutines.delay
 
 
 @Composable
 fun SplashScreen(
     navController: NavController,
-    viewModel: SplashScreenViewModel = hiltViewModel()
 ) {
     val scale = remember { androidx.compose.animation.core.Animatable(0f) }
-
-    LaunchedEffect(Unit) {
-        viewModel.getWords()
-    }
 
     LaunchedEffect(Unit) {
         scale.animateTo(
             targetValue = 1.0f,
             animationSpec = tween(
-                durationMillis = 1500,
+                durationMillis = 1300,
                 easing = {
                     OvershootInterpolator(4f).getInterpolation(it)
                 })
         )
-        delay(2000L)
         navigation(navController)
     }
 

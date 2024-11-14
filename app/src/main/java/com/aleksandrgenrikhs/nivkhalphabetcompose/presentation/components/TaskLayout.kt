@@ -7,8 +7,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,13 +23,19 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -47,6 +55,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.LazyListScrollableState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ScrollableState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ShowDividerWhenScrolled
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskLayout(
     @StringRes titles: List<Int>,
@@ -57,51 +66,81 @@ fun TaskLayout(
     letter: String,
     modifier: Modifier = Modifier,
     onClick: (String, String) -> Unit,
-    onDividerVisibilityChange: (Boolean) -> Unit
+    onBack: () -> Unit
 ) {
+    var isDividerVisible by remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
     val scrollableState: ScrollableState = LazyListScrollableState(listState)
     val savedScrollPosition = rememberSaveable { listState.firstVisibleItemScrollOffset }
-
-    // Восстанавливаем позицию прокрутки при загрузке экрана
+    ShowDividerWhenScrolled(
+        onDividerVisibilityChange = { isVisible ->
+            isDividerVisible = isVisible
+        },
+        scrollableState = scrollableState
+    )
+// Восстанавливаем позицию прокрутки при загрузке экрана
     LaunchedEffect(Unit) {
         listState.scrollToItem(savedScrollPosition)
     }
 
-    ShowDividerWhenScrolled(onDividerVisibilityChange, scrollableState)
+    val action: @Composable RowScope.() -> Unit = {
+        DialogInfo(title = stringResource(R.string.infoTasksScreen, letter))
+    }
 
-    LazyColumn(
-        state = listState,
-        modifier = modifier
-            .fillMaxSize()
-            .background(colorPrimary),
-        contentPadding = PaddingValues(8.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize(),
+        topBar = {
+            Column {
+                AppBar.Render(
+                    config = AppBar.AppBarConfig.AppBarTask(
+                        title = letter,
+                        actions = action,
 
-    ) {
-        item {
-            Image(
-                painter = painterResource(id = R.drawable.ic_tasks),
-                contentDescription = null,
-                modifier = modifier
-                    .size(200.dp),
-                alignment = Alignment.Center
-            )
-        }
-        if (titles.isNotEmpty()) {
-            itemsIndexed(titles) { index, task ->
-                TaskItem(
-                    task = task,
-                    iconResId = icons[index],
-                    onTaskClick = {
-                        if (isTaskVisible[index]) {
-                            onClick(routes[index], letter)
-                        }
-                    },
-                    isClickable = isTaskVisible[index],
-                    isCompleted = isTaskCompleted[index]
+                        ),
+                    navigation = onBack
                 )
+            }
+        }
+    ) { paddingValues ->
+        LazyColumn(
+            state = listState,
+            modifier = modifier
+                .fillMaxSize()
+                .background(colorPrimary),
+            contentPadding = PaddingValues(
+                top = paddingValues.calculateTopPadding() + 8.dp,
+                start = 16.dp,
+                end = 16.dp,
+                bottom = 8.dp
+            ),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+
+        ) {
+            item {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_tasks),
+                    contentDescription = null,
+                    modifier = modifier
+                        .size(200.dp),
+                    alignment = Alignment.Center
+                )
+            }
+            if (titles.isNotEmpty()) {
+                itemsIndexed(titles) { index, task ->
+                    TaskItem(
+                        task = task,
+                        iconResId = icons[index],
+                        onTaskClick = {
+                            if (isTaskVisible[index]) {
+                                onClick(routes[index], letter)
+                            }
+                        },
+                        isClickable = isTaskVisible[index],
+                        isCompleted = isTaskCompleted[index]
+                    )
+                }
             }
         }
     }
@@ -188,7 +227,7 @@ private fun TaskItemPreview() {
             isTaskVisible = listOf(true, true, false),
             letter = "Aa",
             onClick = { _, _ -> },
-            onDividerVisibilityChange = {}
+            onBack = {}
         )
     }
 }

@@ -8,7 +8,6 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.TaskRe
 @Composable
 fun RevisionTasksScreen(
     navController: NavController,
-    onDividerVisibilityChange: (Boolean) -> Unit
 ) {
     TaskRevisionLayout(
         titles = RevisionTask.entries.map { it.titleResId },
@@ -16,8 +15,7 @@ fun RevisionTasksScreen(
         routes = RevisionTask.entries.map { it.route },
         onClick = { route ->
             navController.navigate(route)
-            onDividerVisibilityChange(false)
         },
-        onDividerVisibilityChange = onDividerVisibilityChange
+        onBack = navController::popBackStack
     )
 }

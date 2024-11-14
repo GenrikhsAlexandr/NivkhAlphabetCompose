@@ -73,7 +73,7 @@ class LettersViewModel
         val currentValue = prefInteractor.getCertificateStatus()
         _uiState.update { state ->
             state.copy(
-                getCertificateStatus = currentValue
+                isCertificateCreated = currentValue
             )
         }
     }

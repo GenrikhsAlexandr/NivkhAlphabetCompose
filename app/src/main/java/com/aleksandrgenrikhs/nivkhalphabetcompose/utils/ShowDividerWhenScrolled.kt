@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
@@ -17,16 +18,15 @@ fun ShowDividerWhenScrolled(
     scrollableState: ScrollableState,
 ) {
     var initialScrollOffset by remember { mutableIntStateOf(0) }
-    var currentScrollOffset by remember { mutableIntStateOf(0) }
+    var previousVisibilityState by remember { mutableStateOf(false) }
 
     LaunchedEffect(scrollableState) {
         snapshotFlow { scrollableState.firstVisibleItemScrollOffset }
             .collect { offset ->
-                currentScrollOffset = offset
-                if (currentScrollOffset == initialScrollOffset) {
-                    onDividerVisibilityChange(false)
-                } else {
-                    onDividerVisibilityChange(true)
+                val isCurrentlyVisible = offset > 0
+                if (isCurrentlyVisible != previousVisibilityState) {
+                    onDividerVisibilityChange(isCurrentlyVisible)
+                    previousVisibilityState = isCurrentlyVisible
                 }
             }
     }

@@ -10,8 +10,10 @@ import androidx.compose.foundation.draganddrop.dragAndDropTarget
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,14 +27,20 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draganddrop.DragAndDropEvent
@@ -60,6 +68,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ScrollableState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ShowDividerWhenScrolled
 import com.idapgroup.autosizetext.AutoSizeText
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ThirdTaskLayout(
     modifier: Modifier = Modifier,
@@ -71,67 +80,101 @@ fun ThirdTaskLayout(
     isGuessWrong: Boolean,
     onDone: () -> Unit,
     onReset: () -> Unit,
-    onDividerVisibilityChange: (Boolean) -> Unit,
+    onBack: () -> Unit,
     onDragAndDropEventReceived: (DragAndDropEvent, Int) -> Unit,
 ) {
+    var isDividerVisible by remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
     val scrollableState: ScrollableState = LazyListScrollableState(listState)
+    val savedScrollPosition = rememberSaveable { listState.firstVisibleItemScrollOffset }
+    ShowDividerWhenScrolled(
+        onDividerVisibilityChange = { isVisible ->
+            isDividerVisible = isVisible
+        },
+        scrollableState = scrollableState
+    )
+// Восстанавливаем позицию прокрутки при загрузке экрана
+    LaunchedEffect(Unit) {
+        listState.scrollToItem(savedScrollPosition)
+    }
 
-    ShowDividerWhenScrolled(onDividerVisibilityChange, scrollableState)
+    val action: @Composable RowScope.() -> Unit = {
+        DialogInfo(title = stringResource(R.string.infoThirdScreen))
+    }
 
-    LazyColumn(
-        state = listState,
-        modifier = modifier
-            .fillMaxSize()
-            .background(colorPrimary),
-        contentPadding = PaddingValues(8.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize(),
+        topBar = {
+            Column {
+                AppBar.Render(
+                    config = AppBar.AppBarConfig.AppBarTask(
+                        title = stringResource(id = R.string.thirdTask),
+                        actions = action,
 
-    ) {
-        if (wordsId.isNotEmpty()) {
-            itemsIndexed(wordsId) { index, _ ->
-                ReceivingContainerItem(
-                    title = currentWords[index] ?: "",
-                    index = index,
-                    icon = icons[index] ?: "",
-                    onClick = { onIconClick("$WORDS_AUDIO${wordsId[index]}") },
-                    onDragAndDropEventReceived = { transferData, indexes ->
-                        onDragAndDropEventReceived(transferData, indexes)
-                    },
-                    isError = isGuessWrong
+                        ),
+                    navigation = onBack
                 )
             }
         }
-        item {
-            Row(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                shareWords.map { title ->
-                    ShareText(
-                        title = title ?: "",
+    ) { paddingValues ->
+        LazyColumn(
+            state = listState,
+            modifier = modifier
+                .fillMaxSize()
+                .background(colorPrimary),
+            contentPadding = PaddingValues(
+                top = paddingValues.calculateTopPadding() + 8.dp,
+                start = 16.dp,
+                end = 16.dp,
+                bottom = 8.dp
+            ), verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            if (wordsId.isNotEmpty()) {
+                itemsIndexed(wordsId) { index, _ ->
+                    ReceivingContainerItem(
+                        title = currentWords[index] ?: "",
+                        index = index,
+                        icon = icons[index] ?: "",
+                        onClick = { onIconClick("$WORDS_AUDIO${wordsId[index]}") },
+                        onDragAndDropEventReceived = { transferData, indexes ->
+                            onDragAndDropEventReceived(transferData, indexes)
+                        },
+                        isError = isGuessWrong
                     )
                 }
             }
-            Spacer(modifier = modifier.height(16.dp))
-            Row(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                ResetButton(
-                    onReset = onReset,
-                )
-                Spacer(modifier = modifier.width(8.dp))
-                SubmitButton(
-                    onDone = onDone,
-                )
+            item {
+                Row(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    shareWords.map { title ->
+                        ShareText(
+                            title = title ?: "",
+                        )
+                    }
+                }
+                Spacer(modifier = modifier.height(16.dp))
+                Row(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    ResetButton(
+                        onReset = onReset,
+                    )
+                    Spacer(modifier = modifier.width(8.dp))
+                    SubmitButton(
+                        onDone = onDone,
+                    )
+                }
             }
         }
     }
@@ -328,7 +371,7 @@ private fun ThirdTaskPreview() {
             shareWords = arrayListOf("ӈағзыр̆раӄ", "пʼиды пʼаӽ", "ӿатӽ пʼерӈ"),
             currentWords = arrayListOf("ӈағзыр̆раӄ", "пʼиды пʼаӽ", "ӿатӽ пʼерӈ"),
             isGuessWrong = false,
-            onDividerVisibilityChange = {}
+            onBack = {}
         )
     }
 }

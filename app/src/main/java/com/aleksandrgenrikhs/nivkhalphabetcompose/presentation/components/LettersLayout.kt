@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -17,78 +19,137 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
+import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.LettersUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.LazyGridScrollableState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ScrollableState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ShowDividerWhenScrolled
 import com.idapgroup.autosizetext.AutoSizeText
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LettersLayout(
-    modifier: Modifier = Modifier,
-    letters: List<String>,
-    isLetterCompleted: List<Boolean>,
+    state: LettersUIState,
+    navController: NavController,
     onClickLetter: (String) -> Unit,
     onClickRevision: () -> Unit,
-    onDividerVisibilityChange: (Boolean) -> Unit
 ) {
+    var isDividerVisible by remember { mutableStateOf(false) }
     val listState = rememberLazyGridState()
     val scrollableState: ScrollableState = LazyGridScrollableState(listState)
     val savedScrollPosition = rememberSaveable { listState.firstVisibleItemScrollOffset }
 
+    ShowDividerWhenScrolled(
+        onDividerVisibilityChange = { isVisible ->
+            isDividerVisible = isVisible
+        },
+        scrollableState = scrollableState
+    )
     // Восстанавливаем позицию прокрутки при загрузке экрана
     LaunchedEffect(Unit) {
         listState.scrollToItem(savedScrollPosition)
     }
 
-    ShowDividerWhenScrolled(onDividerVisibilityChange, scrollableState)
+    val actions: @Composable RowScope.() -> Unit = {
+        DialogInfo(
+            title = stringResource(id = R.string.infoLettersScreen)
+        )
+        DialogGift(
+            isLettersCompleted = state.isAllLettersCompleted,
+            navController = navController,
+            isCertificateCreated = state.isCertificateCreated,
+            timeLearning = state.timeLearning
+        )
+        DropdownMenu {
+            navController.navigate(NavigationDestination.AboutScreen.destination)
+        }
+    }
 
-    LazyVerticalGrid(
-        state = listState,
-        modifier = modifier
-            .background(colorPrimary)
-            .padding(
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize(),
+        topBar = {
+            Column {
+                AppBar.Render(
+                    config = AppBar.AppBarConfig.AppBarLetters(
+                        title = stringResource(id = R.string.appName),
+                        actions = actions,
+                    )
+                )
+                if (isDividerVisible) {
+                    HorizontalDivider(
+                        color = colorText
+                    )
+                }
+            }
+        }
+    )
+    { paddingValues ->
+        LazyVerticalGrid(
+            state = listState,
+            modifier = Modifier
+                .fillMaxSize()
+                .background(colorPrimary),
+            contentPadding = PaddingValues(
+                top = paddingValues.calculateTopPadding() + 8.dp,
                 start = 16.dp,
                 end = 16.dp,
+                bottom = 8.dp
             ),
-        contentPadding = PaddingValues(vertical = 8.dp),
-        columns = GridCells.Adaptive(80.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        if (letters.isNotEmpty()) {
-            itemsIndexed(letters) { index, item ->
-                LetterItem(
-                    letter = item,
-                    onClick = { onClickLetter(item) },
-                    isCompleted = isLetterCompleted[index]
-                )
-            }
-            item(span = { GridItemSpan(maxLineSpan) }) {
-                RepeatItem(
-                    onClick = {
-                        onClickRevision()
-                    },
-                )
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            columns = GridCells.Adaptive(70.dp),
+
+            ) {
+            if (state.letters.isNotEmpty()) {
+                itemsIndexed(state.letters) { index, item ->
+                    LetterItem(
+                        letter = item,
+                        onClick = {
+                            onClickLetter(item)
+                        },
+                        isCompleted = state.isLetterCompleted[index]
+                    )
+                }
+                item(span = { GridItemSpan(maxLineSpan) }) {
+                    RepeatItem(
+                        onClick = {
+                            onClickRevision()
+                        },
+                    )
+                }
             }
         }
     }
@@ -104,18 +165,19 @@ private fun LetterItem(
     val textColor = if (isCompleted) colorProgressBar else colorText
     Box(
         modifier = modifier
-            .fillMaxSize()
+            .size(70.dp)
             .clip(CircleShape)
             .clickable(onClick = onClick),
-        contentAlignment = Alignment.Center
     ) {
         AutoSizeText(
             text = letter,
             color = textColor,
             maxLines = 1,
             style = MaterialTheme.typography.displayMedium,
-            minFontSize = 38.sp,
-            modifier = modifier.padding(8.dp)
+            minFontSize = 35.sp,
+            textAlign = TextAlign.Unspecified,
+            modifier = Modifier
+                .align(Alignment.Center)
         )
     }
 }
@@ -150,17 +212,30 @@ private fun RepeatItem(
     }
 }
 
-@Preview(widthDp = 500, heightDp = 700)
 @Composable
-private fun LetterElementPreview() {
+@PreviewLightDark
+private fun PreviewContent(
+    @PreviewParameter(LettersUiStates::class)
+    uiState: LettersUIState
+) {
     NivkhAlphabetComposeTheme {
         LettersLayout(
-            letters = listOf("Щщ", "Шш", "Юю"),
-            isLetterCompleted = listOf(true, false, false),
-            modifier = Modifier,
+            state = uiState,
+            navController = rememberNavController(),
             onClickLetter = {},
             onClickRevision = {},
-            onDividerVisibilityChange = {}
         )
     }
+}
+
+private class LettersUiStates :
+    PreviewParameterProvider<LettersUIState> {
+    override val values: Sequence<LettersUIState>
+        get() = sequenceOf(
+            LettersUIState(
+                letters = listOf("Щщ", "Шш", "Юю"),
+                isLetterCompleted = listOf(true, false, false),
+
+                )
+        )
 }

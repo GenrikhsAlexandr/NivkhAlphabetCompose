@@ -67,8 +67,9 @@ fun DialogGift(
                 if (isCertificateCreated) {
                     val name = ""
                     navController.navigate("$CERTIFICATE_SCREEN/$name")
+                } else {
+                    expanded = true
                 }
-                expanded = true
             },
         contentAlignment = Alignment.Center
     ) {

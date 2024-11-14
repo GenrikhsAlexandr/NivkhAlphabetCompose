@@ -5,7 +5,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.mapper.SecondTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.SecondTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.AlphabetRepository
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.selectUniqueRandomElements
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.selectUniqueElements
 import javax.inject.Inject
 
 class SecondTaskInteractor
@@ -27,7 +27,7 @@ constructor(
         val correctWord = letterWords.minus(usedWords)
             .shuffled()
             .first()
-        val wrongWords = selectUniqueRandomElements(otherWords, 2)
+        val wrongWords = selectUniqueElements(otherWords, 2) { it.letterId }
         val resultList = buildList {
             addAll(wrongWords)
             add(correctWord)

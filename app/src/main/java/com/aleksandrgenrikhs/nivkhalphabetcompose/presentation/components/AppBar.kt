@@ -2,7 +2,6 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material.icons.Icons
@@ -23,7 +22,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import androidx.navigation.compose.rememberNavController
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
@@ -87,7 +85,6 @@ object AppBar {
         config: AppBarConfig,
     ): @Composable () -> Unit {
         val title = @Composable {
-            Row {
                 when (config) {
                     is AppBarConfig.AppBarLetters -> {
                         AutoSizeText(
@@ -129,7 +126,6 @@ object AppBar {
                         }
                     }
                 }
-            }
         }
         return title
     }

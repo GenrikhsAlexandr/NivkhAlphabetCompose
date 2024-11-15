@@ -5,7 +5,6 @@ import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -17,7 +16,6 @@ fun ShowDividerWhenScrolled(
     onDividerVisibilityChange: (Boolean) -> Unit,
     scrollableState: ScrollableState,
 ) {
-    var initialScrollOffset by remember { mutableIntStateOf(0) }
     var previousVisibilityState by remember { mutableStateOf(false) }
 
     LaunchedEffect(scrollableState) {
@@ -29,11 +27,6 @@ fun ShowDividerWhenScrolled(
                     previousVisibilityState = isCurrentlyVisible
                 }
             }
-    }
-
-    // Устанавливаем начальную позицию прокрутки
-    LaunchedEffect(Unit) {
-        initialScrollOffset = scrollableState.firstVisibleItemScrollOffset
     }
 }
 

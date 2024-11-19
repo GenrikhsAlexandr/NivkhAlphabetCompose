@@ -48,7 +48,6 @@ fun FourthTaskLayout(
         modifier = Modifier
             .fillMaxSize(),
         topBar = {
-            Column {
                 AppBar.Render(
                     config = AppBar.AppBarConfig.AppBarTask(
                         title = stringResource(id = R.string.fourthTask),
@@ -57,7 +56,6 @@ fun FourthTaskLayout(
                         ),
                     navigation = onBack
                 )
-            }
         }
     ) { paddingValues ->
         Column(

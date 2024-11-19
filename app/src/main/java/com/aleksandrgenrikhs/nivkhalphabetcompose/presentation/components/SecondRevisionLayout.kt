@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,8 +33,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
@@ -85,7 +82,6 @@ fun SecondRevisionLayout(
         modifier = Modifier
             .fillMaxSize(),
         topBar = {
-            Column {
                 AppBar.Render(
                     config = AppBar.AppBarConfig.AppBarTask(
                         title = stringResource(id = R.string.revisionSecond),
@@ -94,7 +90,6 @@ fun SecondRevisionLayout(
                         ),
                     navigation = onBack
                 )
-            }
         }
     ) { paddingValues ->
         LazyColumn(

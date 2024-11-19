@@ -2,86 +2,92 @@
 <resources>
     <!--header screen-->
     <string name="appName">Nivkh alphabet</string>
-    <string name="letsGo">Let\'s go to knowledge!</string>
+    <string name="letsGo">Keep Calm And Study Hard!</string>
 
     <!--list of tasks-->
     <string name="firstTask">Learn a letter</string>
     <string name="secondTask">Find a word</string>
-    <string name="thirdTask">Match pairs</string>
-    <string name="fourthTask">Spell the word correctly</string>
+    <string name="thirdTask">Match the words to the pictures</string>
+    <string name="fourthTask">Write a word</string>
 
     <!--First Task-->
-    <string name="titleFirstTask">Click and listen to how the letter sounds</string>
+    <string name="titleFirstTask">Click, listen and learn</string>
     <string name="textEndFirstTask">Good job!</string>
 
     <!--Second task-->
     <string name="titleSecondTask">What word has the letter \"%1$s\"</string>
-    <string name="textEndSecondTask">Have at it.</string>
+    <string name="textEndSecondTask">Super!</string>
 
     <!--Third Task-->
-    <string name="titleThirdTask">Pair up.</string>
-    <string name="textEndThirdTask">Super!</string>
+    <string name="titleThirdTask"> Match the words to the pictures </string>
+    <string name="textEndThirdTask">Wow!</string>
     <string name="submit">Check</string>
     <string name="reset">Reset</string>
 
     <!--Fourth task-->
-    <string name="textEndFourthTask">This is a success!\n You\'ve completed all the tasks with this letter!\n Move on to the next one.</string>
-    <string name="enterYourWord">Enter your word</string>
-    <string name="repeat">Repeat again</string>
+    <string name="textEndFourthTask">Super job!\n You\'ve completed all the tasks with this letter!\n Move on to the next one.</string>
+    <string name="enterYourWord">Type the word</string>
+    <string name="repeat">Do it again</string>
 
-    <!--Repeat-->
+    <!--Revision-->
     <string name="revisionTask">Revision</string>
-    <string name="revisionFirst">Select a letter</string>
+    <string name="revisionFirst">Listen and choose</string>
     <string name="textEndRevisionFirst">Great!</string>
-    <string name="revisionSecond">Select a word</string>
-    <string name="textEndRevisionSecond">Stunning!</string>
-    <string name="revisionThird">Fill in the blanks</string>
+    <string name="revisionSecond">Choose the right word</string>
+    <string name="textEndRevisionSecond">Good try!</string>
+    <string name="revisionThird">Complete the table</string>
     <string name="textEndRevisionThird">Genius!</string>
 
     <!--Dialog Box-->
     <string name="nextTask">Go to game %1$s</string>
     <string name="backAlphabet">Go back to the alphabet</string>
     <string name="nextRevisionTasks">Continue</string>
-    <string name="backListTask">Select a task</string>
-    <string name="infoLettersScreen">Select the letter you want to learn.\n You can find the repetition of all letters at the end of the alphabet.</string>
-    <string name="infoTasksScreen">Select a task to learn the letter \"%1$s\".</string>
-    <string name="infoFirstScreen">Listen to the sound of the letter \"%1$s\" and the words that contain it and memorize them.</string>
-    <string name="infoSecondScreen">Select the picture behind which the word with the letter \"%1$s\" is hidden.</string>
-    <string name="infoThirdScreen">Opposite each picture, put the corresponding word.\n To get a hint, click on the picture.</string>
-    <string name="infoFourthScreen">Use the letters of the alphabet to write the correct word.\n To check the word, press ✓.\n To delete a character, press ←.\n To get a hint, press the picture.</string>
-    <string name="infoRevisionTasksScreen">Select a task.</string>
-    <string name="infoRevisionFirstScreen">Select the letter the speaker pronounces.\n Click the sound icon to listen to the letter again.</string>
-    <string name="infoRevisionSecondScreen">Choose the word that matches the picture.</string>
-    <string name="infoRevisionThirdScreen">Fill in the blanks with matching letters, words, and pictures.</string>
+    <string name="backListTask">Choose a task</string>
+    <string name="infoLettersScreen">Choose the letter you want to learn.\n You can find the revision of all letters at the end of the alphabet.</string>
+    <string name="infoTasksScreen">Choose the task to learn the letter \"%1$s\".</string>
+    <string name="infoFirstScreen">Listen to the sound of the letter \"%1$s\" and the words that contain it and learn them.</string>
+    <string name="infoSecondScreen">Choose the picture with the word with the letter \"%1$s\".</string>
+    <string name="infoThirdScreen"> Put the appropriate words near the pictures.\n To get a hint, click on the picture.</string>
+    <string name="infoFourthScreen">Use the letters of the alphabet to write the correct word.\n To check the word, press ✓.\n To delete a letter, press ←.\n To get a hint, click on the picture.</string>
+    <string name="infoRevisionTasksScreen">Choose a task.</string>
+    <string name="infoRevisionFirstScreen">Choose the letter the speaker is pronouncing.\n Click the sound icon to listen to the letter again.</string>
+    <string name="infoRevisionSecondScreen"> Match the words to the pictures.\n To get a hint, click on the picture.</string>
+    <string name="infoRevisionThirdScreen">Complete the gaps with appropriate letters, words, and pictures.</string>
     <string name="ok">OK</string>
 
     <!--Gift-->
-    <string name="notYet">Go through all the letters of the Nivkh alphabet and come back here again!</string>
-    <string name="congratulation">Amazing!!!\nYou passed all the letters of the Nivkh alphabet in %1$s days!!! \nThis is an amazing result that needs to be recorded.
+    <string name="notYet">Learn all the letters of the Nivkh alphabet and come back here again!</string>
+    <string name="congratulation">Amazing!!!\nYou have learned all the letters of the Nivkh alphabet in %1$s days!!! \nThis is an amazing result!
    \n\nEnter your first and last name. </string>
     <string name="next">Next</string>
     <string name="certificate">Certificate</string>
     <string name="downLoadReceiptSuccess">Download completed successfully</string>
     <string name="downloadReceiptError">Download Error: %1$s</string>
     <string name="permissionDenied">Permission Denied. Can\'t download PDF.</string>
-    <string name="fieldEmpty">The field shouldn\'t be empty</string>
+    <string name="fieldEmpty"> fill in the blank </string>
     <string name="fullName">Name Surname</string>
-    <string name="error">Something went wrong</string>
+    <string name="error">Something is wrong</string>
 
     <!--Other-->
     <string name="space">space</string>
-    <string name="noSoundtrack">no soundtrack</string>
+    <string name="noSoundtrack">no sound</string>
     <string name="about">About</string>
     <string name="setting">Setting</string>
     <string name="aboutTitle">Nivkh alphabet \n learning application</string>
     <string name="aboutSubTitle">sakhalin dialect</string>
-    <string name="aboutText">The educational application “Nivkh Alphabet” offers children interesting and understandable tasks about letters. Thanks to cheerful and bright pictures, the child will easily learn all the letters of the Nivkh alphabet. Simple interface and sound accompaniment will allow him to do without your help. After completing all the tasks, the student will be able to get a personalized diploma.</string>
-    <string name="aboutSubText">The project “45 Years of the Nivkh Alphabet” was implemented by the Nogliki Central Model Library named after V.M. Sangi. V.M. Sangi Central Model Library of Nogliki, Dominanta Information and Cultural Enlightenment Center with the support of Sakhalin Energy LLC.
-    \n\nAuthors of the idea:/nInga Valeryevna Krasilnikova,
-        \nOlga Evgenievna Rozhnova,
-        \nLina Vladimirovna Zhamyanova
-    \n\nApplication developer: \nAlexander Yakovlevich Genrikhs
-    \n\nArtist:\nEkaterina Genrikhs
-    \n\nMethodological development:\nEkaterina Alekseevna Genrikhs
+    <string name="aboutText">The educational application “Nivkh Alphabet” offers children interesting tasks about letters.
+        Children will easily learn all the letters of the Nivkh alphabet with help of the cheerful and bright pictures.
+        A simple interface and audio will allow them to learn without your help.
+        \n\tWhen a student completes all the tasks, he/she will get a diploma.
+        \n\n\tThe project “45 Years of the Nivkh Alphabet” was implemented by the Nogliki Central Model Library named after V.M. Sangi.,
+        Information and cultural educational center “Dominanta” with the support of Sakhalin Energy LLC.
+    </string>
+    <string name="aboutSubText">
+        \n\nIdea:\nInga Krasilnikova,
+        \nOlga Rozhnova,
+        \nLina Zhamyanova
+        \n\nApplication developer: \nAlexander Genrikhs
+        \n\nDesigner:\nEkaterina Genrikhs
+        \n\nMethodological support:\nEkaterina Genrikhs
     </string>
 </resources>

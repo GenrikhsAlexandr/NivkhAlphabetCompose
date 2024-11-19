@@ -4,9 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -25,7 +23,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -90,7 +87,7 @@ fun AboutScreen(
                 end = 16.dp,
                 bottom = 8.dp
             ),
-            horizontalAlignment = Alignment.CenterHorizontally,
+            horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.spacedBy(8.dp),
         )
         {
@@ -100,12 +97,10 @@ fun AboutScreen(
                     style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.Start,
                 )
-                Spacer(modifier = modifier.height(16.dp))
                 Text(
                     text = stringResource(id = R.string.aboutSubText),
                     style = MaterialTheme.typography.labelSmall,
                     textAlign = TextAlign.Start,
-                    fontWeight = FontWeight.Normal
                 )
             }
         }

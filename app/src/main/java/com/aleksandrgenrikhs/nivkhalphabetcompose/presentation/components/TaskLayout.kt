@@ -166,7 +166,10 @@ private fun TaskItem(
             .fillMaxWidth()
             .height(100.dp)
             .padding(8.dp)
-            .clickable(onClick = onTaskClick)
+            .clickable(
+                enabled = isClickable,
+                onClick = onTaskClick
+            )
             .clip(ShapeDefaults.Small)
             .background(colorOnPrimary),
         contentAlignment = Alignment.CenterStart

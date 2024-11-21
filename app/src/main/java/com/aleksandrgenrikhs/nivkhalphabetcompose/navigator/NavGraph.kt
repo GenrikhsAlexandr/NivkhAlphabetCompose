@@ -2,8 +2,6 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.navigator
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -34,6 +32,16 @@ fun AnimatedContentTransitionScope<*>.exitAnimation() = slideOutOfContainer(
     AnimatedContentTransitionScope.SlideDirection.Left,
     animationSpec = tween(500)
 )
+fun AnimatedContentTransitionScope<*>.popEnterTransition() = slideIntoContainer(
+    AnimatedContentTransitionScope.SlideDirection.Right,
+    animationSpec = tween(500)
+)
+
+fun AnimatedContentTransitionScope<*>.popExitTransition() = slideOutOfContainer(
+    AnimatedContentTransitionScope.SlideDirection.Right,
+    animationSpec = tween(500)
+)
+
 
 @Composable
 fun NavGraph(
@@ -44,8 +52,8 @@ fun NavGraph(
         startDestination = NavigationDestination.SplashScreen.destination,
         enterTransition = { enterAnimation() },
         exitTransition = { exitAnimation() },
-        popEnterTransition = { fadeIn(animationSpec = tween(500)) },
-        popExitTransition = { fadeOut(animationSpec = tween(500)) },
+        popEnterTransition = { popEnterTransition() },
+        popExitTransition = { popExitTransition() },
     ) {
         composable(
             route = NavigationDestination.SplashScreen.destination,

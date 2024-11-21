@@ -46,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.aleksandrgenrikhs.nivkhalphabetcompose.Letters
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
@@ -233,8 +234,8 @@ private class LettersUiStates :
     override val values: Sequence<LettersUIState>
         get() = sequenceOf(
             LettersUIState(
-                letters = listOf("Щщ", "Шш", "Юю"),
-                isLetterCompleted = listOf(true, false, false),
+                letters = Letters.entries.map { it.title },
+                isLetterCompleted = List(Letters.entries.size) { false },
 
                 )
         )

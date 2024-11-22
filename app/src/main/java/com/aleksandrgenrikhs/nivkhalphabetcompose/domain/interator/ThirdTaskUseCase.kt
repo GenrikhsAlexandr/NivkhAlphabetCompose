@@ -10,7 +10,8 @@ class ThirdTaskUseCase
 ) {
 
     suspend fun getWordsForThirdTask(letterId: String): List<WordModel> {
-        val letterWords = repository.getWords()[letterId] ?: error("Not found letterWords")
+        val letterWords =
+            repository.getWords()[letterId] ?: error("Can't find words for letter $letterId")
         return letterWords
     }
 }

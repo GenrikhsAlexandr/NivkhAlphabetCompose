@@ -3,13 +3,14 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.mapper.SecondRevisionMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.SecondRevisionModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.AlphabetRepository
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.selectUniqueElements
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.SelectUniqueElements
 import javax.inject.Inject
 
 class SecondRevisionUseCase
 @Inject constructor(
     private val repository: AlphabetRepository,
     private val revisionSecondMapper: SecondRevisionMapper,
+    private val selectUniqueElements: SelectUniqueElements
 ) {
 
     suspend fun getWordsForRevisionSecond(): List<SecondRevisionModel> {

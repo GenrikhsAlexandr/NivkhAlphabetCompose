@@ -1,5 +1,6 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator
 
+import androidx.annotation.VisibleForTesting
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.FourthTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.AlphabetRepository
@@ -10,12 +11,14 @@ class FourthTaskInteractor
     private val repository: AlphabetRepository
 ) {
 
-    private val usedWords: MutableSet<WordModel> = mutableSetOf()
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    val usedWords: MutableSet<WordModel> = mutableSetOf()
 
     suspend fun getWordsForFourthTask(letterId: String): FourthTaskModel {
-        val filterWords = repository.getWords()[letterId] ?: error("Not found filterWords")
+        val filterWords =
+            repository.getWords()[letterId] ?: error("Can't find words for letter $letterId")
         val currentWord =
-            filterWords.minus(usedWords)
+            filterWords.filterNot { usedWords.contains(it) }
                 .shuffled()
                 .first()
         usedWords.add(currentWord)

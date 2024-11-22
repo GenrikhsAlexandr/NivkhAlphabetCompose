@@ -3,9 +3,6 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.data.repository
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.AlphabetDataSource
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.dto.SubjectDto
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.dto.WordDto
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.mapper.FirstRevisionMapper
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.mapper.FirstTaskMapper
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.mapper.SecondRevisionMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.mapper.WordMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
 import kotlinx.coroutines.test.runTest
@@ -62,9 +59,6 @@ class AlphabetRepositoryImplTest {
     )
 
     private val wordMapper: WordMapper = spy(WordMapper())
-    private val firstTaskMapper: FirstTaskMapper = mock()
-    private val revisionFirstMapper: FirstRevisionMapper = mock()
-    private val revisionSecondMapper: SecondRevisionMapper = mock()
     private val dataSource: AlphabetDataSource =
         mock { onBlocking { getWords() }.thenReturn(wordsDtos) }
 
@@ -98,10 +92,5 @@ class AlphabetRepositoryImplTest {
         assertEquals(emptyMap<String, List<WordModel>>(), result)
         verify(dataSource).getWords()
         verify(wordMapper, never()).map(wordsDtos)
-    }
-
-    @Test
-    fun `WHEN getWordsForSecondTask`() {
-
     }
 }

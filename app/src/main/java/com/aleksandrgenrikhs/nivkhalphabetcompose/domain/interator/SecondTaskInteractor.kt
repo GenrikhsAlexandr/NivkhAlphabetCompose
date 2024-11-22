@@ -5,7 +5,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.mapper.SecondTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.SecondTaskModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.AlphabetRepository
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.selectUniqueElements
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.SelectUniqueElements
 import javax.inject.Inject
 
 class SecondTaskInteractor
@@ -13,6 +13,7 @@ class SecondTaskInteractor
 constructor(
     private val mapper: SecondTaskMapper,
     private val repository: AlphabetRepository,
+    private val selectUniqueElements: SelectUniqueElements
 ) {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
@@ -21,10 +22,11 @@ constructor(
     suspend fun getWordsForSecondTask(letterId: String): List<SecondTaskModel> {
         val words = repository.getWords()
         val letterWords = words[letterId] ?: error("Can't find words for letter $letterId")
-        val otherWords = words.minus(letterId)
+        val otherWords = words
             .values
             .flatten()
-        val correctWord = letterWords.minus(usedWords)
+            .filterNot { letterWords.contains(it) }
+        val correctWord = letterWords.filterNot { usedWords.contains(it) }
             .shuffled()
             .first()
         val wrongWords = selectUniqueElements(otherWords, 2) { it.letterId }

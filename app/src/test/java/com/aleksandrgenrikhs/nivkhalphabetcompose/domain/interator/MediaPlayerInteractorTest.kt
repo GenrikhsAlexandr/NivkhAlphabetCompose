@@ -50,12 +50,8 @@ class MediaPlayerInteractorTest {
     @Test
     fun `WHEN getIsSoundEnable called THEN return sound enable state`() = runTest {
         whenever(prefRepository.getSoundEnabled()).thenReturn(true)
-
-        // Act: вызываем метод interactor
-        val result = playerInteractor.getIsSoundEnable()
-
-        // Assert: проверяем, что возвращено true и что метод репозитория был вызван
-        assertEquals(true, result)
+        val actual = playerInteractor.getIsSoundEnable()
+        assertEquals(true, actual)
         verify(prefRepository).getSoundEnabled()
     }
 }

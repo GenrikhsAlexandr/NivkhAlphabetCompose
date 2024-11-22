@@ -37,10 +37,9 @@ class FirstTaskUseCaseTest {
     @Test
     fun `WHEN call getWordsForFirstTask and letterId is known THEN return list words for  this letter`() =
         runTest {
-            val result = useCase.getWordsForFirstTask("a")
-
-            assertEquals(2, result.size)
-            assert(result.all { it.letterId == "letterId a" })
+            val actual = useCase.getWordsForFirstTask("a")
+            assertEquals(3, actual.size)
+            assert(actual.all { it.letterId == "letterId a" })
             verify(repository).getWords()
             verify(mapper).map(any())
             verifyNoMoreInteractions(repository, mapper)

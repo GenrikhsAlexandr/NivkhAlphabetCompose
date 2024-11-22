@@ -4,8 +4,6 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.createWordModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.createWords
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.mapper.SecondTaskMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.AlphabetRepository
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.DefaultSelectUniqueElements
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.SelectUniqueElements
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -23,12 +21,9 @@ class SecondTaskInteractorTest {
     private val repository: AlphabetRepository = mock {
         onBlocking { getWords() } doAnswer { createWords() }
     }
-    private val selectUniqueElements: SelectUniqueElements = spy(DefaultSelectUniqueElements())
-
     private val interactor: SecondTaskInteractor = SecondTaskInteractor(
         mapper,
         repository,
-        selectUniqueElements
     )
 
     @Test
@@ -48,8 +43,7 @@ class SecondTaskInteractorTest {
             val actual = interactor.getWordsForSecondTask("a")
 
             assertEquals(3, actual.size)
-            assertEquals(1, actual.count { it.letterId == "letterId a" })
-            assertEquals(2, actual.count { it.letterId != "letterId a" })
+            assertEquals(actual.size, actual.distinctBy { it.letterId }.size)
 
             verify(repository).getWords()
             verify(mapper).map(any())

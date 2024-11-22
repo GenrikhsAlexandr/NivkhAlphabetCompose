@@ -4,8 +4,6 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.data.repository.AlphabetReposi
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.repository.PrefRepositoryImpl
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.AlphabetRepository
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.PrefRepository
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.DefaultSelectUniqueElements
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.SelectUniqueElements
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -22,8 +20,4 @@ interface AppBindsModule {
     @Binds
     @Singleton
     fun bindSharedPreferencesRepository(impl: PrefRepositoryImpl): PrefRepository
-
-    @Binds
-    @Singleton
-    fun bindSelectUniqueElements(impl: DefaultSelectUniqueElements): SelectUniqueElements
 }

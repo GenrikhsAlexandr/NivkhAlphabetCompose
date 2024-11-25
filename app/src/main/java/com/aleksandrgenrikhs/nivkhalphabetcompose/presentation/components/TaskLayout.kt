@@ -194,6 +194,7 @@ private fun TaskItem(
                 color = colorText,
                 style = MaterialTheme.typography.displayMedium,
                 modifier = modifier
+                    .padding(horizontal = 4.dp)
                     .align(Alignment.CenterVertically)
             )
         }

@@ -5,6 +5,7 @@ import android.content.ClipDescription
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.draganddrop.dragAndDropSource
 import androidx.compose.foundation.draganddrop.dragAndDropTarget
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -29,7 +30,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ShapeDefaults
@@ -293,19 +293,20 @@ private fun IconButton(
     icon: String?,
 
     ) {
-    IconButton(
+    Box(
         modifier = modifier
             .size(150.dp)
             .clip(ShapeDefaults.Small)
+            .clickable {
+                onClick()
+            }
             .background(colorProgressBar),
-        onClick = onClick
     ) {
         AsyncImage(
             model = icon,
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
-            modifier = modifier
-                .fillMaxSize()
+            modifier = modifier.fillMaxSize()
         )
     }
 }

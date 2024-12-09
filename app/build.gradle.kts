@@ -16,7 +16,7 @@ android {
         applicationId = "com.aleksandrgenrikhs.nivkhalphabetcompose"
         minSdk = 28
         targetSdk = 35
-        versionCode = 1
+        versionCode = 2
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -35,11 +35,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "21"
     }
     buildFeatures {
         compose = true
@@ -97,12 +97,6 @@ dependencies {
     testImplementation(libs.mockito.kotlin)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.junit.jupiter)
-    //  testImplementation(libs.kotest.runner.junit5.jvm)
-    //   testImplementation(libs.kotest.assertions.core)
-    //  testImplementation (libs.kotest.kotest.runner.junit5)
-    // testImplementation (libs.mockk.mockk)
-
-
 }
 kapt {
     correctErrorTypes = true

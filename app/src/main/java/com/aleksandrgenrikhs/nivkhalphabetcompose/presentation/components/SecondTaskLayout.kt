@@ -1,5 +1,6 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -187,30 +188,22 @@ private fun IconButton(
     val rotationAngle by animateFloatAsState(
         targetValue = if (isFlipped) 180f else 0f, label = "",
     )
-    Box(
-        modifier = modifier
-            .clickable(
-                enabled = isClickable,
-                onClick = onClick
-            )
-            .size(180.dp)
-            .clip(ShapeDefaults.Medium)
-            .background(colorCardLetterItem)
-            .graphicsLayer(
-                rotationY = rotationAngle,
-                transformOrigin = TransformOrigin.Center,
-            ),
-
-        contentAlignment = Alignment.Center
-    ) {
+    Crossfade(
+        targetState = isFlipped, label = ""
+    ) { flipped ->
         Box(
             modifier = modifier
+                .clickable(
+                    enabled = isClickable,
+                    onClick = onClick
+                )
                 .size(180.dp)
+                .clip(ShapeDefaults.Medium)
                 .background(
-                    if (isCorrectAnswer && isFlipped) {
+                    if (isCorrectAnswer && flipped) {
                         colorRight
                     } else
-                        if (!isFlipped) {
+                        if (!flipped) {
                             colorCardLetterItem
                         } else {
                             colorError
@@ -222,7 +215,7 @@ private fun IconButton(
                 ),
             contentAlignment = Alignment.Center
         ) {
-            if (!isFlipped) {
+            if (!flipped) {
                 AsyncImage(
                     model = icon,
                     contentDescription = null,
@@ -231,6 +224,10 @@ private fun IconButton(
                 )
             } else {
                 Text(
+                    modifier = modifier.graphicsLayer {
+                        rotationY = rotationAngle
+                        transformOrigin = TransformOrigin.Center
+                    },
                     text = title,
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.ExtraBold,

@@ -1,18 +1,16 @@
 [versions]
-agp = "8.7.2"
+agp = "8.7.3"
 autosizetextCompose = "0.3.0"
 coilCompose = "2.7.0"
 hilt = "2.51.1"
 hiltNavigationCompose = "1.2.0"
-kotestAssertionsCore = "5.9.1"
-kotestRunnerJunit5Version = "5.7.2"
-kotlin = "2.0.20"
+kotlin = "2.0.21"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
-kotlinxCoroutines = "1.9.0-RC.2"
-kotlinxCoroutinesTest = "1.8.1"
+kotlinxCoroutines = "1.9.0"
+kotlinxCoroutinesTest = "1.9.0"
 kotlinxSerializationJson = "1.7.2"
 lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.9.2"
@@ -21,12 +19,10 @@ material3WindowSize = "1.2.1"
 mockitoCore = "5.8.0"
 mockitoInline = "4.0.0"
 mockitoKotlin = "4.0.0"
-mockkVersion = "1.12.1"
-navigationCompose = "2.8.2"
-kotlinSerialization = "2.0.20"
-uiTextGoogleFonts = "1.7.3"
-junitJupiter = "5.10.2"
-kotestRunnerJunit5Jvm = "5.7.2"
+navigationCompose = "2.8.4"
+kotlinSerialization = "2.0.21"
+uiTextGoogleFonts = "1.7.5"
+junitJupiter = "5.11.1"
 
 [libraries]
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
@@ -53,8 +49,6 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
-kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotestAssertionsCore" }
-kotest-kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotestRunnerJunit5Version" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
@@ -62,9 +56,7 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiter" }
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore" }
 mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockitoInline" }
-kotest-runner-junit5-jvm = { group = "io.kotest", name = "kotest-runner-junit5-jvm", version.ref = "kotestRunnerJunit5Jvm" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
-mockk-mockk = { module = "io.mockk:mockk", version.ref = "mockkVersion" }
 
 [plugins]
 daggerHiltAndroid = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }

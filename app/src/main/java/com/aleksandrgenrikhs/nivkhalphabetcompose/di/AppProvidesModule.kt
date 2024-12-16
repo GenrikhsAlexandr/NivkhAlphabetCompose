@@ -2,12 +2,7 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.di
 
 import android.app.Application
 import android.content.Context
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.grid.LazyGridState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.AlphabetMediaPlayer
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.LazyGridScrollableState
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.LazyListScrollableState
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ScrollableState
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,14 +27,4 @@ object AppProvidesModule {
     @Provides
     @Singleton
     fun provideApplicationContext(@ApplicationContext app: Context): Context = app as Application
-
-    @Provides
-    @Singleton
-    fun provideLazyListScrollableState(state: LazyListState): ScrollableState =
-        LazyListScrollableState(state)
-
-    @Provides
-    @Singleton
-    fun provideLazyGridScrollableState(state: LazyGridState): ScrollableState =
-        LazyGridScrollableState(state)
 }

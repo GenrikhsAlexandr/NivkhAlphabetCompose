@@ -35,8 +35,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -52,9 +52,6 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorOnP
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.LazyListScrollableState
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ScrollableState
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.ShowDividerWhenScrolled
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -71,17 +68,17 @@ fun TaskLayout(
 ) {
     var isDividerVisible by remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
-    val scrollableState: ScrollableState = LazyListScrollableState(listState)
-    val savedScrollPosition = rememberSaveable { listState.firstVisibleItemScrollOffset }
-    ShowDividerWhenScrolled(
-        onDividerVisibilityChange = { isVisible ->
-            isDividerVisible = isVisible
-        },
-        scrollableState = scrollableState
-    )
-// Восстанавливаем позицию прокрутки при загрузке экрана
-    LaunchedEffect(Unit) {
-        listState.scrollToItem(savedScrollPosition)
+
+    LaunchedEffect(listState) {
+        var previousDividerVisible = isDividerVisible
+        snapshotFlow { listState.firstVisibleItemScrollOffset }
+            .collect { offset ->
+                val isCurrentlyVisible = offset > 0
+                if (isCurrentlyVisible != previousDividerVisible) {
+                    previousDividerVisible = isCurrentlyVisible
+                    isDividerVisible = isCurrentlyVisible
+                }
+            }
     }
 
     val action: @Composable RowScope.() -> Unit = {

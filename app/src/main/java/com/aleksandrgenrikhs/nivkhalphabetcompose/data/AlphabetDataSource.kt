@@ -15,6 +15,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.dto.SubjectDto
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FILE_NAME
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_URL
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
@@ -27,7 +28,7 @@ import javax.inject.Inject
 
 class AlphabetDataSource
 @Inject constructor(
-    private val context: Context,
+    @ApplicationContext private val context: Context,
     private val json: Json = Json { ignoreUnknownKeys = true },
 ) {
 

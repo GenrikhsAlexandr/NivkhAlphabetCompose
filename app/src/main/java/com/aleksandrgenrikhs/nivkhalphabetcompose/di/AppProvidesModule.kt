@@ -6,7 +6,9 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.AlphabetMediaPlayer
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import javax.inject.Singleton
@@ -22,9 +24,15 @@ object AppProvidesModule {
 
     @Provides
     @Singleton
-    fun provideMediaPlayer(): AlphabetMediaPlayer = AlphabetMediaPlayer
+    fun provideApplicationContext(@ApplicationContext app: Context): Context = app as Application
+}
+
+
+@Module
+@InstallIn(ViewModelComponent::class)
+object ViewModelModule {
 
     @Provides
-    @Singleton
-    fun provideApplicationContext(@ApplicationContext app: Context): Context = app as Application
+    @ViewModelScoped
+    fun provideMediaPlayer(): AlphabetMediaPlayer = AlphabetMediaPlayer
 }

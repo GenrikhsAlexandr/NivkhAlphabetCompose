@@ -11,6 +11,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.ThirdRevi
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -23,7 +24,7 @@ class ThirdRevisionViewModel
     private val thirdRevisionUseCase: ThirdRevisionInteractor,
     private val uiStateMapper: UIStateThirdRevisionMapper,
     private val mediaPlayerInteractor: MediaPlayerInteractor,
-    private val context: Context
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<ThirdRevisionUIState> =

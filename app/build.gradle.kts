@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlinKapt)
     alias(libs.plugins.kotlinParcelize)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.detekt)
 }
 
 android {
@@ -85,6 +86,9 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.serialization.json)
 
+    //Detekt
+    detektPlugins(libs.detekt.formatting)
+
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     androidTestImplementation(platform(libs.androidx.compose.bom))
@@ -100,6 +104,12 @@ dependencies {
 }
 kapt {
     correctErrorTypes = true
+}
+
+detekt {
+    config.setFrom(rootProject.file("config/detekt/detekt.yml"))
+    buildUponDefaultConfig = true
+    allRules = false
 }
 
 tasks.withType<Test> {

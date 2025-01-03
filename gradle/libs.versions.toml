@@ -2,6 +2,8 @@
 agp = "8.7.3"
 autosizetextCompose = "0.3.0"
 coilCompose = "2.7.0"
+detektFormatting = "1.23.1"
+detekt = "1.23.6"
 hilt = "2.51.1"
 hiltNavigationCompose = "1.2.0"
 kotlin = "2.0.21"
@@ -25,6 +27,7 @@ uiTextGoogleFonts = "1.7.5"
 junitJupiter = "5.11.1"
 
 [libraries]
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detektFormatting" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -66,4 +69,4 @@ jetbrainsKotlinPluginSerialization = { id = "org.jetbrains.kotlin.plugin.seriali
 kotlinKapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlinParcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

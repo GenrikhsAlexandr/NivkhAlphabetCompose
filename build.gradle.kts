@@ -6,5 +6,9 @@ plugins {
     alias(libs.plugins.kotlinKapt) apply false
     alias(libs.plugins.kotlinParcelize) apply false
     alias(libs.plugins.compose.compiler) apply false
+    alias(libs.plugins.detekt) apply true
+}
 
+tasks.register("detektAll") {
+    dependsOn(subprojects.map { "${it.path}:detekt" })
 }

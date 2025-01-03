@@ -1,10 +1,12 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.data.repository
 
+import android.content.ContentResolver
 import android.content.ContentValues
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
 import com.aleksandrgenrikhs.nivkhalphabetcompose.data.AlphabetDataSource
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.mapper.WordMapper
@@ -46,39 +48,57 @@ class AlphabetRepositoryImpl
     override fun downloadCertificatePdf(): Result<Unit> {
         val pdfFilePath = dataSource.getPdfFilePath().absolutePath
         val contentResolver = dataSource.getContentResolver()
-        val pdfByteArray: ByteArray
-        try {
-            pdfByteArray = File(pdfFilePath).readBytes()
-        } catch (e: IOException) {
-            return Result.failure(IOException("Error reading PDF file ${e.message}"))
-        }
-        return try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                val contentValues = ContentValues().apply {
-                    put(MediaStore.Downloads.DISPLAY_NAME, FILE_NAME)
-                    put(MediaStore.Downloads.MIME_TYPE, CONTENT_TYPE_PDF)
-                }
-                val uri =
-                    contentResolver.insert(
-                        MediaStore.Downloads.EXTERNAL_CONTENT_URI,
-                        contentValues
-                    )
-                uri?.let {
-                    contentResolver.openOutputStream(it)?.use { outputStream ->
-                        outputStream.write(pdfByteArray)
-                    }
-                    Result.success(Unit)
-                } ?: Result.failure(IOException("Download error"))
 
-            } else {
-                val downloadsDirectory =
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                val file = File(downloadsDirectory, FILE_NAME)
-                FileOutputStream(file).use { outputStream ->
+        val pdfByteArray = readPdfBytes(pdfFilePath)
+            ?: return Result.failure(IOException("Error reading PDF file"))
+
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            savePdfToMediaStore(contentResolver, pdfByteArray)
+        } else {
+            savePdfToDownloadsDirectory(pdfByteArray)
+        }
+    }
+
+    private fun readPdfBytes(pdfFilePath: String): ByteArray? {
+        return try {
+            File(pdfFilePath).readBytes()
+        } catch (e: IOException) {
+            null
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    private fun savePdfToMediaStore(
+        contentResolver: ContentResolver,
+        pdfByteArray: ByteArray,
+    ): Result<Unit> {
+        return try {
+            val contentValues = ContentValues().apply {
+                put(MediaStore.Downloads.DISPLAY_NAME, FILE_NAME)
+                put(MediaStore.Downloads.MIME_TYPE, CONTENT_TYPE_PDF)
+            }
+            val uri =
+                contentResolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues)
+            uri?.let {
+                contentResolver.openOutputStream(it)?.use { outputStream ->
                     outputStream.write(pdfByteArray)
                 }
                 Result.success(Unit)
+            } ?: Result.failure(IOException("Download error"))
+        } catch (e: IOException) {
+            Result.failure(IOException("Download error ${e.message}"))
+        }
+    }
+
+    private fun savePdfToDownloadsDirectory(pdfByteArray: ByteArray): Result<Unit> {
+        return try {
+            val downloadsDirectory =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            val file = File(downloadsDirectory, FILE_NAME)
+            FileOutputStream(file).use { outputStream ->
+                outputStream.write(pdfByteArray)
             }
+            Result.success(Unit)
         } catch (e: IOException) {
             Result.failure(IOException("Download error ${e.message}"))
         }

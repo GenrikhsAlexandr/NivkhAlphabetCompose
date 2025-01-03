@@ -13,7 +13,8 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import javax.inject.Singleton
 
-@[Module InstallIn(SingletonComponent::class)]
+@Module
+@InstallIn(SingletonComponent::class)
 object AppProvidesModule {
 
     @Provides

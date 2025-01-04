@@ -65,7 +65,6 @@ fun TaskLearnLetterScreen(
                 Task.FIND_WORD.stableId
             ),
             isVisibleSecondButton = true,
-            onDismissRequest = {}
         )
     }
 }

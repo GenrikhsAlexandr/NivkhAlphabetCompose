@@ -82,7 +82,6 @@ fun RevisionCompleteTableScreen(
                 textButtonBack = stringResource(id = R.string.backAlphabet),
                 textButtonNext = stringResource(id = R.string.repeat),
                 isVisibleSecondButton = true,
-                onDismissRequest = {}
             )
         }
     }

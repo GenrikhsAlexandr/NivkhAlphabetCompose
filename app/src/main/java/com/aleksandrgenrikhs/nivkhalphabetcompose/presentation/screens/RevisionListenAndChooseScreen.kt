@@ -60,7 +60,6 @@ fun RevisionListenAndChooseScreen(
             textButtonBack = stringResource(id = R.string.backAlphabet),
             textButtonNext = stringResource(id = R.string.nextRevisionTasks),
             isVisibleSecondButton = true,
-            onDismissRequest = {}
         )
     }
 }

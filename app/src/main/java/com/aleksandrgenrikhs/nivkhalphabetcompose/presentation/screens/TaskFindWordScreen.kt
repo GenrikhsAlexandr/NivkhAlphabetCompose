@@ -67,7 +67,6 @@ fun TaskFindWordScreen(
                 Task.MATCH_WORDS.stableId
             ),
             isVisibleSecondButton = true,
-            onDismissRequest = {}
         )
     }
 }

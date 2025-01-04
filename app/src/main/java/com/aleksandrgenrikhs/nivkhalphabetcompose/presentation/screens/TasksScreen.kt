@@ -15,21 +15,15 @@ fun TasksScreen(
     letter: String,
     tasksViewModel: TasksViewModel = hiltViewModel(),
 ) {
-    val uiState by tasksViewModel.uiState.collectAsState()
+    val viewState by tasksViewModel.uiState.collectAsState()
     LaunchedEffect(Unit) { tasksViewModel.checkTaskCompletion(letter) }
 
-    with(uiState) {
-        TaskLayout(
-            titles = titles,
-            icons = icons,
-            isTaskCompleted = isTaskCompleted,
-            isTaskVisible = isNextTaskVisible,
-            routes = routes,
-            letter = letter,
-            onClick = { route, letter ->
-                navController.navigate("$route/$letter")
-            },
-            onBack = navController::popBackStack
-        )
-    }
+    TaskLayout(
+        viewSate = viewState,
+        letter = letter,
+        onClick = { route ->
+            navController.navigate("$route/$letter")
+        },
+        onBack = navController::popBackStack
+    )
 }

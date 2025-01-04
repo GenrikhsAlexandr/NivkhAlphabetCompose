@@ -52,19 +52,16 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorOnP
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.TaskUIState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskLayout(
-    @StringRes titles: List<Int>,
-    @DrawableRes icons: List<Int>,
-    isTaskCompleted: List<Boolean>,
-    isTaskVisible: List<Boolean>,
-    routes: List<String>,
-    letter: String,
     modifier: Modifier = Modifier,
-    onClick: (String, String) -> Unit,
-    onBack: () -> Unit
+    viewSate: TaskUIState,
+    letter: String,
+    onClick: (String) -> Unit,
+    onBack: () -> Unit,
 ) {
     var isDividerVisible by remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
@@ -130,18 +127,18 @@ fun TaskLayout(
                     alignment = Alignment.Center
                 )
             }
-            if (titles.isNotEmpty()) {
-                itemsIndexed(titles) { index, task ->
+            if (viewSate.titles.isNotEmpty()) {
+                itemsIndexed(viewSate.titles) { index, task ->
                     TaskItem(
                         task = task,
-                        iconResId = icons[index],
+                        iconResId = viewSate.icons[index],
                         onTaskClick = {
-                            if (isTaskVisible[index]) {
-                                onClick(routes[index], letter)
+                            if (viewSate.isNextTaskVisible[index]) {
+                                onClick(viewSate.routes[index])
                             }
                         },
-                        isClickable = isTaskVisible[index],
-                        isCompleted = isTaskCompleted[index]
+                        isClickable = viewSate.isNextTaskVisible[index],
+                        isCompleted = viewSate.isTaskCompleted[index]
                     )
                 }
             }
@@ -156,7 +153,7 @@ private fun TaskItem(
     @DrawableRes iconResId: Int,
     onTaskClick: () -> Unit,
     isClickable: Boolean,
-    isCompleted: Boolean
+    isCompleted: Boolean,
 ) {
     Box(
         modifier = modifier
@@ -222,18 +219,21 @@ private fun TaskItem(
     }
 }
 
-@Preview(widthDp = 600, heightDp = 700)
+@Preview(showSystemUi = true)
 @Composable
 private fun TaskItemPreview() {
     NivkhAlphabetComposeTheme {
         TaskLayout(
-            titles = listOf(R.string.firstTask, R.string.secondTask, R.string.thirdTask),
-            icons = listOf(R.drawable.ic_task1, R.drawable.ic_task2, R.drawable.ic_task3),
-            routes = listOf(),
-            isTaskCompleted = listOf(true, false, false),
-            isTaskVisible = listOf(true, true, false),
+            viewSate = TaskUIState(
+                titles = listOf(R.string.firstTask, R.string.secondTask, R.string.thirdTask),
+                icons = listOf(R.drawable.ic_task1, R.drawable.ic_task2, R.drawable.ic_task3),
+                routes = listOf(),
+                isTaskCompleted = listOf(true, false, false),
+                isNextTaskVisible = listOf(true, true, false),
+                stablesId = listOf()
+            ),
             letter = "Aa",
-            onClick = { _, _ -> },
+            onClick = {},
             onBack = {}
         )
     }

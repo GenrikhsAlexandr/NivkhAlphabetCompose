@@ -64,6 +64,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPri
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorRight
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.TaskMatchWordsUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO
 import com.idapgroup.autosizetext.AutoSizeText
 
@@ -71,12 +72,8 @@ import com.idapgroup.autosizetext.AutoSizeText
 @Composable
 fun TaskMatchWordsLayout(
     modifier: Modifier = Modifier,
-    wordsId: List<String>,
-    icons: List<String?>,
-    shareWords: List<String?>,
-    currentWords: List<String?>,
+    viewState: TaskMatchWordsUIState,
     onIconClick: (String) -> Unit,
-    isGuessWrong: Boolean,
     onDone: () -> Unit,
     onReset: () -> Unit,
     onBack: () -> Unit,
@@ -135,17 +132,17 @@ fun TaskMatchWordsLayout(
             ), verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            if (wordsId.isNotEmpty()) {
-                itemsIndexed(wordsId) { index, _ ->
+            if (viewState.wordsId.isNotEmpty()) {
+                itemsIndexed(viewState.wordsId) { index, _ ->
                     ReceivingContainerItem(
-                        title = currentWords[index] ?: "",
+                        title = viewState.currentWords[index] ?: "",
                         index = index,
-                        icon = icons[index] ?: "",
-                        onClick = { onIconClick("$WORDS_AUDIO${wordsId[index]}") },
+                        icon = viewState.icons[index] ?: "",
+                        onClick = { onIconClick("$WORDS_AUDIO${viewState.wordsId[index]}") },
                         onDragAndDropEventReceived = { transferData, indexes ->
                             onDragAndDropEventReceived(transferData, indexes)
                         },
-                        isError = isGuessWrong
+                        isError = viewState.isGuessWrong
                     )
                 }
             }
@@ -157,7 +154,7 @@ fun TaskMatchWordsLayout(
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    shareWords.map { title ->
+                    viewState.shareableWords.map { title ->
                         ShareText(
                             title = title ?: "",
                         )
@@ -362,20 +359,22 @@ private fun SubmitButton(
     }
 }
 
-@Preview(widthDp = 410, heightDp = 700)
+@Preview(showSystemUi = true)
 @Composable
-private fun ThirdTaskPreview() {
+private fun MatchWordsPreview() {
     NivkhAlphabetComposeTheme {
         TaskMatchWordsLayout(
-            wordsId = listOf("1.2", "1.3", "1.1"),
-            icons = listOf(null, null, null),
+            viewState = TaskMatchWordsUIState(
+
+                wordsId = listOf("1.2", "1.3", "1.1"),
+                icons = listOf(null, null, null),
+                shareableWords = arrayListOf("ӈағзыр̆раӄ", "пʼиды пʼаӽ", "ӿатӽ пʼерӈ"),
+                currentWords = arrayListOf("ӈағзыр̆раӄ", "пʼиды пʼаӽ", "ӿатӽ пʼерӈ"),
+            ),
             onIconClick = {},
             onDone = {},
             onReset = {},
             onDragAndDropEventReceived = { _, _ -> },
-            shareWords = arrayListOf("ӈағзыр̆раӄ", "пʼиды пʼаӽ", "ӿатӽ пʼерӈ"),
-            currentWords = arrayListOf("ӈағзыр̆раӄ", "пʼиды пʼаӽ", "ӿатӽ пʼерӈ"),
-            isGuessWrong = false,
             onBack = {}
         )
     }

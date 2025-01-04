@@ -6,8 +6,7 @@ data class TaskMatchWordsUIState(
     val wordsId: List<String> = emptyList(),
     val icons: List<String?> = emptyList(),
     val shareableWords: List<String?> = listOf(null, null, null),
-    val isAnswerCorrect: Boolean = false,
     val currentWords: List<String?> = listOf(null, null, null),
-    val shouldPlayFinishAudio: Boolean = false,
     val isGuessWrong: Boolean = false,
+    val showDialog: Boolean = false,
 )

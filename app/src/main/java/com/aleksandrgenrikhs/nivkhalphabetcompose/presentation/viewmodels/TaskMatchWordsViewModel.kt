@@ -34,15 +34,6 @@ class TaskMatchWordsViewModel
         MutableStateFlow(TaskMatchWordsUIState())
     val uiState = _uiState.asStateFlow()
 
-    init {
-        viewModelScope.launch {
-            val currentValue = mediaPlayerInteractor.getIsSoundEnable()
-            _uiState.update { state ->
-                state.copy(shouldPlayFinishAudio = currentValue)
-            }
-        }
-    }
-
     fun setSelectedLetter(letter: String) {
         _uiState.update { state ->
             state.copy(selectedLetter = letter)
@@ -62,18 +53,6 @@ class TaskMatchWordsViewModel
                 )
             }
         }
-    }
-
-    fun playSound(url: String) {
-        if (url == FINISH_AUDIO) {
-            _uiState.update { state ->
-                state.copy(
-                    shouldPlayFinishAudio = false
-                )
-            }
-        }
-        mediaPlayerInteractor.playerDestroy()
-        mediaPlayerInteractor.initPlayer(context, url)
     }
 
     fun updateReceivingContainer(clipData: ClipData?, index: Int) {
@@ -109,12 +88,8 @@ class TaskMatchWordsViewModel
         val currentWords = uiState.value.currentWords
         val correctWords = uiState.value.titles
         if (currentWords == correctWords) {
-            _uiState.update { state ->
-                state.copy(
-                    isAnswerCorrect = true
-                )
-            }
-            prefInteractor.taskCompleted(Task.MATCH_WORDS.stableId, uiState.value.selectedLetter)
+            showDialog()
+            saveTaskProgress()
         } else {
             playSound(ERROR_AUDIO)
             _uiState.update { state ->
@@ -125,6 +100,28 @@ class TaskMatchWordsViewModel
                 )
             }
         }
+    }
+
+    private fun showDialog() {
+        viewModelScope.launch {
+            if (mediaPlayerInteractor.getIsSoundEnable()) {
+                playSound(FINISH_AUDIO)
+            }
+            _uiState.update { state ->
+                state.copy(
+                    showDialog = true,
+                )
+            }
+        }
+    }
+
+    private fun saveTaskProgress() {
+        prefInteractor.taskCompleted(Task.MATCH_WORDS.stableId, uiState.value.selectedLetter)
+    }
+
+    fun playSound(url: String) {
+        mediaPlayerInteractor.playerDestroy()
+        mediaPlayerInteractor.initPlayer(context, url)
     }
 
     override fun onCleared() {

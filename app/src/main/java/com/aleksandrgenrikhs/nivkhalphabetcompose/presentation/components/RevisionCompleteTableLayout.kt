@@ -600,7 +600,7 @@ private fun SubmitButton(
 
 @Preview(widthDp = 410, heightDp = 900)
 @Composable
-private fun ThirdTaskPreview() {
+private fun MatchWordsPreview() {
     NivkhAlphabetComposeTheme {
         RevisionCompleteTableLayout(
             title = "ӈағзыр̆раӄ",

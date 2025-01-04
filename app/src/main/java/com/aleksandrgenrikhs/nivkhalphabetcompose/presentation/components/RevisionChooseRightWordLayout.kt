@@ -40,20 +40,16 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorErr
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.RevisionChooseRightWordUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RevisionChooseRightWordLayout(
-    words: List<String>,
-    wordsId: List<String>,
-    correctWordId: String,
-    icon: String?,
     modifier: Modifier = Modifier,
+    viewState: RevisionChooseRightWordUIState,
     onWordClick: (String) -> Unit,
     onIconClick: (String) -> Unit,
-    isCorrectAnswer: List<Boolean?>,
-    isClickable: Boolean,
     onBack: () -> Unit,
 ) {
     var isDividerVisible by remember { mutableStateOf(false) }
@@ -106,22 +102,21 @@ fun RevisionChooseRightWordLayout(
             item {
                 IconButton(
                     onClick = {
-                        onIconClick("$WORDS_AUDIO$correctWordId")
+                        onIconClick("$WORDS_AUDIO${viewState.correctWordId}")
                     },
-                    icon = icon
+                    icon = viewState.icon
                 )
             }
-            itemsIndexed(words) { index, item ->
+            itemsIndexed(viewState.title) { index, item ->
                 WordItem(
                     title = item,
                     onClick = {
-                        onWordClick(wordsId[index])
+                        onWordClick(viewState.wordsId[index])
                     },
-                    isCorrectAnswer = isCorrectAnswer[index],
-                    isClickable = isClickable
+                    isCorrectAnswer = viewState.isCorrectAnswers[index],
+                    isClickable = !viewState.isUserAnswerCorrect
                 )
             }
-
         }
     }
 }
@@ -130,7 +125,7 @@ fun RevisionChooseRightWordLayout(
 private fun IconButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
-    icon: String?
+    icon: String?,
 ) {
     Box(
         modifier = modifier
@@ -154,7 +149,7 @@ private fun WordItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     isCorrectAnswer: Boolean?,
-    isClickable: Boolean
+    isClickable: Boolean,
 ) {
     Box(
         modifier = modifier
@@ -178,19 +173,19 @@ private fun WordItem(
     }
 }
 
-@Preview(widthDp = 600, heightDp = 700)
+@Preview(showSystemUi = true)
 @Composable
-private fun SecondRevisionLayoutPreview() {
+private fun RevisionChooseRightLayoutPreview() {
     NivkhAlphabetComposeTheme {
         RevisionChooseRightWordLayout(
-            words = listOf("Aa", "Bb", "Cc"),
-            wordsId = listOf("1", "2", "3"),
-            icon = null,
-            correctWordId = "1",
+            viewState = RevisionChooseRightWordUIState(
+                wordsId = listOf("1", "2", "3"),
+                title = listOf("1", "2", "3"),
+                icon = "icon",
+                isCorrectAnswers = listOf(null, true, false),
+            ),
             onIconClick = {},
             onWordClick = {},
-            isCorrectAnswer = listOf(null, true, false),
-            isClickable = true,
             onBack = {}
         )
     }

@@ -17,14 +17,14 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.DialogSuccess
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.ThirdTaskLayout
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.ThirdTaskViewModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.TaskMatchWordsLayout
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.TaskMatchWordsViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 
 @Composable
-fun ThirdTaskScreen(
+fun TaskMatchWordsScreen(
     navController: NavController,
-    viewModel: ThirdTaskViewModel = hiltViewModel(),
+    viewModel: TaskMatchWordsViewModel = hiltViewModel(),
     letter: String,
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -41,7 +41,7 @@ fun ThirdTaskScreen(
     }
 
     with(uiState) {
-        ThirdTaskLayout(
+        TaskMatchWordsLayout(
             wordsId = wordsId,
             icons = icons,
             currentWords = currentWords,
@@ -76,7 +76,7 @@ fun ThirdTaskScreen(
                     navController.navigate(
                         "${NavigationDestination.FourthTaskScreen.destination}/$letter"
                     ) {
-                        popUpTo("${NavigationDestination.ThirdTaskScreen.destination}/$letter") {
+                        popUpTo("${NavigationDestination.TaskMatchWordsScreen.destination}/$letter") {
                             inclusive = true
                         }
                     }

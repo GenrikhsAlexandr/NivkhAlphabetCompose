@@ -1,6 +1,6 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate
 
-data class ThirdTaskUIState(
+data class TaskMatchWordsUIState(
     val selectedLetter: String = "",
     val titles: List<String> = emptyList(),
     val wordsId: List<String> = emptyList(),

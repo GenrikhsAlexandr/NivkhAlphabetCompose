@@ -4,12 +4,12 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.AlphabetRepository
 import javax.inject.Inject
 
-class ThirdTaskUseCase
+class TaskMatchWordsUseCase
 @Inject constructor(
     private val repository: AlphabetRepository
 ) {
 
-    suspend fun getWordsForThirdTask(letterId: String): List<WordModel> {
+    suspend fun getWordsForTaskMatchWords(letterId: String): List<WordModel> {
         val letterWords =
             repository.getWords()[letterId] ?: error("Can't find words for letter $letterId")
         return letterWords

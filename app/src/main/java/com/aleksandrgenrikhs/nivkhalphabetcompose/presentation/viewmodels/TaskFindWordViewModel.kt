@@ -44,7 +44,7 @@ class TaskFindWordViewModel
 
     fun updateWordsForLetter(letterId: String) {
         viewModelScope.launch {
-            val filteredWords = findWordInteractor.getWordsForSecondTask(letterId)
+            val filteredWords = findWordInteractor.getWordsForTaskMatchWords(letterId)
             val mappedWords = uiStateMapper.map(filteredWords)
             _uiState.update { state ->
                 state.copy(

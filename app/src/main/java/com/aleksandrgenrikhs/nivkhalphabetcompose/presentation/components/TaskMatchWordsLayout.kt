@@ -69,7 +69,7 @@ import com.idapgroup.autosizetext.AutoSizeText
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ThirdTaskLayout(
+fun TaskMatchWordsLayout(
     modifier: Modifier = Modifier,
     wordsId: List<String>,
     icons: List<String?>,
@@ -366,7 +366,7 @@ private fun SubmitButton(
 @Composable
 private fun ThirdTaskPreview() {
     NivkhAlphabetComposeTheme {
-        ThirdTaskLayout(
+        TaskMatchWordsLayout(
             wordsId = listOf("1.2", "1.3", "1.1"),
             icons = listOf(null, null, null),
             onIconClick = {},

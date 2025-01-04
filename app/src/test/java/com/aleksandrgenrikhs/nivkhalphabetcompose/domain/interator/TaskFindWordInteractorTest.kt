@@ -30,7 +30,7 @@ class TaskFindWordInteractorTest {
     fun `WHEN call getWordsForSecondTask and letterId is missing THEN throw exception`() =
         runTest {
             try {
-                interactor.getWordsForSecondTask("unknownId")
+                interactor.getWordsForTaskMatchWords("unknownId")
                 error("Do not reach this")
             } catch (e: Exception) {
                 assertEquals("Can't find words for letter unknownId", e.message)
@@ -40,7 +40,7 @@ class TaskFindWordInteractorTest {
     @Test
     fun `WHEN call getWordsForSecondTask and letterId is known THEN return list of one correct word and two wrong words`() =
         runTest {
-            val actual = interactor.getWordsForSecondTask("a")
+            val actual = interactor.getWordsForTaskMatchWords("a")
 
             assertEquals(3, actual.size)
             assertEquals(actual.size, actual.distinctBy { it.letterId }.size)
@@ -53,8 +53,8 @@ class TaskFindWordInteractorTest {
     @Test
     fun `WHEN call getWordsForSecondTask second time with same letterId THEN return list without words witch were used fist run`() =
         runTest {
-            val firstCallResult = interactor.getWordsForSecondTask("a")
-            val secondCallResult = interactor.getWordsForSecondTask("a")
+            val firstCallResult = interactor.getWordsForTaskMatchWords("a")
+            val secondCallResult = interactor.getWordsForTaskMatchWords("a")
             firstCallResult.forEach { firstCallWord ->
                 assertTrue(secondCallResult.all { firstCallWord.wordId != it.wordId })
             }

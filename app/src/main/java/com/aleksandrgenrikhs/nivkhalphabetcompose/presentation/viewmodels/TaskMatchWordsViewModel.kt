@@ -7,9 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.PrefInteractor
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.ThirdTaskUseCase
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateThirdTaskMapper
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.ThirdTaskUIState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.TaskMatchWordsUseCase
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateTaskMatchWordsMapper
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.TaskMatchWordsUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,16 +21,17 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ThirdTaskViewModel
+class TaskMatchWordsViewModel
 @Inject constructor(
     private val prefInteractor: PrefInteractor,
-    private val thirdUseCase: ThirdTaskUseCase,
-    private val uiStateMapper: UIStateThirdTaskMapper,
+    private val matchWordsUseCase: TaskMatchWordsUseCase,
+    private val uiStateMapper: UIStateTaskMatchWordsMapper,
     private val mediaPlayerInteractor: MediaPlayerInteractor,
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<ThirdTaskUIState> = MutableStateFlow(ThirdTaskUIState())
+    private val _uiState: MutableStateFlow<TaskMatchWordsUIState> =
+        MutableStateFlow(TaskMatchWordsUIState())
     val uiState = _uiState.asStateFlow()
 
     init {
@@ -50,7 +51,7 @@ class ThirdTaskViewModel
 
     suspend fun updateWordsForLetter(letterId: String) {
         _uiState.update { state ->
-            val filteredWords = thirdUseCase.getWordsForThirdTask(letterId)
+            val filteredWords = matchWordsUseCase.getWordsForTaskMatchWords(letterId)
             val mappedWords = uiStateMapper.map(filteredWords)
             with(mappedWords) {
                 state.copy(
@@ -113,7 +114,7 @@ class ThirdTaskViewModel
                     isAnswerCorrect = true
                 )
             }
-            prefInteractor.taskCompleted(Task.THIRD.stableId, uiState.value.selectedLetter)
+            prefInteractor.taskCompleted(Task.MATCH_WORDS.stableId, uiState.value.selectedLetter)
         } else {
             playSound(ERROR_AUDIO)
             _uiState.update { state ->

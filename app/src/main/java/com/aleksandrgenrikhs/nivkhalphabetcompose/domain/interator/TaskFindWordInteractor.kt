@@ -18,7 +18,7 @@ constructor(
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     val usedWords: MutableSet<WordModel> = mutableSetOf()
 
-    suspend fun getWordsForSecondTask(letterId: String): List<TaskFindWordModel> {
+    suspend fun getWordsForTaskMatchWords(letterId: String): List<TaskFindWordModel> {
         val words = repository.getWords()
         val letterWords = words[letterId] ?: error("Can't find words for letter $letterId")
         val otherWords = words

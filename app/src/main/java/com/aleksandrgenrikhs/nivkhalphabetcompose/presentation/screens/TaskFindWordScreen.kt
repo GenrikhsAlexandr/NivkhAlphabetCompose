@@ -52,7 +52,7 @@ fun TaskFindWordScreen(
             },
             navigationNext = {
                 navController.navigate(
-                    "${NavigationDestination.ThirdTaskScreen.destination}/$letter"
+                    "${NavigationDestination.TaskMatchWordsScreen.destination}/$letter"
                 ) {
                     popUpTo("${NavigationDestination.TaskFindWordScreen.destination}/$letter") {
                         inclusive = true
@@ -64,7 +64,7 @@ fun TaskFindWordScreen(
             textButtonBack = stringResource(id = R.string.backAlphabet),
             textButtonNext = stringResource(
                 id = R.string.nextTask,
-                Task.THIRD.stableId
+                Task.MATCH_WORDS.stableId
             ),
             isVisibleSecondButton = true,
             onDismissRequest = {}

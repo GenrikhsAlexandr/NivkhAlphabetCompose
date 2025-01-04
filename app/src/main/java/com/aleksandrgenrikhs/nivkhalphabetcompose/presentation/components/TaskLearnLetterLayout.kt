@@ -51,23 +51,16 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorCar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.TaskLearnLetterUIState
 import com.idapgroup.autosizetext.AutoSizeText
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskLearnLetterLayout(
     modifier: Modifier = Modifier,
-    titles: List<String>,
-    wordsId: List<String>,
-    icons: List<String?>,
-    progressWords: List<Int>,
-    isClickableWords: List<Boolean>,
+    viewState: TaskLearnLetterUIState,
     letter: String,
     onClick: (String, Int?) -> Unit,
-    isClickableLetter: Boolean,
-    isPlaying: Boolean,
-    progressLetter: Int,
-    isVisibleWord: Boolean,
     onBack: () -> Unit,
 ) {
     var isDividerVisible by remember { mutableStateOf(false) }
@@ -135,23 +128,23 @@ fun TaskLearnLetterLayout(
             }
             item {
                 CardLetter(
-                    progress = progressLetter,
+                    progress = viewState.progressLetter,
                     title = letter,
                     onClick = {
                         onClick(letter, null)
                     },
-                    isClickable = isClickableLetter && !isPlaying,
+                    isClickable = viewState.isClickableLetter && !viewState.isPlaying,
                 )
             }
-            if (titles.isNotEmpty()) {
-                itemsIndexed(titles) { index, title ->
+            if (viewState.titles.isNotEmpty()) {
+                itemsIndexed(viewState.titles) { index, title ->
                     CardWord(
-                        progress = progressWords[index],
+                        progress = viewState.progressWords[index],
                         title = title,
-                        icon = icons[index],
-                        onClick = { onClick(wordsId[index], index) },
-                        isClickable = isClickableWords[index] && !isPlaying,
-                        isVisible = isVisibleWord,
+                        icon = viewState.icons[index],
+                        onClick = { onClick(viewState.wordsId[index], index) },
+                        isClickable = viewState.isClickableWords[index] && !viewState.isPlaying,
+                        isVisible = viewState.isVisibleWord,
                     )
                 }
             }
@@ -165,7 +158,7 @@ private fun CardLetter(
     title: String,
     onClick: () -> Unit,
     isClickable: Boolean,
-    progress: Int
+    progress: Int,
 ) {
     Box(
         modifier = modifier
@@ -270,17 +263,12 @@ private fun CardWord(
 private fun FirstTaskContentPreview() {
     NivkhAlphabetComposeTheme {
         TaskLearnLetterLayout(
-            titles = listOf("Alpha", "Word", "Nivkh"),
-            wordsId = listOf("1.2", "1.3", "1.1"),
-            icons = listOf("we", "wew", "ds"),
-            progressWords = listOf(3, 2, 0),
-            isClickableWords = listOf(true, false, false),
+            viewState = TaskLearnLetterUIState(
+                titles = listOf("word1", "word2", "word3"),
+                progressWords = listOf(1, 2, 3),
+            ),
             letter = "Aa",
             onClick = { _, _ -> },
-            isClickableLetter = false,
-            progressLetter = 1,
-            isVisibleWord = true,
-            isPlaying = false,
             onBack = {}
         )
     }

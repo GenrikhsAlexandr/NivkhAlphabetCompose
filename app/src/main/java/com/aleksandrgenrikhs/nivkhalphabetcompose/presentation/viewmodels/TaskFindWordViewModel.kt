@@ -128,7 +128,7 @@ class TaskFindWordViewModel
         prefInteractor.taskCompleted(Task.FIND_WORD.stableId, uiState.value.selectedLetter)
     }
 
-    fun playSound(url: String) {
+    private fun playSound(url: String) {
         mediaPlayerInteractor.playerDestroy()
         mediaPlayerInteractor.initPlayer(context, url)
     }

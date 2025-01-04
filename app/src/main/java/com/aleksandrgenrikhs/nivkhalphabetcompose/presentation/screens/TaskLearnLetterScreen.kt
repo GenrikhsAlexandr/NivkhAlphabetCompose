@@ -22,60 +22,50 @@ fun TaskLearnLetterScreen(
     viewModel: TaskLearnLetterViewModel = hiltViewModel(),
     letter: String,
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val viewState by viewModel.uiState.collectAsState()
 
     viewModel.setSelectedLetter(letter)
 
-    with(uiState) {
-        LaunchedEffect(Unit) {
-            viewModel.updateWordsForLetter(letter)
-            viewModel.checkTaskCompletion(letter)
-        }
-        TaskLearnLetterLayout(
-            titles = titles,
-            wordsId = wordsId,
-            icons = icons,
-            progressWords = progressWords,
-            isClickableWords = isClickableWords,
-            onClick = (viewModel::onClickElement),
-            letter = letter,
-            isClickableLetter = isClickableLetter,
-            isPlaying = isPlaying,
-            isVisibleWord = isVisibleWord,
-            progressLetter = progressLetter,
-            onBack = navController::popBackStack
-        )
+    LaunchedEffect(Unit) {
+        viewModel.updateWordsForLetter(letter)
+        viewModel.checkTaskCompletion(letter)
+    }
+    TaskLearnLetterLayout(
+        onClick = (viewModel::onClickElement),
+        letter = letter,
+        viewState = viewState,
+        onBack = navController::popBackStack
+    )
 
-        if (isCompletedWords.isNotEmpty() && isCompletedWords.last() && !isPlaying) {
-            if (shouldPlayFinishAudio) {
-                viewModel.playSoundForElement(FINISH_AUDIO)
-            }
-            DialogSuccess(
-                navigationBack = {
-                    navController.popBackStack(
-                        NavigationDestination.LettersScreen.destination,
-                        inclusive = false
-                    )
-                },
-                navigationNext = {
-                    navController.navigate(
-                        "${NavigationDestination.TaskFindWordScreen.destination}/$letter"
-                    ) {
-                        popUpTo("${NavigationDestination.TaskLearnLetterScreen.destination}/$letter") {
-                            inclusive = true
-                        }
-                    }
-                },
-                painter = painterResource(R.drawable.ic_end_task1),
-                title = stringResource(id = R.string.textEndFirstTask),
-                textButtonBack = stringResource(id = R.string.backAlphabet),
-                textButtonNext = stringResource(
-                    id = R.string.nextTask,
-                    Task.FIND_WORD.stableId
-                ),
-                isVisibleSecondButton = true,
-                onDismissRequest = {}
-            )
+    if (viewState.showDialog && !viewState.isPlaying) {
+        if (viewState.shouldPlayFinishAudio) {
+            viewModel.playSoundForElement(FINISH_AUDIO)
         }
+        DialogSuccess(
+            navigationBack = {
+                navController.popBackStack(
+                    NavigationDestination.LettersScreen.destination,
+                    inclusive = false
+                )
+            },
+            navigationNext = {
+                navController.navigate(
+                    "${NavigationDestination.TaskFindWordScreen.destination}/$letter"
+                ) {
+                    popUpTo("${NavigationDestination.TaskLearnLetterScreen.destination}/$letter") {
+                        inclusive = true
+                    }
+                }
+            },
+            painter = painterResource(R.drawable.ic_end_task1),
+            title = stringResource(id = R.string.textEndFirstTask),
+            textButtonBack = stringResource(id = R.string.backAlphabet),
+            textButtonNext = stringResource(
+                id = R.string.nextTask,
+                Task.FIND_WORD.stableId
+            ),
+            isVisibleSecondButton = true,
+            onDismissRequest = {}
+        )
     }
 }

@@ -13,5 +13,6 @@ data class TaskLearnLetterUIState(
     val isClickableLetter: Boolean = true,
     val isCompletedLetter: Boolean = false,
     val isVisibleWord: Boolean = false,
+    val showDialog: Boolean = false,
     val shouldPlayFinishAudio: Boolean = false,
 )

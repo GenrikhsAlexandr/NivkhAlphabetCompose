@@ -46,13 +46,6 @@ class TaskLearnLetterViewModel
         viewModelScope.launch {
             prefInteractor.saveStartTimeLearning()
         }
-
-        viewModelScope.launch {
-            val currentValue = mediaPlayerInteractor.getIsSoundEnable()
-            _uiState.update { state ->
-                state.copy(shouldPlayFinishAudio = currentValue)
-            }
-        }
     }
 
     suspend fun updateWordsForLetter(letterId: String) {
@@ -75,8 +68,7 @@ class TaskLearnLetterViewModel
     suspend fun checkTaskCompletion(letter: String) {
         _uiState.update { state ->
             val isTaskCompleted = prefInteractor.isTaskCompleted(
-                Task.LEARN_LETTER.stableId,
-                letter
+                Task.LEARN_LETTER.stableId, letter
             )
             state.copy(
                 isVisibleWord = isTaskCompleted,
@@ -100,7 +92,8 @@ class TaskLearnLetterViewModel
                 when {
                     !it && uiState.value.isCompletedLetter
                             || !it && uiState.value.isCompletedWords[0]
-                            || !it && uiState.value.isCompletedWords[1] -> mediaPlayerInteractor.playerDestroy()
+                            || !it && uiState.value.isCompletedWords[1]
+                            || !it && uiState.value.isCompletedWords[2] -> mediaPlayerInteractor.playerDestroy()
                 }
             }
         }
@@ -145,18 +138,32 @@ class TaskLearnLetterViewModel
                         isClickableWords = newIsClickable,
                     )
                 }
-                saveTaskProgress()
+            }
+        }
+        if (uiState.value.isCompletedWords.isNotEmpty()
+            && uiState.value.isCompletedWords.last()
+        ) {
+            showDialog()
+            saveTaskProgress()
+        }
+    }
+
+    private fun showDialog() {
+        viewModelScope.launch {
+            val currentValue = mediaPlayerInteractor.getIsSoundEnable()
+            _uiState.update { state ->
+                state.copy(
+                    shouldPlayFinishAudio = currentValue,
+                    showDialog = true,
+                )
             }
         }
     }
 
     private fun saveTaskProgress() {
-        if (uiState.value.isCompletedWords.last()) {
-            prefInteractor.taskCompleted(
-                Task.LEARN_LETTER.stableId,
-                uiState.value.selectedLetter
-            )
-        }
+        prefInteractor.taskCompleted(
+            Task.LEARN_LETTER.stableId, uiState.value.selectedLetter
+        )
     }
 
     fun playSoundForElement(element: String) {
@@ -167,11 +174,6 @@ class TaskLearnLetterViewModel
 
             FINISH_AUDIO -> {
                 mediaPlayerInteractor.initPlayer(context, FINISH_AUDIO)
-                _uiState.update { state ->
-                    state.copy(
-                        shouldPlayFinishAudio = false
-                    )
-                }
             }
 
             else -> {

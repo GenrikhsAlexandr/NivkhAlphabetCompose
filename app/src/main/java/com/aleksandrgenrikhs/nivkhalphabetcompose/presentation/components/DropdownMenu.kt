@@ -61,7 +61,7 @@ fun DropdownMenu(
             DropdownMenuItem(
                 onClick = {
                     onClick()
-                    expanded = false;
+                    expanded = false
                 },
                 text = {
                     Text(
@@ -73,7 +73,7 @@ fun DropdownMenu(
             )
             DropdownMenuItem(
                 onClick = {
-                    expanded = false;
+                    expanded = false
                     showDialog = true
                 },
                 text = {

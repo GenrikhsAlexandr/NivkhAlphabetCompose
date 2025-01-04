@@ -83,8 +83,7 @@ fun NavGraph(
         composable(
             route = "${NavigationDestination.TaskLearnLetterScreen.destination}/{${Constants.LETTER_KEY}}",
             arguments = listOf(navArgument(Constants.LETTER_KEY) { type = NavType.StringType })
-        )
-        { backStackEntry ->
+        ) { backStackEntry ->
             val currentLetter = backStackEntry.arguments?.getString(Constants.LETTER_KEY)
             TaskLearnLetterScreen(
                 letter = checkNotNull(currentLetter),
@@ -157,15 +156,12 @@ fun NavGraph(
         }
         composable(
             route = NavigationDestination.AboutScreen.destination
-        )
-        {
+        ) {
             AboutScreen(navController = navController)
         }
         composable(
             route = "${NavigationDestination.CertificateScreen.destination}/{${Constants.NAME_KEY}}",
-            arguments = listOf(navArgument(Constants.NAME_KEY) {
-                type = NavType.StringType
-            })
+            arguments = listOf(navArgument(Constants.NAME_KEY) { type = NavType.StringType })
         ) { backStackEntry ->
             backStackEntry.arguments?.getString(Constants.NAME_KEY)?.let {
                 CertificateScreen(

@@ -127,7 +127,6 @@ private fun DialogInfoPreview() {
         DialogInfoItem(
             title = stringResource(id = R.string.infoLettersScreen),
             onDismissRequest = {},
-
-            )
+        )
     }
 }

@@ -144,8 +144,7 @@ private fun TitleTask(
         modifier = modifier
             .wrapContentSize(),
         contentAlignment = Alignment.Center
-    )
-    {
+    ) {
         val text = stringResource(id = R.string.titleSecondTask, letter)
         val annotatedString = buildAnnotatedString {
             append(text)

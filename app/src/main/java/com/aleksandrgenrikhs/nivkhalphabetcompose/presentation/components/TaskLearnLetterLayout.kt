@@ -91,8 +91,7 @@ fun TaskLearnLetterLayout(
                     config = AppBar.AppBarConfig.AppBarTask(
                         title = stringResource(id = R.string.firstTask),
                         actions = action,
-
-                        ),
+                    ),
                     navigation = onBack
                 )
                 if (isDividerVisible) {
@@ -117,8 +116,7 @@ fun TaskLearnLetterLayout(
             ),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp),
-        )
-        {
+        ) {
             item {
                 Text(
                     text = stringResource(id = R.string.titleFirstTask),
@@ -169,8 +167,7 @@ private fun CardLetter(
                 onClick = onClick
             ),
         contentAlignment = Alignment.Center
-    )
-    {
+    ) {
         LinearProgressIndicator(
             progress = { (progress.toFloat() / 5f) },
             modifier = Modifier
@@ -211,8 +208,7 @@ private fun CardWord(
                 onClick = onClick
             ),
         contentAlignment = Alignment.Center
-    )
-    {
+    ) {
         LinearProgressIndicator(
             progress = { (progress.toFloat() / 3f) },
             modifier = Modifier

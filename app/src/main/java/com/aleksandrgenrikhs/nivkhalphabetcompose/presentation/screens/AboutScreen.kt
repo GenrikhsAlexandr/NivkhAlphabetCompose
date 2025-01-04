@@ -93,10 +93,8 @@ fun AboutScreen(
             ),
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.spacedBy(8.dp),
-        )
-        {
+        ) {
             item {
-
                 Text(
                     text = stringResource(id = R.string.aboutText),
                     style = MaterialTheme.typography.bodyLarge,

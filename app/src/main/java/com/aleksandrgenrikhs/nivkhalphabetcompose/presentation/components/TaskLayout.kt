@@ -91,8 +91,7 @@ fun TaskLayout(
                     config = AppBar.AppBarConfig.AppBarTask(
                         title = letter,
                         actions = action,
-
-                        ),
+                    ),
                     navigation = onBack
                 )
                 if (isDividerVisible) {

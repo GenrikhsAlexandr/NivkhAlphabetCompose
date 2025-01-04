@@ -55,7 +55,7 @@ fun DialogGift(
     modifier: Modifier = Modifier,
     navController: NavController,
     isCertificateCreated: Boolean,
-    timeLearning: Int
+    timeLearning: Int,
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -97,7 +97,7 @@ fun DialogGifItem(
     onDismissRequest: () -> Unit,
     isLettersCompleted: Boolean,
     timeLearning: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     var name by remember { mutableStateOf("") }
 
@@ -130,18 +130,25 @@ fun DialogGifItem(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Image(
-                    painter = if (!isLettersCompleted) painterResource(R.drawable.ic_notyet) else painterResource(
-                        R.drawable.ic_congratulation
-                    ),
+                    painter = if (!isLettersCompleted) {
+                        painterResource(R.drawable.ic_notyet)
+                    } else {
+                        painterResource(R.drawable.ic_congratulation)
+                    },
                     contentDescription = null,
                     contentScale = ContentScale.Fit,
                     modifier = modifier
                         .height(160.dp)
                 )
                 Text(
-                    text = if (!isLettersCompleted) stringResource(id = R.string.notYet) else stringResource(
-                        id = R.string.congratulation, timeLearning
-                    ),
+                    text = if (!isLettersCompleted) {
+                        stringResource(id = R.string.notYet)
+                    } else {
+                        stringResource(
+                            id = R.string.congratulation,
+                            timeLearning
+                        )
+                    },
                     style = MaterialTheme.typography.titleMedium,
                     modifier = modifier.padding(16.dp),
                     textAlign = TextAlign.Center
@@ -156,11 +163,12 @@ fun DialogGifItem(
                                     text = stringResource(id = R.string.fieldEmpty),
                                     style = textStyle
                                 )
-                            } else
+                            } else {
                                 Text(
                                     text = stringResource(id = R.string.fullName),
                                     style = textStyle
                                 )
+                            }
                         },
                         onValueChange = { newName ->
                             name = newName.filter { it.isLetter() || it.isWhitespace() }
@@ -180,14 +188,16 @@ fun DialogGifItem(
                             unfocusedIndicatorColor = Color.Transparent,
                             focusedIndicatorColor = Color.Transparent,
                             focusedContainerColor = colorText,
-                            cursorColor = colorCardLetterItem
+                            cursorColor = colorCardLetterItem,
                         )
                     )
                 }
                 TextButton(
                     onClick = {
                         if (isLettersCompleted) {
-                            if (name.isEmpty()) isError = true else {
+                            if (name.isEmpty()) {
+                                isError = true
+                            } else {
                                 isError = false
                                 navController.navigate("$CERTIFICATE_SCREEN/$name")
                                 onDismissRequest()
@@ -198,12 +208,19 @@ fun DialogGifItem(
                     },
                     modifier = modifier
                         .padding(8.dp)
-                        .background(colorPrimary, CircleShape)
+                        .background(
+                            colorPrimary,
+                            CircleShape
+                        )
                 ) {
                     Text(
-                        text = if (isLettersCompleted) stringResource(id = R.string.next) else stringResource(
-                            id = R.string.ok
-                        ),
+                        text = if (isLettersCompleted) {
+                            stringResource(id = R.string.next)
+                        } else {
+                            stringResource(
+                                id = R.string.ok
+                            )
+                        },
                         style = MaterialTheme.typography.bodyLarge,
                         textAlign = TextAlign.Center
                     )

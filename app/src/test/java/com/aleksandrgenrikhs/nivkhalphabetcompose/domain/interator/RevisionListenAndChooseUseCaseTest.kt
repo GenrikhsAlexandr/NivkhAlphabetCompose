@@ -8,7 +8,6 @@ import org.mockito.kotlin.spy
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.verifyNoMoreInteractions
 
-
 class RevisionListenAndChooseUseCaseTest {
 
     private val mapper: RevisionListenAndChooseMapper = spy(RevisionListenAndChooseMapper())

@@ -11,7 +11,6 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.Letter
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.REVISION_TASKS_SCREEN
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.TASKS_SCREEN
 
-
 @Composable
 fun LetterScreen(
     navController: NavController,

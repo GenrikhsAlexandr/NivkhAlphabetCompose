@@ -50,8 +50,7 @@ fun TaskWriteWordLayout(
                 config = AppBar.AppBarConfig.AppBarTask(
                     title = stringResource(id = R.string.fourthTask),
                     actions = action,
-
-                    ),
+                ),
                 navigation = onBack
             )
         }

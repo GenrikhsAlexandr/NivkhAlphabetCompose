@@ -15,5 +15,4 @@ data class RevisionCompleteTableUIState(
     val correctIcons: List<String?> = listOf(null, null),
     val isGuessWrong: Boolean = false,
     val showDialog: Boolean = false,
-
-    )
+)

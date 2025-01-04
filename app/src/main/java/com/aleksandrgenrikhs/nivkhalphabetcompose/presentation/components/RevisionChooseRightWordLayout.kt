@@ -79,8 +79,7 @@ fun RevisionChooseRightWordLayout(
                 config = AppBar.AppBarConfig.AppBarTask(
                     title = stringResource(id = R.string.revisionSecond),
                     actions = action,
-
-                    ),
+                ),
                 navigation = onBack
             )
         }
@@ -165,7 +164,15 @@ private fun WordItem(
     ) {
         Text(
             text = title,
-            color = if (isCorrectAnswer != null && !isCorrectAnswer) colorError else if (isCorrectAnswer == null) colorText else colorProgressBar,
+            color = if (isCorrectAnswer != null && !isCorrectAnswer) {
+                colorError
+            } else {
+                if (isCorrectAnswer == null) {
+                    colorText
+                } else {
+                    colorProgressBar
+                }
+            },
             maxLines = 1,
             style = MaterialTheme.typography.displayLarge,
             modifier = modifier.padding(8.dp)

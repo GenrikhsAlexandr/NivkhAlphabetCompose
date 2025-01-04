@@ -86,8 +86,7 @@ fun RevisionListenAndChooseLayout(
                     config = AppBar.AppBarConfig.AppBarTask(
                         title = stringResource(id = R.string.revisionFirst),
                         actions = action,
-
-                        ),
+                    ),
                     navigation = onBack
                 )
                 if (isDividerVisible) {
@@ -113,8 +112,7 @@ fun RevisionListenAndChooseLayout(
             columns = GridCells.Fixed(2),
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
-        )
-        {
+        ) {
             item(span = { GridItemSpan(maxLineSpan) }) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_revision_first),
@@ -187,7 +185,13 @@ private fun LetterItem(
     ) {
         Text(
             text = letter,
-            color = if (isCorrectAnswer != null && !isCorrectAnswer) colorError else if (isCorrectAnswer == null) colorText else colorProgressBar,
+            color = if (isCorrectAnswer != null && !isCorrectAnswer) {
+                colorError
+            } else if (isCorrectAnswer == null) {
+                colorText
+            } else {
+                colorProgressBar
+            },
             maxLines = 1,
             style = MaterialTheme.typography.displayLarge,
             modifier = modifier.padding(8.dp)

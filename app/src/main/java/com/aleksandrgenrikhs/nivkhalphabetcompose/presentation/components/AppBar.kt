@@ -37,7 +37,7 @@ object AppBar {
 
         data class AppBarTask(
             val title: String,
-            val actions: @Composable RowScope.() -> Unit
+            val actions: @Composable RowScope.() -> Unit,
         ) : AppBarConfig()
 
         data object AppBarAbout : AppBarConfig()
@@ -85,47 +85,47 @@ object AppBar {
         config: AppBarConfig,
     ): @Composable () -> Unit {
         val title = @Composable {
-                when (config) {
-                    is AppBarConfig.AppBarLetters -> {
+            when (config) {
+                is AppBarConfig.AppBarLetters -> {
+                    AutoSizeText(
+                        text = config.title,
+                        style = MaterialTheme.typography.titleLarge,
+                        maxLines = 1,
+                        minFontSize = 20.sp,
+                        textAlign = TextAlign.Center
+                    )
+                }
+
+                is AppBarConfig.AppBarTask -> {
+                    AutoSizeText(
+                        text = config.title,
+                        style = MaterialTheme.typography.titleLarge,
+                        maxLines = 1,
+                        minFontSize = 16.sp,
+                    )
+                }
+
+                is AppBarConfig.AppBarAbout -> {
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
                         AutoSizeText(
-                            text = config.title,
+                            text = stringResource(id = R.string.aboutTitle),
                             style = MaterialTheme.typography.titleLarge,
                             maxLines = 1,
-                            minFontSize = 20.sp,
+                            fontSize = 22.sp,
+                            minFontSize = 16.sp,
                             textAlign = TextAlign.Center
                         )
-                    }
-
-                    is AppBarConfig.AppBarTask -> {
-                        AutoSizeText(
-                            text = config.title,
-                            style = MaterialTheme.typography.titleLarge,
-                            maxLines = 1,
-                            minFontSize = 16.sp,
+                        Text(
+                            text = stringResource(id = R.string.aboutSubTitle),
+                            style = MaterialTheme.typography.labelSmall,
+                            fontWeight = FontWeight.Normal,
                         )
                     }
-
-                    is AppBarConfig.AppBarAbout -> {
-                        Column(
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                        ) {
-                            AutoSizeText(
-                                text = stringResource(id = R.string.aboutTitle),
-                                style = MaterialTheme.typography.titleLarge,
-                                maxLines = 1,
-                                fontSize = 22.sp,
-                                minFontSize = 16.sp,
-                                textAlign = TextAlign.Center
-                            )
-                            Text(
-                                text = stringResource(id = R.string.aboutSubTitle),
-                                style = MaterialTheme.typography.labelSmall,
-                                fontWeight = FontWeight.Normal,
-                            )
-                        }
-                    }
                 }
+            }
         }
         return title
     }

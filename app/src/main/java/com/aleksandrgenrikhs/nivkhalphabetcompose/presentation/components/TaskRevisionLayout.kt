@@ -52,7 +52,7 @@ fun TaskRevisionLayout(
     routes: List<String>,
     modifier: Modifier = Modifier,
     onClick: (String) -> Unit,
-    onBack: () -> Unit
+    onBack: () -> Unit,
 ) {
     var isDividerVisible by remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
@@ -82,8 +82,7 @@ fun TaskRevisionLayout(
                     config = AppBar.AppBarConfig.AppBarTask(
                         title = stringResource(id = R.string.revisionTask),
                         actions = action,
-
-                        ),
+                    ),
                     navigation = onBack
                 )
                 if (isDividerVisible) {
@@ -126,7 +125,7 @@ private fun RevisionTaskItem(
     modifier: Modifier = Modifier,
     @DrawableRes iconResId: Int,
     onTaskClick: () -> Unit,
-    @StringRes title: Int
+    @StringRes title: Int,
 ) {
     Column(
         modifier = modifier
@@ -156,8 +155,7 @@ private fun RevisionTaskItem(
     }
 }
 
-
-@Preview(widthDp = 600, heightDp = 700)
+@Preview(showSystemUi = true)
 @Composable
 private fun TaskRevisionLayoutPreview() {
     NivkhAlphabetComposeTheme {

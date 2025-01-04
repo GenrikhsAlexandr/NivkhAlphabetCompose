@@ -27,7 +27,6 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 
-
 @Composable
 fun SplashScreen(
     navController: NavController,
@@ -39,9 +38,8 @@ fun SplashScreen(
             targetValue = 1.0f,
             animationSpec = tween(
                 durationMillis = 1500,
-                easing = {
-                    OvershootInterpolator(4f).getInterpolation(it)
-                })
+                easing = { OvershootInterpolator(4f).getInterpolation(it) }
+            )
         )
         navigation(navController)
     }

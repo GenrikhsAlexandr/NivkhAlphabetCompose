@@ -20,7 +20,6 @@ class MediaPlayerInteractorTest {
 
     private val playerInteractor = MediaPlayerInteractor(mediaPlayer, prefRepository)
 
-
     @Test
     fun `WHEN call mediaplayer THEN player is initialized and play`() {
         val context: Context = mock()

@@ -112,8 +112,7 @@ fun LettersLayout(
                 }
             }
         }
-    )
-    { paddingValues ->
+    ) { paddingValues ->
         LazyVerticalGrid(
             state = listState,
             modifier = Modifier
@@ -128,8 +127,7 @@ fun LettersLayout(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
             columns = GridCells.Adaptive(70.dp),
-
-            ) {
+        ) {
             if (state.letters.isNotEmpty()) {
                 itemsIndexed(state.letters) { index, item ->
                     LetterItem(
@@ -213,7 +211,7 @@ private fun RepeatItem(
 @PreviewLightDark
 private fun PreviewContent(
     @PreviewParameter(LettersUiStates::class)
-    uiState: LettersUIState
+    uiState: LettersUIState,
 ) {
     NivkhAlphabetComposeTheme {
         LettersLayout(
@@ -232,7 +230,6 @@ private class LettersUiStates :
             LettersUIState(
                 letters = Letters.entries.map { it.title },
                 isLetterCompleted = List(Letters.entries.size) { false },
-
-                )
+            )
         )
 }

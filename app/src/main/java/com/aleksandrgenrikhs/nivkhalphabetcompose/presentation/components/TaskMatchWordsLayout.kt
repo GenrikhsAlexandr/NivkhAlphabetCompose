@@ -107,8 +107,7 @@ fun TaskMatchWordsLayout(
                     config = AppBar.AppBarConfig.AppBarTask(
                         title = stringResource(id = R.string.thirdTask),
                         actions = action,
-
-                        ),
+                    ),
                     navigation = onBack
                 )
                 if (isDividerVisible) {
@@ -129,7 +128,8 @@ fun TaskMatchWordsLayout(
                 start = 16.dp,
                 end = 16.dp,
                 bottom = 8.dp
-            ), verticalArrangement = Arrangement.spacedBy(16.dp),
+            ),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             if (viewState.wordsId.isNotEmpty()) {
@@ -266,8 +266,7 @@ private fun ShareText(
                 )
             },
         contentAlignment = Alignment.Center
-    )
-    {
+    ) {
         AutoSizeText(
             text = currentTitle,
             style = MaterialTheme.typography.bodyLarge.copy(
@@ -285,8 +284,7 @@ private fun IconButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     icon: String?,
-
-    ) {
+) {
     Box(
         modifier = modifier
             .size(150.dp)

@@ -44,7 +44,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.Certif
 fun CertificateScreen(
     name: String,
     viewModel: CertificateViewModel = hiltViewModel(),
-    navController: NavController
+    navController: NavController,
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
@@ -139,7 +139,7 @@ fun PdfViewer(bitmap: Bitmap?) {
 @PreviewLightDark
 private fun PreviewContent(
     @PreviewParameter(CertificateUIStates::class)
-    uiState: CertificateUIState
+    uiState: CertificateUIState,
 ) {
     NivkhAlphabetComposeTheme {
         CertificateLayout(

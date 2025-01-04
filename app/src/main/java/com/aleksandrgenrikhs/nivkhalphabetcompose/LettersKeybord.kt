@@ -49,8 +49,4 @@ enum class LettersKeybord(
     EE("э"),
     YU("ю"),
     Ya("я");
-
-    companion object {
-        fun getById(stableId: String): LettersKeybord? = entries.find { it.title == stableId }
-    }
 }

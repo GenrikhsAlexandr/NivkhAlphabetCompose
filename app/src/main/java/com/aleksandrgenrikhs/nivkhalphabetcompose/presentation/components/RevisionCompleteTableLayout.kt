@@ -109,8 +109,7 @@ fun RevisionCompleteTableLayout(
                     config = AppBar.AppBarConfig.AppBarTask(
                         title = stringResource(id = R.string.thirdTask),
                         actions = action,
-
-                        ),
+                    ),
                     navigation = onBack
                 )
                 if (isDividerVisible) {
@@ -131,7 +130,8 @@ fun RevisionCompleteTableLayout(
                 start = 16.dp,
                 end = 16.dp,
                 bottom = 8.dp
-            ), verticalArrangement = Arrangement.spacedBy(12.dp),
+            ),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             if (viewState.title.isNotEmpty()) {
@@ -445,8 +445,7 @@ private fun ShareWords(
                 )
             },
         contentAlignment = Alignment.Center
-    )
-    {
+    ) {
         AutoSizeText(
             text = title,
             style = MaterialTheme.typography.titleLarge,
@@ -478,8 +477,7 @@ private fun ShareLetters(
                 )
             },
         contentAlignment = Alignment.Center
-    )
-    {
+    ) {
         AutoSizeText(
             text = letter,
             style = MaterialTheme.typography.titleLarge,
@@ -489,7 +487,6 @@ private fun ShareLetters(
         )
     }
 }
-
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

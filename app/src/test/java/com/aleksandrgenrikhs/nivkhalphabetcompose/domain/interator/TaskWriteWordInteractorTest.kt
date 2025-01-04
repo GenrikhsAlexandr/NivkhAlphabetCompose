@@ -10,18 +10,18 @@ import org.junit.jupiter.api.Test
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.mock
 
-class FourthTaskInteractorTest {
+class TaskWriteWordInteractorTest {
 
     private val repository: AlphabetRepository = mock {
         onBlocking { getWords() } doAnswer { createWords() }
     }
-    private val interactor = FourthTaskInteractor(repository)
+    private val interactor = TaskWriteWordInteractor(repository)
 
     @Test
     fun `WHEN call getWordsForSecondTask and letterId is missing THEN throw exception`() =
         runTest {
             try {
-                interactor.getWordsForFourthTask("unknownId")
+                interactor.getWordsForTaskWriteWord("unknownId")
                 error("Do not reach this")
             } catch (e: Exception) {
                 assertEquals("Can't find words for letter unknownId", e.message)
@@ -31,9 +31,9 @@ class FourthTaskInteractorTest {
     @Test
     fun `WHEN call getWordsForSecondTask second time with same letterId THEN return list without words witch were used fist run`() =
         runTest {
-            val firstCall = interactor.getWordsForFourthTask("a")
-            val secondCall = interactor.getWordsForFourthTask("a")
-            val thirdCall = interactor.getWordsForFourthTask("a")
+            val firstCall = interactor.getWordsForTaskWriteWord("a")
+            val secondCall = interactor.getWordsForTaskWriteWord("a")
+            val thirdCall = interactor.getWordsForTaskWriteWord("a")
             assertNotEquals(firstCall.wordId, secondCall.wordId, thirdCall.wordId)
         }
 

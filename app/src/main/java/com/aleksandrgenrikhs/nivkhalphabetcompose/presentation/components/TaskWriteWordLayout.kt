@@ -28,7 +28,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPri
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FourthTaskLayout(
+fun TaskWriteWordLayout(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     onDelete: () -> Unit,
@@ -38,7 +38,7 @@ fun FourthTaskLayout(
     isGuessWrong: Boolean,
     userGuess: String,
     onClickable: Boolean,
-    onBack: () -> Unit
+    onBack: () -> Unit,
 ) {
     val action: @Composable RowScope.() -> Unit = {
         DialogInfo(title = stringResource(id = R.string.infoFourthScreen))
@@ -99,7 +99,7 @@ fun FourthTaskLayout(
 @Composable
 private fun FourthTaskContentPreview() {
     NivkhAlphabetComposeTheme {
-        FourthTaskLayout(
+        TaskWriteWordLayout(
             onClick = { },
             onDelete = {},
             onDone = {},

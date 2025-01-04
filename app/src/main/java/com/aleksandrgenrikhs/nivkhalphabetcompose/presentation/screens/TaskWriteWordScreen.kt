@@ -14,16 +14,16 @@ import coil.compose.rememberAsyncImagePainter
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.DialogSuccess
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.FourthTaskLayout
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.FourthTaskViewModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.TaskWriteWordLayout
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.TaskWriteWordViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO
 import kotlinx.coroutines.delay
 
 @Composable
-fun FourthTaskScreen(
+fun TaskWriteWordScreen(
     navController: NavController,
-    viewModel: FourthTaskViewModel = hiltViewModel(),
+    viewModel: TaskWriteWordViewModel = hiltViewModel(),
     letter: String,
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -39,7 +39,7 @@ fun FourthTaskScreen(
     }
 
     with(uiState) {
-        FourthTaskLayout(
+        TaskWriteWordLayout(
             onClick = { viewModel.playSound("${WORDS_AUDIO}${wordId}") },
             icon = icon,
             onClickable = isClickable,

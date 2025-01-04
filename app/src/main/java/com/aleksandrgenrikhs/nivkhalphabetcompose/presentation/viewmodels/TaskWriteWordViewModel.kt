@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.FourthTaskInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.PrefInteractor
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.FourthTaskUIState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.TaskWriteWordInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.TaskWriteWordUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO
@@ -21,16 +21,16 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FourthTaskViewModel
+class TaskWriteWordViewModel
 @Inject constructor(
     private val prefInteractor: PrefInteractor,
-    private val fourthTaskInteractor: FourthTaskInteractor,
+    private val writeWordInteractor: TaskWriteWordInteractor,
     private val mediaPlayerInteractor: MediaPlayerInteractor,
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<FourthTaskUIState> =
-        MutableStateFlow(FourthTaskUIState())
+    private val _uiState: MutableStateFlow<TaskWriteWordUIState> =
+        MutableStateFlow(TaskWriteWordUIState())
     val uiState = _uiState.asStateFlow()
 
     init {
@@ -50,7 +50,7 @@ class FourthTaskViewModel
 
     fun updateWordsForLetter(letterId: String) {
         viewModelScope.launch {
-            val filteredWords = fourthTaskInteractor.getWordsForFourthTask(letterId)
+            val filteredWords = writeWordInteractor.getWordsForTaskWriteWord(letterId)
             _uiState.update { state ->
                 with(filteredWords) {
                     state.copy(
@@ -122,7 +122,7 @@ class FourthTaskViewModel
 
     private fun saveTaskProgress() {
         if (uiState.value.isCompleted) {
-            prefInteractor.taskCompleted(Task.FOURTH.stableId, uiState.value.selectedLetter)
+            prefInteractor.taskCompleted(Task.WRITE_WORD.stableId, uiState.value.selectedLetter)
         }
     }
 
@@ -140,7 +140,7 @@ class FourthTaskViewModel
 
     override fun onCleared() {
         super.onCleared()
-        fourthTaskInteractor.clearPreviousWordsList()
+        writeWordInteractor.clearPreviousWordsList()
         mediaPlayerInteractor.playerDestroy()
     }
 }

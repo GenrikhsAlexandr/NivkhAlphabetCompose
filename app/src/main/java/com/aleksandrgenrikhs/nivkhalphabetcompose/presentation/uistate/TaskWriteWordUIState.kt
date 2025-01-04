@@ -1,6 +1,6 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate
 
-data class FourthTaskUIState(
+data class TaskWriteWordUIState(
     val selectedLetter: String = "",
     val wordId: String = "",
     val title: String = "",

@@ -1,12 +1,12 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator
 
 import androidx.annotation.VisibleForTesting
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.FourthTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.TaskWriteWordModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.AlphabetRepository
 import javax.inject.Inject
 
-class FourthTaskInteractor
+class TaskWriteWordInteractor
 @Inject constructor(
     private val repository: AlphabetRepository
 ) {
@@ -14,7 +14,7 @@ class FourthTaskInteractor
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     val usedWords: MutableSet<WordModel> = mutableSetOf()
 
-    suspend fun getWordsForFourthTask(letterId: String): FourthTaskModel {
+    suspend fun getWordsForTaskWriteWord(letterId: String): TaskWriteWordModel {
         val filterWords =
             repository.getWords()[letterId] ?: error("Can't find words for letter $letterId")
         val currentWord =
@@ -22,7 +22,7 @@ class FourthTaskInteractor
                 .shuffled()
                 .first()
         usedWords.add(currentWord)
-        return FourthTaskModel(
+        return TaskWriteWordModel(
             title = currentWord.title,
             icon = currentWord.icon,
             wordId = currentWord.wordId

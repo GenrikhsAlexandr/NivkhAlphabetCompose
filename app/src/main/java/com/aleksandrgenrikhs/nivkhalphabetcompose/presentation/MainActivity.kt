@@ -43,8 +43,7 @@ class MainActivity : ComponentActivity() {
 
 @Preview(showBackground = true)
 @Composable
-fun TopAppBarAlphabetPreview(
-) {
+fun TopAppBarAlphabetPreview() {
     NivkhAlphabetComposeTheme {
         NavGraph(
             navController = rememberNavController()

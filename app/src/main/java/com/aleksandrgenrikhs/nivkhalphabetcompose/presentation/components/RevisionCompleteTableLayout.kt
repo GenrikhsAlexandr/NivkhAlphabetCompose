@@ -68,22 +68,14 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPri
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorRight
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.RevisionCompleteTableUIState
 import com.idapgroup.autosizetext.AutoSizeText
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RevisionCompleteTableLayout(
     modifier: Modifier = Modifier,
-    title: String,
-    letter: String,
-    icon: String,
-    shareWords: List<String?>,
-    shareLetters: List<String?>,
-    shareIcons: List<String?>,
-    currentWords: List<String?>,
-    currentLetters: List<String?>,
-    currentIcons: List<String?>,
-    isGuessWrong: Boolean,
+    viewState: RevisionCompleteTableUIState,
     onDone: () -> Unit,
     onReset: () -> Unit,
     onBack: () -> Unit,
@@ -142,7 +134,7 @@ fun RevisionCompleteTableLayout(
             ), verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            if (title.isNotEmpty()) {
+            if (viewState.title.isNotEmpty()) {
                 item {
                     Row(
                         modifier = modifier
@@ -151,7 +143,7 @@ fun RevisionCompleteTableLayout(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         IconItem(
-                            icon = icon,
+                            icon = viewState.icon,
                         )
                         Spacer(modifier = modifier.width(4.dp))
                         Column(
@@ -162,23 +154,23 @@ fun RevisionCompleteTableLayout(
                                 .wrapContentWidth(),
                         ) {
                             ReceivingContainerItem(
-                                title = currentLetters[0] ?: "",
+                                title = viewState.currentLetters[0] ?: "",
                                 icon = null,
                                 index = 0,
                                 onDragAndDropEventReceived = { transferData, index ->
                                     onDragAndDropEventReceived(transferData, index)
                                 },
-                                isError = isGuessWrong
+                                isError = viewState.isGuessWrong
                             )
                             Spacer(modifier = modifier.height(2.dp))
                             ReceivingContainerItem(
-                                title = currentWords[0] ?: "",
+                                title = viewState.currentWords[0] ?: "",
                                 icon = null,
                                 index = 0,
                                 onDragAndDropEventReceived = { transferData, index ->
                                     onDragAndDropEventReceived(transferData, index)
                                 },
-                                isError = isGuessWrong
+                                isError = viewState.isGuessWrong
                             )
                         }
                     }
@@ -192,12 +184,12 @@ fun RevisionCompleteTableLayout(
                     ) {
                         ReceivingContainerItem(
                             title = null,
-                            icon = currentIcons[0] ?: "",
+                            icon = viewState.currentIcons[0] ?: "",
                             index = 0,
                             onDragAndDropEventReceived = { transferData, index ->
                                 onDragAndDropEventReceived(transferData, index)
                             },
-                            isError = isGuessWrong,
+                            isError = viewState.isGuessWrong,
                         )
                         Spacer(modifier = modifier.width(4.dp))
                         Column(
@@ -208,17 +200,17 @@ fun RevisionCompleteTableLayout(
                                 .wrapContentWidth(),
                         ) {
                             ReceivingContainerItem(
-                                title = currentLetters[1] ?: "",
+                                title = viewState.currentLetters[1] ?: "",
                                 icon = null,
                                 index = 1,
                                 onDragAndDropEventReceived = { transferData, index ->
                                     onDragAndDropEventReceived(transferData, index)
                                 },
-                                isError = isGuessWrong
+                                isError = viewState.isGuessWrong
                             )
                             Spacer(modifier = modifier.height(2.dp))
                             TextItem(
-                                title = title,
+                                title = viewState.title,
                             )
                         }
                     }
@@ -232,12 +224,12 @@ fun RevisionCompleteTableLayout(
                     ) {
                         ReceivingContainerItem(
                             title = null,
-                            icon = currentIcons[1] ?: "",
+                            icon = viewState.currentIcons[1] ?: "",
                             index = 1,
                             onDragAndDropEventReceived = { transferData, index ->
                                 onDragAndDropEventReceived(transferData, index)
                             },
-                            isError = isGuessWrong,
+                            isError = viewState.isGuessWrong,
                         )
                         Spacer(modifier = modifier.width(4.dp))
                         Column(
@@ -248,17 +240,17 @@ fun RevisionCompleteTableLayout(
                                 .wrapContentWidth(),
                         ) {
                             TextItem(
-                                title = letter,
+                                title = viewState.letter,
                             )
                             Spacer(modifier = modifier.height(2.dp))
                             ReceivingContainerItem(
-                                title = currentWords[1] ?: "",
+                                title = viewState.currentWords[1] ?: "",
                                 icon = null,
                                 index = 1,
                                 onDragAndDropEventReceived = { transferData, index ->
                                     onDragAndDropEventReceived(transferData, index)
                                 },
-                                isError = isGuessWrong
+                                isError = viewState.isGuessWrong
                             )
                         }
                     }
@@ -269,7 +261,7 @@ fun RevisionCompleteTableLayout(
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceEvenly,
                     ) {
-                        shareIcons.map { icon ->
+                        viewState.shareIcons.map { icon ->
                             ShareIcons(
                                 icon = icon ?: ""
                             )
@@ -282,7 +274,7 @@ fun RevisionCompleteTableLayout(
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceEvenly,
                     ) {
-                        shareWords.map { title ->
+                        viewState.shareWords.map { title ->
                             ShareWords(
                                 title = title ?: "",
                             )
@@ -295,7 +287,7 @@ fun RevisionCompleteTableLayout(
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceEvenly,
                     ) {
-                        shareLetters.map { letter ->
+                        viewState.shareLetters.map { letter ->
                             ShareLetters(
                                 letter = letter ?: "",
                             )
@@ -598,24 +590,27 @@ private fun SubmitButton(
     }
 }
 
-@Preview(widthDp = 410, heightDp = 900)
+@Preview(showSystemUi = true)
 @Composable
 private fun MatchWordsPreview() {
     NivkhAlphabetComposeTheme {
         RevisionCompleteTableLayout(
-            title = "ӈағзыр̆раӄ",
-            letter = "Aa",
-            icon = "null",
+            viewState = RevisionCompleteTableUIState(
+                title = "ӈағзыр̆раӄ",
+                letter = "Aa",
+                icon = "null",
+                shareWords = arrayListOf("ӈағзыр̆раӄ", "пʼиды пʼаӽ", "ӿатӽ пʼерӈ"),
+                shareLetters = arrayListOf("Aa", "Bb", "Cc"),
+                shareIcons = arrayListOf(null, null, null),
+                currentWords = arrayListOf("ӈағзыр̆раӄ", "пʼиды пʼаӽ", "ӿатӽ пʼерӈ"),
+                currentLetters = arrayListOf("Aa", "Bb", "Cc"),
+                isGuessWrong = false,
+                currentIcons = listOf(null, null, null),
+            ),
             onDone = {},
             onReset = {},
             onDragAndDropEventReceived = { _, _ -> },
-            shareWords = arrayListOf("ӈағзыр̆раӄ", "пʼиды пʼаӽ", "ӿатӽ пʼерӈ"),
-            shareLetters = arrayListOf("Aa", "Bb", "Cc"),
-            shareIcons = arrayListOf(null, null, null),
-            currentWords = arrayListOf("ӈағзыр̆раӄ", "пʼиды пʼаӽ", "ӿатӽ пʼерӈ"),
-            currentLetters = arrayListOf("Aa", "Bb", "Cc"),
-            isGuessWrong = false,
-            currentIcons = listOf(null, null, null),
+
             onBack = {}
         )
     }

@@ -28,7 +28,6 @@ object AppProvidesModule {
     fun provideApplicationContext(@ApplicationContext app: Context): Context = app as Application
 }
 
-
 @Module
 @InstallIn(ViewModelComponent::class)
 object ViewModelModule {

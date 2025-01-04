@@ -25,7 +25,6 @@ object AlphabetMediaPlayer {
             }
             mediaPlayer
         } catch (e: Exception) {
-            e.printStackTrace()
             if (!showToast) {
                 Toast.makeText(
                     context,

@@ -66,7 +66,6 @@ class AlphabetDataSource
             fileDescriptor.close()
             tempBitmap
         } catch (e: IOException) {
-            e.printStackTrace()
             null
         }
     }

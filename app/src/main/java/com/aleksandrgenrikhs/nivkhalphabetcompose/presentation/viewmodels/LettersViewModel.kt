@@ -35,7 +35,7 @@ class LettersViewModel
     }
 
     private suspend fun getLetterCompleted(): List<Letters>? {
-        return prefInteractor.getLetterCompleted(Task.FOURTH.stableId)
+        return prefInteractor.getLetterCompleted(Task.WRITE_WORD.stableId)
     }
 
     suspend fun checkLetterCompleted() {

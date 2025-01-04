@@ -11,7 +11,7 @@ class WordMapper
 
     override fun map(input: List<SubjectDto>): Map<String, List<WordModel>> {
         val result = mutableMapOf<String, List<WordModel>>()
-        input.forEach() { group ->
+        input.forEach { group ->
             result[group.id] = group.words.map { word ->
                 WordModel(
                     letterId = group.id,

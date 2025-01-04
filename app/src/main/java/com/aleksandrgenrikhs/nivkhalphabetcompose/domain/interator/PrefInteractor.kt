@@ -42,8 +42,9 @@ class PrefInteractor
                 (timeEnd - sharedPreferencesRepository.getStartTimeLearningAlphabet()) / millisInDay
             if (differenceInMillis < 1) {
                 sharedPreferencesRepository.saveTimeLearningAlphabet(1)
-            } else
+            } else {
                 sharedPreferencesRepository.saveTimeLearningAlphabet(differenceInMillis.toInt())
+            }
         }
     }
 

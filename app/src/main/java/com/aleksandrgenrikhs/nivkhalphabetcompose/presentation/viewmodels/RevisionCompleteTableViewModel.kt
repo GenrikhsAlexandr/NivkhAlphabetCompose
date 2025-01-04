@@ -33,15 +33,6 @@ class RevisionCompleteTableViewModel
 
     private var wordsUIState: RevisionCompleteTableUIState? = null
 
-    init {
-        viewModelScope.launch {
-            val currentValue = mediaPlayerInteractor.getIsSoundEnable()
-            _uiState.update { state ->
-                state.copy(shouldPlayFinishAudio = currentValue)
-            }
-        }
-    }
-
     suspend fun updateWords() {
         _uiState.update { state ->
             val words = completeTableUseCase.getWordsForRevisionCompleteTable()
@@ -62,18 +53,6 @@ class RevisionCompleteTableViewModel
                 }
             } ?: state
         }
-    }
-
-    fun playSound(url: String) {
-        if (url == FINISH_AUDIO) {
-            _uiState.update { state ->
-                state.copy(
-                    shouldPlayFinishAudio = false
-                )
-            }
-        }
-        mediaPlayerInteractor.playerDestroy()
-        mediaPlayerInteractor.initPlayer(context, url)
     }
 
     fun updateReceivingContainer(clipData: ClipData?, index: Int) {
@@ -127,11 +106,7 @@ class RevisionCompleteTableViewModel
         val correctIcons = uiState.value.correctIcons
         val correctLetters = uiState.value.correctLetters
         if (currentWords == correctWords && currentLetters == correctLetters && currentIcons == correctIcons) {
-            _uiState.update { state ->
-                state.copy(
-                    isAnswerCorrect = true
-                )
-            }
+            showDialog()
         } else {
             playSound(ERROR_AUDIO)
             _uiState.update { state ->
@@ -164,6 +139,24 @@ class RevisionCompleteTableViewModel
                 )
             } ?: state
         }
+    }
+
+    private fun showDialog() {
+        viewModelScope.launch {
+            if (mediaPlayerInteractor.getIsSoundEnable()) {
+                playSound(FINISH_AUDIO)
+            }
+            _uiState.update { state ->
+                state.copy(
+                    showDialog = true,
+                )
+            }
+        }
+    }
+
+    fun playSound(url: String) {
+        mediaPlayerInteractor.playerDestroy()
+        mediaPlayerInteractor.initPlayer(context, url)
     }
 
     override fun onCleared() {

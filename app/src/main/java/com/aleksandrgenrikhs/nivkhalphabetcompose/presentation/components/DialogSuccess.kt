@@ -20,11 +20,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import coil.compose.AsyncImagePainter
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorOnPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
@@ -36,15 +36,10 @@ fun DialogSuccess(
     textButtonNext: String,
     navigationBack: () -> Unit,
     navigationNext: () -> Unit,
-    painter: AsyncImagePainter,
+    painter: Painter,
     isVisibleSecondButton: Boolean,
-    onDismissRequest: () -> Unit
 ) {
-    Dialog(
-        onDismissRequest = {
-            onDismissRequest()
-        }
-    ) {
+    Dialog(onDismissRequest = {}) {
         Box(
             modifier = Modifier
                 .wrapContentSize()

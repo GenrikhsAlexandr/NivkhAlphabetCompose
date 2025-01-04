@@ -68,7 +68,8 @@ class TaskLearnLetterViewModel
     suspend fun checkTaskCompletion(letter: String) {
         _uiState.update { state ->
             val isTaskCompleted = prefInteractor.isTaskCompleted(
-                Task.LEARN_LETTER.stableId, letter
+                Task.LEARN_LETTER.stableId,
+                letter
             )
             state.copy(
                 isVisibleWord = isTaskCompleted,
@@ -90,10 +91,10 @@ class TaskLearnLetterViewModel
                     )
                 }
                 when {
-                    !it && uiState.value.isCompletedLetter
-                            || !it && uiState.value.isCompletedWords[0]
-                            || !it && uiState.value.isCompletedWords[1]
-                            || !it && uiState.value.isCompletedWords[2] -> mediaPlayerInteractor.playerDestroy()
+                    !it && uiState.value.isCompletedLetter ||
+                            !it && uiState.value.isCompletedWords[0] ||
+                            !it && uiState.value.isCompletedWords[1] ||
+                            !it && uiState.value.isCompletedWords[2] -> mediaPlayerInteractor.playerDestroy()
                 }
             }
         }
@@ -140,9 +141,7 @@ class TaskLearnLetterViewModel
                 }
             }
         }
-        if (uiState.value.isCompletedWords.isNotEmpty()
-            && uiState.value.isCompletedWords.last()
-        ) {
+        if (uiState.value.isCompletedWords.isNotEmpty() && uiState.value.isCompletedWords.last()) {
             showDialog()
             saveTaskProgress()
         }
@@ -162,7 +161,8 @@ class TaskLearnLetterViewModel
 
     private fun saveTaskProgress() {
         prefInteractor.taskCompleted(
-            Task.LEARN_LETTER.stableId, uiState.value.selectedLetter
+            Task.LEARN_LETTER.stableId,
+            uiState.value.selectedLetter
         )
     }
 

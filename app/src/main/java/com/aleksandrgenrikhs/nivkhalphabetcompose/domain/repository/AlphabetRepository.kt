@@ -7,7 +7,6 @@ interface AlphabetRepository {
 
     suspend fun getWords(): Map<String, List<WordModel>>
 
-
     suspend fun getPdfPage(name: String): Bitmap?
 
     fun downloadCertificatePdf(): Result<Unit>

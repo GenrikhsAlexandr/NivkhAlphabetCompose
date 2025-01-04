@@ -23,16 +23,15 @@ class PrefRepositoryImpl
         if (!letters.contains(letterId)) {
             preferences.edit()
                 .putString(
-                    taskId.toString(), "$currentValue:$letterId"
+                    taskId.toString(),
+                    "$currentValue:$letterId"
                 )
                 .apply()
         }
     }
 
     override suspend fun getLetterCompleted(taskId: Int): List<Letters>? {
-        val completedLetter = preferences.getString(
-            taskId.toString(), ""
-        )
+        val completedLetter = preferences.getString(taskId.toString(), "")
         return completedLetter?.split(":")?.mapNotNull {
             Letters.getById(it)
         }

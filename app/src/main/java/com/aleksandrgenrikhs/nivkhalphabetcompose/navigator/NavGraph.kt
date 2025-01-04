@@ -10,17 +10,17 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.AboutScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.CertificateScreen
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.FirstRevisionScreen
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.FirstTaskScreen
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.FourthTaskScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.LetterScreen
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.RevisionChooseRightWordScreen
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.RevisionCompleteTableScreen
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.RevisionListenAndChooseScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.RevisionTasksScreen
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.SecondRevisionScreen
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.SecondTaskScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.SplashScreen
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.TaskFindWordScreen
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.TaskLearnLetterScreen
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.TaskMatchWordsScreen
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.TaskWriteWordScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.TasksScreen
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.ThirdRevisionScreen
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.screens.ThirdTaskScreen
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants
 
 private fun AnimatedContentTransitionScope<*>.enterAnimation() = slideIntoContainer(
@@ -32,6 +32,7 @@ fun AnimatedContentTransitionScope<*>.exitAnimation() = slideOutOfContainer(
     AnimatedContentTransitionScope.SlideDirection.Left,
     animationSpec = tween(500)
 )
+
 fun AnimatedContentTransitionScope<*>.popEnterTransition() = slideIntoContainer(
     AnimatedContentTransitionScope.SlideDirection.Right,
     animationSpec = tween(500)
@@ -42,10 +43,9 @@ fun AnimatedContentTransitionScope<*>.popExitTransition() = slideOutOfContainer(
     animationSpec = tween(500)
 )
 
-
 @Composable
 fun NavGraph(
-    navController: NavHostController
+    navController: NavHostController,
 ) {
     NavHost(
         navController = navController,
@@ -71,9 +71,7 @@ fun NavGraph(
         }
         composable(
             route = "${NavigationDestination.TasksScreen.destination}/{${Constants.LETTER_KEY}}",
-            arguments = listOf(navArgument(Constants.LETTER_KEY) {
-                type = NavType.StringType
-            })
+            arguments = listOf(navArgument(Constants.LETTER_KEY) { type = NavType.StringType })
         ) { backStackEntry ->
             backStackEntry.arguments?.getString(Constants.LETTER_KEY)?.let {
                 TasksScreen(
@@ -83,80 +81,77 @@ fun NavGraph(
             }
         }
         composable(
-            route = "${NavigationDestination.FirstTaskScreen.destination}/{${Constants.LETTER_KEY}}",
-            arguments = listOf(navArgument(Constants.LETTER_KEY) {
-                type = NavType.StringType
-            }
-            )
+            route = "${NavigationDestination.TaskLearnLetterScreen.destination}/{${Constants.LETTER_KEY}}",
+            arguments = listOf(navArgument(Constants.LETTER_KEY) { type = NavType.StringType })
         )
         { backStackEntry ->
             val currentLetter = backStackEntry.arguments?.getString(Constants.LETTER_KEY)
-            FirstTaskScreen(
+            TaskLearnLetterScreen(
                 letter = checkNotNull(currentLetter),
                 navController = navController,
             )
         }
         composable(
-            route = "${NavigationDestination.SecondTaskScreen.destination}/{${Constants.LETTER_KEY}}",
+            route = "${NavigationDestination.TaskFindWordScreen.destination}/{${Constants.LETTER_KEY}}",
             arguments = listOf(
                 navArgument(Constants.LETTER_KEY) { type = NavType.StringType },
             )
         ) { backStackEntry ->
             val currentLetter = backStackEntry.arguments?.getString(Constants.LETTER_KEY)
-            SecondTaskScreen(
+            TaskFindWordScreen(
                 letter = checkNotNull(currentLetter),
                 navController = navController,
             )
         }
         composable(
-            route = "${NavigationDestination.ThirdTaskScreen.destination}/{${Constants.LETTER_KEY}}",
+            route = "${NavigationDestination.TaskMatchWordsScreen.destination}/{${Constants.LETTER_KEY}}",
             arguments = listOf(
                 navArgument(Constants.LETTER_KEY) { type = NavType.StringType },
             )
         ) { backStackEntry ->
             val currentLetter = backStackEntry.arguments?.getString(Constants.LETTER_KEY)
-            ThirdTaskScreen(
+            TaskMatchWordsScreen(
                 letter = checkNotNull(currentLetter),
                 navController = navController,
             )
         }
         composable(
-            route = "${NavigationDestination.FourthTaskScreen.destination}/{${Constants.LETTER_KEY}}",
+            route = "${NavigationDestination.TaskWriteWordScreen.destination}/{${Constants.LETTER_KEY}}",
             arguments = listOf(
                 navArgument(Constants.LETTER_KEY) { type = NavType.StringType },
             )
         ) { backStackEntry ->
             val currentLetter = backStackEntry.arguments?.getString(Constants.LETTER_KEY)
-            FourthTaskScreen(
+            TaskWriteWordScreen(
                 letter = checkNotNull(currentLetter),
                 navController = navController,
             )
         }
         composable(
-            route = NavigationDestination.RevisionTaskScreen.destination,
+            route = NavigationDestination.RevisionTasksScreen.destination,
         ) {
             RevisionTasksScreen(
                 navController = navController,
             )
         }
         composable(
-            route = NavigationDestination.RevisionFirstScreen.destination,
+            route = NavigationDestination.RevisionListenAndChooseScreen.destination,
         ) {
-            FirstRevisionScreen(
+            RevisionListenAndChooseScreen(
                 navController = navController,
             )
         }
         composable(
-            route = NavigationDestination.RevisionSecondScreen.destination,
+            route = NavigationDestination.RevisionChooseRightWordScreen.destination,
         ) {
-            SecondRevisionScreen(
+            RevisionChooseRightWordScreen(
                 navController = navController,
             )
         }
         composable(
-            route = NavigationDestination.RevisionThirdScreen.destination,
+            route = NavigationDestination.RevisionCompleteTableScreen.destination,
         ) {
-            ThirdRevisionScreen(
+            RevisionCompleteTableScreen(
                 navController = navController,
             )
         }
@@ -164,9 +159,7 @@ fun NavGraph(
             route = NavigationDestination.AboutScreen.destination
         )
         {
-            AboutScreen(
-                navController = navController,
-            )
+            AboutScreen(navController = navController)
         }
         composable(
             route = "${NavigationDestination.CertificateScreen.destination}/{${Constants.NAME_KEY}}",

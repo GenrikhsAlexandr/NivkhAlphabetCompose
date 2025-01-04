@@ -44,18 +44,16 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorErr
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorProgressBar
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.RevisionListenAndChooseUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.LETTER_AUDIO
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RevisionListenAndChooseLayout(
-    letters: List<String>,
-    correctLetter: String,
     modifier: Modifier = Modifier,
+    viewState: RevisionListenAndChooseUIState,
     onLetterClick: (String) -> Unit,
     onIconClick: (String) -> Unit,
-    isCorrectAnswer: List<Boolean?>,
-    isClickable: Boolean,
     onBack: () -> Unit,
 ) {
     var isDividerVisible by remember { mutableStateOf(false) }
@@ -129,20 +127,19 @@ fun RevisionListenAndChooseLayout(
             item(span = { GridItemSpan(maxLineSpan) }) {
                 IconButton(
                     onClick = {
-                        onIconClick("$LETTER_AUDIO$correctLetter")
+                        onIconClick("$LETTER_AUDIO${viewState.correctLetter}")
                     }
                 )
             }
-            itemsIndexed(letters) { index, item ->
+            itemsIndexed(viewState.letters) { index, item ->
                 LetterItem(
                     letter = item,
                     onClick = {
                         onLetterClick(item)
                     },
-                    isCorrectAnswer = isCorrectAnswer[index],
-                    isClickable = isClickable
+                    isCorrectAnswer = viewState.isCorrectAnswers[index],
+                    isClickable = !viewState.isUserAnswerCorrect
                 )
-
             }
         }
     }
@@ -176,7 +173,7 @@ private fun LetterItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     isCorrectAnswer: Boolean?,
-    isClickable: Boolean
+    isClickable: Boolean,
 ) {
     Box(
         modifier = modifier
@@ -198,17 +195,17 @@ private fun LetterItem(
     }
 }
 
-@Preview(widthDp = 600, heightDp = 700)
+@Preview(showSystemUi = true)
 @Composable
-private fun FirstRevisionLayoutPreview() {
+private fun RevisionListenLayoutPreview() {
     NivkhAlphabetComposeTheme {
         RevisionListenAndChooseLayout(
-            letters = listOf("Aa", "Bb", "Cc"),
-            correctLetter = "Aa",
+            viewState = RevisionListenAndChooseUIState(
+                letters = listOf("A", "B", "C", "D"),
+                isCorrectAnswers = listOf(false, true, null, null),
+            ),
             onIconClick = {},
             onLetterClick = {},
-            isCorrectAnswer = listOf(null, true, false),
-            isClickable = true,
             onBack = {}
         )
     }

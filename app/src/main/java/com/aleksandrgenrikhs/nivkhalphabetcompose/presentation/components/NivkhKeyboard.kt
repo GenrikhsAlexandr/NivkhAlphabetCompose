@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,6 +23,8 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,6 +34,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aleksandrgenrikhs.nivkhalphabetcompose.LettersKeybord
@@ -47,10 +52,10 @@ fun NivkhKeyboard(
     input: String,
     letter: List<String> = LettersKeybord.entries.map { it.title },
     isError: Boolean,
-    onValueChange: (letter: String) -> Unit,
+    onInputChange: (String) -> Unit,
     onDelete: () -> Unit,
     onDone: (word: String) -> Unit,
-    onClickable: Boolean
+    onClickable: Boolean,
 ) {
     Column(
         modifier = modifier
@@ -67,32 +72,14 @@ fun NivkhKeyboard(
             DeleteButton(
                 onDelete = onDelete
             )
-            Box(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .size(60.dp)
-                    .weight(1f)
-                    .padding(horizontal = 8.dp)
-                    .border(
-                        shape = RoundedCornerShape(8.dp),
-                        brush = if (!isError) SolidColor(colorProgressBar) else SolidColor(
-                            colorError
-                        ),
-                        width = 1.dp
-                    ),
-                contentAlignment = Alignment.Center,
+            InputTextField(
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .weight(1f),
+                errorText = isError,
+                onInputChange = onInputChange,
+                input = input
             )
-            {
-                AutoSizeText(
-                    text = input,
-                    maxLines = 1,
-                    style = MaterialTheme.typography.displayMedium,
-                    minFontSize = 32.sp,
-                    color = if (!isError) colorText else colorError,
-                    modifier = Modifier
-                        .padding(4.dp),
-                )
-            }
             DoneButton(
                 onDone = onDone,
                 word = input,
@@ -114,22 +101,80 @@ fun NivkhKeyboard(
         items(letter) {
             LetterButton(
                 letter = it,
-                onClick = onValueChange,
+                onClick = onInputChange,
             )
         }
         item(span = { GridItemSpan(maxCurrentLineSpan) }) {
             SpaceButton(
-                onClick = onValueChange
+                onClick = onInputChange
             )
         }
     }
 }
 
 @Composable
+private fun InputTextField(
+    modifier: Modifier = Modifier,
+    input: String,
+    errorText: Boolean,
+    onInputChange: (String) -> Unit = {},
+) {
+    val targetTextColor = if (errorText) {
+        colorError
+    } else {
+        colorText
+    }
+
+    val targetBorderColor = if (errorText) {
+        colorError
+    } else {
+        colorProgressBar
+    }
+
+    val textStyle = MaterialTheme.typography.displayMedium.copy(
+        color = targetTextColor,
+        fontSize = 32.sp,
+        lineHeight = 35.sp,
+        textAlign = TextAlign.Center
+    )
+
+    BasicTextField(
+        modifier = modifier
+            .fillMaxWidth()
+            .size(60.dp)
+            .padding(horizontal = 8.dp)
+            .border(
+                shape = RoundedCornerShape(8.dp),
+                brush = SolidColor(targetBorderColor),
+                width = 1.dp
+            )
+            .padding(4.dp)
+            .then(modifier),
+        value = input,
+        onValueChange = { newValue ->
+            onInputChange(newValue)
+        },
+        textStyle = textStyle,
+        maxLines = 1,
+        singleLine = true,
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.None),
+        decorationBox = { innerTextField ->
+            Box(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                innerTextField()
+            }
+        }
+    )
+}
+
+@Composable
 private fun LetterButton(
     letter: String,
     onClick: (letter: String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier
@@ -154,7 +199,7 @@ private fun LetterButton(
 @Composable
 private fun DeleteButton(
     onDelete: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier
@@ -181,7 +226,7 @@ private fun DoneButton(
     word: String,
     onDone: (word: String) -> Unit,
     modifier: Modifier = Modifier,
-    onClickable: Boolean
+    onClickable: Boolean,
 ) {
     Box(
         modifier = modifier
@@ -210,7 +255,7 @@ private fun DoneButton(
 private fun SpaceButton(
     modifier: Modifier = Modifier,
     onClick: (space: String) -> Unit,
-    space: String = " "
+    space: String = " ",
 ) {
     Box(
         modifier = modifier

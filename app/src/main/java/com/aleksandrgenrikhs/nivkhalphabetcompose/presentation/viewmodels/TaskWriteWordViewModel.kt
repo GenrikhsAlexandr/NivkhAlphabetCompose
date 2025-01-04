@@ -32,15 +32,7 @@ class TaskWriteWordViewModel
     private val _uiState: MutableStateFlow<TaskWriteWordUIState> =
         MutableStateFlow(TaskWriteWordUIState())
     val uiState = _uiState.asStateFlow()
-
-    init {
-        viewModelScope.launch {
-            val currentValue = mediaPlayerInteractor.getIsSoundEnable()
-            _uiState.update { state ->
-                state.copy(shouldPlayFinishAudio = currentValue)
-            }
-        }
-    }
+    private var taskCompleted = false
 
     fun setSelectedLetter(letter: String) {
         _uiState.update {
@@ -86,54 +78,60 @@ class TaskWriteWordViewModel
     }
 
     fun checkUserGuess(word: String) {
+        val isAnswerCorrect = word == uiState.value.title
         _uiState.update { state ->
-            val isAnswerCorrect = word == state.title
-            if (isAnswerCorrect) {
-                playSound("$WORDS_AUDIO${state.wordId}")
-            } else {
-                playSound(ERROR_AUDIO)
-            }
             val correctAnswersCount = if (isAnswerCorrect) {
                 state.correctAnswersCount + 1
             } else {
                 state.correctAnswersCount
             }
-            val isCompleted = correctAnswersCount == 3
+            taskCompleted = correctAnswersCount == 3
             state.copy(
-                isCompleted = isCompleted,
                 correctAnswersCount = correctAnswersCount,
                 isGuessWrong = !isAnswerCorrect,
                 isClickable = false
             )
         }
-        processCorrectGuess()
-        saveTaskProgress()
+        if (isAnswerCorrect) {
+            playSound("$WORDS_AUDIO${uiState.value.wordId}")
+            processCorrectGuess()
+        } else {
+            playSound(ERROR_AUDIO)
+        }
     }
 
     private fun processCorrectGuess() {
-        if (!uiState.value.isGuessWrong && !uiState.value.isCompleted) {
+        if (!taskCompleted) {
             viewModelScope.launch {
-                delay(2000)
+                delay(1500)
                 updateUserGuess("")
                 updateWordsForLetter(uiState.value.selectedLetter)
+            }
+        } else {
+            showDialog()
+            saveTaskProgress()
+        }
+    }
+
+    private fun showDialog() {
+        viewModelScope.launch {
+            delay(1500)
+            if (mediaPlayerInteractor.getIsSoundEnable()) {
+                playSound(FINISH_AUDIO)
+            }
+            _uiState.update { state ->
+                state.copy(
+                    showDialog = true,
+                )
             }
         }
     }
 
     private fun saveTaskProgress() {
-        if (uiState.value.isCompleted) {
-            prefInteractor.taskCompleted(Task.WRITE_WORD.stableId, uiState.value.selectedLetter)
-        }
+        prefInteractor.taskCompleted(Task.WRITE_WORD.stableId, uiState.value.selectedLetter)
     }
 
     fun playSound(url: String) {
-        if (url == FINISH_AUDIO) {
-            _uiState.update { state ->
-                state.copy(
-                    shouldPlayFinishAudio = false
-                )
-            }
-        }
         mediaPlayerInteractor.playerDestroy()
         mediaPlayerInteractor.initPlayer(context, url)
     }

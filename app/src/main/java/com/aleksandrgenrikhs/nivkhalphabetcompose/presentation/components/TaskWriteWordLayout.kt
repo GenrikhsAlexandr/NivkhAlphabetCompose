@@ -25,19 +25,17 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.NivkhAlphabetComposeTheme
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorCardLetterItem
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.TaskWriteWordUIState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskWriteWordLayout(
     modifier: Modifier = Modifier,
+    viewState: TaskWriteWordUIState,
     onClick: () -> Unit,
     onDelete: () -> Unit,
     onDone: (String) -> Unit,
-    icon: String?,
     onUserGuessChanged: (String) -> Unit,
-    isGuessWrong: Boolean,
-    userGuess: String,
-    onClickable: Boolean,
     onBack: () -> Unit,
 ) {
     val action: @Composable RowScope.() -> Unit = {
@@ -48,14 +46,14 @@ fun TaskWriteWordLayout(
         modifier = Modifier
             .fillMaxSize(),
         topBar = {
-                AppBar.Render(
-                    config = AppBar.AppBarConfig.AppBarTask(
-                        title = stringResource(id = R.string.fourthTask),
-                        actions = action,
+            AppBar.Render(
+                config = AppBar.AppBarConfig.AppBarTask(
+                    title = stringResource(id = R.string.fourthTask),
+                    actions = action,
 
-                        ),
-                    navigation = onBack
-                )
+                    ),
+                navigation = onBack
+            )
         }
     ) { paddingValues ->
         Column(
@@ -77,37 +75,34 @@ fun TaskWriteWordLayout(
                 contentAlignment = Alignment.Center
             ) {
                 AsyncImage(
-                    model = icon,
+                    model = viewState.icon,
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds,
                     modifier = modifier.fillMaxSize()
                 )
             }
             NivkhKeyboard(
-                input = userGuess,
-                isError = isGuessWrong,
-                onValueChange = onUserGuessChanged,
+                input = viewState.userGuess,
+                isError = viewState.isGuessWrong,
+                onInputChange = onUserGuessChanged,
                 onDelete = onDelete,
                 onDone = onDone,
-                onClickable = onClickable
+                onClickable = viewState.isClickable
             )
         }
     }
 }
 
-@Preview(widthDp = 510, heightDp = 1010)
+@Preview(showSystemUi = true)
 @Composable
-private fun FourthTaskContentPreview() {
+private fun TaskWriteWordContentPreview() {
     NivkhAlphabetComposeTheme {
         TaskWriteWordLayout(
+            viewState = TaskWriteWordUIState(),
             onClick = { },
             onDelete = {},
             onDone = {},
-            icon = null,
             onUserGuessChanged = {},
-            isGuessWrong = true,
-            userGuess = "Aldjf",
-            onClickable = true,
             onBack = {}
         )
     }

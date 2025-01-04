@@ -1,24 +1,24 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator
 
 import androidx.annotation.VisibleForTesting
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.mapper.SecondTaskMapper
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.SecondTaskModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.mapper.TaskFindWordMapper
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.TaskFindWordModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.AlphabetRepository
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.selectUniqueElements
 import javax.inject.Inject
 
-class SecondTaskInteractor
+class TaskFindWordInteractor
 @Inject
 constructor(
-    private val mapper: SecondTaskMapper,
+    private val mapper: TaskFindWordMapper,
     private val repository: AlphabetRepository,
 ) {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     val usedWords: MutableSet<WordModel> = mutableSetOf()
 
-    suspend fun getWordsForSecondTask(letterId: String): List<SecondTaskModel> {
+    suspend fun getWordsForSecondTask(letterId: String): List<TaskFindWordModel> {
         val words = repository.getWords()
         val letterWords = words[letterId] ?: error("Can't find words for letter $letterId")
         val otherWords = words

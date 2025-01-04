@@ -2,7 +2,7 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator
 
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.createWordModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.createWords
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.mapper.SecondTaskMapper
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.mapper.TaskFindWordMapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.AlphabetRepository
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -15,13 +15,13 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.mock
 
-class SecondTaskInteractorTest {
+class TaskFindWordInteractorTest {
 
-    private val mapper: SecondTaskMapper = spy(SecondTaskMapper())
+    private val mapper: TaskFindWordMapper = spy(TaskFindWordMapper())
     private val repository: AlphabetRepository = mock {
         onBlocking { getWords() } doAnswer { createWords() }
     }
-    private val interactor: SecondTaskInteractor = SecondTaskInteractor(
+    private val interactor: TaskFindWordInteractor = TaskFindWordInteractor(
         mapper,
         repository,
     )

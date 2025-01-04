@@ -4,6 +4,7 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -50,21 +51,16 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorErr
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorPrimary
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorRight
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.ui.theme.colorText
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.TaskFindWordUIState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SecondTaskLayout(
     modifier: Modifier = Modifier,
-    lettersId: List<String>,
-    titles: List<String>,
-    wordsId: List<String>,
-    icons: List<String?>,
-    isFlipped: List<Boolean>,
-    isCorrectAnswer: List<Boolean>,
+    viewState: TaskFindWordUIState,
     letter: String,
     onClick: (String, String) -> Unit,
-    isClickable: Boolean,
-    onBack: () -> Unit
+    onBack: () -> Unit,
 ) {
     var isDividerVisible by remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
@@ -93,8 +89,7 @@ fun SecondTaskLayout(
                     config = AppBar.AppBarConfig.AppBarTask(
                         title = stringResource(id = R.string.secondTask),
                         actions = action,
-
-                        ),
+                    ),
                     navigation = onBack
                 )
                 if (isDividerVisible) {
@@ -124,16 +119,16 @@ fun SecondTaskLayout(
                     letter = letter
                 )
             }
-            itemsIndexed(titles) { index, item ->
+            itemsIndexed(viewState.titles) { index, item ->
                 IconButton(
                     onClick = {
-                        onClick(wordsId[index], lettersId[index])
+                        onClick(viewState.wordsId[index], viewState.lettersId[index])
                     },
-                    icon = icons[index],
+                    icon = viewState.icons[index],
                     title = item,
-                    isFlipped = isFlipped[index],
-                    isClickable = isClickable,
-                    isCorrectAnswer = isCorrectAnswer[index],
+                    isFlipped = viewState.isFlipped[index],
+                    isClickable = !viewState.isCorrectWord,
+                    isCorrectAnswer = viewState.isCorrectAnswers[index],
                 )
             }
         }
@@ -180,31 +175,37 @@ private fun IconButton(
     title: String,
     isFlipped: Boolean,
     isClickable: Boolean,
-    isCorrectAnswer: Boolean
+    isCorrectAnswer: Boolean,
 ) {
     val rotationAngle by animateFloatAsState(
-        targetValue = if (isFlipped) 180f else 0f, label = "",
+        targetValue = if (isFlipped) 180f else 0f,
+        label = "",
     )
+    val interactionSource = remember { MutableInteractionSource() }
     Crossfade(
-        targetState = isFlipped, label = ""
+        targetState = isFlipped,
+        label = ""
     ) { flipped ->
         Box(
             modifier = modifier
                 .clickable(
                     enabled = isClickable,
-                    onClick = onClick
+                    onClick = onClick,
+                    interactionSource = interactionSource,
+                    indication = null
                 )
                 .size(180.dp)
                 .clip(ShapeDefaults.Medium)
                 .background(
-                    if (isCorrectAnswer && flipped) {
-                        colorRight
-                    } else
+                    if (!isCorrectAnswer && flipped) {
+                        colorError
+                    } else {
                         if (!flipped) {
                             colorCardLetterItem
                         } else {
-                            colorError
+                            colorRight
                         }
+                    }
                 )
                 .graphicsLayer(
                     rotationY = rotationAngle,
@@ -234,20 +235,21 @@ private fun IconButton(
     }
 }
 
-@Preview(widthDp = 410, heightDp = 610)
+@Preview(showSystemUi = true, apiLevel = 34)
 @Composable
 private fun SecondTaskPreview() {
     NivkhAlphabetComposeTheme {
         SecondTaskLayout(
-            lettersId = listOf("Aa", "Bb", "Cc"),
-            titles = listOf("Hello", "Word", "Nivkh"),
-            wordsId = listOf("1.2", "1.1", "1.3"),
-            icons = listOf(null, null, null),
-            isFlipped = listOf(true, false, true),
+            viewState = TaskFindWordUIState(
+                titles = listOf("title1", "title2", "title3"),
+                icons = listOf("icon1", "icon2", "icon3"),
+                isFlipped = listOf(true, false, true),
+                isCorrectAnswers = listOf(true, false, false),
+                lettersId = listOf("letterId1", "letterId2", "letterId3"),
+                isCorrectWord = false
+            ),
             letter = "Aa",
             onClick = { _, _ -> },
-            isClickable = true,
-            isCorrectAnswer = listOf(true, true, false),
             onBack = {}
         )
     }

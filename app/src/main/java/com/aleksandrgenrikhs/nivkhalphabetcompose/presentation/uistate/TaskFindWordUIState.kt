@@ -1,6 +1,6 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate
 
-data class SecondTaskUIState(
+data class TaskFindWordUIState(
     val selectedLetter: String = "",
     val lettersId: List<String> = emptyList(),
     val titles: List<String> = emptyList(),
@@ -10,6 +10,5 @@ data class SecondTaskUIState(
     val isCorrectAnswers: List<Boolean> = emptyList(),
     val correctAnswersCount: Int = 0,
     val isCorrectWord: Boolean = false,
-    val isCompleted: Boolean = false,
-    val shouldPlayFinishAudio: Boolean = false,
+    val showDialog: Boolean = false,
 )

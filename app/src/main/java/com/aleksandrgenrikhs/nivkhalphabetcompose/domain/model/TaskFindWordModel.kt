@@ -1,6 +1,6 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model
 
-data class SecondTaskModel(
+data class TaskFindWordModel(
     val letterId: String,
     val title: String,
     val wordId: String,

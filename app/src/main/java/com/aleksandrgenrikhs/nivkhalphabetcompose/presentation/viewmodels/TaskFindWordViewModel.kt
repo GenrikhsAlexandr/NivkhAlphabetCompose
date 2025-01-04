@@ -6,9 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.PrefInteractor
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.SecondTaskInteractor
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateSecondTaskMapper
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.SecondTaskUIState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.TaskFindWordInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateTaskFindWordMapper
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.TaskFindWordUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO
@@ -22,18 +22,19 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SecondTaskViewModel
+class TaskFindWordViewModel
 @Inject constructor(
-    private val secondInteractor: SecondTaskInteractor,
+    private val findWordInteractor: TaskFindWordInteractor,
     private val prefInteractor: PrefInteractor,
-    private val uiStateMapper: UIStateSecondTaskMapper,
+    private val uiStateMapper: UIStateTaskFindWordMapper,
     private val mediaPlayerInteractor: MediaPlayerInteractor,
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<SecondTaskUIState> =
-        MutableStateFlow(SecondTaskUIState())
+    private val _uiState: MutableStateFlow<TaskFindWordUIState> =
+        MutableStateFlow(TaskFindWordUIState())
     val uiState = _uiState.asStateFlow()
+    private var taskCompleted = false
 
     fun setSelectedLetter(letter: String) {
         _uiState.update { state ->
@@ -41,26 +42,22 @@ class SecondTaskViewModel
         }
     }
 
-    init {
-        viewModelScope.launch {
-            val currentValue = mediaPlayerInteractor.getIsSoundEnable()
-            _uiState.update { state ->
-                state.copy(shouldPlayFinishAudio = currentValue)
-            }
-        }
-    }
-
     fun updateWordsForLetter(letterId: String) {
         viewModelScope.launch {
+            val filteredWords = findWordInteractor.getWordsForSecondTask(letterId)
+            val mappedWords = uiStateMapper.map(filteredWords)
             _uiState.update { state ->
-                val filteredWords = secondInteractor.getWordsForSecondTask(letterId)
-                val mappedWords = uiStateMapper.map(filteredWords)
-                with(mappedWords) {
+                state.copy(
+                    icons = mappedWords.icons,
+                    isFlipped = mappedWords.isFlipped,
+                )
+            }
+            delay(200)
+            with(mappedWords) {
+                _uiState.update { state ->
                     state.copy(
                         lettersId = lettersId,
                         wordsId = wordsId,
-                        icons = icons,
-                        isFlipped = isFlipped,
                         titles = titles,
                         isCorrectAnswers = isCorrectAnswers,
                         isCorrectWord = false
@@ -80,7 +77,7 @@ class SecondTaskViewModel
             } else {
                 state.correctAnswersCount
             }
-            val isCompleted = correctAnswersCount == 3
+            taskCompleted = correctAnswersCount == 3
             val index = state.wordsId.indexOfFirst { it == wordId }
             val newIsFlippedList = state.isFlipped.toMutableList()
             newIsFlippedList[index] = !newIsFlippedList[index]
@@ -90,49 +87,55 @@ class SecondTaskViewModel
                 isFlipped = newIsFlippedList,
                 isCorrectAnswers = newIsCorrectAnswerList,
                 correctAnswersCount = correctAnswersCount,
-                isCompleted = isCompleted,
                 isCorrectWord = isCorrectWord,
             )
         }
         if (uiState.value.isCorrectWord) {
             playSound("$WORDS_AUDIO$wordId")
+            processCorrectGuess()
         } else {
             playSound(ERROR_AUDIO)
         }
-        processCorrectGuess()
-        saveTaskProgress()
     }
 
     private fun processCorrectGuess() {
-        if (uiState.value.isCorrectWord && !uiState.value.isCompleted) {
-            viewModelScope.launch {
-                delay(2000)
+        viewModelScope.launch {
+            if (!taskCompleted) {
+                delay(1500)
                 updateWordsForLetter(uiState.value.selectedLetter)
+            } else {
+                showDialog()
+                saveTaskProgress()
+            }
+        }
+    }
+
+    private fun showDialog() {
+        viewModelScope.launch {
+            delay(1500)
+            if (mediaPlayerInteractor.getIsSoundEnable()) {
+                playSound(FINISH_AUDIO)
+            }
+            _uiState.update { state ->
+                state.copy(
+                    showDialog = true,
+                )
             }
         }
     }
 
     private fun saveTaskProgress() {
-        if (uiState.value.isCompleted) {
-            prefInteractor.taskCompleted(Task.SECOND.stableId, uiState.value.selectedLetter)
-        }
+        prefInteractor.taskCompleted(Task.FIND_WORD.stableId, uiState.value.selectedLetter)
     }
 
     fun playSound(url: String) {
-        if (url == FINISH_AUDIO) {
-            _uiState.update { state ->
-                state.copy(
-                    shouldPlayFinishAudio = false
-                )
-            }
-        }
         mediaPlayerInteractor.playerDestroy()
         mediaPlayerInteractor.initPlayer(context, url)
     }
 
     override fun onCleared() {
         super.onCleared()
-        secondInteractor.clearPreviousWordsList()
+        findWordInteractor.clearPreviousWordsList()
         mediaPlayerInteractor.playerDestroy()
     }
 }

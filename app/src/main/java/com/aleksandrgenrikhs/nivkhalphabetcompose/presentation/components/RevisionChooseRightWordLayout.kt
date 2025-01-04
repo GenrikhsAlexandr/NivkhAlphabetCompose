@@ -44,7 +44,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SecondRevisionLayout(
+fun RevisionChooseRightWordLayout(
     words: List<String>,
     wordsId: List<String>,
     correctWordId: String,
@@ -54,7 +54,7 @@ fun SecondRevisionLayout(
     onIconClick: (String) -> Unit,
     isCorrectAnswer: List<Boolean?>,
     isClickable: Boolean,
-    onBack: () -> Unit
+    onBack: () -> Unit,
 ) {
     var isDividerVisible by remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
@@ -182,7 +182,7 @@ private fun WordItem(
 @Composable
 private fun SecondRevisionLayoutPreview() {
     NivkhAlphabetComposeTheme {
-        SecondRevisionLayout(
+        RevisionChooseRightWordLayout(
             words = listOf("Aa", "Bb", "Cc"),
             wordsId = listOf("1", "2", "3"),
             icon = null,

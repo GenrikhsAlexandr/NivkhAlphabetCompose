@@ -1,6 +1,6 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate
 
-data class ThirdRevisionUIState(
+data class RevisionCompleteTableUIState(
     val title: String = "",
     val letter: String = "",
     val icon: String = "",

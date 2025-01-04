@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.SecondRevisionUseCase
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateSecondRevisionMapper
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.SecondRevisionUIState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.RevisionChooseRightWordUseCase
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateRevisionChooseRightWordMapper
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.RevisionChooseRightWordUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO
@@ -20,16 +20,16 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SecondRevisionViewModel
+class RevisionChooseRightWordViewModel
 @Inject constructor(
-    private val secondRevisionUseCase: SecondRevisionUseCase,
-    private val uiStateMapper: UIStateSecondRevisionMapper,
+    private val chooseRightWordUseCase: RevisionChooseRightWordUseCase,
+    private val uiStateMapper: UIStateRevisionChooseRightWordMapper,
     private val mediaPlayerInteractor: MediaPlayerInteractor,
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<SecondRevisionUIState> =
-        MutableStateFlow(SecondRevisionUIState())
+    private val _uiState: MutableStateFlow<RevisionChooseRightWordUIState> =
+        MutableStateFlow(RevisionChooseRightWordUIState())
     val uiState = _uiState.asStateFlow()
 
     init {
@@ -43,7 +43,7 @@ class SecondRevisionViewModel
 
     suspend fun updateWords() {
         _uiState.update { state ->
-            val words = secondRevisionUseCase.getWordsForRevisionSecond()
+            val words = chooseRightWordUseCase.getWordsForRevisionChooseRightWord()
             val mappedWords = uiStateMapper.map(words)
             with(mappedWords) {
                 state.copy(

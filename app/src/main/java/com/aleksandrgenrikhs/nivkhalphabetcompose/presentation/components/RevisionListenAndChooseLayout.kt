@@ -48,7 +48,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.LETTER_AUDIO
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FirstRevisionLayout(
+fun RevisionListenAndChooseLayout(
     letters: List<String>,
     correctLetter: String,
     modifier: Modifier = Modifier,
@@ -202,7 +202,7 @@ private fun LetterItem(
 @Composable
 private fun FirstRevisionLayoutPreview() {
     NivkhAlphabetComposeTheme {
-        FirstRevisionLayout(
+        RevisionListenAndChooseLayout(
             letters = listOf("Aa", "Bb", "Cc"),
             correctLetter = "Aa",
             onIconClick = {},

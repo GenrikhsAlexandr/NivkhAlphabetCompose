@@ -2,18 +2,18 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper
 
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Mapper
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.WordModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.ThirdRevisionUIState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.RevisionCompleteTableUIState
 import javax.inject.Inject
 
-class UIStateThirdRevisionMapper
-@Inject constructor() : Mapper<List<WordModel>, ThirdRevisionUIState> {
+class UIStateRevisionCompleteTableMapper
+@Inject constructor() : Mapper<List<WordModel>, RevisionCompleteTableUIState> {
 
-    override fun map(input: List<WordModel>): ThirdRevisionUIState {
+    override fun map(input: List<WordModel>): RevisionCompleteTableUIState {
         val title = input[1].title
         val letter = input[2].letterId
         val icon = input[0].icon
 
-        return ThirdRevisionUIState(
+        return RevisionCompleteTableUIState(
             title = title,
             letter = letter,
             icon = icon,

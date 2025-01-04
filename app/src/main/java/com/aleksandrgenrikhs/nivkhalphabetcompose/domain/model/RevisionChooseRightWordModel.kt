@@ -1,6 +1,6 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model
 
-data class SecondRevisionModel(
+data class RevisionChooseRightWordModel(
     val title: String,
     val wordId: String,
     val icon: String?,

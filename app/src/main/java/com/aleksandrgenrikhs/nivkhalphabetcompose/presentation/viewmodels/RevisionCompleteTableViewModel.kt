@@ -5,9 +5,9 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.ThirdRevisionInteractor
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateThirdRevisionMapper
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.ThirdRevisionUIState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.RevisionCompleteTableInteractor
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateRevisionCompleteTableMapper
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.RevisionCompleteTableUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,19 +19,19 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ThirdRevisionViewModel
+class RevisionCompleteTableViewModel
 @Inject constructor(
-    private val thirdRevisionUseCase: ThirdRevisionInteractor,
-    private val uiStateMapper: UIStateThirdRevisionMapper,
+    private val completeTableUseCase: RevisionCompleteTableInteractor,
+    private val uiStateMapper: UIStateRevisionCompleteTableMapper,
     private val mediaPlayerInteractor: MediaPlayerInteractor,
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<ThirdRevisionUIState> =
-        MutableStateFlow(ThirdRevisionUIState())
+    private val _uiState: MutableStateFlow<RevisionCompleteTableUIState> =
+        MutableStateFlow(RevisionCompleteTableUIState())
     val uiState = _uiState.asStateFlow()
 
-    private var wordsUIState: ThirdRevisionUIState? = null
+    private var wordsUIState: RevisionCompleteTableUIState? = null
 
     init {
         viewModelScope.launch {
@@ -44,7 +44,7 @@ class ThirdRevisionViewModel
 
     suspend fun updateWords() {
         _uiState.update { state ->
-            val words = thirdRevisionUseCase.getWordsForRevisionThird()
+            val words = completeTableUseCase.getWordsForRevisionCompleteTable()
             wordsUIState = uiStateMapper.map(words)
             wordsUIState?.let { mappedWords ->
                 with(mappedWords) {

@@ -15,40 +15,38 @@ import coil.compose.rememberAsyncImagePainter
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.DialogSuccess
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.SecondRevisionLayout
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.SecondRevisionViewModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.RevisionListenAndChooseLayout
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.RevisionListenAndChooseViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants
 import kotlinx.coroutines.delay
 
 @Composable
-fun SecondRevisionScreen(
+fun RevisionListenAndChooseScreen(
     navController: NavController,
-    viewModel: SecondRevisionViewModel = hiltViewModel(),
+    viewModel: RevisionListenAndChooseViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var isLaunchedEffectCalled by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         if (!isLaunchedEffectCalled) {
-            viewModel.updateWords()
+            viewModel.updateLetters()
             isLaunchedEffectCalled = true
         }
     }
 
     with(uiState) {
-        SecondRevisionLayout(
-            words = title,
-            wordsId = wordsId,
-            icon = icon,
-            correctWordId = correctWordId,
-            onWordClick = (viewModel::checkUserGuess),
+        RevisionListenAndChooseLayout(
+            letters = letters,
+            correctLetter = correctLetter,
+            onLetterClick = (viewModel::checkUserGuess),
             onIconClick = (viewModel::playSound),
             isCorrectAnswer = isCorrectAnswers,
             isClickable = !isUserAnswerCorrect,
             onBack = navController::popBackStack
         )
         if (isCompleted) {
-            val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_revision2)
+            val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_revision1)
             var showDialog by remember { mutableStateOf(false) }
             LaunchedEffect(key1 = null) {
                 delay(2000)
@@ -67,15 +65,15 @@ fun SecondRevisionScreen(
                     },
                     navigationNext = {
                         navController.navigate(
-                            NavigationDestination.RevisionThirdScreen.destination
+                            NavigationDestination.RevisionChooseRightWordScreen.destination
                         ) {
-                            popUpTo(NavigationDestination.RevisionSecondScreen.destination) {
+                            popUpTo(NavigationDestination.RevisionListenAndChooseScreen.destination) {
                                 inclusive = true
                             }
                         }
                     },
                     painter = painter,
-                    title = stringResource(id = R.string.textEndRevisionSecond),
+                    title = stringResource(id = R.string.textEndRevisionFirst),
                     textButtonBack = stringResource(id = R.string.backAlphabet),
                     textButtonNext = stringResource(id = R.string.nextRevisionTasks),
                     isVisibleSecondButton = true,

@@ -2,13 +2,13 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FIRST_TASK_SCREEN
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FOURTH_TASK_SCREEN
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.REVISION_FIRST_SCREEN
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.REVISION_SECOND_SCREEN
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.REVISION_THIRD_SCREEN
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.SECOND_TASK_SCREEN
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.THIRD_TASK_SCREEN
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.REVISION_CHOOSE_RIGHT_WORD_SCREEN
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.REVISION_COMPLETE_TABLE_SCREEN
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.REVISION_LISTEN_AND_CHOOSE_SCREEN
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.TASK_FIND_WORD_SCREEN
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.TASK_LEARN_LETTER_SCREEN
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.TASK_MATCH_WORDS_SCREEN
+import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.TASK_WRITE_WORD_SCREEN
 
 enum class Task(
     val stableId: Int,
@@ -18,29 +18,29 @@ enum class Task(
     val icon: Int,
     val route: String
 ) {
-    FIRST(
+    LEARN_LETTER(
         stableId = 1,
         titleResId = R.string.firstTask,
         icon = R.drawable.ic_task1,
-        route = FIRST_TASK_SCREEN
+        route = TASK_LEARN_LETTER_SCREEN
     ),
-    SECOND(
+    FIND_WORD(
         stableId = 2,
         titleResId = R.string.secondTask,
         icon = R.drawable.ic_task2,
-        route = SECOND_TASK_SCREEN
+        route = TASK_FIND_WORD_SCREEN
     ),
-    THIRD(
+    MATCH_WORDS(
         stableId = 3,
         titleResId = R.string.thirdTask,
         icon = R.drawable.ic_task3,
-        route = THIRD_TASK_SCREEN
+        route = TASK_MATCH_WORDS_SCREEN
     ),
-    FOURTH(
+    WRITE_WORD(
         stableId = 4,
         titleResId = R.string.fourthTask,
         icon = R.drawable.ic_task4,
-        route = FOURTH_TASK_SCREEN
+        route = TASK_WRITE_WORD_SCREEN
     )
 }
 
@@ -52,22 +52,22 @@ enum class RevisionTask(
     val icon: Int,
     val route: String
 ) {
-    REVISION_FIRST(
+    LISTEN_AND_CHOOSE(
         stableId = 5,
         titleResId = R.string.revisionFirst,
         icon = R.drawable.ic_revision_task_first,
-        route = REVISION_FIRST_SCREEN
+        route = REVISION_LISTEN_AND_CHOOSE_SCREEN
     ),
-    REVISION_SECOND(
+    CHOOSE_RIGHT_WORD(
         stableId = 5,
         titleResId = R.string.revisionSecond,
         icon = R.drawable.ic_revision_task_second,
-        route = REVISION_SECOND_SCREEN
+        route = REVISION_CHOOSE_RIGHT_WORD_SCREEN
     ),
-    REVISION_THIRD(
+    COMPLETE_TABLE(
         stableId = 7,
         titleResId = R.string.revisionThird,
         icon = R.drawable.ic_revision_task_third,
-        route = REVISION_THIRD_SCREEN
+        route = REVISION_COMPLETE_TABLE_SCREEN
     )
 }

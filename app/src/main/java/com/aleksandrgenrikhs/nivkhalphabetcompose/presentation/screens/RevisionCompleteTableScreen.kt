@@ -16,14 +16,14 @@ import coil.compose.rememberAsyncImagePainter
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.DialogSuccess
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.ThirdRevisionLayout
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.ThirdRevisionViewModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.RevisionCompleteTableLayout
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.RevisionCompleteTableViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 
 @Composable
-fun ThirdRevisionScreen(
+fun RevisionCompleteTableScreen(
     navController: NavController,
-    viewModel: ThirdRevisionViewModel = hiltViewModel(),
+    viewModel: RevisionCompleteTableViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var isLaunchedEffectCalled by rememberSaveable { mutableStateOf(false) }
@@ -36,7 +36,7 @@ fun ThirdRevisionScreen(
     }
 
     with(uiState) {
-        ThirdRevisionLayout(
+        RevisionCompleteTableLayout(
             title = title,
             letter = letter,
             icon = icon,
@@ -70,9 +70,9 @@ fun ThirdRevisionScreen(
                 },
                 navigationNext = {
                     navController.navigate(
-                        NavigationDestination.RevisionTaskScreen.destination,
+                        NavigationDestination.RevisionTasksScreen.destination,
                     ) {
-                        popUpTo(NavigationDestination.RevisionTaskScreen.destination) {
+                        popUpTo(NavigationDestination.RevisionTasksScreen.destination) {
                             inclusive = true
                         }
                     }

@@ -3,10 +3,10 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.FirstRevisionUseCase
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateFirstRevisionMapper
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.FirstRevisionUIState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.RevisionListenAndChooseUseCase
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateRevisionListenAndChooseMapper
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.RevisionListenAndChooseUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.ERROR_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.LETTER_AUDIO
@@ -20,16 +20,16 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FirstRevisionViewModel
+class RevisionListenAndChooseViewModel
 @Inject constructor(
-    private val firstRevisionUseCase: FirstRevisionUseCase,
-    private val uiStateMapper: UIStateFirstRevisionMapper,
+    private val listenAndChooseUseCase: RevisionListenAndChooseUseCase,
+    private val uiStateMapper: UIStateRevisionListenAndChooseMapper,
     private val mediaPlayerInteractor: MediaPlayerInteractor,
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<FirstRevisionUIState> =
-        MutableStateFlow(FirstRevisionUIState())
+    private val _uiState: MutableStateFlow<RevisionListenAndChooseUIState> =
+        MutableStateFlow(RevisionListenAndChooseUIState())
     val uiState = _uiState.asStateFlow()
 
     init {
@@ -43,7 +43,7 @@ class FirstRevisionViewModel
 
     fun updateLetters() {
         _uiState.update { state ->
-            val allLetters = firstRevisionUseCase.getLettersForFirstRevision()
+            val allLetters = listenAndChooseUseCase.getLettersForRevisionListenAndChoose()
             val mappedLetters = uiStateMapper.map(allLetters)
             playSound("$LETTER_AUDIO${mappedLetters.correctLetter}")
             with(mappedLetters) {

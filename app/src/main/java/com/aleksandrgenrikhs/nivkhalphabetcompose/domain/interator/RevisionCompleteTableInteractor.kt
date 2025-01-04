@@ -5,12 +5,12 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.repository.AlphabetRepo
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.selectUniqueElements
 import javax.inject.Inject
 
-class ThirdRevisionInteractor
+class RevisionCompleteTableInteractor
 @Inject constructor(
     private val repository: AlphabetRepository,
 ) {
 
-    suspend fun getWordsForRevisionThird(): List<WordModel> {
+    suspend fun getWordsForRevisionCompleteTable(): List<WordModel> {
         val allWords = repository.getWords()
             .values
             .flatten()

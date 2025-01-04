@@ -72,7 +72,7 @@ import com.idapgroup.autosizetext.AutoSizeText
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ThirdRevisionLayout(
+fun RevisionCompleteTableLayout(
     modifier: Modifier = Modifier,
     title: String,
     letter: String,
@@ -602,7 +602,7 @@ private fun SubmitButton(
 @Composable
 private fun ThirdTaskPreview() {
     NivkhAlphabetComposeTheme {
-        ThirdRevisionLayout(
+        RevisionCompleteTableLayout(
             title = "ӈағзыр̆раӄ",
             letter = "Aa",
             icon = "null",

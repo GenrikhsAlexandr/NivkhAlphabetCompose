@@ -1,6 +1,6 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model
 
-data class FirstTaskModel(
+data class TaskLearnLetterModel(
     val letterId: String,
     val title: String,
     val wordId: String,

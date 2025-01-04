@@ -1,6 +1,6 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate
 
-data class FirstTaskUIState(
+data class TaskLearnLetterUIState(
     val selectedLetter: String = "",
     val titles: List<String> = emptyList(),
     val wordsId: List<String> = emptyList(),

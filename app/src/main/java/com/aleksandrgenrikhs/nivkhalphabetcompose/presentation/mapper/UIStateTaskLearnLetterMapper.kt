@@ -1,15 +1,15 @@
 package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper
 
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Mapper
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.FirstTaskModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.FirstTaskUIState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.model.TaskLearnLetterModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.TaskLearnLetterUIState
 import javax.inject.Inject
 
-class UIStateFirstTaskMapper
-@Inject constructor() : Mapper<List<FirstTaskModel>, FirstTaskUIState> {
+class UIStateTaskLearnLetterMapper
+@Inject constructor() : Mapper<List<TaskLearnLetterModel>, TaskLearnLetterUIState> {
 
-    override fun map(input: List<FirstTaskModel>): FirstTaskUIState {
-        return FirstTaskUIState(
+    override fun map(input: List<TaskLearnLetterModel>): TaskLearnLetterUIState {
+        return TaskLearnLetterUIState(
             titles = input.map { it.title },
             wordsId = input.map { it.wordId },
             icons = input.map { it.icon },

@@ -55,7 +55,7 @@ import com.idapgroup.autosizetext.AutoSizeText
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FirstTaskLayout(
+fun TaskLearnLetterLayout(
     modifier: Modifier = Modifier,
     titles: List<String>,
     wordsId: List<String>,
@@ -68,7 +68,7 @@ fun FirstTaskLayout(
     isPlaying: Boolean,
     progressLetter: Int,
     isVisibleWord: Boolean,
-    onBack: () -> Unit
+    onBack: () -> Unit,
 ) {
     var isDividerVisible by remember { mutableStateOf(false) }
     val listState = rememberLazyListState()
@@ -269,7 +269,7 @@ private fun CardWord(
 @Composable
 private fun FirstTaskContentPreview() {
     NivkhAlphabetComposeTheme {
-        FirstTaskLayout(
+        TaskLearnLetterLayout(
             titles = listOf("Alpha", "Word", "Nivkh"),
             wordsId = listOf("1.2", "1.3", "1.1"),
             icons = listOf("we", "wew", "ds"),

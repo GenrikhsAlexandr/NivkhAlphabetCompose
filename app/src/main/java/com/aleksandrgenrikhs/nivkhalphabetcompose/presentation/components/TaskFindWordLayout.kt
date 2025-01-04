@@ -55,7 +55,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.TaskFindW
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SecondTaskLayout(
+fun TaskFindWordLayout(
     modifier: Modifier = Modifier,
     viewState: TaskFindWordUIState,
     letter: String,
@@ -239,7 +239,7 @@ private fun IconButton(
 @Composable
 private fun SecondTaskPreview() {
     NivkhAlphabetComposeTheme {
-        SecondTaskLayout(
+        TaskFindWordLayout(
             viewState = TaskFindWordUIState(
                 titles = listOf("title1", "title2", "title3"),
                 icons = listOf("icon1", "icon2", "icon3"),

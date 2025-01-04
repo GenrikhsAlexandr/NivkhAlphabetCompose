@@ -4,11 +4,11 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
-import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.FirstTaskUseCase
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.MediaPlayerInteractor
 import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.PrefInteractor
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateFirstTaskMapper
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.FirstTaskUIState
+import com.aleksandrgenrikhs.nivkhalphabetcompose.domain.interator.TaskLearnLetterUseCase
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.mapper.UIStateTaskLearnLetterMapper
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.uistate.TaskLearnLetterUIState
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.LETTER_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO
@@ -21,16 +21,17 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FirstTaskViewModel
+class TaskLearnLetterViewModel
 @Inject constructor(
     private val prefInteractor: PrefInteractor,
-    private val firstTaskUseCase: FirstTaskUseCase,
-    private val uiStateMapper: UIStateFirstTaskMapper,
+    private val learnLetterUseCase: TaskLearnLetterUseCase,
+    private val uiStateMapper: UIStateTaskLearnLetterMapper,
     private val mediaPlayerInteractor: MediaPlayerInteractor,
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<FirstTaskUIState> = MutableStateFlow(FirstTaskUIState())
+    private val _uiState: MutableStateFlow<TaskLearnLetterUIState> =
+        MutableStateFlow(TaskLearnLetterUIState())
     val uiState = _uiState.asStateFlow()
 
     fun setSelectedLetter(letter: String) {
@@ -55,7 +56,7 @@ class FirstTaskViewModel
     }
 
     suspend fun updateWordsForLetter(letterId: String) {
-        val letteredWords = firstTaskUseCase.getWordsForFirstTask(letterId)
+        val letteredWords = learnLetterUseCase.getWordsForTaskLearnLetter(letterId)
         val mappedWords = uiStateMapper.map(letteredWords)
         _uiState.update {
             with(mappedWords) {
@@ -74,7 +75,7 @@ class FirstTaskViewModel
     suspend fun checkTaskCompletion(letter: String) {
         _uiState.update { state ->
             val isTaskCompleted = prefInteractor.isTaskCompleted(
-                Task.FIRST.stableId,
+                Task.LEARN_LETTER.stableId,
                 letter
             )
             state.copy(
@@ -152,7 +153,7 @@ class FirstTaskViewModel
     private fun saveTaskProgress() {
         if (uiState.value.isCompletedWords.last()) {
             prefInteractor.taskCompleted(
-                Task.FIRST.stableId,
+                Task.LEARN_LETTER.stableId,
                 uiState.value.selectedLetter
             )
         }

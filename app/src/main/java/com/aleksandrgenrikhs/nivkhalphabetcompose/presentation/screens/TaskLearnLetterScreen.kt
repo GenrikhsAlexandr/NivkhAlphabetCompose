@@ -4,29 +4,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import coil.compose.rememberAsyncImagePainter
 import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.DialogSuccess
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.FirstTaskLayout
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.FirstTaskViewModel
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.TaskLearnLetterLayout
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.TaskLearnLetterViewModel
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 
 @Composable
-fun FirstTaskScreen(
+fun TaskLearnLetterScreen(
     navController: NavController,
-    viewModel: FirstTaskViewModel = hiltViewModel(),
+    viewModel: TaskLearnLetterViewModel = hiltViewModel(),
     letter: String,
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    var showDialog by rememberSaveable { mutableStateOf(false) }
 
     viewModel.setSelectedLetter(letter)
 
@@ -35,7 +31,7 @@ fun FirstTaskScreen(
             viewModel.updateWordsForLetter(letter)
             viewModel.checkTaskCompletion(letter)
         }
-        FirstTaskLayout(
+        TaskLearnLetterLayout(
             titles = titles,
             wordsId = wordsId,
             icons = icons,
@@ -51,13 +47,9 @@ fun FirstTaskScreen(
         )
 
         if (isCompletedWords.isNotEmpty() && isCompletedWords.last() && !isPlaying) {
-            showDialog = true
-        }
-        if (showDialog) {
             if (shouldPlayFinishAudio) {
                 viewModel.playSoundForElement(FINISH_AUDIO)
             }
-            val painter = rememberAsyncImagePainter(model = R.drawable.ic_end_task1)
             DialogSuccess(
                 navigationBack = {
                     navController.popBackStack(
@@ -67,19 +59,19 @@ fun FirstTaskScreen(
                 },
                 navigationNext = {
                     navController.navigate(
-                        "${NavigationDestination.SecondTaskScreen.destination}/$letter"
+                        "${NavigationDestination.TaskFindWordScreen.destination}/$letter"
                     ) {
-                        popUpTo("${NavigationDestination.FirstTaskScreen.destination}/$letter") {
+                        popUpTo("${NavigationDestination.TaskLearnLetterScreen.destination}/$letter") {
                             inclusive = true
                         }
                     }
                 },
-                painter = painter,
+                painter = painterResource(R.drawable.ic_end_task1),
                 title = stringResource(id = R.string.textEndFirstTask),
                 textButtonBack = stringResource(id = R.string.backAlphabet),
                 textButtonNext = stringResource(
                     id = R.string.nextTask,
-                    Task.SECOND.stableId
+                    Task.FIND_WORD.stableId
                 ),
                 isVisibleSecondButton = true,
                 onDismissRequest = {}

@@ -15,11 +15,11 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.R
 import com.aleksandrgenrikhs.nivkhalphabetcompose.Task
 import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestination
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.DialogSuccess
-import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.SecondTaskLayout
+import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.TaskFindWordLayout
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.TaskFindWordViewModel
 
 @Composable
-fun SecondTaskScreen(
+fun TaskFindWordScreen(
     navController: NavController,
     viewModel: TaskFindWordViewModel = hiltViewModel(),
     letter: String,
@@ -36,7 +36,7 @@ fun SecondTaskScreen(
         }
     }
 
-    SecondTaskLayout(
+    TaskFindWordLayout(
         viewState = viewState,
         letter = letter,
         onClick = (viewModel::flipCard),

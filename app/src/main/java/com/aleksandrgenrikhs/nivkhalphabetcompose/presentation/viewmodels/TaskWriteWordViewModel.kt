@@ -68,9 +68,9 @@ class TaskWriteWordViewModel
     }
 
     fun deleteLastLetter() {
-        val currentUserGuess = uiState.value.inputWord
-        if (currentUserGuess.isNotEmpty()) {
-            val newText = currentUserGuess.dropLast(1)
+        val currentValue = uiState.value.inputWord
+        if (currentValue.isNotEmpty()) {
+            val newText = currentValue.dropLast(1)
             _uiState.update { state ->
                 state.copy(
                     inputWord = newText,

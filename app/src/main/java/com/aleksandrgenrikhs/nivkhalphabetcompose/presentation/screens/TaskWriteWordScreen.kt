@@ -40,7 +40,7 @@ fun TaskWriteWordScreen(
         viewState = viewState,
         onClick = { viewModel.playSound("${WORDS_AUDIO}${viewState.wordId}") },
         onDone = (viewModel::checkUserGuess),
-        onUserGuessChanged = { viewModel.updateUserGuess(it.appendChar(viewState.userGuess)) },
+        onInputChange = { viewModel.onInputChange(it) },
         onDelete = { viewModel.deleteLastLetter() },
         onBack = navController::popBackStack
     )
@@ -68,8 +68,4 @@ fun TaskWriteWordScreen(
             isVisibleSecondButton = true,
         )
     }
-}
-
-private fun String.appendChar(char: String): String {
-    return char + this
 }

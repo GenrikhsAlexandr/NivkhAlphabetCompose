@@ -7,7 +7,7 @@ data class TaskWriteWordUIState(
     val icon: String = "",
     val correctAnswersCount: Int = 0,
     val isGuessWrong: Boolean = false,
-    val userGuess: String = "",
+    val inputWord: String = "",
     val isClickable: Boolean = false,
     val isLoading: Boolean = false,
     val showDialog: Boolean = false,

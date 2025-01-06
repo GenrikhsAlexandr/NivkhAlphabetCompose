@@ -49,16 +49,18 @@ class TaskWriteWordViewModel
                         wordId = wordId,
                         title = title,
                         icon = icon,
+                        inputWord = ""
                     )
                 }
             }
         }
     }
 
-    fun updateUserGuess(guessedWord: String) {
+    fun onInputChange(newValue: String) {
+        val newText = uiState.value.inputWord + newValue
         _uiState.update { state ->
             state.copy(
-                userGuess = guessedWord,
+                inputWord = newText,
                 isGuessWrong = false,
                 isClickable = true
             )
@@ -66,19 +68,21 @@ class TaskWriteWordViewModel
     }
 
     fun deleteLastLetter() {
-        val currentUserGuess = uiState.value.userGuess
+        val currentUserGuess = uiState.value.inputWord
         if (currentUserGuess.isNotEmpty()) {
-            val newUserGuess = currentUserGuess.dropLast(1)
+            val newText = currentUserGuess.dropLast(1)
             _uiState.update { state ->
                 state.copy(
-                    userGuess = newUserGuess
+                    inputWord = newText,
+                    isGuessWrong = false,
+                    isClickable = true
                 )
             }
         }
     }
 
-    fun checkUserGuess(word: String) {
-        val isAnswerCorrect = word == uiState.value.title
+    fun checkUserGuess() {
+        val isAnswerCorrect = uiState.value.inputWord == uiState.value.title
         _uiState.update { state ->
             val correctAnswersCount = if (isAnswerCorrect) {
                 state.correctAnswersCount + 1
@@ -104,7 +108,6 @@ class TaskWriteWordViewModel
         if (!taskCompleted) {
             viewModelScope.launch {
                 delay(1500)
-                updateUserGuess("")
                 updateWordsForLetter(uiState.value.selectedLetter)
             }
         } else {

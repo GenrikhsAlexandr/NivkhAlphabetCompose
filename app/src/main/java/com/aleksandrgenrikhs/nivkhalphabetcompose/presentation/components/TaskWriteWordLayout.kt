@@ -34,8 +34,8 @@ fun TaskWriteWordLayout(
     viewState: TaskWriteWordUIState,
     onClick: () -> Unit,
     onDelete: () -> Unit,
-    onDone: (String) -> Unit,
-    onUserGuessChanged: (String) -> Unit,
+    onDone: () -> Unit,
+    onInputChange: (String) -> Unit,
     onBack: () -> Unit,
 ) {
     val action: @Composable RowScope.() -> Unit = {
@@ -81,9 +81,9 @@ fun TaskWriteWordLayout(
                 )
             }
             NivkhKeyboard(
-                input = viewState.userGuess,
+                input = viewState.inputWord,
                 isError = viewState.isGuessWrong,
-                onInputChange = onUserGuessChanged,
+                onInputChange = onInputChange,
                 onDelete = onDelete,
                 onDone = onDone,
                 onClickable = viewState.isClickable
@@ -101,7 +101,7 @@ private fun TaskWriteWordContentPreview() {
             onClick = { },
             onDelete = {},
             onDone = {},
-            onUserGuessChanged = {},
+            onInputChange = {},
             onBack = {}
         )
     }

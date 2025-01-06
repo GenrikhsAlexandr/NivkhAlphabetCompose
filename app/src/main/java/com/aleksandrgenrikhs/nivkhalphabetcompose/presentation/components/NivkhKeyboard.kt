@@ -54,7 +54,7 @@ fun NivkhKeyboard(
     isError: Boolean,
     onInputChange: (String) -> Unit,
     onDelete: () -> Unit,
-    onDone: (word: String) -> Unit,
+    onDone: () -> Unit,
     onClickable: Boolean,
 ) {
     Column(
@@ -78,11 +78,10 @@ fun NivkhKeyboard(
                     .weight(1f),
                 errorText = isError,
                 onInputChange = onInputChange,
-                input = input
+                input = input,
             )
             DoneButton(
                 onDone = onDone,
-                word = input,
                 onClickable = onClickable
             )
         }
@@ -119,6 +118,10 @@ private fun InputTextField(
     errorText: Boolean,
     onInputChange: (String) -> Unit = {},
 ) {
+    val updateValue: (String) -> Unit = { newValue ->
+        onInputChange(newValue)
+    }
+
     val targetTextColor = if (errorText) {
         colorError
     } else {
@@ -150,10 +153,9 @@ private fun InputTextField(
             )
             .padding(4.dp)
             .then(modifier),
+        enabled = false,
         value = input,
-        onValueChange = { newValue ->
-            onInputChange(newValue)
-        },
+        onValueChange = updateValue,
         textStyle = textStyle,
         maxLines = 1,
         singleLine = true,
@@ -173,7 +175,7 @@ private fun InputTextField(
 @Composable
 private fun LetterButton(
     letter: String,
-    onClick: (letter: String) -> Unit,
+    onClick: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -223,8 +225,7 @@ private fun DeleteButton(
 
 @Composable
 private fun DoneButton(
-    word: String,
-    onDone: (word: String) -> Unit,
+    onDone: () -> Unit,
     modifier: Modifier = Modifier,
     onClickable: Boolean,
 ) {
@@ -235,7 +236,7 @@ private fun DoneButton(
             .clip(CircleShape)
             .clickable(
                 onClick = {
-                    onDone(word)
+                    onDone()
                 },
                 enabled = onClickable
             ),
@@ -253,7 +254,7 @@ private fun DoneButton(
 @Composable
 private fun SpaceButton(
     modifier: Modifier = Modifier,
-    onClick: (space: String) -> Unit,
+    onClick: (String) -> Unit,
     space: String = " ",
 ) {
     Box(

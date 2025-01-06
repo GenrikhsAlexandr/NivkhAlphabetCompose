@@ -48,5 +48,5 @@ enum class LettersKeybord(
     MM("ь"),
     EE("э"),
     YU("ю"),
-    Ya("я");
+    Ya("я"),
 }

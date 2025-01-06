@@ -14,6 +14,7 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.LETTER_AUDIO
 import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.WORDS_AUDIO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -100,59 +101,84 @@ class TaskLearnLetterViewModel
         }
     }
 
-    fun onClickElement(element: String, index: Int?) {
-        playSoundForElement(element)
+    fun onClickLetter(letter: String) {
+        playSound("$LETTER_AUDIO$letter")
         updatePlayingState()
-        when (element) {
-            uiState.value.selectedLetter -> {
-                _uiState.update { state ->
-                    val newProgressLetter = state.progressLetter + 1
-                    val newIsVisibleWord = newProgressLetter > 4 || state.isVisibleWord
-                    val newIsCompletedLetter = newProgressLetter > 4
-                    val newIsClickable = state.isClickableWords.toMutableList()
-                    if (newIsCompletedLetter) {
-                        newIsClickable[0] = true
-                    }
-                    state.copy(
-                        progressLetter = newProgressLetter,
-                        isVisibleWord = newIsVisibleWord,
-                        isClickableWords = newIsClickable,
-                        isCompletedLetter = newIsCompletedLetter
-                    )
-                }
+        _uiState.update { state ->
+            val newProgressLetter = state.progressLetter + 1
+            val newIsVisibleWord = newProgressLetter > 4 || state.isVisibleWord
+            val newIsCompletedLetter = newProgressLetter > 4
+            val newIsClickable = state.isClickableWords.toMutableList()
+            if (newIsCompletedLetter) {
+                newIsClickable[0] = true
             }
-
-            else -> {
-                if (index == null) return
-                _uiState.update { state ->
-                    val newProgressWord = state.progressWords.toMutableList()
-                    val newWordIsCompleted = state.isCompletedWords.toMutableList()
-                    val newIsClickable = state.isClickableWords.toMutableList()
-                    newProgressWord[index] = state.progressWords[index] + 1
-                    newWordIsCompleted[index] = newProgressWord[index] > 2
-                    if (newWordIsCompleted[index] && index < state.titles.lastIndex) {
-                        newIsClickable[index + 1] = true
-                    }
-                    state.copy(
-                        progressWords = newProgressWord,
-                        isCompletedWords = newWordIsCompleted,
-                        isClickableWords = newIsClickable,
-                    )
-                }
-            }
+            state.copy(
+                progressLetter = newProgressLetter,
+                isVisibleWord = newIsVisibleWord,
+                isClickableWords = newIsClickable,
+                isCompletedLetter = newIsCompletedLetter
+            )
         }
-        if (uiState.value.isCompletedWords.isNotEmpty() && uiState.value.isCompletedWords.last()) {
+    }
+
+    fun onClickWord(word: String, index: Int?) {
+        playSound("$WORDS_AUDIO$word")
+        updatePlayingState()
+        if (index == null) return
+        _uiState.update { state ->
+            val (newProgressWord, newWordIsCompleted, newIsClickable) = updateWordState(
+                index,
+                uiState.value.progressWords,
+                uiState.value.isCompletedWords,
+                uiState.value.isClickableWords
+            )
+            state.copy(
+                progressWords = newProgressWord,
+                isCompletedWords = newWordIsCompleted,
+                isClickableWords = newIsClickable,
+            )
+        }
+        val isAllWordsCompleted = uiState.value.isCompletedWords.isNotEmpty() &&
+                uiState.value.isCompletedWords.last()
+        if (isAllWordsCompleted) {
+            _uiState.update { state ->
+                state.copy(
+                    isClickableWords = listOf(false, false, false),
+                )
+            }
             showDialog()
             saveTaskProgress()
         }
     }
 
+    private fun updateWordState(
+        index: Int,
+        progressWords: List<Int>,
+        isCompletedWords: List<Boolean>,
+        isClickableWords: List<Boolean>,
+    ): Triple<List<Int>, List<Boolean>, List<Boolean>> {
+        val newProgressWord = progressWords.toMutableList()
+        val newWordIsCompleted = isCompletedWords.toMutableList()
+        val newIsClickable = isClickableWords.toMutableList()
+
+        newProgressWord[index] = progressWords[index] + 1
+        newWordIsCompleted[index] = newProgressWord[index] > 2
+
+        if (newWordIsCompleted[index] && index < isCompletedWords.lastIndex) {
+            newIsClickable[index + 1] = true
+        }
+
+        return Triple(newProgressWord, newWordIsCompleted, newIsClickable)
+    }
+
     private fun showDialog() {
         viewModelScope.launch {
-            val currentValue = mediaPlayerInteractor.getIsSoundEnable()
+            delay(1500)
+            if (mediaPlayerInteractor.getIsSoundEnable()) {
+                playSound(FINISH_AUDIO)
+            }
             _uiState.update { state ->
                 state.copy(
-                    shouldPlayFinishAudio = currentValue,
                     showDialog = true,
                 )
             }
@@ -166,20 +192,9 @@ class TaskLearnLetterViewModel
         )
     }
 
-    fun playSoundForElement(element: String) {
-        when (element) {
-            uiState.value.selectedLetter -> {
-                mediaPlayerInteractor.initPlayer(context, "$LETTER_AUDIO$element")
-            }
-
-            FINISH_AUDIO -> {
-                mediaPlayerInteractor.initPlayer(context, FINISH_AUDIO)
-            }
-
-            else -> {
-                mediaPlayerInteractor.initPlayer(context, "$WORDS_AUDIO$element")
-            }
-        }
+    fun playSound(url: String) {
+        mediaPlayerInteractor.playerDestroy()
+        mediaPlayerInteractor.initPlayer(context, url)
     }
 
     override fun onCleared() {

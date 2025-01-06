@@ -60,7 +60,8 @@ fun TaskLearnLetterLayout(
     modifier: Modifier = Modifier,
     viewState: TaskLearnLetterUIState,
     letter: String,
-    onClick: (String, Int?) -> Unit,
+    onClickLetter: (String) -> Unit,
+    onClickWord: (String, Int?) -> Unit,
     onBack: () -> Unit,
 ) {
     var isDividerVisible by remember { mutableStateOf(false) }
@@ -129,7 +130,7 @@ fun TaskLearnLetterLayout(
                     progress = viewState.progressLetter,
                     title = letter,
                     onClick = {
-                        onClick(letter, null)
+                        onClickLetter(letter)
                     },
                     isClickable = viewState.isClickableLetter && !viewState.isPlaying,
                 )
@@ -140,7 +141,7 @@ fun TaskLearnLetterLayout(
                         progress = viewState.progressWords[index],
                         title = title,
                         icon = viewState.icons[index],
-                        onClick = { onClick(viewState.wordsId[index], index) },
+                        onClick = { onClickWord(viewState.wordsId[index], index) },
                         isClickable = viewState.isClickableWords[index] && !viewState.isPlaying,
                         isVisible = viewState.isVisibleWord,
                     )
@@ -254,17 +255,23 @@ private fun CardWord(
     }
 }
 
-@Preview(widthDp = 410, heightDp = 610)
+@Preview(showSystemUi = true, apiLevel = 34)
 @Composable
 private fun FirstTaskContentPreview() {
     NivkhAlphabetComposeTheme {
         TaskLearnLetterLayout(
             viewState = TaskLearnLetterUIState(
                 titles = listOf("word1", "word2", "word3"),
+                isCompletedLetter = true,
                 progressWords = listOf(1, 2, 3),
+                icons = listOf(null, null, null),
+                wordsId = listOf("1", "2", "3"),
+                isCompletedWords = listOf(true, false, false),
+                isClickableWords = listOf(true, true, false),
             ),
             letter = "Aa",
-            onClick = { _, _ -> },
+            onClickWord = { _, _ -> },
+            onClickLetter = {},
             onBack = {}
         )
     }

@@ -14,7 +14,6 @@ import com.aleksandrgenrikhs.nivkhalphabetcompose.navigator.NavigationDestinatio
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.DialogSuccess
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components.TaskLearnLetterLayout
 import com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.viewmodels.TaskLearnLetterViewModel
-import com.aleksandrgenrikhs.nivkhalphabetcompose.utils.Constants.FINISH_AUDIO
 
 @Composable
 fun TaskLearnLetterScreen(
@@ -31,16 +30,14 @@ fun TaskLearnLetterScreen(
         viewModel.checkTaskCompletion(letter)
     }
     TaskLearnLetterLayout(
-        onClick = (viewModel::onClickElement),
+        onClickLetter = (viewModel::onClickLetter),
+        onClickWord = (viewModel::onClickWord),
         letter = letter,
         viewState = viewState,
         onBack = navController::popBackStack
     )
 
-    if (viewState.showDialog && !viewState.isPlaying) {
-        if (viewState.shouldPlayFinishAudio) {
-            viewModel.playSoundForElement(FINISH_AUDIO)
-        }
+    if (viewState.showDialog) {
         DialogSuccess(
             navigationBack = {
                 navController.popBackStack(

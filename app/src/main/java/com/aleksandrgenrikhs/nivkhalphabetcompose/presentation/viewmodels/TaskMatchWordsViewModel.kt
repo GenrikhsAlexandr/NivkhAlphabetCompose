@@ -79,7 +79,8 @@ class TaskMatchWordsViewModel
             state.copy(
                 currentWords = mutableListOf(null, null, null),
                 isGuessWrong = false,
-                shareableWords = uiState.value.titles.shuffled()
+                shareableWords = uiState.value.titles.shuffled(),
+                resetTrigger = !uiState.value.resetTrigger
             )
         }
     }

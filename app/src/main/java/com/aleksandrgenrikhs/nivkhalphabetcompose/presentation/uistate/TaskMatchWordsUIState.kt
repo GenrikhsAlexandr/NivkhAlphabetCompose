@@ -9,4 +9,5 @@ data class TaskMatchWordsUIState(
     val currentWords: List<String?> = listOf(null, null, null),
     val isGuessWrong: Boolean = false,
     val showDialog: Boolean = false,
+    val resetTrigger:Boolean = false
 )

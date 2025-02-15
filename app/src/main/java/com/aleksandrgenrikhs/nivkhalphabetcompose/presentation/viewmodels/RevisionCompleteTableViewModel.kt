@@ -136,7 +136,6 @@ class RevisionCompleteTableViewModel
                     shareIcons = words.shareIcons,
                     shareWords = words.shareWords,
                     shareLetters = words.shareLetters,
-                    resetTrigger = !state.resetTrigger
                 )
             } ?: state
         }

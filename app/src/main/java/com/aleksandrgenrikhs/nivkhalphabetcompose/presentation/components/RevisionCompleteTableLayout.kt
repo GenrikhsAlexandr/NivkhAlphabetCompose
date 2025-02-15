@@ -2,17 +2,13 @@ package com.aleksandrgenrikhs.nivkhalphabetcompose.presentation.components
 
 import android.content.ClipData
 import android.content.ClipDescription
-import android.graphics.Point
+import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import android.os.Build
-import android.view.View
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.draganddrop.dragAndDropSource
 import androidx.compose.foundation.draganddrop.dragAndDropTarget
-import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,7 +20,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -43,7 +38,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -57,15 +51,12 @@ import androidx.compose.ui.draganddrop.mimeTypes
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -274,7 +265,6 @@ fun RevisionCompleteTableLayout(
                         viewState.shareIcons.map { icon ->
                             ShareIcons(
                                 icon = icon ?: "",
-                                resetTrigger = viewState.resetTrigger
                             )
                         }
                     }
@@ -288,7 +278,6 @@ fun RevisionCompleteTableLayout(
                         viewState.shareWords.map { title ->
                             ShareWords(
                                 title = title ?: "",
-                                resetTrigger = viewState.resetTrigger
                             )
                         }
                     }
@@ -302,7 +291,6 @@ fun RevisionCompleteTableLayout(
                         viewState.shareLetters.map { letter ->
                             ShareLetters(
                                 letter = letter ?: "",
-                                resetTrigger = viewState.resetTrigger
                             )
                         }
                     }
@@ -442,60 +430,21 @@ private fun IconItem(
 private fun ShareWords(
     modifier: Modifier = Modifier,
     title: String,
-    resetTrigger: Boolean
 ) {
-    val localView = LocalView.current
-    val isModernDragAndDrop = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-    var offsetX by remember(resetTrigger) { mutableFloatStateOf(0f) }
-    var offsetY by remember(resetTrigger) { mutableFloatStateOf(0f) }
-    val animatedOffsetX by animateFloatAsState(targetValue = offsetX, label = "offsetX")
-    val animatedOffsetY by animateFloatAsState(targetValue = offsetY, label = "offsetY")
     Box(
         modifier = modifier
             .wrapContentSize()
-            .then(
-                if (isModernDragAndDrop) {
-                    Modifier.dragAndDropSource {
-                        detectTapGestures(
-                            onPress = {
-                                startTransfer(
-                                    DragAndDropTransferData(
-                                        clipData = ClipData.newPlainText("text", title)
-                                    )
-                                )
-                            }
+            .dragAndDropSource {
+                detectTapGestures(
+                    onPress = {
+                        startTransfer(
+                            DragAndDropTransferData(
+                                clipData = ClipData.newPlainText("text", title)
+                            )
                         )
                     }
-                } else {
-                    Modifier.pointerInput(Unit) {
-                        detectDragGestures(
-                            onDragStart = {
-                                offsetX = 0f
-                                offsetY = 0f
-                                val clipData = ClipData.newPlainText("text", title)
-                                // Создаем кастомный DragShadow с анимацией
-                                val dragShadow = object : View.DragShadowBuilder() {
-                                    override fun onProvideShadowMetrics(size: Point, touch: Point) {
-                                        size.set(150, 50) // Размер тени
-                                        touch.set(75, 25) // Точка касания
-                                    }
-                                }
-
-                                localView.startDragAndDrop(clipData, dragShadow, null, 0)
-                            },
-                            onDrag = { change, dragAmount ->
-                                change.consume()
-                                offsetX += dragAmount.x
-                                offsetY += dragAmount.y
-                            },
-                            onDragEnd = {
-                                offsetX = 0f
-                                offsetY = 0f
-                            }
-                        )
-                    }
-                }
-            ),
+                )
+            },
         contentAlignment = Alignment.Center
     ) {
         AutoSizeText(
@@ -504,80 +453,30 @@ private fun ShareWords(
             maxLines = 1,
             textAlign = TextAlign.Center,
             minFontSize = 22.sp,
-            modifier = Modifier.offset {
-                IntOffset(
-                    animatedOffsetX.toInt(),
-                    animatedOffsetY.toInt()
-                )
-            })
+        )
     }
 }
-
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ShareLetters(
     modifier: Modifier = Modifier,
     letter: String,
-    resetTrigger: Boolean
 ) {
-    val localView = LocalView.current // Получаем View из Compose
-    val isDragAndDropSupported = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
-
-    var offsetX by remember(resetTrigger) { mutableFloatStateOf(0f) }
-    var offsetY by remember(resetTrigger) { mutableFloatStateOf(0f) }
-    val animatedOffsetX by animateFloatAsState(targetValue = offsetX, label = "offsetX")
-    val animatedOffsetY by animateFloatAsState(targetValue = offsetY, label = "offsetY")
-
     Box(
         modifier = modifier
             .wrapContentSize()
-            .then(
-                if (isDragAndDropSupported) {
-                    Modifier.dragAndDropSource {
-                        detectTapGestures(
-                            onPress = {
-                                startTransfer(
-                                    DragAndDropTransferData(
-                                        clipData = ClipData.newPlainText("text", letter)
-                                    )
-                                )
-                            }
+            .dragAndDropSource {
+                detectTapGestures(
+                    onPress = {
+                        startTransfer(
+                            DragAndDropTransferData(
+                                clipData = ClipData.newPlainText("text", letter)
+                            )
                         )
                     }
-                } else {
-                    Modifier.pointerInput(Unit) {
-                        detectDragGestures(
-                            onDragStart = {
-                                offsetX = 0f
-                                offsetY = 0f
-                                val clipData = ClipData.newPlainText("text", letter)
-                                // Создаем кастомный DragShadow с анимацией
-                                val dragShadow = object : View.DragShadowBuilder() {
-                                    override fun onProvideShadowMetrics(
-                                        size: Point,
-                                        touch: Point
-                                    ) {
-                                        size.set(150, 50) // Размер тени
-                                        touch.set(75, 25) // Точка касания
-                                    }
-                                }
-
-                                localView.startDragAndDrop(clipData, dragShadow, null, 0)
-                            },
-                            onDrag = { change, dragAmount ->
-                                change.consume()
-                                offsetX += dragAmount.x
-                                offsetY += dragAmount.y
-                            },
-                            onDragEnd = {
-                                offsetX = 0f
-                                offsetY = 0f
-                            }
-                        )
-                    }
-                }
-            ),
+                )
+            },
         contentAlignment = Alignment.Center
     ) {
         AutoSizeText(
@@ -586,12 +485,6 @@ private fun ShareLetters(
             maxLines = 1,
             textAlign = TextAlign.Center,
             minFontSize = 22.sp,
-            modifier = Modifier.offset {
-                IntOffset(
-                    animatedOffsetX.toInt(),
-                    animatedOffsetY.toInt()
-                )
-            }
         )
     }
 }
@@ -601,7 +494,6 @@ private fun ShareLetters(
 private fun ShareIcons(
     modifier: Modifier = Modifier,
     icon: String,
-    resetTrigger: Boolean
 ) {
     val painter = rememberAsyncImagePainter(
         ImageRequest.Builder(LocalContext.current)
@@ -610,18 +502,16 @@ private fun ShareIcons(
             .build()
     )
     var imageBitmap by remember { mutableStateOf<ImageBitmap?>(null) }
-    val localView = LocalView.current // Получаем View из Compose
-    val isDragAndDropSupported = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
-
-    var offsetX by remember(resetTrigger) { mutableFloatStateOf(0f) }
-    var offsetY by remember(resetTrigger) { mutableFloatStateOf(0f) }
-    val animatedOffsetX by animateFloatAsState(targetValue = offsetX, label = "offsetX")
-    val animatedOffsetY by animateFloatAsState(targetValue = offsetY, label = "offsetY")
 
     LaunchedEffect(painter) {
         val result = painter.imageLoader.execute(painter.request).drawable
-        (result as BitmapDrawable).bitmap.asImageBitmap().let {
-            imageBitmap = it
+        if (result is BitmapDrawable) {
+            val hardwareBitmap = result.bitmap
+            val softwareBitmap = hardwareBitmap.copy(
+                Bitmap.Config.ARGB_8888,
+                true
+            ) // 🔥 Преобразуем в software bitmap
+            imageBitmap = softwareBitmap.asImageBitmap()
         }
     }
     AsyncImage(
@@ -630,65 +520,22 @@ private fun ShareIcons(
         contentScale = ContentScale.FillBounds,
         modifier = modifier
             .size(50.dp)
-            .offset {
-                IntOffset(
-                    animatedOffsetX.toInt(),
-                    animatedOffsetY.toInt()
-                )
-            }
-            .then(
-                if (isDragAndDropSupported) {
-                    Modifier.dragAndDropSource(
-                        drawDragDecoration = {
-                            imageBitmap?.let { drawImage(it) }
-                        },
-                        block = {
-                            detectTapGestures(
-                                onPress = {
-                                    startTransfer(
-                                        DragAndDropTransferData(
-                                            clipData = ClipData.newPlainText("image Url", icon)
-                                        )
-                                    )
-                                })
-                        }
-                    )
-                } else {
-                    Modifier.pointerInput(Unit) {
-                        detectDragGestures(
-                            onDragStart = {
-                                offsetX = 0f
-                                offsetY = 0f
-                                val clipData = ClipData.newPlainText("image Url", icon)
-                                // Создаем кастомный DragShadow с анимацией
-                                val dragShadow = object : View.DragShadowBuilder() {
-                                    override fun onProvideShadowMetrics(
-                                        size: Point,
-                                        touch: Point
-                                    ) {
-                                        size.set(150, 50) // Размер тени
-                                        touch.set(75, 25) // Точка касания
-                                    }
-                                }
-
-                                localView.startDragAndDrop(clipData, dragShadow, null, 0)
-                            },
-                            onDrag = { change, dragAmount ->
-                                change.consume()
-                                offsetX += dragAmount.x
-                                offsetY += dragAmount.y
-                            },
-                            onDragEnd = {
-                                offsetX = 0f
-                                offsetY = 0f
-                            }
-                        )
-                    }
+            .dragAndDropSource(
+                drawDragDecoration = {
+                    imageBitmap?.let { drawImage(it) }
+                },
+                block = {
+                    detectTapGestures(
+                        onPress = {
+                            startTransfer(
+                                DragAndDropTransferData(
+                                    clipData = ClipData.newPlainText("image Url", icon)
+                                )
+                            )
+                        })
                 }
-            )
-    )
+            ))
 }
-
 
 @Composable
 private fun ResetButton(

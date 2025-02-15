@@ -80,7 +80,6 @@ class TaskMatchWordsViewModel
                 currentWords = mutableListOf(null, null, null),
                 isGuessWrong = false,
                 shareableWords = uiState.value.titles.shuffled(),
-                resetTrigger = !uiState.value.resetTrigger
             )
         }
     }
